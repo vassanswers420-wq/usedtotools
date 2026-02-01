@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Free GST Calculator for India to calculate GST amount and final price instantly. Supports 5%, 12%, 18% and 28% GST slabs. Fast and accurate.">
+  <meta name="keywords" content="GST calculator, India GST, tax calculator, online GST calculator, finance tools">
+	<link rel="canonical" href="https://usedtotools.com/gst-calculator">
+  <title>GST Calculator India – Calculate GST Online (5%, 12%, 18%, 28%) | UsedToTools</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<header class="site-header">
+  <a href="index.html" class="logo">
+    <img src="images/logo.png" alt="UsedToTools Logo">
+  </a>
+  <h1 class="site-title">UsedToTools</h1>
+</header>
+<div class="site-wrapper">
+<h1>GST Calculator</h1>
+
+<!-- PAGE LAYOUT: LEFT = CALCULATOR, RIGHT = QUICK LINKS -->
+<div class="page-layout">
+
+  <!-- LEFT COLUMN: CALCULATOR -->
+  <div class="left-column">
+    <div class="calculator">
+      <label>Original Price (₹):</label>
+      <input type="number" id="price" placeholder="1000">
+
+      <label>GST Rate (%):</label>
+      <select id="gstRate">
+        <option value="5">5%</option>
+        <option value="12">12%</option>
+        <option value="18" selected>18%</option>
+        <option value="28">28%</option>
+      </select>
+
+      <button onclick="calculateGST()">Calculate GST</button>
+
+      <p class="result" id="result"></p>
+
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN: QUICK LINKS -->
+  <aside class="sidebar">
+    <a href="calculator.html" class="quick-box">🧮 Basic Calculator</a>
+    <a href="incometax.html" class="quick-box">📈 Income Tax Calculator</a>
+    <a href="emi-calculators.html" class="quick-box">💰 EMI Calculator</a>
+    <a href="fuel.html" class="quick-box">⛽ Fuel Cost Calculator</a>
+	<a href="SWP-Calculator.html" class="quick-box">📈 SWP calculator</a>
+  </aside>
+
+</div>
+	  <div style="text-align: center; margin-top: 15px;">
+         <a href="index.html" class="home-btn">← Back to Home</a>
+      </div>
+<!-- DESCRIPTION BELOW CALCULATOR -->
+<section class="content">
+  <h2>GST Calculator India – Online GST Calculation Tool</h2>
+
+
+  <p>
+    The <strong>GST Calculator Online</strong> is a powerful yet easy-to-use tool designed to help
+    users calculate the <strong>GST amount</strong> and <strong>final payable price</strong> in India.
+    It supports all major GST slabs and eliminates the need for manual calculations.
+  </p>
+
+  <p>
+    This calculator is especially useful for individuals and businesses who deal with GST
+    on a daily basis and want quick, error-free results.
+  </p>
+
+  <ul>
+    <li>Calculate GST for standard slabs: <strong>5%, 12%, 18%, and 28%</strong></li>
+    <li>Supports both <strong>GST Inclusive</strong> and <strong>GST Exclusive</strong> calculations</li>
+    <li>Instantly shows <strong>GST amount</strong> and <strong>total price</strong></li>
+    <li>Ideal for <strong>students, shop owners, freelancers, and small businesses</strong></li>
+    <li>No registration or login required</li>
+    <li>100% free and accessible on all devices</li>
+    <li>Mobile-friendly and lightweight design</li>
+    <li>Helps reduce billing and invoicing errors</li>
+  </ul>
+
+  <p>
+    To use the GST calculator, simply enter the base amount, choose the applicable GST rate,
+    and get instant results. The tool ensures accurate calculations as per India’s GST rules.
+  </p>
+
+  <p>
+    Whether you are preparing invoices, estimating product prices, or learning about GST,
+    this calculator provides a reliable and efficient solution for all your GST calculation needs.
+  </p>
+</section>
+
+
+<script>
+function calculateGST() {
+  let price = parseFloat(document.getElementById("price").value);
+  let rate = parseFloat(document.getElementById("gstRate").value);
+
+  if (isNaN(price) || isNaN(rate)) {
+    document.getElementById("result").innerText =
+      "Please enter a valid price.";
+    return;
+  }
+
+  let gstAmount = (price * rate) / 100;
+  let finalPrice = price + gstAmount;
+
+  document.getElementById("result").innerText =
+    "GST Amount: ₹ " + gstAmount.toFixed(2) + "\n" +
+    "Final Price: ₹ " + finalPrice.toFixed(2);
+}
+</script>
+</div>
+</body>
+</html>

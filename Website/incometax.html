@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free Income Tax Calculator for India to compare Old vs New Tax Regime. Calculate annual and monthly tax instantly and choose the better option.">
+  <meta name="keywords" content="Income tax calculator, India, Old regime, New regime, tax calculator, online">
+  <title>Income Tax Calculator India – Old vs New Tax Regime | UsedToTools</title>
+  <link rel="stylesheet" href="style.css">
+	<link rel="canonical" href="https://usedtotools.com/income-tax-calculator">
+  <style>
+    .calculator select, .calculator input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-top: 6px;
+    }
+
+    .calculator button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: #0bb884;
+      color: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .calculator button:hover {
+      background: #099e71;
+    }
+
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #0b7a5a;
+      white-space: pre-line;
+    }
+
+    .tax-comparison {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .tax-box {
+      flex: 1 1 45%;
+      background: #fff;
+      border-left: 5px solid #0bb884;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .tax-box h3 {
+      margin-top: 0;
+      color: #0bb884;
+    }
+
+    @media (max-width: 900px) {
+      .tax-comparison {
+        flex-direction: column;
+      }
+      .tax-box {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<header class="site-header">
+  <a href="index.html" class="logo">
+    <img src="images/logo.png" alt="UsedToTools Logo">
+  </a>
+  <h1 class="site-title">UsedToTools</h1>
+</header>
+<div class="site-wrapper">
+<h1>Income Tax Calculator – Old vs New Regime</h1>
+
+<div class="page-layout">
+
+  <!-- LEFT COLUMN -->
+  <div class="left-column">
+    <div class="calculator">
+      <label>Annual Taxable Income (₹):</label>
+      <input type="number" id="income" placeholder="500000">
+
+      <label>Select Display Mode:</label>
+      <select id="displayMode" onchange="updateModeDescription()">
+        <option value="current">📌 Current Tax Only</option>
+        <option value="comparison">🔍 Compare Old vs New</option>
+      </select>
+
+      <!-- Dynamic description -->
+      <p id="modeDesc" style="font-size:13px; color:#444; margin-top:5px;">
+        📌 Shows your tax under the current New Regime only.
+      </p>
+
+      <button onclick="calculateTax()">Calculate Tax</button>
+
+      <!-- Comparison boxes -->
+      <div class="tax-comparison" id="comparison" style="display:none;">
+        <div class="tax-box" id="newTaxBox">
+          <h3>New Regime 💰</h3>
+          <p id="newTax"></p>
+        </div>
+        <div class="tax-box" id="oldTaxBox">
+          <h3>Old Regime 🏛</h3>
+          <p id="oldTax"></p>
+        </div>
+      </div>
+
+      <!-- Difference for comparison -->
+      <p class="result" id="diffResult" style="display:none;"></p>
+    </div>
+
+    <div style="text-align: center; margin-top: 15px;">
+      <a href="index.html" class="home-btn">← Back to Home</a>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN: QUICK LINKS -->
+  <aside class="sidebar">
+    <a href="calculator.html" class="quick-box">🧮 Basic Calculator</a>
+    <a href="gst.html" class="quick-box">📊 GST Calculator</a>
+    <a href="emi-calculators.html" class="quick-box">💰 EMI Calculator</a>
+    <a href="fuel.html" class="quick-box">⛽ Fuel Cost Calculator</a>
+	<a href="SWP-Calculator.html" class="quick-box">📈 SWP calculator</a>
+  </aside>
+
+</div>
+<section class="content">
+  <h2>Income Tax Calculator – Old vs New Regime</h2>
+  <p>
+    This Income Tax Calculator helps you estimate your payable tax under the <strong>New Tax Regime</strong> or compare it with the <strong>Old Tax Regime</strong> based on your annual income.
+    It follows the latest income tax slabs applicable in India.
+  </p>
+
+  <h2>How This Income Tax Calculator Works</h2>
+  <p>
+    Enter your annual taxable income and choose the display mode.
+    In <strong>Current Mode</strong>, the calculator shows tax payable under the New Regime.
+    In <strong>Compare Mode</strong>, it displays tax under both regimes along with the difference, helping you identify the better option.
+  </p>
+
+  <h2>Who Should Use This Tax Calculator?</h2>
+  <ul>
+    <li>Salaried employees comparing tax regimes</li>
+    <li>Freelancers and self-employed professionals</li>
+    <li>Students and individuals planning future taxes</li>
+  </ul>
+
+  <h2>Benefits of Comparing Old vs New Tax Regime</h2>
+  <ul>
+    <li>Helps choose the most tax-efficient regime</li>
+    <li>Provides monthly and yearly tax estimates</li>
+    <li>Reduces calculation errors and saves time</li>
+  </ul>
+</section>
+
+
+
+<script>
+function updateModeDescription() {
+  const mode = document.getElementById("displayMode").value;
+  const desc = document.getElementById("modeDesc");
+  const comparisonDiv = document.getElementById("comparison");
+  const diffResult = document.getElementById("diffResult");
+
+  if (mode === "current") {
+    desc.innerText = "📌 Shows your tax under the current New Regime only.";
+    comparisonDiv.style.display = "none";
+    diffResult.style.display = "none";
+  } else {
+    desc.innerText = "🔍 Shows both Old and New Regime taxes side by side and the difference.";
+  }
+}
+
+function calculateTax() {
+  const income = parseFloat(document.getElementById("income").value);
+  const mode = document.getElementById("displayMode").value;
+
+  if (isNaN(income) || income <= 0) {
+    alert("Please enter a valid income.");
+    return;
+  }
+
+  // New Regime Calculation
+  let newTax = 0;
+  if (income <= 300000) newTax = 0;
+  else if (income <= 500000) newTax = (income-300000)*0.05;
+  else if (income <= 750000) newTax = (200000*0.05) + (income-500000)*0.10;
+  else if (income <= 1000000) newTax = (200000*0.05)+(250000*0.10)+(income-750000)*0.15;
+  else if (income <= 1250000) newTax = (200000*0.05)+(250000*0.10)+(250000*0.15)+(income-1000000)*0.20;
+  else if (income <= 1500000) newTax = (200000*0.05)+(250000*0.10)+(250000*0.15)+(250000*0.20)+(income-1250000)*0.25;
+  else newTax = (200000*0.05)+(250000*0.10)+(250000*0.15)+(250000*0.20)+(250000*0.25)+(income-1500000)*0.30;
+
+  // Old Regime Calculation
+  let oldTax = 0;
+  if (income <= 250000) oldTax = 0;
+  else if (income <= 500000) oldTax = (income-250000)*0.05;
+  else if (income <= 1000000) oldTax = (250000*0.05)+(income-500000)*0.20;
+  else oldTax = (250000*0.05)+(500000*0.20)+(income-1000000)*0.30;
+
+  const comparisonDiv = document.getElementById("comparison");
+  const diffResult = document.getElementById("diffResult");
+
+  if (mode === "current") {
+    diffResult.style.display = "block";
+    diffResult.innerText = `Total Tax: ₹ ${newTax.toFixed(2)}\nMonthly Tax: ₹ ${(newTax/12).toFixed(2)}`;
+    comparisonDiv.style.display = "none";
+  } else {
+    comparisonDiv.style.display = "flex";
+    document.getElementById("newTax").innerText = `Total Tax: ₹ ${newTax.toFixed(2)}\nMonthly Tax: ₹ ${(newTax/12).toFixed(2)}`;
+    document.getElementById("oldTax").innerText = `Total Tax: ₹ ${oldTax.toFixed(2)}\nMonthly Tax: ₹ ${(oldTax/12).toFixed(2)}`;
+
+    const diff = Math.abs(newTax - oldTax);
+    const better = (newTax < oldTax) ? "New Regime is better 💰" : "Old Regime is better 🏛";
+    diffResult.style.display = "block";
+    diffResult.innerText = `Difference: ₹ ${diff.toFixed(2)}\n${better}`;
+  }
+}
+</script>
+</div>
+</body>
+</html>

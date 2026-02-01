@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fuel cost calculator to estimate petrol or diesel expenses for your trip based on distance and mileage. Simple and accurate.">
+  <meta name="description" content="Free Fuel Cost Calculator for India to estimate petrol or diesel expenses based on distance, mileage, and fuel price. Fast and accurate.">
+<link rel="canonical" href="https://usedtotools.com/fuel-cost-calculator">
+
+ <title>Fuel Cost Calculator India – Calculate Petrol & Diesel Cost Online | UsedToTools</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <a href="index.html" class="logo">
+    <img src="images/logo.png" alt="UsedToTools Logo">
+  </a>
+  <h1 class="site-title">UsedToTools</h1>
+</header>
+<div class="site-wrapper">
+<h1>Fuel Cost Calculator</h1>
+
+<!-- PAGE LAYOUT: LEFT = CALCULATOR, RIGHT = QUICK LINKS -->
+<div class="page-layout">
+
+  <!-- LEFT COLUMN: CALCULATOR -->
+  <div class="left-column">
+    <div class="calculator">
+      <label>Distance to Travel (km):</label>
+      <input type="number" id="distance" placeholder="100">
+
+      <label>Vehicle Mileage (km/litre):</label>
+      <input type="number" id="mileage" placeholder="15">
+
+      <label>Fuel Price (₹ per litre):</label>
+      <input type="number" id="fuelPrice" placeholder="100">
+
+      <button onclick="calculateFuel()">Calculate Fuel Cost</button>
+
+      <p class="result" id="result"></p>
+
+
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN: QUICK LINKS -->
+  <aside class="sidebar">
+    <a href="calculator.html" class="quick-box">🧮 Basic Calculator</a>
+    <a href="gst.html" class="quick-box">📊 GST Calculator</a>
+    <a href="emi-calculators.html" class="quick-box">💰 EMI Calculator</a>
+    <a href="incometax.html" class="quick-box">📈 Income Tax</a>
+	<a href="SWP-Calculator.html" class="quick-box">📈 SWP calculator</a>
+  </aside>
+
+</div>
+	  <div style="text-align: center; margin-top: 15px;">
+         <a href="index.html" class="home-btn">← Back to Home</a>
+      </div>
+<!-- DESCRIPTION BELOW CALCULATOR -->
+<section class="content">
+  <h2>Fuel Cost Calculator Online</h2>
+
+  <p>
+    This fuel cost calculator helps you accurately estimate your petrol or diesel expenses
+    based on the total distance traveled and your vehicle’s mileage.
+    It is a simple yet powerful tool designed for daily commuters, travelers,
+    delivery drivers, and vehicle owners across India.
+  </p>
+
+  <p>
+    By entering just a few details, you can quickly calculate how much fuel your trip will consume
+    and the total cost involved, making travel planning more efficient and budget-friendly.
+  </p>
+
+  <ul>
+    <li>Calculate fuel expenses for both short and long-distance journeys</li>
+    <li>Supports petrol and diesel cost estimation</li>
+    <li>Helps compare travel costs between different vehicles</li>
+    <li>Useful for trip planning, budgeting, and expense tracking</li>
+    <li>Ideal for students, professionals, and frequent travelers</li>
+    <li>Works instantly without sign-up or downloads</li>
+  </ul>
+
+  <p>
+    This calculator is especially useful when fuel prices fluctuate,
+    allowing you to plan routes, control spending, and make informed decisions
+    before starting your journey.
+  </p>
+
+  <p>
+    Whether you are planning a road trip, daily office commute,
+    or managing transport costs for business purposes,
+    this fuel cost calculator provides quick and reliable results.
+  </p>
+</section>
+
+
+<script>
+function calculateFuel() {
+  let distance = parseFloat(document.getElementById("distance").value);
+  let mileage = parseFloat(document.getElementById("mileage").value);
+  let fuelPrice = parseFloat(document.getElementById("fuelPrice").value);
+
+  if (isNaN(distance) || isNaN(mileage) || isNaN(fuelPrice) || mileage <= 0) {
+    document.getElementById("result").innerText = "Please enter valid numbers (mileage must be > 0).";
+    return;
+  }
+
+  let litresNeeded = distance / mileage;
+  let cost = litresNeeded * fuelPrice;
+
+  document.getElementById("result").innerText =
+    "Fuel Needed: " + litresNeeded.toFixed(2) + " litres\n" +
+    "Estimated Fuel Cost: ₹ " + cost.toFixed(2);
+}
+</script>
+</div>
+</body>
+</html>

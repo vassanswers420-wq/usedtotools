@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Unix Timestamp Converter | Convert Timestamp to Date & Vice Versa</title>
+<meta name="description" content="Convert Unix timestamps to human-readable dates and vice versa. Free online Timestamp Converter for developers, testers, and log analysis.">
+<meta name="keywords" content="timestamp converter, Unix timestamp, convert timestamp to date, convert date to timestamp, online timestamp tool, developer tools, API timestamp">
+
+<!-- Canonical -->
+<link rel="canonical" href="https://usedtotools.com/tools/timestamp-converter.html">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Unix Timestamp Converter – Online Tool">
+<meta property="og:description" content="Quickly convert Unix timestamps to human-readable dates and back. Ideal for developers, testers, and log analysis.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://usedtotools.com/tools/timestamp-converter.html">
+<meta property="og:image" content="https://usedtotools.com/assets/timestamp-tool.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Unix Timestamp Converter – Online Tool">
+<meta name="twitter:description" content="Convert Unix timestamps to readable dates and vice versa instantly. Free tool for developers and testers.">
+<meta name="twitter:image" content="https://usedtotools.com/assets/timestamp-tool.png">
+
+<link rel="stylesheet" href="../style.css">
+
+<!-- Structured Data for Google -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Unix Timestamp Converter",
+  "url": "https://usedtotools.com/tools/timestamp-converter.html",
+  "applicationCategory": "DeveloperTool",
+  "description": "Convert Unix timestamps to human-readable dates and vice versa instantly. Free online Timestamp Converter.",
+  "operatingSystem": "Web",
+  "screenshot": "https://usedtotools.com/assets/timestamp-tool.png",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+
+</head>
+<body>
+<header class="site-header">
+  <a href="../index.html" class="logo">
+    <img src="../images/logo.png" alt="UsedToTools Logo">
+  </a>
+  <h1 class="site-title">UsedToTools</h1>
+</header>
+<h1>Timestamp Converter</h1>
+
+<div class="page-layout">
+
+  <div class="left-column">
+    <main class="main-area">
+
+      <div class="calculator">
+        <p class="title">Unix Timestamp ↔ Human Date</p>
+
+        <label>Enter Timestamp (seconds)</label>
+        <input type="number" id="timestamp" placeholder="e.g. 1675000000">
+
+        <label>OR Enter Date</label>
+        <input type="datetime-local" id="datetime">
+
+        <button onclick="convertTimestamp()">Convert</button>
+
+        <p class="result" id="tsResult"></p>
+      </div>
+
+      <div style="text-align:center; margin-top:15px;">
+        <a href="../index.html" class="home-btn">← Back to Home</a>
+      </div>
+
+    </main>
+  </div>
+
+	<aside class="sidebar">
+	  <a href="JSON-Formatter-Validator.html" class="quick-box">📄 JSON Formatter</a>
+	  <a href="number-base-converter.html" class="quick-box">🔐 Base Converter</a>
+	  <a href="uuid.html" class="quick-box">🆔 UUID Generator</a>
+	  <a href="ip-subnet.html" class="quick-box">🌍 IP Subnet</a>
+	  <a href="hash.html" class="quick-box">#️⃣ Hash Generator</a>
+	  <a href="base64.html" class="quick-box">📜 Base64 Encode/Decode</a>
+	</aside>
+
+</div>
+
+<section class="content">
+  <h2>Timestamp Converter</h2>
+  <p>
+    Convert Unix timestamps to human-readable dates and back. Useful for developers, testers, and anyone working with logs, APIs, or databases.
+  </p>
+  <ul>
+    <li>✔ Convert timestamp → readable date</li>
+    <li>✔ Convert date → timestamp</li>
+    <li>✔ Works with seconds since Unix epoch</li>
+  </ul>
+</section>
+
+<!-- FAQ Schema -->
+<section>
+  <h2>FAQ - Timestamp Converter</h2>
+  <div itemscope itemtype="https://schema.org/FAQPage">
+    <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <h3 itemprop="name">What is a Unix timestamp?</h3>
+      <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">A Unix timestamp is the number of seconds that have elapsed since January 1, 1970 (UTC).</p>
+      </div>
+    </div>
+    <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <h3 itemprop="name">Can I convert timestamp to my local timezone?</h3>
+      <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">Yes, this tool shows the human-readable date in your browser’s local timezone automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function convertTimestamp() {
+  const tsInput = document.getElementById("timestamp").value.trim();
+  const dtInput = document.getElementById("datetime").value.trim();
+  const resultEl = document.getElementById("tsResult");
+
+  if (tsInput) {
+    const ts = parseInt(tsInput) * 1000;
+    if (isNaN(ts)) {
+      resultEl.innerText = "Invalid timestamp!";
+      return;
+    }
+    const date = new Date(ts);
+    resultEl.innerText = "Date: " + date.toLocaleString();
+  } else if (dtInput) {
+    const date = new Date(dtInput);
+    if (isNaN(date)) {
+      resultEl.innerText = "Invalid date!";
+      return;
+    }
+    const timestamp = Math.floor(date.getTime() / 1000);
+    resultEl.innerText = "Timestamp: " + timestamp;
+  } else {
+    resultEl.innerText = "Enter a timestamp or a date!";
+  }
+}
+</script>
+
+</body>
+</html>

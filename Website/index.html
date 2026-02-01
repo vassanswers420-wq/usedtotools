@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UsedToTools – Free Online EMI, GST, Income Tax, BMI, Developer & Cricket Tools</title>
+
+<meta name="description" content="UsedToTools offers free online calculators and utility tools for EMI, GST, income tax, BMI, fuel cost, unit conversion, password strength, coding, hashing, base64, UUID generation, and cricket stats. Fast, accurate, and browser-based.">
+
+<meta name="keywords" content="free online tools, EMI calculator, GST calculator India, income tax calculator online, BMI calculator, fuel cost calculator, unit converter, password strength checker, JSON formatter, base64 encoder, hash generator, UUID generator, IP subnet calculator, cricket stats tool, run rate calculator, typing speed test, developer tools online">
+
+<link rel="canonical" href="https://usedtotools.com/">
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #ededed;
+  margin: 0;
+  padding: 30px;
+}
+/*scale */
+.site-wrapper {
+  transform: scale(0.9);
+  transform-origin: Top center;
+  width: 100%;
+}
+
+h1 { text-align: center; color: #2c3e50; margin-bottom: 6px; }
+.tagline { text-align: center; font-size: 15px; color: #555; font-weight: 500; letter-spacing: 0.3px; margin: 4px 0; }
+.category-desc { text-align: center; color: #555; font-size: 14px; margin-bottom: 20px; }
+
+/* CATEGORY BOX */
+.category-box {
+  padding: 25px;
+  margin-bottom: 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+/* CATEGORY TITLE */
+.category-title {
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+/* SPECIFIC SECTION COLORS */
+.finance-section { background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 70%); border-left: 6px solid #FF5722; }
+.finance-section .category-title { color: #FF5722; }
+
+.developer-section { background: linear-gradient(135deg, #f3e5f5 0%, #ffffff 70%); border-left: 6px solid #9C27B0; }
+.developer-section .category-title { color: #9C27B0; }
+
+.other-section { background: linear-gradient(135deg, #fff3e0 0%, #ffffff 70%); border-left: 6px solid #ef6c00; }
+.other-section .category-title { color: #ef6c00; }
+
+.cricket-section { background: linear-gradient(135deg, #e8f5e9 0%, #ffffff 70%); border-left: 6px solid #2e7d32; }
+.cricket-section .category-title { color: #2e7d32; }
+
+/* GRID */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* TOOL CARD */
+.tool {
+  background: #f9fafb;
+  padding: 18px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 0 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
+}
+
+.tool:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+
+.tool a {
+  font-size: 17px;
+  font-weight: bold;
+  color: #1e88e5;
+  text-decoration: none;
+}
+
+.tool a:hover { text-decoration: underline; }
+
+.tool p { margin-top: 6px; color: #555; font-size: 14px; }
+
+/* EXPAND BUTTON */
+.expand-btn {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  background: #f3f3f3;
+  color: #333;
+  border-top: 1px solid #ddd;
+  border-radius: 0 0 12px 12px;
+  transition: background 0.2s;
+}
+
+.expand-btn:hover { background: #e9e9e9; }
+
+/* FOOTER */
+.connect {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 16px;
+}
+
+.instagram-btn {
+  display: inline-block;
+  padding: 10px 18px;
+  background: #E4405F;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.instagram-btn:hover { background: #C13584; }
+
+/* ----------------- COLLAPSED LOGIC ----------------- */
+.tools-grid .tool.extra { display:none; opacity: 0; }
+
+/* DESKTOP: first 6 visible */
+@media(min-width: 768px) {
+  .tools-grid .tool:nth-child(-n+6) { display:block; opacity:1 !important; }
+}
+
+/* MOBILE: first 3 visible */
+@media(max-width: 767px) {
+  .tools-grid .tool:nth-child(-n+3) { display:block; opacity:1 !important; }
+}
+
+</style>
+
+<!-- JSON-LD Structured Data for Google Rich Results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "UsedToTools",
+  "url": "https://usedtotools.com/",
+  "description": "UsedToTools offers free online calculators and utility tools for EMI, GST, income tax, BMI, fuel cost, unit conversion, password strength, coding, hashing, Base64, UUID generation, and cricket stats. Fast, accurate, and browser-based.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://usedtotools.com/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "mainEntity": [
+    {
+      "@type": "ItemList",
+      "name": "Finance Calculators",
+      "description": "Online calculators for EMI, GST, Income Tax, Fuel Cost, SWP planning.",
+      "itemListElement": [
+        {"@type": "ListItem","position":1,"url":"https://usedtotools.com/calculator.html","name":"Basic & Scientific Calculator"},
+        {"@type": "ListItem","position":2,"url":"https://usedtotools.com/emi-calculators.html","name":"EMI Calculator"},
+        {"@type": "ListItem","position":3,"url":"https://usedtotools.com/gst.html","name":"GST Calculator"},
+        {"@type": "ListItem","position":4,"url":"https://usedtotools.com/fuel.html","name":"Fuel Cost Calculator"},
+        {"@type": "ListItem","position":5,"url":"https://usedtotools.com/incometax.html","name":"Income Tax Calculator"},
+        {"@type": "ListItem","position":6,"url":"https://usedtotools.com/SWP-Calculator.html","name":"SWP Calculator"}
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "Developer & Hashing Tools",
+      "description": "Online developer utilities for JSON formatting, Base64, hashing, UUID, number base conversion, and IP subnet calculation.",
+      "itemListElement": [
+        {"@type": "ListItem","position":1,"url":"https://usedtotools.com/Dtools/timestamp.html","name":"Timestamp Converter"},
+        {"@type": "ListItem","position":2,"url":"https://usedtotools.com/Dtools/JSON-Formatter-Validator.html","name":"JSON Formatter & Validator"},
+        {"@type": "ListItem","position":3,"url":"https://usedtotools.com/Dtools/base64.html","name":"Base64 Encoder / Decoder"},
+        {"@type": "ListItem","position":4,"url":"https://usedtotools.com/Dtools/hash.html","name":"Hash Generator"},
+        {"@type": "ListItem","position":5,"url":"https://usedtotools.com/Dtools/number-base-converter.html","name":"Number Base Converter"},
+        {"@type": "ListItem","position":6,"url":"https://usedtotools.com/Dtools/uuid.html","name":"UUID Generator"},
+        {"@type": "ListItem","position":7,"url":"https://usedtotools.com/Dtools/ip-subnet.html","name":"IP Subnet Calculator"}
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "Other Utility Tools",
+      "description": "Online calculators for password strength, BMI, unit conversion, and typing speed.",
+      "itemListElement": [
+        {"@type": "ListItem","position":1,"url":"https://usedtotools.com/other/password-strength.html","name":"Password Strength Checker"},
+        {"@type": "ListItem","position":2,"url":"https://usedtotools.com/other/bmi.html","name":"BMI Calculator"},
+        {"@type": "ListItem","position":3,"url":"https://usedtotools.com/other/unit-converter.html","name":"Unit Converter"},
+        {"@type": "ListItem","position":4,"url":"https://usedtotools.com/other/typing-speed.html","name":"Typing Speed Test"}
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "Cricket Tools",
+      "description": "Online cricket calculators and stats for player performance, match prediction, and head-to-head comparisons.",
+      "itemListElement": [
+        {"@type": "ListItem","position":1,"url":"https://usedtotools.com/cricket/player-stats.html","name":"Player Stats"},
+        {"@type": "ListItem","position":2,"url":"https://usedtotools.com/cricket/match-prediction.html","name":"Match Prediction"},
+        {"@type": "ListItem","position":3,"url":"https://usedtotools.com/cricket/head-to-head.html","name":"Head to Head"}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <a href="index.html" class="logo">
+    <img src="images/logo.png" alt="UsedToTools Logo">
+  </a>
+  <h1 class="site-title">UsedToTools</h1>
+</header>
+
+ <div class="site-wrapper">
+<h1>UsedToTools – Free Online Calculators & Utility Tools</h1>
+<p class="tagline">Practical Free Online Tools That Just Work</p>
+<p class="tagline">All-in-one calculators for Finance, Developer, Daily Utilities, and Cricket Stats</p>
+
+<!-- 🔢 FINANCE CALCULATORS -->
+<div class="category-box finance-section">
+  <div class="category-title">💼 Finance Calculators</div>
+  <p class="category-desc">
+    Quickly calculate your EMIs, GST, income tax, Fuel cost, and systematic withdrawal plans with our free online finance tools. Perfect for personal finance, loans, and tax planning in India.
+  </p>
+  <div class="tools-grid" id="finance-tools">
+    <div class="tool"> <a href="calculator.html">Basic & Scientific Calculator</a> <p>Perform arithmetic and scientific calculations online instantly</p> </div>
+    <div class="tool"> <a href="emi-calculators.html">EMI Calculator</a> <p>Calculate home, car, and personal loan EMIs easily</p> </div>
+    <div class="tool"> <a href="gst.html">GST Calculator</a> <p>Compute GST instantly for products and services in India</p> </div>
+    <div class="tool"> <a href="fuel.html">Fuel Cost Calculator</a> <p>Estimate fuel expenses for trips and daily commutes</p> </div>
+    <div class="tool"> <a href="incometax.html">Income Tax Calculator</a> <p>Accurate tax calculations for salaried, self-employed & freelancers in India</p> </div>
+    <div class="tool extra"> <a href="SWP-Calculator.html">SWP Calculator</a> <p>Plan systematic withdrawals and see a full schedule</p> </div>
+  </div>
+  <button class="expand-btn" aria-expanded="false" aria-controls="finance-tools" onclick="toggleTools(this)">Expand ▾</button>
+</div>
+
+<!-- 👨🏻‍💻 DEVELOPER TOOLS -->
+<div class="category-box developer-section">
+  <div class="category-title">👨🏻‍💻 Developer & Hashing Tools</div>
+  <p class="category-desc">
+    Free online tools for developers including JSON formatting, Base64 encoding/decoding, hashing, UUID generation, number base conversion, and IP subnet calculation. Perfect for coding, networking, and debugging tasks.
+  </p>
+  <div class="tools-grid" id="developer-tools">
+    <div class="tool"> <a href="Dtools/timestamp.html">Timestamp Converter</a> <p>Convert UNIX timestamps to readable date & time formats</p> </div>
+    <div class="tool"> <a href="Dtools/JSON-Formatter-Validator.html">JSON Formatter & Validator</a> <p>Format, validate, and beautify JSON data online</p> </div>
+    <div class="tool"> <a href="Dtools/base64.html">Base64 Encoder / Decoder</a> <p>Encode or decode text and files to/from Base64 easily</p> </div>
+    <div class="tool"> <a href="Dtools/hash.html">Hash Generator</a> <p>Generate MD5, SHA1, SHA256, and other hashes instantly</p> </div>
+    <div class="tool"> <a href="Dtools/number-base-converter.html">Number Base Converter</a> <p>Convert between binary, octal, decimal, and hexadecimal</p> </div>
+    <div class="tool"> <a href="Dtools/uuid.html">UUID Generator</a> <p>Create unique UUIDs for databases and applications</p> </div>
+    <div class="tool extra"> <a href="Dtools/ip-subnet.html">IP Subnet Calculator</a> <p>Calculate subnet masks, network ranges, and CIDR easily</p> </div>
+  </div>
+  <button class="expand-btn" aria-expanded="false" aria-controls="developer-tools" onclick="toggleTools(this)">Expand ▾</button>
+</div>
+
+<!-- 🧩 OTHER CALCULATORS -->
+<div class="category-box other-section">
+  <div class="category-title">🧩 Other Calculators & Utility Tools</div>
+  <p class="category-desc">
+    Useful online tools for daily life including password strength checker, BMI calculator, unit conversion, and typing speed tests. All free, fast, and accessible on any device.
+  </p>
+  <div class="tools-grid" id="other-tools">
+    <div class="tool"> <a href="other/password-strength.html">Password Strength Checker</a> <p>Check and improve the security of your passwords online</p> </div>
+    <div class="tool"> <a href="other/bmi.html">BMI Calculator</a> <p>Calculate your Body Mass Index and monitor health</p> </div>
+    <div class="tool"> <a href="other/unit-converter.html">Unit Converter</a> <p>Convert length, weight, volume, and more easily</p> </div>
+    <div class="tool extra"> <a href="other/typing-speed.html">Typing Speed Test</a> <p>Measure typing speed and accuracy online</p> </div>
+  </div>
+  <button class="expand-btn" aria-expanded="false" aria-controls="other-tools" onclick="toggleTools(this)">Expand ▾</button>
+</div>
+
+<!-- 🏏 CRICKET TOOLS -->
+<div class="category-box cricket-section">
+  <div class="category-title">🏏 Cricket Tools & Stats Calculators</div>
+  <p class="category-desc">
+    Online cricket calculators for player stats, match prediction, and head-to-head comparisons. Perfect for fans, analysts, and fantasy cricket players.
+  </p>
+  <div class="tools-grid">
+    <div class="tool"> <a href="cricket/player-stats.html">Player Stats</a> <p>View detailed cricket player statistics and performance</p> </div>
+    <div class="tool"> <a href="cricket/match-prediction.html">Match Prediction</a> <p>Predict cricket match outcomes based on stats and form</p> </div>
+    <div class="tool"> <a href="cricket/head-to-head.html">Head to Head</a> <p>Compare player or team performance head-to-head</p> </div>
+  </div>
+</div>
+
+<div class="connect">
+<p>Built and maintained by the creator of UsedToTools</p>
+<a href="mailto:vassanswers420@gmail.com" class="instagram-btn">📧 Email Me</a>
+</div>
+
+<script>
+function toggleTools(btn){
+  const grid = document.getElementById(btn.getAttribute('aria-controls'));
+  const extras = grid.querySelectorAll('.tool.extra');
+
+  // If no extra tools exist, hide button
+  if(extras.length === 0){
+    btn.style.display = 'none';
+    return;
+  }
+
+  const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+  
+  extras.forEach(tool => {
+    if(isExpanded){
+      tool.style.opacity = 0;
+      setTimeout(()=> tool.style.display='none', 300);
+    } else {
+      tool.style.display='block';
+      setTimeout(()=> tool.style.opacity=1, 10);
+    }
+  });
+
+  btn.innerText = isExpanded ? "Expand ▾" : "Collapse ▴";
+  btn.setAttribute('aria-expanded', !isExpanded);
+}
+
+// Function to hide expand buttons if nothing extra to show
+function updateExpandButtons(){
+  const buttons = document.querySelectorAll('.expand-btn');
+
+  buttons.forEach(btn => {
+    const grid = document.getElementById(btn.getAttribute('aria-controls'));
+    const tools = grid.querySelectorAll('.tool');
+    const windowWidth = window.innerWidth;
+    const defaultVisible = windowWidth >= 768 ? 6 : 3; // Desktop:6, Mobile:3
+
+    if(tools.length <= defaultVisible){
+      btn.style.display = 'none';
+    } else {
+      btn.style.display = 'block';
+    }
+  });
+}
+
+// Run on page load
+document.addEventListener("DOMContentLoaded", updateExpandButtons);
+
+// Update on window resize
+window.addEventListener("resize", updateExpandButtons);
+</script>
+
+</div>
+</body>
+</html>
