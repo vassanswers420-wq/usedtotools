@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UUID Generator | Online v4 UUID Tool</title>
+<meta name="description" content="Generate unique UUIDs (v4) instantly online. Free UUID generator for developers, API keys, session tokens, databases, and distributed systems.">
+<meta name="keywords" content="UUID generator, v4 UUID, generate UUID online, API key generator, unique identifier, random UUID">
+
+<!-- Canonical -->
+<link rel="canonical" href="https://usedtotools.com/tools/uuid.html">
+
+<!-- Open Graph -->
+<meta property="og:title" content="UUID Generator – Online Tool">
+<meta property="og:description" content="Quickly generate unique v4 UUIDs for API keys, databases, session tokens, and more. Free and instant UUID generator.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://usedtotools.com/tools/uuid.html">
+<meta property="og:image" content="https://usedtotools.com/assets/uuid-tool.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UUID Generator – Online Tool">
+<meta name="twitter:description" content="Generate unique v4 UUIDs instantly online. Perfect for developers and distributed systems.">
+<meta name="twitter:image" content="https://usedtotools.com/assets/uuid-tool.png">
+
+<link rel="stylesheet" href="../style.css">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "UUID Generator",
+  "url": "https://usedtotools.com/tools/uuid.html",
+  "applicationCategory": "DeveloperTool",
+  "description": "Generate unique v4 UUIDs online for API keys, session tokens, and databases instantly.",
+  "operatingSystem": "Web",
+  "screenshot": "https://usedtotools.com/assets/uuid-tool.png",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <a href="../index.html" class="logo">
+    <img src="../images/logo.png" alt="UsedToTools Logo">
+  </a>
+  <h1 class="site-title">UsedToTools</h1>
+</header>
+<h1>UUID Generator</h1>
+
+<div class="page-layout">
+
+  <div class="left-column">
+    <main class="main-area">
+
+      <div class="calculator">
+        <p class="title">Generate UUID (v4)</p>
+
+        <label>Generated UUID</label>
+        <input type="text" id="uuidOutput" readonly placeholder="Click generate">
+
+        <button onclick="generateUUID()">Generate UUID</button>
+        <button onclick="copyUUID()" style="background:#444;margin-top:10px;">
+          Copy to Clipboard
+        </button>
+
+        <div class="result" id="copyMsg"></div>
+      </div>
+
+      <div style="text-align:center; margin-top:15px;">
+        <a href="../index.html" class="home-btn">← Back to Home</a>
+      </div>
+
+    </main>
+  </div>
+
+	<aside class="sidebar">
+	  <a href="timestamp-converter.html" class="quick-box">⏱ Timestamp Converter</a>
+	  <a href="JSON-Formatter-Validator.html" class="quick-box">📄 JSON Formatter</a>
+	  <a href="number-base-converter.html" class="quick-box">🔐 Base Converter</a>
+	  <a href="ip-subnet.html" class="quick-box">🌍 IP Subnet</a>
+	  <a href="hash.html" class="quick-box">#️⃣ Hash Generator</a>
+	  <a href="base64.html" class="quick-box">📜 Base64 Encode/Decode</a>
+	</aside>
+
+</div>
+
+<section class="content">
+  <h2>What is a UUID?</h2>
+  <p>
+    A UUID (Universally Unique Identifier) is a 128-bit value that uniquely identifies data across systems, databases, and applications.
+    UUIDs are ideal for API keys, session tokens, database records, and distributed systems because they guarantee global uniqueness.
+  </p>
+
+  <ul>
+    <li>✔ Widely used in databases, APIs, and distributed systems</li>
+    <li>✔ Extremely low risk of collisions</li>
+    <li>✔ Generated locally — no external server required</li>
+    <li>✔ Useful for tracking, authentication, and data consistency</li>
+  </ul>
+</section>
+
+<!-- FAQ Structured Data -->
+<section>
+  <h2>FAQ - UUID Generator</h2>
+  <div itemscope itemtype="https://schema.org/FAQPage">
+    <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <h3 itemprop="name">What is a UUID v4?</h3>
+      <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">UUID v4 is a randomly generated UUID. It uses random numbers to ensure uniqueness across systems.</p>
+      </div>
+    </div>
+    <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <h3 itemprop="name">Can I use this UUID generator for API keys?</h3>
+      <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">Yes, the generated UUIDs are globally unique and safe for use as API keys, session identifiers, and database records.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function generateUUID() {
+  const uuid = crypto.randomUUID();
+  document.getElementById("uuidOutput").value = uuid;
+  document.getElementById("copyMsg").textContent = "";
+}
+
+function copyUUID() {
+  const field = document.getElementById("uuidOutput");
+  if (!field.value) return;
+
+  field.select();
+  field.setSelectionRange(0, 99999);
+  navigator.clipboard.writeText(field.value);
+
+  document.getElementById("copyMsg").textContent = "Copied to clipboard ✔";
+}
+</script>
+
+</body>
+</html>

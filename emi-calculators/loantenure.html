@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Loan Tenure Calculator for India by UsedToTools. Calculate how long it will take to repay your loan based on EMI, loan amount, and interest rate. Mobile-friendly and fast.">
+  <meta name="keywords" content="Loan tenure calculator, EMI planning, loan repayment duration, India EMI calculator, UsedToTools">
+
+  <title>Loan Tenure Calculator – Calculate Loan Duration | UsedToTools</title>
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="Loan Tenure Calculator – Calculate Loan Duration | UsedToTools">
+  <meta property="og:description" content="Determine how long it will take to repay your loan based on EMI, loan amount, and interest rate. Free, fast, and mobile-friendly online calculator.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://usedtotools.com/loantenure.html">
+  <meta property="og:image" content="https://usedtotools.com/images/loan-tenure-calculator.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Loan Tenure Calculator – Calculate Loan Duration | UsedToTools">
+  <meta name="twitter:description" content="Determine your loan repayment duration with this free online calculator. Mobile-friendly, accurate, and easy to use.">
+  <meta name="twitter:image" content="https://usedtotools.com/images/loan-tenure-calculator.png">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Loan Tenure Calculator",
+    "url": "https://usedtotools.com/loantenure.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "description": "Calculate the loan repayment duration based on EMI, loan amount, and interest rate. Plan EMIs effectively and compare loans.",
+    "screenshot": "https://usedtotools.com/images/loan-tenure-calculator.png"
+  }
+  </script>
+</head>
+
+<body>
+<header class="site-header">
+  <a href="../index.html" class="logo">
+    <img src="../images/logo.png" alt="UsedToTools Logo">
+  </a>
+  <h1 class="site-title">UsedToTools</h1>
+</header>
+<h1>Loan Tenure Calculator</h1>
+
+<!-- PAGE LAYOUT -->
+<div class="page-layout">
+
+  <!-- LEFT COLUMN: CALCULATOR -->
+  <div class="left-column">
+    <div class="calculator">
+      <div class="title">Calculate Loan Tenure Instantly</div>
+
+      <label for="loanAmount">Loan Amount (₹):</label>
+      <input type="number" id="loanAmount" placeholder="500000">
+
+      <label for="monthlyEMI">Monthly EMI (₹):</label>
+      <input type="number" id="monthlyEMI" placeholder="15000">
+
+      <label for="interestRate">Interest Rate (% per annum):</label>
+      <input type="number" id="interestRate" placeholder="12">
+
+      <button onclick="calculateLoanTenure()">Calculate Tenure</button>
+
+      <p class="result" id="tenureResult"></p>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN: QUICK LINKS -->
+  <aside class="sidebar">
+    <a href="standard-emi.html" class="quick-box">💵 Standard EMI Calculator</a>
+    <a href="interest-rate.html" class="quick-box">📈 Interest Rate Calculator</a>
+    <a href="car-loan.html" class="quick-box">🚗 Car Loan EMI Calculator</a>
+    <a href="loan-amount.html" class="quick-box">💰 Loan Amount Calculator</a>
+    <a href="home-loan-emi.html" class="quick-box">🏠 Home Loan EMI Calculator</a>
+    <a href="personalloan.html" class="quick-box">👤 Personal Loan EMI Calculator</a>
+  </aside>
+
+</div>
+
+<!-- HOME BUTTON -->
+<div style="text-align: center; margin-top: 15px;">
+  <a href="../index.html" class="home-btn">← Back to Home</a>
+</div>
+
+<!-- DESCRIPTION BELOW CALCULATOR -->
+<section class="content">
+  <h2>Loan Tenure Calculator – Know How Long It Will Take to Repay</h2>
+
+  <p>
+    The <strong>Loan Tenure Calculator</strong> by <strong>UsedToTools</strong> helps you determine the repayment duration of a loan
+    based on your monthly EMI, loan amount, and interest rate. Plan your EMIs effectively and choose the right loan amount.
+  </p>
+
+  <ul>
+    <li>Calculate <strong>loan tenure</strong> in months or years</li>
+    <li>See <strong>total interest payable</strong> over the tenure</li>
+    <li>Plan EMIs and optimize loan repayment</li>
+    <li>Fast, mobile-friendly, and easy to use</li>
+    <li>No registration required</li>
+  </ul>
+
+  <p>Enter your loan amount, EMI, and interest rate above to instantly calculate your loan repayment duration.</p>
+</section>
+
+<!-- TENURE CALCULATION SCRIPT -->
+<script>
+function calculateLoanTenure() {
+  let P = parseFloat(document.getElementById("loanAmount").value);
+  let EMI = parseFloat(document.getElementById("monthlyEMI").value);
+  let R = parseFloat(document.getElementById("interestRate").value);
+
+  if (isNaN(P) || isNaN(EMI) || isNaN(R) || P <= 0 || EMI <= 0 || R <= 0) {
+    document.getElementById("tenureResult").innerText = "Please enter valid positive numbers.";
+    return;
+  }
+
+  let monthlyRate = R / 12 / 100;
+
+  let months = Math.log(EMI / (EMI - P * monthlyRate)) / Math.log(1 + monthlyRate);
+  let years = Math.floor(months / 12);
+  let remainingMonths = Math.ceil(months % 12);
+
+  let totalPayment = EMI * months;
+  let totalInterest = totalPayment - P;
+
+  document.getElementById("tenureResult").innerText =
+    `Loan Tenure: ${years} years and ${remainingMonths} months\n` +
+    `Total Interest Payable: ₹ ${totalInterest.toFixed(2)}\n` +
+    `Total Payment: ₹ ${totalPayment.toFixed(2)}`;
+}
+</script>
+
+</body>
+</html>

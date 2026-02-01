@@ -1,0 +1,294 @@
+/* GLOBAL STYLES */
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+/* HEADER & LOGO */
+site-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f0f4f8; /* or your preferred header color */
+}
+
+site-header .logo img {
+  height: 50px; /* adjust size */
+  margin-right: 15px;
+}
+
+site-header .site-title {
+  font-size: 1.5rem;
+  color: #0bb884; /* match your branding */
+  margin: 0;
+}
+body {
+  margin: 0;
+  padding: 20px;
+  background: #f0f4f8;  /* soft light blue-gray background */
+  color: #222;
+}
+/*scale */
+site-wrapper {
+  transform: scale(0.9);
+  transform-origin: Top center;
+  width: 100%;
+}
+h1 {
+  margin-bottom: 20px;
+  color: #0bb884; /* heading color */
+}
+
+/* PAGE LAYOUT */.emi-review {
+  font-size: 12px;
+  color: #444;
+  text-align: center;
+  margin-top: 5px;
+  line-height: 1.3;
+}
+
+.page-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  
+}
+/* AI HUB Section */
+.ai-section { 
+  background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 70%); 
+  border-left: 6px solid #00bcd4; 
+}
+.ai-section .category-title { color: #00bcd4; }
+
+
+/* LEFT COLUMN: CALCULATOR + DESCRIPTION */
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1 1 600px;
+}
+/* ===============================
+   EMI Calculator List Grid
+=============================== */
+.emi-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 15px; /* space between buttons */
+}
+
+.emi-list li {
+  margin: 0; /* no extra margin needed, gap handles spacing */
+}
+
+/* Make EMI buttons uniform size and centered */
+.emi-list li a.home-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 80px;          /* fixed height for all buttons */
+  width: 100%;           /* fills grid column */
+  padding: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 8px;
+  background: #0bb884;    /* main green color */
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.emi-review {
+  font-size: 12px;
+  color: #444;
+  text-align: center;
+  margin-top: 5px;
+  line-height: 1.3;
+}
+
+/* Hover effect */
+.emi-list li a.home-btn:hover {
+  background: #099e71; /* darker green */
+  transform: translateY(-3px);
+}
+
+/* BACK TO HOME button styling (reuse home-btn) */
+.back-home a.home-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  margin-top: 20px;
+  text-align: center;
+  width: auto;
+}
+
+/* Responsive grid: 2 columns for tablets, 1 column for mobile */
+@media (max-width: 900px) {
+  .emi-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .emi-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* MAIN AREA wraps calculator + description */
+.main-area {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* CALCULATOR STYLES */
+.calculator {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-top: 5px solid #0bb884; /* colored top border for emphasis */
+}
+
+.calculator .title {
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #0bb884;
+}
+
+.calculator label {
+  display: block;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.calculator input,
+.calculator select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: border-color 0.2s;
+}
+
+.calculator input:focus,
+.calculator select:focus {
+  border-color: #0bb884;
+  outline: none;
+}
+
+.calculator button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: #0bb884;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.calculator button:hover {
+  background: #099e71;
+}
+
+.result {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #0b7a5a;
+}
+
+/* DESCRIPTION STYLES */
+.content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  border-left: 5px solid #0bb884; /* left accent */
+}
+
+.content h2 {
+  color: #0bb884;
+}
+
+.content h3 {
+  color: #222;
+}
+
+.content ul li::marker {
+  color: #0bb884; /* green bullets */
+}
+.home-btn {
+  display: inline-block;          /* allows width to fit content */
+  padding: 10px 20px;             /* smaller padding makes box tighter */
+  background: #0bb884;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.25s ease, transform 0.2s ease;
+  text-align: center;
+}
+
+.home-btn:hover {
+  background: #099e71;
+  transform: translateY(-2px);
+}
+
+/* RIGHT COLUMN: QUICK LINKS */
+.sidebar {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.quick-box {
+  background: #0bb884;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.quick-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+  background: #099e71;
+}
+
+/* RESPONSIVE STYLES */
+@media (max-width: 900px) {
+  .page-layout {
+    flex-direction: column;
+  }
+
+  .left-column, .sidebar {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .quick-box {
+    flex: 1 1 45%;
+    text-align: center;
+  }
+}
+
