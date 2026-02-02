@@ -1,121 +1,145 @@
-/* GLOBAL STYLES */
+/* =========================
+   GLOBAL STYLES
+========================= */
 * {
   box-sizing: border-box;
   font-family: Arial, sans-serif;
 }
-/* HEADER & LOGO */
-site-header {
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #f0f4f8; /* or your preferred header color */
-}
 
-site-header .logo img {
-  height: 50px; /* adjust size */
-  margin-right: 15px;
-}
-
-site-header .site-title {
-  font-size: 1.5rem;
-  color: #0bb884; /* match your branding */
-  margin: 0;
-}
 body {
   margin: 0;
   padding: 20px;
   background: #f0f4f8;  /* soft light blue-gray background */
   color: #222;
 }
-/*scale */
-site-wrapper {
+/* main.css or your global stylesheet */
+:root {
+  --bg-color: #f0f4f8;       /* default: day background */
+  --text-color: #222;        /* default text */
+  --primary-color: #0bb884;  /* green for buttons/headings */
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* headings, buttons, sections use variables too */
+h1, h2, h3, .calculator .title, .content h2 {
+  color: var(--primary-color);
+}
+
+.home-btn, .quick-box, .calculator button {
+  background: var(--primary-color);
+}
+
+/* optional: button hover darker */
+.home-btn:hover, .quick-box:hover, .calculator button:hover {
+  background: #099e71; /* or use a darker variant variable if you want */
+}
+
+/* =========================
+   HEADER & LOGO
+========================= */
+.site-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f0f4f8; /* header color */
+}
+
+.site-header .logo img {
+  height: 50px;
+  margin-right: 15px;
+}
+
+.site-header .site-title {
+  font-size: 1.5rem;
+  color: #0bb884; /* match branding */
+  margin: 0;
+}
+
+/* =========================
+   SITE WRAPPER
+========================= */
+.site-wrapper {
   transform: scale(0.9);
-  transform-origin: Top center;
+  transform-origin: top center;
   width: 100%;
 }
+
+/* =========================
+   HEADINGS
+========================= */
 h1 {
   margin-bottom: 20px;
-  color: #0bb884; /* heading color */
+  color: #0bb884; /* main green heading color */
 }
 
-/* PAGE LAYOUT */.emi-review {
-  font-size: 12px;
-  color: #444;
-  text-align: center;
-  margin-top: 5px;
-  line-height: 1.3;
-}
-
+/* =========================
+   PAGE LAYOUT
+========================= */
 .page-layout {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
-  
 }
-/* AI HUB Section */
-.ai-section { 
-  background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 70%); 
-  border-left: 6px solid #00bcd4; 
-}
-.ai-section .category-title { color: #00bcd4; }
 
-
-/* LEFT COLUMN: CALCULATOR + DESCRIPTION */
 .left-column {
   display: flex;
   flex-direction: column;
   gap: 20px;
   flex: 1 1 600px;
 }
-/* ===============================
-   EMI Calculator List Grid
-=============================== */
+
+.main-area {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* =========================
+   EMI CALCULATOR GRID
+========================= */
 .emi-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columns */
-  gap: 15px; /* space between buttons */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
 }
 
-.emi-list li {
-  margin: 0; /* no extra margin needed, gap handles spacing */
-}
-
-/* Make EMI buttons uniform size and centered */
 .emi-list li a.home-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  height: 80px;          /* fixed height for all buttons */
-  width: 100%;           /* fills grid column */
+  height: 80px;
+  width: 100%;
   padding: 10px;
   font-size: 14px;
   font-weight: bold;
   border-radius: 8px;
-  background: #0bb884;    /* main green color */
+  background: #0bb884;    /* main green */
   color: #fff;
   text-decoration: none;
   box-shadow: 0 4px 10px rgba(0,0,0,0.12);
   transition: transform 0.2s ease, background 0.2s ease;
 }
-.emi-review {
-  font-size: 12px;
-  color: #444;
-  text-align: center;
-  margin-top: 5px;
-  line-height: 1.3;
-}
 
-/* Hover effect */
 .emi-list li a.home-btn:hover {
-  background: #099e71; /* darker green */
+  background: #099e71; /* darker green hover */
   transform: translateY(-3px);
 }
 
-/* BACK TO HOME button styling (reuse home-btn) */
 .back-home a.home-btn {
   display: inline-block;
   padding: 12px 20px;
@@ -124,7 +148,7 @@ h1 {
   width: auto;
 }
 
-/* Responsive grid: 2 columns for tablets, 1 column for mobile */
+/* Responsive grid: tablets 2 columns, mobile 1 column */
 @media (max-width: 900px) {
   .emi-list {
     grid-template-columns: repeat(2, 1fr);
@@ -137,20 +161,15 @@ h1 {
   }
 }
 
-/* MAIN AREA wraps calculator + description */
-.main-area {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* CALCULATOR STYLES */
+/* =========================
+   CALCULATOR BOX
+========================= */
 .calculator {
   background: #fff;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  border-top: 5px solid #0bb884; /* colored top border for emphasis */
+  border-top: 5px solid #0bb884;
 }
 
 .calculator .title {
@@ -205,13 +224,15 @@ h1 {
   color: #0b7a5a;
 }
 
-/* DESCRIPTION STYLES */
+/* =========================
+   DESCRIPTION CONTENT
+========================= */
 .content {
   background: #fff;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-  border-left: 5px solid #0bb884; /* left accent */
+  border-left: 5px solid #0bb884;
 }
 
 .content h2 {
@@ -223,11 +244,15 @@ h1 {
 }
 
 .content ul li::marker {
-  color: #0bb884; /* green bullets */
+  color: #0bb884;
 }
+
+/* =========================
+   BUTTONS
+========================= */
 .home-btn {
-  display: inline-block;          /* allows width to fit content */
-  padding: 10px 20px;             /* smaller padding makes box tighter */
+  display: inline-block;
+  padding: 10px 20px;
   background: #0bb884;
   color: #fff;
   font-weight: bold;
@@ -240,14 +265,6 @@ h1 {
 .home-btn:hover {
   background: #099e71;
   transform: translateY(-2px);
-}
-
-/* RIGHT COLUMN: QUICK LINKS */
-.sidebar {
-  width: 220px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
 }
 
 .quick-box {
@@ -268,7 +285,23 @@ h1 {
   background: #099e71;
 }
 
-/* RESPONSIVE STYLES */
+/* =========================
+   SECTIONS
+========================= */
+.ai-section { 
+  background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 70%);
+  border-left: 6px solid #00bcd4;
+}
+.ai-section .category-title { color: #00bcd4; }
+
+/* Lifestyle & Health Tools header green */
+.other-section .category-title {
+  color: #2e7d32;  /* green header for Lifestyle section */
+}
+
+/* =========================
+   RESPONSIVE PAGE LAYOUT
+========================= */
 @media (max-width: 900px) {
   .page-layout {
     flex-direction: column;
@@ -291,4 +324,3 @@ h1 {
     text-align: center;
   }
 }
-

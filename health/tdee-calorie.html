@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TDEE & Calorie Target Calculator – Free Online Health Tool | UsedToTools</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="TDEE & Calorie Target Calculator for India. Calculate your Total Daily Energy Expenditure, recommended calories for weight loss, maintenance, or muscle gain. Free, online, mobile-friendly.">
+<meta name="keywords" content="TDEE calculator, calorie target calculator, daily calorie needs, health calculator, weight loss calculator, muscle gain calculator, UsedToTools">
+
+<!-- Open Graph / Social Sharing -->
+<meta property="og:title" content="TDEE & Calorie Target Calculator – Free Online Health Tool | UsedToTools">
+<meta property="og:description" content="Calculate your Total Daily Energy Expenditure and daily calorie needs for weight loss, maintenance, or muscle gain. Free and mobile-friendly.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://usedtotools.com/health/tdee-calorie.html">
+<meta property="og:image" content="https://usedtotools.com/images/tdee-calculator.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TDEE & Calorie Target Calculator – Free Online Health Tool | UsedToTools">
+<meta name="twitter:description" content="Calculate your daily calorie needs and Total Daily Energy Expenditure for weight loss, maintenance, or muscle gain. Free online tool.">
+<meta name="twitter:image" content="https://usedtotools.com/images/tdee-calculator.png">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "TDEE & Calorie Target Calculator",
+  "url": "https://usedtotools.com/health/tdee-calorie.html",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Web",
+  "description": "Calculate your Total Daily Energy Expenditure (TDEE) and daily calorie targets for weight loss, maintenance, or muscle gain with this free online tool.",
+  "screenshot": "https://usedtotools.com/images/tdee-calculator.png"
+}
+</script>
+
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="site-header">
+  <a href="../index.html" class="logo">
+    <img src="../images/logo.png" alt="UsedToTools Logo">
+  </a>
+  <h1 class="site-title">UsedToTools</h1>
+</header>
+ <div class="site-wrapper">
+<h1>TDEE & Calorie Target Calculator</h1>
+
+<div class="page-layout">
+
+  <!-- LEFT COLUMN -->
+  <div class="left-column">
+    <main class="main-area">
+      <div class="calculator">
+        <p class="title">Calculate Your TDEE & Daily Calorie Needs</p>
+
+        <label for="gender">Gender</label>
+        <select id="gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+
+        <label for="age">Age (years)</label>
+        <input type="number" id="age" placeholder="25">
+
+        <label for="height">Height (cm)</label>
+        <input type="number" id="height" placeholder="170">
+
+        <label for="weight">Weight (kg)</label>
+        <input type="number" id="weight" placeholder="65">
+
+        <label for="activity">Activity Level</label>
+        <select id="activity">
+          <option value="1.2">Sedentary (little or no exercise)</option>
+          <option value="1.375">Lightly active (light exercise 1–3 days/week)</option>
+          <option value="1.55">Moderately active (moderate exercise 3–5 days/week)</option>
+          <option value="1.725">Very active (hard exercise 6–7 days/week)</option>
+          <option value="1.9">Extra active (very hard exercise or physical job)</option>
+        </select>
+
+        <label for="goal">Goal</label>
+        <select id="goal">
+          <option value="maintain">Maintain Weight</option>
+          <option value="loss">Fat Loss</option>
+          <option value="gain">Muscle Gain</option>
+        </select>
+
+        <button onclick="calculateTDEE()">Calculate</button>
+
+        <p id="result" class="result"></p>
+      </div>
+
+      <div style="text-align:center; margin-top:15px;">
+        <a href="../index.html" class="home-btn">← Back to Home</a>
+      </div>
+    </main>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <aside class="sidebar">
+    <a href="body-fat.html" class="quick-box">🏋️ Body Fat % Calculator</a>
+	<a href="bmi.html" class="quick-box">📊 BMI calculator</a>
+  </aside>
+</div>
+
+<section class="content">
+  <h2>TDEE & Daily Calorie Target Calculator – Plan Your Nutrition</h2>
+  <p>
+    This <strong>TDEE Calculator</strong> helps you determine your Total Daily Energy Expenditure based on your age, gender, height, weight, and activity level. 
+    By combining this with your goal (weight loss, maintenance, or muscle gain), you can calculate your recommended daily calorie intake.
+  </p>
+  <p>
+    Use this free online tool to plan your nutrition, monitor your diet, and achieve your fitness goals efficiently. Mobile-friendly and easy to use.
+  </p>
+</section>
+
+<script>
+const ageInput = document.getElementById("age");
+const heightInput = document.getElementById("height");
+const weightInput = document.getElementById("weight");
+const genderInput = document.getElementById("gender");
+const activityInput = document.getElementById("activity");
+const goalInput = document.getElementById("goal");
+const result = document.getElementById("result");
+
+function calculateTDEE() {
+  const age = +ageInput.value;
+  const height = +heightInput.value;
+  const weight = +weightInput.value;
+  const gender = genderInput.value;
+  const activity = +activityInput.value;
+  const goal = goalInput.value;
+
+  if (!age || !height || !weight) {
+    result.innerText = "Please enter all values.";
+    return;
+  }
+
+  // BMR calculation
+  let bmr;
+  if (gender === "male") {
+    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+  } else {
+    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+  }
+
+  // TDEE = BMR * activity factor
+  let tdee = bmr * activity;
+
+  // Adjust for goal
+  let calories;
+  if (goal === "maintain") {
+    calories = tdee;
+  } else if (goal === "loss") {
+    calories = tdee - 500; // basic fat loss deficit
+  } else {
+    calories = tdee + 500; // basic muscle gain surplus
+  }
+
+  result.innerText = `BMR: ${Math.round(bmr)} kcal/day | TDEE: ${Math.round(tdee)} kcal/day | Recommended Calories: ${Math.round(calories)} kcal/day`;
+}
+</script>
+</div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BMI & BMR Calculator – Free Online Health Tool | UsedToTools</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="BMI & BMR Calculator for India. Calculate your Body Mass Index and Basal Metabolic Rate to assess health, daily calorie needs, and fitness planning. Free, online, mobile-friendly.">
+<meta name="keywords" content="BMI calculator, BMR calculator, body mass index, basal metabolic rate, health calculator, calorie needs, fitness calculator, UsedToTools">
+
+<!-- Open Graph / Social Sharing -->
+<meta property="og:title" content="BMI & BMR Calculator – Free Online Health Tool | UsedToTools">
+<meta property="og:description" content="Calculate your BMI and BMR to understand your body health and daily calorie requirements. Free, fast, and mobile-friendly.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://usedtotools.com/bmi-bmr.html">
+<meta property="og:image" content="https://usedtotools.com/images/bmi-bmr-calculator.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BMI & BMR Calculator – Free Online Health Tool | UsedToTools">
+<meta name="twitter:description" content="Calculate your BMI and BMR to understand your health and calorie needs. Free, fast, and mobile-friendly tool.">
+<meta name="twitter:image" content="https://usedtotools.com/images/bmi-bmr-calculator.png">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "BMI & BMR Calculator",
+  "url": "https://usedtotools.com/bmi-bmr.html",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Web",
+  "description": "Calculate your Body Mass Index (BMI) and Basal Metabolic Rate (BMR) to assess health, daily calorie requirements, and plan fitness goals.",
+  "screenshot": "https://usedtotools.com/images/bmi-bmr-calculator.png"
+}
+</script>
+
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a href="../index.html" class="logo">
+    <img src="../images/logo.png" alt="UsedToTools Logo">
+  </a>
+  <h1 class="site-title">UsedToTools</h1>
+</header>
+ <div class="site-wrapper">
+<h1>BMI & BMR Calculator</h1>
+
+<div class="page-layout">
+
+  <!-- LEFT COLUMN -->
+  <div class="left-column">
+    <main class="main-area">
+      <div class="calculator">
+        <p class="title">Calculate Your BMI & BMR</p>
+
+        <label for="gender">Gender</label>
+        <select id="gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+
+        <label for="age">Age (years)</label>
+        <input type="number" id="age" placeholder="25">
+
+        <label for="height">Height (cm)</label>
+        <input type="number" id="height" placeholder="170">
+
+        <label for="weight">Weight (kg)</label>
+        <input type="number" id="weight" placeholder="65">
+
+        <button onclick="calculate()">Calculate</button>
+
+        <p id="result" class="result"></p>
+      </div>
+
+      <div style="text-align:center; margin-top:15px;">
+        <a href="../index.html" class="home-btn">← Back to Home</a>
+      </div>
+    </main>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <aside class="sidebar">
+	<a href="body-fat.html" class="quick-box">🏋️ Body Fat % Calculator</a>
+	<a href="tdee-calorie.html" class="quick-box">🧮 TDEE & Calorie Calculator</a>
+  </aside>
+</div>
+
+<section class="content">
+  <h2>BMI & BMR Calculator – Assess Your Health & Calories</h2>
+  <p>
+    The <strong>BMI & BMR Calculator</strong> helps you determine your Body Mass Index and Basal Metabolic Rate. 
+    BMI indicates whether your weight is healthy for your height, showing if you are underweight, normal, overweight, or obese. 
+    BMR estimates the calories your body needs at rest for essential functions like breathing, circulation, and metabolism.
+  </p>
+  <p>
+    Use this free online tool to understand your health, plan diet and fitness goals, and manage your weight efficiently.
+  </p>
+</section>
+
+<script>
+const ageInput = document.getElementById("age");
+const heightInput = document.getElementById("height");
+const weightInput = document.getElementById("weight");
+const genderInput = document.getElementById("gender");
+const result = document.getElementById("result");
+
+function calculate() {
+  const age = +ageInput.value;
+  const height = +heightInput.value;
+  const weight = +weightInput.value;
+  const gender = genderInput.value;
+
+  if (!age || !height || !weight) {
+    result.innerText = "Please enter all values.";
+    return;
+  }
+
+  const bmi = (weight / ((height / 100) ** 2)).toFixed(2);
+  let bmr;
+
+  if (gender === "male") {
+    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+  } else {
+    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+  }
+
+  result.innerText = `BMI: ${bmi} | BMR: ${Math.round(bmr)} kcal/day`;
+}
+</script>
+</div>
+</body>
+</html>
