@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hash Generator (MD5, SHA1, SHA256, SHA512) | UsedToTools</title>
+<meta name="description" content="Free online hash generator. Generate MD5, SHA-1, SHA-256 and SHA-512 hashes instantly.">
+<meta name="keywords" content="Hash Generator, MD5 Generator, SHA256 Generator, SHA512 Generator">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.tool-box {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 140px;
+  padding: 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  resize: vertical;
+  font-family: monospace;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+.form-group { margin-bottom: 15px; }
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--border-color);
+  color: var(--text-color);
+}
+
+.result-box {
+  margin-top: 20px;
+}
+
+small { opacity: 0.8; }
+
+.content-section { margin-top: 40px; }
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="../index.html" class="logo">
+      <span class="logo-text">UsedToTools</span>
+    </a>
+
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle">🌙 Night</button>
+  </div>
+</header>
+
+<!-- ================= CONTENT ================= -->
+<section class="section">
+<div class="container page-layout">
+
+<!-- LEFT COLUMN -->
+<div class="left-column">
+
+<h1 class="section-title">Hash Generator</h1>
+<p class="section-desc">
+Generate cryptographic hashes using MD5, SHA-1, SHA-256, or SHA-512.
+</p>
+
+<div class="tool-box">
+
+<div class="form-group">
+<label><strong>Input Text</strong></label>
+<textarea id="inputText" placeholder="Enter text to hash..."></textarea>
+</div>
+
+<div class="form-group">
+<label><strong>Hash Algorithm</strong></label>
+<select id="algorithm">
+  <option value="MD5">MD5</option>
+  <option value="SHA-1">SHA-1</option>
+  <option value="SHA-256" selected>SHA-256</option>
+  <option value="SHA-512">SHA-512</option>
+</select>
+</div>
+
+<div class="btn-row">
+  <button class="btn btn-primary" onclick="generateHash()">Generate Hash</button>
+  <button class="btn btn-secondary" onclick="clearText()">Clear</button>
+</div>
+
+<div class="result-box">
+<label><strong>Hash Output</strong></label>
+<textarea id="outputText" readonly placeholder="Generated hash will appear here..."></textarea>
+</div>
+
+<small>
+⚠️ Hashing is one-way. Original input cannot be recovered.
+</small>
+
+</div>
+
+<!-- INFO -->
+<section class="content-section">
+<h2>What is a Hash?</h2>
+<p>
+A hash function converts input data into a fixed-length string.
+Even a small change in input produces a completely different hash.
+</p>
+
+<h2>Common Uses</h2>
+<ul>
+  <li>Password storage</li>
+  <li>Data integrity checks</li>
+  <li>File verification</li>
+  <li>Digital signatures</li>
+</ul>
+</section>
+
+<section class="content-section">
+<h2>FAQs</h2>
+
+<h4>Is MD5 secure?</h4>
+<p>No. MD5 is considered broken and should not be used for security purposes.</p>
+
+<h4>Which hash should I use?</h4>
+<p>Use SHA-256 or SHA-512 for modern applications.</p>
+
+<h4>Can hashes be reversed?</h4>
+<p>No. Hashing is a one-way function.</p>
+</section>
+
+</div>
+
+<!-- RIGHT COLUMN -->
+<aside class="right-column">
+<h2 class="section-title">Developer Tools</h2>
+<div class="quick-links">
+  <a href="json.html">JSON Formatter</a>
+  <a href="base64.html">Base64 Encoder / Decoder</a>
+  <a href="ipsubnet.html">IP & Subnet Calculator</a>
+  <a href="numberbase.html">Number Base Converter</a>
+  <a href="timesmp.html">Timestamp Converter</a>
+  <a href="uuid.html">UUID Generator</a>
+</div>
+</aside>
+
+</div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <p>© 2026 UsedToTools · Hash Generator</p>
+</footer>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+async function generateHash() {
+  const text = document.getElementById("inputText").value;
+  const algo = document.getElementById("algorithm").value;
+  const output = document.getElementById("outputText");
+
+  if (!text) {
+    output.value = "";
+    return;
+  }
+
+  // MD5 fallback (not in Web Crypto)
+  if (algo === "MD5") {
+    output.value = md5(text);
+    return;
+  }
+
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const hashBuffer = await crypto.subtle.digest(algo, data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  output.value = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+/* Simple MD5 implementation (client-side) */
+function md5(str) {
+  return CryptoJS.MD5(str).toString();
+}
+
+function clearText() {
+  inputText.value = "";
+  outputText.value = "";
+}
+
+(function() {
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('themeToggle');
+
+    // Default theme if none is saved
+    const defaultTheme = 'light';
+
+    // Apply saved theme or default
+    const savedTheme = localStorage.getItem('theme') || defaultTheme;
+    root.setAttribute('data-theme', savedTheme);
+    toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
+
+    // Toggle function
+    toggleBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'night' ? 'light' : 'night';
+
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+    });
+
+    // Optional: Watch for system preference and apply if first visit
+    // const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // if (!localStorage.getItem('theme')) {
+    //   const initial = prefersDark ? 'night' : 'light';
+    //   root.setAttribute('data-theme', initial);
+    //   toggleBtn.textContent = initial === 'night' ? '☀️ Day' : '🌙 Night';
+    // }
+  })();
+</script>
+
+<!-- MD5 LIB (lightweight) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+</body>
+</html>

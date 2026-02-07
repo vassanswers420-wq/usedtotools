@@ -1,557 +1,277 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>UsedToTools – Free Online EMI, GST, Income Tax, BMI, Developer & Cricket Tools</title>
+  <title>Free Online Calculators & Utility Tools | Finance, Health, Math – UsedToTools</title>
+  <meta name="description" content="Use free online calculators and utility tools for finance, health, math, conversions, lifestyle, and daily needs. Fast, accurate, and easy tools at UsedToTools." />
 
-<meta name="description" content="UsedToTools offers free online calculators and utility tools for EMI, GST, income tax, BMI, fuel cost, unit conversion, password strength, coding, hashing, base64, UUID generation, and cricket stats. Fast, accurate, and browser-based.">
-
-<meta name="keywords" content="free online tools, EMI calculator, GST calculator India, income tax calculator online, BMI calculator, fuel cost calculator, unit converter, password strength checker, JSON formatter, base64 encoder, hash generator, UUID generator, IP subnet calculator, cricket stats tool, run rate calculator, typing speed test, developer tools online">
-
-<link rel="canonical" href="https://usedtotools.com/">
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #ededed;
-  margin: 0;
-  padding: 30px;
-}
-/*scale */
-.site-wrapper {
-  transform: scale(0.9);
-  transform-origin: Top center;
-  width: 100%;
-}
-
-h1 { text-align: center; color: #2c3e50; margin-bottom: 6px; }
-.tagline { text-align: center; font-size: 15px; color: #555; font-weight: 500; letter-spacing: 0.3px; margin: 4px 0; }
-.category-desc { text-align: center; color: #555; font-size: 14px; margin-bottom: 20px; }
-
-/* CATEGORY BOX */
-.category-box {
-  padding: 25px;
-  margin-bottom: 40px;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: hidden;
-}
-
-/* CATEGORY TITLE */
-.category-title {
-  text-align: center;
-  font-size: 22px;
-  margin-bottom: 15px;
-}
-
-/* SPECIFIC SECTION COLORS */
-.finance-section { background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 70%); border-left: 6px solid #FF5722; }
-.finance-section .category-title { color: #FF5722; }
-
-.developer-section { background: linear-gradient(135deg, #f3e5f5 0%, #ffffff 70%); border-left: 6px solid #9C27B0; }
-.developer-section .category-title { color: #9C27B0; }
-
-.health-section { background: linear-gradient(135deg, #fff3e0 0%, #ffffff 70%); border-left: 6px solid #ef6c00; }
-.health-section .category-title { color: #2e7d32; }
-
-.other-section { background: linear-gradient(135deg, #fff3e0 0%, #ffffff 70%); border-left: 6px solid #ef6c00; }
-.other-section .category-title { color: #ef6c00; }
-
-.cricket-section { background: linear-gradient(135deg, #e8f5e9 0%, #ffffff 70%); border-left: 6px solid #2e7d32; }
-.cricket-section .category-title { color: #2e7d32; }
-
-/* GRID */
-.tools-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-}
-
-/* TOOL CARD */
-.tool {
-  background: #f9fafb;
-  padding: 18px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 0 8px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
-}
-
-.tool:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
-}
-
-.tool a {
-  font-size: 17px;
-  font-weight: bold;
-  color: #1e88e5;
-  text-decoration: none;
-}
-
-.tool a:hover { text-decoration: underline; }
-
-.tool p { margin-top: 6px; color: #555; font-size: 14px; }
-
-/* EXPAND BUTTON */
-.expand-btn {
-  width: 100%;
-  padding: 12px 0;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  background: #f3f3f3;
-  color: #333;
-  border-top: 1px solid #ddd;
-  border-radius: 0 0 12px 12px;
-  transition: background 0.2s;
-}
-
-.expand-btn:hover { background: #e9e9e9; }
-
-/* FOOTER */
-.connect {
-  text-align: center;
-  margin: 20px 0;
-  font-size: 16px;
-}
-
-.instagram-btn {
-  display: inline-block;
-  padding: 10px 18px;
-  background: #E4405F;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-.instagram-btn:hover { background: #C13584; }
-
-/* ----------------- COLLAPSED LOGIC ----------------- */
-.tools-grid .tool.extra { display:none; opacity: 0; }
-
-/* DESKTOP: first 6 visible */
-@media(min-width: 768px) {
-  .tools-grid .tool:nth-child(-n+6) { display:block; opacity:1 !important; }
-}
-
-/* MOBILE: first 3 visible */
-@media(max-width: 767px) {
-  .tools-grid .tool:nth-child(-n+3) { display:block; opacity:1 !important; }
-}
-
-</style>
-
-<!-- JSON-LD Structured Data for Google Rich Results -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "UsedToTools",
-  "url": "https://usedtotools.com/",
-  "description": "UsedToTools offers free online calculators and utility tools for EMI, GST, income tax, BMI, TDEE, Body Fat %, fuel cost, unit conversion, password strength, coding, hashing, Base64, UUID generation, and cricket stats. Fast, accurate, and browser-based.",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://usedtotools.com/?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  },
-  "mainEntity": [
-    {
-      "@type": "ItemList",
-      "name": "Finance Calculators",
-      "description": "Online calculators for EMI, GST, Income Tax, Fuel Cost, SWP planning.",
-      "itemListElement": [
-        {"@type":"ListItem","position":1,"url":"https://usedtotools.com/calculator.html","name":"Basic & Scientific Calculator"},
-        {"@type":"ListItem","position":2,"url":"https://usedtotools.com/emi-calculators.html","name":"EMI Calculator"},
-        {"@type":"ListItem","position":3,"url":"https://usedtotools.com/gst.html","name":"GST Calculator"},
-        {"@type":"ListItem","position":4,"url":"https://usedtotools.com/fuel.html","name":"Fuel Cost Calculator"},
-        {"@type":"ListItem","position":5,"url":"https://usedtotools.com/incometax.html","name":"Income Tax Calculator"},
-        {"@type":"ListItem","position":6,"url":"https://usedtotools.com/SWP-Calculator.html","name":"SWP Calculator"}
-      ]
-    },
-    {
-      "@type": "ItemList",
-      "name": "Developer & Hashing Tools",
-      "description": "Online developer utilities for JSON formatting, Base64, hashing, UUID, number base conversion, and IP subnet calculation.",
-      "itemListElement": [
-        {"@type":"ListItem","position":1,"url":"https://usedtotools.com/Dtools/timestamp.html","name":"Timestamp Converter"},
-        {"@type":"ListItem","position":2,"url":"https://usedtotools.com/Dtools/JSON-Formatter-Validator.html","name":"JSON Formatter & Validator"},
-        {"@type":"ListItem","position":3,"url":"https://usedtotools.com/Dtools/base64.html","name":"Base64 Encoder / Decoder"},
-        {"@type":"ListItem","position":4,"url":"https://usedtotools.com/Dtools/hash.html","name":"Hash Generator"},
-        {"@type":"ListItem","position":5,"url":"https://usedtotools.com/Dtools/number-base-converter.html","name":"Number Base Converter"},
-        {"@type":"ListItem","position":6,"url":"https://usedtotools.com/Dtools/uuid.html","name":"UUID Generator"},
-        {"@type":"ListItem","position":7,"url":"https://usedtotools.com/Dtools/ip-subnet.html","name":"IP Subnet Calculator"}
-      ]
-    },
-    {
-      "@type": "ItemList",
-      "name": "Lifestyle & Health Tools",
-      "description": "Online tools for health and lifestyle including BMI, TDEE, Body Fat %, and fitness calculators.",
-      "itemListElement": [
-        {"@type":"ListItem","position":1,"url":"https://usedtotools.com/health/bmi.html","name":"BMI Calculator"},
-        {"@type":"ListItem","position":2,"url":"https://usedtotools.com/health/tdee-calorie.html","name":"TDEE & Calorie Calculator"},
-        {"@type":"ListItem","position":3,"url":"https://usedtotools.com/health/body-fat.html","name":"Body Fat % Calculator"}
-      ]
-    },
-    {
-      "@type": "ItemList",
-      "name": "Other Utility Tools",
-      "description": "Online calculators for password strength, unit conversion, and typing speed.",
-      "itemListElement": [
-        {"@type":"ListItem","position":1,"url":"https://usedtotools.com/other/password-strength.html","name":"Password Strength Checker"},
-        {"@type":"ListItem","position":2,"url":"https://usedtotools.com/other/unit-converter.html","name":"Unit Converter"},
-        {"@type":"ListItem","position":3,"url":"https://usedtotools.com/other/typing-speed.html","name":"Typing Speed Test"}
-      ]
-    },
-    {
-      "@type": "ItemList",
-      "name": "Cricket Tools",
-      "description": "Online cricket calculators and stats for player performance, match prediction, and head-to-head comparisons.",
-      "itemListElement": [
-        {"@type":"ListItem","position":1,"url":"https://usedtotools.com/cricket/player-stats.html","name":"Player Stats"},
-        {"@type":"ListItem","position":2,"url":"https://usedtotools.com/cricket/match-prediction.html","name":"Match Prediction"},
-        {"@type":"ListItem","position":3,"url":"https://usedtotools.com/cricket/head-to-head.html","name":"Head to Head"}
-      ]
-    }
-  ]
-}
-
-</script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<header class="site-header">
-  <a href="index.html" class="logo">
-    <img src="images/logo.png" alt="UsedToTools Logo">
-  </a>
-  <h1 class="site-title">UsedToTools</h1>
-</header>
-<button id="themeToggle" style="position:fixed; top:20px; right:20px; padding:10px 15px; z-index:1000;">
-  🌙 Nightly(UPCOMMING)
-</button>
 
- <div class="site-wrapper">
-<h1>UsedToTools – Free Online Calculators & Utility Tools</h1>
-<p class="tagline">Practical Free Online Tools That Just Work</p>
-<p class="tagline">All-in-one calculators for Finance, Developer, Daily Utilities, and Cricket Stats</p>
-<!-- Search Box -->
-<!-- Search Box -->
-<div style="max-width:450px;margin:20px auto;position:relative;">
-  <input
-    type="text"
-    id="toolSearch"
-    placeholder="Search tools..."
-    oninput="searchTools()"
-    style="
-      width:100%;
-      padding:12px 40px;
-      font-size:16px;
-      border:1px solid #ccc;
-      border-radius:6px;
-      outline:none;
-    "
-  />
+  <!-- ================= HEADER ================= -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="assets/logo-day.png" alt="UsedToTools" class="logo-img logo-day">
+        <img src="assets/logo-night.png" alt="UsedToTools" class="logo-img logo-night">    
+		<span class="logo-text">Usedtotools.com</span>	
+	</a>
 
-  <span style="
-    position:absolute;
-    left:12px;
-    top:50%;
-    transform:translateY(-50%);
-    font-size:18px;
-    color:#888;
-  ">🔍</span>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="#popular">Popular</a>
+        <a href="/about.html">About</a>
+      </nav>
 
-  <span
-    id="clearBtn"
-    onclick="clearSearch()"
-    style="
-      position:absolute;
-      right:12px;
-      top:50%;
-      transform:translateY(-50%);
-      cursor:pointer;
-      font-size:18px;
-      display:none;
-    "
-  >❌</span>
+		<div class="search-container">
+		  <input type="text" id="toolSearch" placeholder="Search tools..." autocomplete="off" />
+		  <button class="search-btn" id="searchBtn" aria-label="Search tools">🔍</button>
 
-  <div
-    id="searchResults"
-    style="
-      position:absolute;
-      top:100%;
-      left:0;
-      right:0;
-      background:#fff;
-      border:1px solid #ddd;
-      border-top:none;
-      max-height:260px;
-      overflow-y:auto;
-      display:none;
-      z-index:9999;
-      border-radius:0 0 6px 6px;
-    "
-  ></div>
-</div>
+		  <!-- 🔽 Search results dropdown -->
+		  <div id="searchResults" class="search-results"></div>
+		</div>
 
 
-<!-- 🔢 FINANCE CALCULATORS -->
-<div class="category-box finance-section">
-  <div class="category-title">💼 Finance Calculators</div>
-  <p class="category-desc">
-    Quickly calculate your EMIs, GST, income tax, Fuel cost, and systematic withdrawal plans with our free online finance tools. Perfect for personal finance, loans, and tax planning in India.
-  </p>
-  <div class="tools-grid" id="finance-tools">
-    <div class="tool"> <a href="calculator.html">Basic & Scientific Calculator</a> <p>Perform arithmetic and scientific calculations online instantly</p> </div>
-    <div class="tool"> <a href="emi-calculators.html">EMI Calculator</a> <p>Calculate home, car, and personal loan EMIs easily</p> </div>
-    <div class="tool"> <a href="gst.html">GST Calculator</a> <p>Compute GST instantly for products and services in India</p> </div>
-    <div class="tool"> <a href="fuel.html">Fuel Cost Calculator</a> <p>Estimate fuel expenses for trips and daily commutes</p> </div>
-    <div class="tool"> <a href="incometax.html">Income Tax Calculator</a> <p>Accurate tax calculations for salaried, self-employed & freelancers in India</p> </div>
-    <div class="tool extra"> <a href="SWP-Calculator.html">SWP Calculator</a> <p>Plan systematic withdrawals and see a full schedule</p> </div>
-  </div>
-  <button class="expand-btn" aria-expanded="false" aria-controls="finance-tools" onclick="toggleTools(this)">Expand ▾</button>
-</div>
 
-<!-- 👨🏻‍💻 DEVELOPER TOOLS -->
-<div class="category-box developer-section">
-  <div class="category-title">👨🏻‍💻 Developer & Hashing Tools</div>
-  <p class="category-desc">
-    Free online tools for developers including JSON formatting, Base64 encoding/decoding, hashing, UUID generation, number base conversion, and IP subnet calculation. Perfect for coding, networking, and debugging tasks.
-  </p>
-  <div class="tools-grid" id="developer-tools">
-    <div class="tool"> <a href="Dtools/timestamp.html">Timestamp Converter</a> <p>Convert UNIX timestamps to readable date & time formats</p> </div>
-    <div class="tool"> <a href="Dtools/JSON-Formatter-Validator.html">JSON Formatter & Validator</a> <p>Format, validate, and beautify JSON data online</p> </div>
-    <div class="tool"> <a href="Dtools/base64.html">Base64 Encoder / Decoder</a> <p>Encode or decode text and files to/from Base64 easily</p> </div>
-    <div class="tool"> <a href="Dtools/hash.html">Hash Generator</a> <p>Generate MD5, SHA1, SHA256, and other hashes instantly</p> </div>
-    <div class="tool"> <a href="Dtools/number-base-converter.html">Number Base Converter</a> <p>Convert between binary, octal, decimal, and hexadecimal</p> </div>
-    <div class="tool"> <a href="Dtools/uuid.html">UUID Generator</a> <p>Create unique UUIDs for databases and applications</p> </div>
-    <div class="tool extra"> <a href="Dtools/ip-subnet.html">IP Subnet Calculator</a> <p>Calculate subnet masks, network ranges, and CIDR easily</p> </div>
-  </div>
-  <button class="expand-btn" aria-expanded="false" aria-controls="developer-tools" onclick="toggleTools(this)">Expand ▾</button>
-</div>
+      <button class="theme-toggle" id="themeToggle">🌙 Night</button>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="container">
+	  <h1>Free Online Calculators & Everyday Utility Tools</h1>
+	   <p>Calculate EMI, BMI, age, tax, conversions, geometry, and more with fast, accurate, and easy-to-use online tools.</p>
 
 
-<!-- 🧩 Health / Lifestyle Tools -->
-<div class="category-box health-section">
-  <div class="category-title">🧩 Lifestyle & Health Tools</div>
-  <p class="category-desc">
-    Useful online tools for daily health and lifestyle tracking, including BMI, BMR/TDEE, Body Fat %, and fitness calculators. All free, fast, and mobile-friendly.
-  </p>
-  <div class="tools-grid" id="health-tools">
-    <div class="tool"> 
-      <a href="health/bmi.html">BMI Calculator</a> 
-      <p>Calculate your Body Mass Index and monitor health</p> 
+      <div class="hero-actions">
+        <a href="#categories" class="btn btn-primary">Explore Tools</a>
+        <a href="#popular" class="btn btn-outline">Popular Calculators</a>
+      </div>
+    </div>
+  </section>
+
+<!-- ================= CATEGORIES ================= -->
+<section class="section" id="categories">
+  <div class="container">
+    <h2 class="section-title">All-in-One Online Calculator Platform</h2>
+    <p class="section-desc">Browse calculators and utilities by category.</p>
+	<p>
+      UsedToTools provides free online calculators and utility tools including
+      finance calculators, health calculators, math tools, unit converters,
+      developer utilities, and lifestyle tools. All tools are fast, accurate,
+      mobile-friendly, and require no sign-up.
+    </p>
+
+    <div class="card-grid">
+
+      <a href="math/Math tools.html" class="card-link">
+        <div class="card">
+          <div class="card-title">🧮 Math & Calculators</div>
+		  <div class="card-desc">Basic, scientific, geometry, and everyday math calculators.</div>
+        </div>
+      </a>
+
+      <a href="finance/finance.html" class="card-link">
+        <div class="card">
+          <div class="card-title">💰 Finance Calculators</div>
+          <div class="card-desc">EMI, home loan, interest, tax, and investment calculators.</div>
+		  </div>
+      </a>
+
+      <a href="health/health.html" class="card-link">
+        <div class="card">
+          <div class="card-title">❤️ Health Calculators</div>
+          <div class="card-desc">BMI, BMR, calorie, and fitness-related health tools.</div>
+        </div>
+      </a>
+
+      <a href="dtool/dtools.html" class="card-link">
+        <div class="card">
+          <div class="card-title">🧑‍💻 Developer Tools</div>
+          <div class="card-desc">Hash generators, encoders, formatters, and utility tools for developers.</div>
+		 </div>
+      </a>
+
+      <a href="other/lifestyle.html" class="card-link">
+        <div class="card">
+          <div class="card-title">🧩 Lifestyle Utilities</div>
+          <div class="card-desc">Age calculator, password strength checker, typing speed, and daily utilities.</div>
+		 </div>
+      </a>
+
+	  <a href="cricket/cricket.html" class="card-link">
+        <div class="card">
+          <div class="card-title">🏏 Cricket Tools & Stats</div>
+          <div class="card-desc">Cricket match analysis, head-to-head stats, and player performance tools.</div>
+
+        </div>
+      </a>
     </div>
 
-    <div class="tool"> 
-      <a href="health/tdee-calorie.html">TDEE & Calorie Calculator</a> 
-      <p>Calculate Total Daily Energy Expenditure and recommended daily calories for weight goals</p> 
+  </div>
+</section>
+
+
+  <!-- ================= POPULAR TOOLS ================= -->
+<section class="section" id="popular">
+  <div class="container">
+    <h2 class="section-title">Popular Tools</h2>
+	<p class="section-desc">Most used tools by our visitors.</p>
+	  <div class="shelf">
+      <div class="shelf-track">
+        
+	 <a href="finance/emi/homeloan.html" class="card-link">
+        <div class="card">
+          <div class="card-title">Home Loan EMI Calculator</div>
+          <div class="card-desc">Calculate monthly EMI, interest, and loan tenure instantly.</div>
+        </div>
+	 </a>
+ 
+	 <a href="dtool/hash.html" class="card-link">
+        <div class="card">
+          <div class="card-title">Hash Generator Tool</div>
+          <div class="card-desc">Generate MD5, SHA-1, SHA-256 hashes online.</div>
+        </div>
+	 </a>
+	 
+	 <a href="health/bmi.html" class="card-link">
+        <div class="card">
+          <div class="card-title">BMI Calculator</div>
+          <div class="card-desc">Check your Body Mass Index based on height and weight.</div>
+        </div>
+	 </a>
+	 
+	 <a href="other/unitconverter.html" class="card-link">
+        <div class="card">
+          <div class="card-title">Unit Converter</div>
+          <div class="card-desc">Convert length, weight, temperature, and more units easily.</div>
+        </div>
+	 </a>
+
+	<a href="other/Agecalc.html" class="card-link">
+        <div class="card">
+          <div class="card-title">Age Calculator</div>
+          <div class="card-desc">Calculate your exact age in years, months, and days.</div>
+        </div>
+	 </a>
+	
+	<a href="math/geometry.html" class="card-link">
+        <div class="card">
+          <div class="card-title">Geometry Calculator</div>
+          <div class="card-desc">Calculate area, perimeter, and volume with unit support.</div>
+        </div>
+	 </a>
+	
+      </div>
     </div>
+  </section>
 
-    <div class="tool"> 
-      <a href="health/body-fat.html">Body Fat % Calculator</a> 
-      <p>Estimate your body fat percentage and fitness category using U.S. Navy method</p> 
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 UsedToTools.com · Free Online Calculators & Utilities</p>
     </div>
-  </div>
-  <button class="expand-btn" aria-expanded="false" aria-controls="health-tools" onclick="toggleTools(this)">Expand ▾</button>
-</div>
+  </footer>
 
+  <!-- ================= THEME SCRIPT ================= -->
+  <script>
+  (function() {
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('themeToggle');
 
+    // Default theme if none is saved
+    const defaultTheme = 'light';
 
-<!-- 🧩 OTHER CALCULATORS -->
-<div class="category-box other-section">
-  <div class="category-title">🧩 Other Calculators & Utility Tools</div>
-  <p class="category-desc">
-    Useful online tools for daily life including password strength checker, BMI calculator, unit conversion, and typing speed tests. All free, fast, and accessible on any device.
-  </p>
-  <div class="tools-grid" id="other-tools">
-    <div class="tool"> <a href="other/password-strength.html">Password Strength Checker</a> <p>Check and improve the security of your passwords online</p> </div>
-    <div class="tool"> <a href="other/unit-converter.html">Unit Converter</a> <p>Convert length, weight, volume, and more easily</p> </div>
-    <div class="tool extra"> <a href="other/typing-speed.html">Typing Speed Test</a> <p>Measure typing speed and accuracy online</p> </div>
-  </div>
-  <button class="expand-btn" aria-expanded="false" aria-controls="other-tools" onclick="toggleTools(this)">Expand ▾</button>
-</div>
+    // Apply saved theme or default
+    const savedTheme = localStorage.getItem('theme') || defaultTheme;
+    root.setAttribute('data-theme', savedTheme);
+    toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
 
-<!-- 🏏 CRICKET TOOLS -->
-<div class="category-box cricket-section">
-  <div class="category-title">🏏 Cricket Tools & Stats Calculators</div>
-  <p class="category-desc">
-    Online cricket calculators for player stats, match prediction, and head-to-head comparisons. Perfect for fans, analysts, and fantasy cricket players.
-  </p>
-  <div class="tools-grid">
-    <div class="tool"> <a href="cricket/player-stats.html">Player Stats</a> <p>View detailed cricket player statistics and performance</p> </div>
-    <div class="tool"> <a href="cricket/match-prediction.html">Match Prediction</a> <p>Predict cricket match outcomes based on stats and form</p> </div>
-    <div class="tool"> <a href="cricket/head-to-head.html">Head to Head</a> <p>Compare player or team performance head-to-head</p> </div>
-  </div>
-</div>
+    // Toggle function
+    toggleBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'night' ? 'light' : 'night';
 
-<div class="connect">
-<p>Built and maintained by the creator of UsedToTools</p>
-<a href="mailto:vassanswers420@gmail.com" class="instagram-btn">📧 Email Me</a>
-</div>
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+    });
 
-<script>
-function toggleTools(btn){
-  const grid = document.getElementById(btn.getAttribute('aria-controls'));
-  const extras = grid.querySelectorAll('.tool.extra');
-
-  // If no extra tools exist, hide button
-  if(extras.length === 0){
-    btn.style.display = 'none';
-    return;
-  }
-
-  const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+    // Optional: Watch for system preference and apply if first visit
+    // const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // if (!localStorage.getItem('theme')) {
+    //   const initial = prefersDark ? 'night' : 'light';
+    //   root.setAttribute('data-theme', initial);
+    //   toggleBtn.textContent = initial === 'night' ? '☀️ Day' : '🌙 Night';
+    // }
+  })();
+  </script>
   
-  extras.forEach(tool => {
-    if(isExpanded){
-      tool.style.opacity = 0;
-      setTimeout(()=> tool.style.display='none', 300);
-    } else {
-      tool.style.display='block';
-      setTimeout(()=> tool.style.opacity=1, 10);
-    }
-  });
-
-  btn.innerText = isExpanded ? "Expand ▾" : "Collapse ▴";
-  btn.setAttribute('aria-expanded', !isExpanded);
-}
-
-// Function to hide expand buttons if nothing extra to show
-function updateExpandButtons(){
-  const buttons = document.querySelectorAll('.expand-btn');
-
-  buttons.forEach(btn => {
-    const grid = document.getElementById(btn.getAttribute('aria-controls'));
-    const tools = grid.querySelectorAll('.tool');
-    const windowWidth = window.innerWidth;
-    const defaultVisible = windowWidth >= 768 ? 6 : 3; // Desktop:6, Mobile:3
-
-    if(tools.length <= defaultVisible){
-      btn.style.display = 'none';
-    } else {
-      btn.style.display = 'block';
-    }
-  });
-}
-
-// Run on page load
-document.addEventListener("DOMContentLoaded", updateExpandButtons);
-
-// Update on window resize
-window.addEventListener("resize", updateExpandButtons);
-</script>
-
-</div>
+  
+   <!-- ================= Search SCRIPT ================= -->
 <script>
-const toolIndex = Array.from(document.querySelectorAll(".tool a")).map(a => ({
-  name: a.innerText.trim(),
-  desc: a.parentElement.querySelector("p")?.innerText || "",
-  url: a.href
-}));
+const searchInput = document.getElementById('toolSearch');
+const searchResults = document.getElementById('searchResults');
 
-function searchTools() {
-  const input = document.getElementById("toolSearch");
-  const query = input.value.toLowerCase();
-  const results = document.getElementById("searchResults");
-  const clearBtn = document.getElementById("clearBtn");
+// Tool list
+const tools = [
+  { name: "Home Loan EMI Calculator", url: "finance/emi/homeloan.html" },
+  { name: "EMI Calculator", url: "finance/finance.html" },
+  { name: "Income Tax Calculator", url: "finance/finance.html" },
+  { name: "BMI Calculator", url: "health/bmi.html" },
+  { name: "Age Calculator", url: "other/Agecalc.html" },
+  { name: "Unit Converter", url: "other/unitconverter.html" },
+  { name: "Geometry Calculator", url: "math/geometry.html" },
+  { name: "Hash Generator", url: "dtool/hash.html" }
+];
 
-  results.innerHTML = "";
+// Show matching results
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.toLowerCase().trim();
+  searchResults.innerHTML = '';
 
   if (!query) {
-    results.style.display = "none";
-    clearBtn.style.display = "none";
+    searchResults.style.display = 'none';
     return;
   }
 
-  clearBtn.style.display = "block";
-
-  const matches = toolIndex.filter(t =>
-    t.name.toLowerCase().includes(query) ||
-    t.desc.toLowerCase().includes(query)
+  const matches = tools.filter(tool =>
+    tool.name.toLowerCase().includes(query)
   );
 
   if (matches.length === 0) {
-    results.innerHTML = `<div style="padding:12px;color:#666;">No tools found</div>`;
-  } else {
-    matches.forEach(t => {
-      const div = document.createElement("div");
-      div.innerHTML = `
-        <a href="${t.url}" style="
-          display:block;
-          padding:10px 12px;
-          text-decoration:none;
-          color:#222;
-        ">
-          <strong>${t.name}</strong>
-          <div style="font-size:13px;color:#666;">${t.desc}</div>
-        </a>
-      `;
-      div.onmouseover = () => div.style.background = "#f0f4f8";
-      div.onmouseout = () => div.style.background = "#fff";
-      results.appendChild(div);
+    searchResults.style.display = 'none';
+    return;
+  }
+
+  matches.forEach(tool => {
+    const item = document.createElement('div');
+    item.className = 'search-result-item';
+    item.textContent = tool.name;
+
+    item.addEventListener('click', () => {
+      window.location.href = tool.url;
     });
-  }
 
-  results.style.display = "block";
-}
+    searchResults.appendChild(item);
+  });
 
-function clearSearch() {
-  document.getElementById("toolSearch").value = "";
-  document.getElementById("searchResults").style.display = "none";
-  document.getElementById("clearBtn").style.display = "none";
-}
+  searchResults.style.display = 'block';
+});
 
-/* Keyboard shortcut */
-document.addEventListener("keydown", e => {
-  if (e.key === "/" && document.activeElement.tagName !== "INPUT") {
-    e.preventDefault();
-    document.getElementById("toolSearch").focus();
+// Hide dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-container')) {
+    searchResults.style.display = 'none';
   }
 });
 </script>
-<script>
-// Check if user already has a theme preference in localStorage
-if(localStorage.getItem('theme') === 'night') {
-  setNightMode();
-} else {
-  setDayMode();
-}
 
-// Toggle button
-document.getElementById('themeToggle').addEventListener('click', () => {
-  if(document.documentElement.getAttribute('data-theme') === 'night') {
-    setDayMode();
-  } else {
-    setNightMode();
-  }
-});
 
-function setDayMode() {
-  document.documentElement.setAttribute('data-theme', 'day');
-  document.documentElement.style.setProperty('--bg-color', '#f0f4f8');
-  document.documentElement.style.setProperty('--text-color', '#222');
-  document.documentElement.style.setProperty('--primary-color', '#0bb884');
-  document.getElementById('themeToggle').innerText = '🌙 Nightly(UPCOMMING)';
-  localStorage.setItem('theme', 'day');
-}
-
-function setNightMode() {
-  document.documentElement.setAttribute('data-theme', 'night');
-  document.documentElement.style.setProperty('--bg-color', '#121212');
-  document.documentElement.style.setProperty('--text-color', '#eee');
-  document.documentElement.style.setProperty('--primary-color', '#1de9b6');
-  document.getElementById('themeToggle').innerText = '🌙 Nightly(UPCOMMING)';
-  localStorage.setItem('theme', 'night');
-}
-</script>
 
 </body>
 </html>

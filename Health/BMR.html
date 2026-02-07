@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>BMI Calculator – Calculate Body Mass Index Online | UsedToTools</title>
-  <meta name="description" content="Free BMI calculator to calculate your Body Mass Index using height and weight. Instantly check BMI value, category, and health range.">
-  <meta name="keywords" content="BMI calculator, body mass index calculator, health calculator, bmi check, weight height calculator">
+  <title>BMR Calculator – Basal Metabolic Rate Calculator | UsedToTools</title>
+  <meta name="description" content="Free BMR Calculator to estimate your Basal Metabolic Rate. Calculate how many calories your body burns at rest based on age, gender, height, and weight.">
+  <meta name="keywords" content="BMR Calculator, Basal Metabolic Rate Calculator, BMR Formula, Calories at Rest, Health Calculator">
   <meta name="robots" content="index, follow">
 
   <link rel="stylesheet" href="../style.css">
@@ -45,11 +45,6 @@
       margin-top: 20px;
       font-size: 1rem;
     }
-
-    .result strong {
-      display: block;
-      margin-bottom: 5px;
-    }
   </style>
 </head>
 
@@ -80,12 +75,32 @@
     <!-- LEFT -->
     <div class="left-column">
 
-      <h1 class="section-title">BMI Calculator</h1>
+      <h1 class="section-title">BMR Calculator</h1>
       <p class="section-desc">
-        Calculate your Body Mass Index (BMI) using height and weight instantly.
+        Use this free BMR Calculator to estimate your Basal Metabolic Rate and
+        understand how many calories your body burns at rest.
+      </p>
+
+      <p>
+        Knowing your BMR helps you plan weight loss, weight gain, and daily
+        calorie intake more accurately. This calculator uses a widely accepted
+        scientific formula for reliable results.
       </p>
 
       <div class="tool-box">
+
+        <div class="form-group">
+          <label><strong>Gender</strong></label>
+          <select id="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label><strong>Age (years)</strong></label>
+          <input id="age" type="number" placeholder="e.g. 25">
+        </div>
 
         <div class="form-group">
           <label><strong>Height (cm)</strong></label>
@@ -97,60 +112,60 @@
           <input id="weight" type="number" placeholder="e.g. 65">
         </div>
 
-        <button class="btn" onclick="calculateBMI()">Calculate BMI</button>
+        <button class="btn" onclick="calculateBMR()">Calculate BMR</button>
 
         <div class="result" id="result"></div>
 
       </div>
 
-      <!-- EXISTING INFO -->
+      <!-- SEO CONTENT -->
       <section class="content-section">
-        <h2>BMI Categories</h2>
+        <h2>What is Basal Metabolic Rate (BMR)?</h2>
+        <p>
+          Basal Metabolic Rate (BMR) is the number of calories your body requires
+          to perform essential life-sustaining functions such as breathing,
+          blood circulation, temperature regulation, and cell repair while at rest.
+        </p>
+
+        <h3>Why is BMR Important?</h3>
+        <p>
+          Your BMR makes up the largest portion of your daily calorie needs.
+          Understanding it allows you to:
+        </p>
         <ul>
-          <li>Underweight: below 18.5</li>
-          <li>Normal weight: 18.5 – 24.9</li>
-          <li>Overweight: 25 – 29.9</li>
-          <li>Obese: 30 and above</li>
+          <li>Set accurate calorie targets for weight loss or gain</li>
+          <li>Create effective diet and fitness plans</li>
+          <li>Understand your metabolism better</li>
         </ul>
+
+        <h3>BMR Formula Used</h3>
+        <p>
+          This calculator uses the Mifflin-St Jeor equation, one of the most
+          accurate and widely used formulas for estimating BMR.
+        </p>
       </section>
 
-      <!-- ===== SEO CONTENT ===== -->
-      <section class="seo-content">
-        <h2>What Is BMI (Body Mass Index)?</h2>
+      <!-- FAQ SECTION -->
+      <section class="content-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <h3>Is this BMR calculator accurate?</h3>
         <p>
-          Body Mass Index (BMI) is a simple calculation used to assess whether
-          a person has a healthy body weight for their height. It is commonly
-          used as a general health indicator for adults.
+          This calculator provides a close estimate using scientific formulas.
+          Actual BMR may vary based on genetics, muscle mass, and health conditions.
         </p>
 
-        <h3>How BMI Is Calculated</h3>
+        <h3>What is the difference between BMR and TDEE?</h3>
         <p>
-          BMI is calculated using your weight in kilograms divided by the square
-          of your height in meters. This BMI calculator does the calculation
-          instantly so you don’t need to remember the formula.
+          BMR is the calories burned at complete rest, while TDEE includes
+          physical activity and daily movement.
         </p>
 
-        <h3>Why Use a BMI Calculator?</h3>
-        <ul>
-          <li>Quickly check your weight category</li>
-          <li>Simple and easy health assessment</li>
-          <li>No manual calculations required</li>
-          <li>Free and instant results</li>
-        </ul>
-
-        <h3>Frequently Asked Questions</h3>
-
-        <p><strong>Is this BMI calculator accurate?</strong><br>
-        Yes, it follows the standard BMI formula used worldwide.</p>
-
-        <p><strong>Can BMI be used for everyone?</strong><br>
-        BMI is a general guideline for adults and does not directly measure body fat.</p>
-
-        <p><strong>Is this a medical diagnosis?</strong><br>
-        No, BMI is a screening tool and not a medical diagnosis.</p>
-
-        <p><strong>Does this calculator work on mobile?</strong><br>
-        Yes, it is fully responsive and works on all devices.</p>
+        <h3>How often should I calculate my BMR?</h3>
+        <p>
+          You should recalculate your BMR whenever your weight, age, or activity
+          level changes significantly.
+        </p>
       </section>
 
     </div>
@@ -159,7 +174,7 @@
     <aside class="right-column">
       <h2 class="section-title">Health Tools</h2>
       <div class="quick-links">
-        <a href="bmr.html">BMR Calculator</a>
+        <a href="bmi.html">BMI Calculator</a>
         <a href="tdee.html">TDEE Calculator</a>
         <a href="bodyfat.html">Body Fat Calculator</a>
       </div>
@@ -170,32 +185,32 @@
 
 <!-- ================= FOOTER ================= -->
 <footer class="footer">
-  <p>© 2026 UsedToTools · BMI Calculator</p>
+  <p>© 2026 UsedToTools · BMR Calculator</p>
 </footer>
 
-<!-- ================= SCRIPT (UNCHANGED) ================= -->
+<!-- ================= SCRIPT ================= -->
 <script>
-function calculateBMI() {
-  const height = parseFloat(document.getElementById("height").value) / 100;
+function calculateBMR() {
+  const gender = document.getElementById("gender").value;
+  const age = parseFloat(document.getElementById("age").value);
+  const height = parseFloat(document.getElementById("height").value);
   const weight = parseFloat(document.getElementById("weight").value);
   const result = document.getElementById("result");
 
-  if (!height || !weight) {
-    result.innerHTML = "Please enter valid height and weight.";
+  if (!age || !height || !weight) {
+    result.innerHTML = "Please enter all values.";
     return;
   }
 
-  const bmi = (weight / (height * height)).toFixed(1);
-  let category = "";
-
-  if (bmi < 18.5) category = "Underweight";
-  else if (bmi < 25) category = "Normal weight";
-  else if (bmi < 30) category = "Overweight";
-  else category = "Obese";
+  let bmr;
+  if (gender === "male") {
+    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+  } else {
+    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+  }
 
   result.innerHTML = `
-    <strong>Your BMI: ${bmi}</strong>
-    Category: ${category}
+    <strong>Your BMR:</strong> ${Math.round(bmr)} calories/day
   `;
 }
 

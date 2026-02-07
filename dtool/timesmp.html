@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Timestamp Converter | UsedToTools</title>
+<meta name="description" content="Free Unix timestamp converter. Convert Unix timestamps to human-readable date and time and vice versa.">
+<meta name="keywords" content="Timestamp Converter, Unix Timestamp, Epoch Converter">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.tool-box {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-family: monospace;
+}
+
+.form-group { margin-bottom: 15px; }
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--border-color);
+  color: var(--text-color);
+}
+
+.result-box {
+  margin-top: 20px;
+  font-family: monospace;
+}
+
+.result-box div {
+  margin-bottom: 6px;
+}
+
+.status {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.status.error { color: #e74c3c; }
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="../index.html" class="logo">
+      <span class="logo-text">UsedToTools</span>
+    </a>
+
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle">🌙 Night</button>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<section class="section">
+<div class="container page-layout">
+
+<!-- LEFT COLUMN -->
+<div class="left-column">
+
+<h1 class="section-title">Timestamp Converter</h1>
+<p class="section-desc">
+Convert Unix timestamps to human-readable date and time — and back.
+</p>
+
+<div class="tool-box">
+
+<div class="form-group">
+<label><strong>Unix Timestamp (seconds)</strong></label>
+<input id="timestampInput" placeholder="e.g. 1700000000">
+</div>
+
+<div class="btn-row">
+  <button class="btn btn-primary" onclick="timestampToDate()">Convert to Date</button>
+  <button class="btn btn-secondary" onclick="setCurrentTimestamp()">Now</button>
+</div>
+
+<hr style="margin:20px 0; border:none; border-top:1px solid var(--border-color);">
+
+<div class="form-group">
+<label><strong>Date & Time</strong></label>
+<input id="dateInput" type="datetime-local">
+</div>
+
+<div class="btn-row">
+  <button class="btn btn-primary" onclick="dateToTimestamp()">Convert to Timestamp</button>
+  <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+</div>
+
+<div class="result-box" id="results"></div>
+<div id="status" class="status"></div>
+
+</div>
+
+<section class="content-section">
+<h2>What is a Unix Timestamp?</h2>
+<p>
+A Unix timestamp represents the number of seconds elapsed since
+January 1, 1970 (UTC).
+</p>
+</section>
+
+<section class="content-section">
+<h2>Common Uses</h2>
+<ul>
+  <li>API debugging</li>
+  <li>Log analysis</li>
+  <li>Date-time conversions</li>
+  <li>Database timestamps</li>
+</ul>
+</section>
+
+</div>
+
+<!-- RIGHT COLUMN -->
+<aside class="right-column">
+<h2 class="section-title">Developer Tools</h2>
+<div class="quick-links">
+  <a href="json.html">JSON Formatter</a>
+  <a href="base64.html">Base64 Encoder / Decoder</a>
+  <a href="ipsubnet.html">IP & Subnet Calculator</a>
+  <a href="numberbase.html">Number Base Converter</a>
+  <a href="hash.html">Hash Generator</a>
+  <a href="uuid.html">UUID Generator</a>
+</div>
+</aside>
+
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 UsedToTools · Timestamp Converter</p>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+function timestampToDate() {
+  const ts = document.getElementById("timestampInput").value;
+  const results = document.getElementById("results");
+  const status = document.getElementById("status");
+
+  if (!ts || isNaN(ts)) {
+    status.textContent = "✖ Invalid timestamp";
+    status.className = "status error";
+    results.innerHTML = "";
+    return;
+  }
+
+  const date = new Date(ts * 1000);
+
+  results.innerHTML = `
+    <div>UTC: ${date.toUTCString()}</div>
+    <div>Local: ${date.toString()}</div>
+  `;
+  status.textContent = "";
+}
+
+function dateToTimestamp() {
+  const dateVal = document.getElementById("dateInput").value;
+  const results = document.getElementById("results");
+  const status = document.getElementById("status");
+
+  if (!dateVal) {
+    status.textContent = "✖ Invalid date";
+    status.className = "status error";
+    results.innerHTML = "";
+    return;
+  }
+
+  const timestamp = Math.floor(new Date(dateVal).getTime() / 1000);
+  results.innerHTML = `<div>Unix Timestamp: ${timestamp}</div>`;
+  status.textContent = "";
+}
+
+function setCurrentTimestamp() {
+  document.getElementById("timestampInput").value =
+    Math.floor(Date.now() / 1000);
+  timestampToDate();
+}
+
+function clearAll() {
+  document.getElementById("timestampInput").value = "";
+  document.getElementById("dateInput").value = "";
+  document.getElementById("results").innerHTML = "";
+  document.getElementById("status").textContent = "";
+}
+
+(function() {
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('themeToggle');
+
+    // Default theme if none is saved
+    const defaultTheme = 'light';
+
+    // Apply saved theme or default
+    const savedTheme = localStorage.getItem('theme') || defaultTheme;
+    root.setAttribute('data-theme', savedTheme);
+    toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
+
+    // Toggle function
+    toggleBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'night' ? 'light' : 'night';
+
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+    });
+
+    // Optional: Watch for system preference and apply if first visit
+    // const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // if (!localStorage.getItem('theme')) {
+    //   const initial = prefersDark ? 'night' : 'light';
+    //   root.setAttribute('data-theme', initial);
+    //   toggleBtn.textContent = initial === 'night' ? '☀️ Day' : '🌙 Night';
+    // }
+  })();
+</script>
+
+</body>
+</html>
