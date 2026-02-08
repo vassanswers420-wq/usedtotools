@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Income Tax Calculator – India | UsedToTools</title>
+<meta name="description" content="Income Tax Calculator for India with Old & New Regime comparison. Calculate tax, cess and net income instantly.">
+<meta name="keywords" content="Income Tax Calculator India, Old Regime, New Regime, Tax Cess Calculator, Net Income Calculator">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+/* TOOL BOX */
+.tax-box {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  max-width: 520px;
+}
+
+.form-group { margin-bottom: 15px; }
+label { font-weight: 600; display: block; margin-bottom: 6px; }
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius);
+  border: none;
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.result-box {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background: var(--bg-color);
+}
+
+.content-section { margin-top: 40px; }
+
+.quick-links a {
+  display: block;
+  padding: 6px 0;
+  color: var(--text-color);
+  text-decoration: none;
+}
+.quick-links a:hover { color: var(--primary-color); }
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="../index.html" class="logo"><span class="logo-text">UsedToTools</span></a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle">🌙 Night</button>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<section class="section">
+<div class="container page-layout">
+
+<!-- LEFT COLUMN -->
+<div class="left-column">
+
+<h1 class="section-title">Income Tax Calculator (India)</h1>
+<p class="section-desc">
+Calculate income tax under Old & New Regime including Health & Education Cess.
+</p>
+
+<div class="tax-box">
+  <div class="form-group">
+    <label>Annual Gross Income (₹)</label>
+    <input type="number" id="income">
+  </div>
+
+  <div class="form-group">
+    <label>Deductions (80C, 80D etc.) – Old Regime (₹)</label>
+    <input type="number" id="deductions" placeholder="Only for Old Regime">
+  </div>
+
+  <div class="form-group">
+    <label>Tax Regime</label>
+    <select id="regime">
+      <option value="new">New Regime</option>
+      <option value="old">Old Regime</option>
+    </select>
+  </div>
+
+  <button class="primary-btn" onclick="calculateTax()">Calculate Tax</button>
+
+  <div class="result-box" id="result"></div>
+</div>
+
+<!-- INFO SECTIONS -->
+<section class="content-section">
+<h2>How Income Tax is Calculated</h2>
+<p>
+Income tax in India is calculated using slab rates. Under the Old Regime,
+deductions like 80C and 80D are allowed. The New Regime offers lower slab rates
+but no major deductions. A 4% health & education cess is added on final tax.
+</p>
+</section>
+
+<section class="content-section">
+<h2>FAQs</h2>
+
+<h4>Which tax regime is better?</h4>
+<p>If you claim high deductions, Old Regime may be better. Otherwise, New Regime usually results in lower tax.</p>
+
+<h4>Is this calculator exact?</h4>
+<p>This gives an estimate. Actual tax may vary based on surcharge, rebates, and exemptions.</p>
+
+<h4>Is cess mandatory?</h4>
+<p>Yes. A 4% Health & Education Cess applies on total tax.</p>
+</section>
+
+</div>
+
+<!-- RIGHT COLUMN -->
+<aside class="right-column">
+<h2 class="section-title">Finance Tools</h2>
+<div class="quick-links">
+  <a href="sip.html">SIP Calculator</a>
+  <a href="swp.html">SWP Calculator</a>
+  <a href="emipage.html">EMI Calculators</a>
+  <a href="Gst.html">GST Calculator</a>
+</div>
+</aside>
+
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+<p>© 2026 UsedToTools</p>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+function calculateTax() {
+  const income = +document.getElementById("income").value;
+  const deductions = +document.getElementById("deductions").value;
+  const regime = document.getElementById("regime").value;
+
+  if (!income || income <= 0) {
+    result.innerHTML = "Please enter a valid income.";
+    return;
+  }
+
+  let taxableIncome = income;
+  let tax = 0;
+
+  if (regime === "old") {
+    taxableIncome = Math.max(0, income - deductions);
+    if (taxableIncome > 250000) tax += Math.min(taxableIncome - 250000, 250000) * 0.05;
+    if (taxableIncome > 500000) tax += Math.min(taxableIncome - 500000, 500000) * 0.20;
+    if (taxableIncome > 1000000) tax += (taxableIncome - 1000000) * 0.30;
+  } else {
+    if (taxableIncome > 300000) tax += Math.min(taxableIncome - 300000, 300000) * 0.05;
+    if (taxableIncome > 600000) tax += Math.min(taxableIncome - 600000, 300000) * 0.10;
+    if (taxableIncome > 900000) tax += Math.min(taxableIncome - 900000, 300000) * 0.15;
+    if (taxableIncome > 1200000) tax += Math.min(taxableIncome - 1200000, 300000) * 0.20;
+    if (taxableIncome > 1500000) tax += (taxableIncome - 1500000) * 0.30;
+  }
+
+  const cess = tax * 0.04;
+  const totalTax = tax + cess;
+  const netIncome = income - totalTax;
+
+  result.innerHTML = `
+    <strong>Taxable Income:</strong> ₹${taxableIncome.toLocaleString()}<br>
+    <strong>Income Tax:</strong> ₹${Math.round(tax).toLocaleString()}<br>
+    <strong>Health & Education Cess (4%):</strong> ₹${Math.round(cess).toLocaleString()}<br>
+    <strong>Total Tax Payable:</strong> ₹${Math.round(totalTax).toLocaleString()}<br>
+    <strong>Net Income:</strong> ₹${Math.round(netIncome).toLocaleString()}
+  `;
+}
+
+// THEME TOGGLE
+(function() {
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('themeToggle');
+    const defaultTheme = 'light';
+    const savedTheme = localStorage.getItem('theme') || defaultTheme;
+
+    root.setAttribute('data-theme', savedTheme);
+    toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
+
+    toggleBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'night' ? 'light' : 'night';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+    });
+})();
+</script>
+
+<!-- Structured FAQ JSON-LD for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Which tax regime is better?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you claim high deductions, Old Regime may be better. Otherwise, New Regime usually results in lower tax."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this calculator exact?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This gives an estimate. Actual tax may vary based on surcharge, rebates, and exemptions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is cess mandatory?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. A 4% Health & Education Cess applies on total tax."
+      }
+    }
+  ]
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Online Calculator – Basic & Scientific Calculator | UsedToTools</title>
+  <meta name="description" content="Free online calculator with basic and scientific functions. Perform fast math calculations including addition, subtraction, multiplication, division, trigonometry, and square roots.">
+  <meta name="keywords" content="online calculator, scientific calculator, basic calculator, math calculator, free calculator tool">
+
+  <!-- GLOBAL CSS -->
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    /* =========================
+       CALCULATOR COMPONENT ONLY
+    ========================= */
+
+    .calculator {
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      max-width: 420px;
+    }
+
+    .calc-display {
+      width: 100%;
+      height: 60px;
+      font-size: 1.6rem;
+      padding: 10px;
+      text-align: right;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      margin-bottom: 15px;
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    .calc-toggle {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .calc-toggle button {
+      flex: 1;
+      padding: 8px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      background: var(--border-color);
+    }
+
+    .calc-toggle .active {
+      background: var(--primary-color);
+      color: #fff;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .calc-grid button {
+      padding: 16px;
+      font-size: 1rem;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    .calc-grid button.operator {
+      background: var(--primary-color);
+      color: #fff;
+    }
+
+    .calc-grid button.equal {
+      grid-column: span 2;
+      background: var(--primary-hover);
+      color: #fff;
+    }
+
+    .scientific {
+      display: none;
+      margin-bottom: 10px;
+    }
+
+    .scientific.active {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="../index.html" class="logo">
+      <span class="logo-text">UsedToTools</span>
+    </a>
+
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="/about.html">About</a>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle">🌙 Night</button>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<section class="section">
+  <div class="container page-layout">
+
+    <!-- LEFT COLUMN -->
+    <div class="left-column">
+
+      <h1 class="section-title">Online Calculator</h1>
+      <p class="section-desc">
+        Free online basic and scientific calculator for fast and accurate math calculations.
+      </p>
+
+      <div class="calculator">
+
+        <input type="text" id="display" class="calc-display" readonly />
+
+        <div class="calc-toggle">
+          <button id="basicBtn" class="active">Basic</button>
+          <button id="sciBtn">Scientific</button>
+        </div>
+
+        <!-- SCIENTIFIC -->
+        <div id="scientific" class="scientific">
+          <button onclick="press('Math.sin(')">sin</button>
+          <button onclick="press('Math.cos(')">cos</button>
+          <button onclick="press('Math.tan(')">tan</button>
+          <button onclick="press('Math.sqrt(')">√</button>
+        </div>
+
+        <!-- MAIN GRID -->
+        <div class="calc-grid">
+          <button onclick="clearDisplay()">C</button>
+          <button onclick="press('(')">(</button>
+          <button onclick="press(')')">)</button>
+          <button class="operator" onclick="press('/')">÷</button>
+
+          <button onclick="press('7')">7</button>
+          <button onclick="press('8')">8</button>
+          <button onclick="press('9')">9</button>
+          <button class="operator" onclick="press('*')">×</button>
+
+          <button onclick="press('4')">4</button>
+          <button onclick="press('5')">5</button>
+          <button onclick="press('6')">6</button>
+          <button class="operator" onclick="press('-')">−</button>
+
+          <button onclick="press('1')">1</button>
+          <button onclick="press('2')">2</button>
+          <button onclick="press('3')">3</button>
+          <button class="operator" onclick="press('+')">+</button>
+
+          <button onclick="press('0')">0</button>
+          <button onclick="press('.')">.</button>
+          <button class="equal" onclick="calculate()">=</button>
+        </div>
+
+      </div>
+
+      <!-- SEO CONTENT -->
+      <section class="seo-content">
+        <h2>Free Online Basic and Scientific Calculator</h2>
+        <p>
+          This online calculator allows you to perform basic arithmetic and scientific
+          calculations instantly. It is designed for students, professionals, and anyone
+          who needs quick and accurate math results.
+        </p>
+
+        <h3>Calculator Features</h3>
+        <ul>
+          <li>Basic operations: addition, subtraction, multiplication, division</li>
+          <li>Scientific functions: sine, cosine, tangent, square root</li>
+          <li>Fast, lightweight, and easy to use</li>
+          <li>Works on desktop and mobile devices</li>
+        </ul>
+
+        <h3>Who Can Use This Calculator?</h3>
+        <p>
+          This calculator is useful for students solving math problems, professionals
+          handling quick calculations, and anyone who needs a reliable online calculator
+          without installing apps.
+        </p>
+
+        <h3>Frequently Asked Questions</h3>
+
+        <p><strong>Is this calculator free to use?</strong><br>
+        Yes, this calculator is completely free with no usage limits.</p>
+
+        <p><strong>Does it support scientific calculations?</strong><br>
+        Yes, you can switch to scientific mode to access trigonometric and square root functions.</p>
+
+        <p><strong>Will this calculator work on mobile?</strong><br>
+        Yes, it is fully responsive and works on all modern devices.</p>
+      </section>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-column">
+      <h2 class="section-title">Quick Links</h2>
+      <p class="section-desc">Related tools</p>
+
+      <div class="quick-links">
+        <a href="geometry.html">Geometry Tools</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 UsedToTools</p>
+</footer>
+
+<!-- JS (UNCHANGED) -->
+<script>
+  const display = document.getElementById("display");
+  const sci = document.getElementById("scientific");
+  const basicBtn = document.getElementById("basicBtn");
+  const sciBtn = document.getElementById("sciBtn");
+
+  function press(val) {
+    display.value += val;
+  }
+
+  function clearDisplay() {
+    display.value = "";
+  }
+
+  function calculate() {
+    try {
+      display.value = eval(display.value);
+    } catch {
+      display.value = "Error";
+    }
+  }
+
+  sciBtn.onclick = () => {
+    sci.classList.add("active");
+    sciBtn.classList.add("active");
+    basicBtn.classList.remove("active");
+  };
+
+  basicBtn.onclick = () => {
+    sci.classList.remove("active");
+    basicBtn.classList.add("active");
+    sciBtn.classList.remove("active");
+  };
+
+  (function() {
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('themeToggle');
+
+    const defaultTheme = 'light';
+    const savedTheme = localStorage.getItem('theme') || defaultTheme;
+    root.setAttribute('data-theme', savedTheme);
+    toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
+
+    toggleBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'night' ? 'light' : 'night';
+
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+    });
+  })();
+</script>
+
+</body>
+</html>
