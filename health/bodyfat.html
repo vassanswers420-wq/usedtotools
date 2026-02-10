@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Body Fat Calculator | UsedToTools</title>
+  <meta name="description" content="Accurately calculate your body fat percentage using the U.S. Navy method. Ideal for men and women to track health and fitness progress.">
+  <meta name="keywords" content="Body Fat Calculator, Body Fat Percentage, Health Tools, Fitness, Health Calculator, U.S. Navy Method">
+
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .tool-box {
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    .form-group { margin-bottom: 15px; }
+
+    .btn {
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      background: var(--primary-color);
+      color: #fff;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 1rem;
+    }
+
+    .seo-block { margin-top: 40px; }
+    .faq { margin-top: 30px; }
+    .faq h3 { margin-bottom: 8px; }
+    .faq p { margin-bottom: 15px; }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="../index.html" class="logo">
+      <img src="../assets/logo-day.png" class="logo-img logo-day">
+      <img src="../assets/logo-night.png" class="logo-img logo-night">
+      <span class="logo-text">UsedToTools</span>
+    </a>
+
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle">🌙 Night</button>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<section class="section">
+  <div class="container page-layout">
+
+    <div class="left-column">
+
+      <h1 class="section-title">Body Fat Calculator</h1>
+      <p class="section-desc">
+        Estimate your body fat percentage quickly and easily using our calculator. Track your fitness, health progress, and achieve your goals with accurate results.
+      </p>
+
+      <div class="tool-box">
+
+        <div class="form-group">
+          <label><strong>Gender</strong></label>
+          <select id="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label><strong>Height (cm)</strong></label>
+          <input id="height" type="number">
+        </div>
+
+        <div class="form-group">
+          <label><strong>Neck Circumference (cm)</strong></label>
+          <input id="neck" type="number">
+        </div>
+
+        <div class="form-group">
+          <label><strong>Waist Circumference (cm)</strong></label>
+          <input id="waist" type="number">
+        </div>
+
+        <div class="form-group" id="hipGroup" style="display:none;">
+          <label><strong>Hip Circumference (cm)</strong></label>
+          <input id="hip" type="number">
+        </div>
+
+        <button class="btn" onclick="calculateBodyFat()">Calculate Body Fat</button>
+
+        <div class="result" id="result"></div>
+
+      </div>
+
+      <!-- SEO Content Block -->
+      <div class="seo-block">
+        <h2>Why Track Your Body Fat Percentage?</h2>
+        <p>Monitoring your body fat percentage is an important step in understanding your overall health. Unlike weight alone, body fat gives a better picture of fitness, helping you make informed decisions about diet, exercise, and lifestyle changes.</p>
+
+        <h2>How This Calculator Works</h2>
+        <p>Our Body Fat Calculator uses the U.S. Navy method, which is a trusted and accurate approach for estimating body fat. Simply input your measurements, and the calculator will provide your body fat percentage instantly.</p>
+
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq">
+          <h3>1. Is this calculator suitable for both men and women?</h3>
+          <p>Yes, it works for both genders. Female users will also input hip measurements for accurate results.</p>
+
+          <h3>2. How often should I check my body fat?</h3>
+          <p>It's recommended to track body fat monthly or quarterly, depending on your fitness goals.</p>
+
+          <h3>3. Can I rely solely on this calculator for health monitoring?</h3>
+          <p>This calculator provides an estimate. For comprehensive health assessment, consult a healthcare professional.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <aside class="right-column">
+      <h2 class="section-title">Health Tools</h2>
+      <div class="quick-links">
+        <a href="bmi.html">BMI Calculator</a>
+        <a href="bmr.html">BMR Calculator</a>
+        <a href="tdee.html">TDEE Calculator</a>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 UsedToTools · Body Fat Calculator</p>
+</footer>
+
+<script>
+const genderSelect = document.getElementById("gender");
+const hipGroup = document.getElementById("hipGroup");
+const heightInput = document.getElementById("height");
+const neckInput = document.getElementById("neck");
+const waistInput = document.getElementById("waist");
+const hipInput = document.getElementById("hip");
+
+genderSelect.addEventListener("change", () => {
+  hipGroup.style.display = genderSelect.value === "female" ? "block" : "none";
+});
+
+function calculateBodyFat() {
+  const gender = genderSelect.value;
+  const height = +heightInput.value;
+  const neck = +neckInput.value;
+  const waist = +waistInput.value;
+  const hip = +hipInput.value;
+  const result = document.getElementById("result");
+
+  if (!height || !neck || !waist || (gender === "female" && !hip)) {
+    result.innerHTML = "Please fill all required fields.";
+    return;
+  }
+
+  let bodyFat;
+
+  if (gender === "male") {
+    bodyFat =
+      495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height)) - 450;
+  } else {
+    bodyFat =
+      495 / (1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.221 * Math.log10(height)) - 450;
+  }
+
+  result.innerHTML = `
+    <strong>Body Fat Percentage:</strong> ${bodyFat.toFixed(1)}%
+  `;
+}
+
+(function() {
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('themeToggle');
+
+    const defaultTheme = 'light';
+    const savedTheme = localStorage.getItem('theme') || defaultTheme;
+    root.setAttribute('data-theme', savedTheme);
+    toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
+
+    toggleBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'night' ? 'light' : 'night';
+
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+    });
+})();
+</script>
+
+</body>
+</html>

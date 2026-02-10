@@ -525,8 +525,8 @@ html[data-theme="night"] .logo-night {
     font-size: 1.3rem;
   }
   /* Hide search button on all screens */
-	.search-container .search-btn {
+   .search-container .search-btn {
   display: none;
-}
+  }
 }
 

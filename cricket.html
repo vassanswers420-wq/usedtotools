@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cricket Tools & Stats | UsedToTools</title>
+  <meta name="description" content="Cricket tools including match predictions, head to head stats, player statistics and score calculators.">
+  <meta name="keywords" content="Cricket Stats, Match Prediction, Head to Head Cricket, Player Stats">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <img src="assets/logo-day.png" class="logo-img logo-day" alt="UsedToTools">
+      <img src="assets/logo-night.png" class="logo-img logo-night" alt="UsedToTools">
+      <span class="logo-text">UsedToTools</span>
+    </a>
+
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+
+    </nav>
+
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <h1>Cricket Tools & Stats</h1>
+  <p>
+    Match predictions, head-to-head stats, player analysis and cricket utilities —
+    all in one place.
+  </p>
+
+  <a href="#tools" class="btn btn-primary">Explore Cricket Tools</a>
+</section>
+
+<!-- ================= TOOLS ================= -->
+<section class="section" id="tools">
+  <div class="container">
+
+    <h2 class="section-title">Cricket Utilities</h2>
+    <p class="section-desc">
+      Analyze matches, players and teams using smart cricket tools.
+    </p>
+
+    <div class="card-grid">
+
+      <a href="cricket/head-to-head.html" class="card-link">
+        <div class="card">
+          <h3 class="card-title">🤝 Head to Head Stats</h3>
+          <p class="card-desc">
+            Compare two teams with historical wins, runs and records.
+          </p>
+        </div>
+      </a>
+
+      <a href="cricket/match-prediction.html" class="card-link">
+        <div class="card">
+          <h3 class="card-title">🔮 Match Prediction</h3>
+          <p class="card-desc">
+            Predict match outcome using form, venue and toss factors.
+          </p>
+        </div>
+      </a>
+
+      <a href="cricket/player-stats.html" class="card-link">
+        <div class="card">
+          <h3 class="card-title">👤 Player Statistics</h3>
+          <p class="card-desc">
+            Batting, bowling and all-rounder performance analysis.
+          </p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= INFO ================= -->
+<section class="section section-muted">
+  <div class="container">
+    <h2 class="section-title">Why Use Our Cricket Tools?</h2>
+    <p class="section-desc">
+      Built for fans, analysts and fantasy players.
+      Fast, lightweight and easy to understand.
+    </p>
+
+    <ul class="feature-list">
+      <li>✔ Simple & clean UI</li>
+      <li>✔ Mobile-friendly</li>
+      <li>✔ No login required</li>
+      <li>✔ Free to use</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <p>© 2026 UsedToTools · Cricket Tools & Statistics</p>
+</footer>
+
+<!-- ================= THEME SCRIPT ================= -->
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.setAttribute(
+    "data-theme",
+    html.getAttribute("data-theme") === "night" ? "light" : "night"
+  );
+}
+</script>
+
+</body>
+</html>
