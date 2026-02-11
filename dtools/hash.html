@@ -4,9 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Hash Generator (MD5, SHA1, SHA256, SHA512) | UsedToTools</title>
-<meta name="description" content="Free online hash generator. Generate MD5, SHA-1, SHA-256 and SHA-512 hashes instantly.">
-<meta name="keywords" content="Hash Generator, MD5 Generator, SHA256 Generator, SHA512 Generator">
+<title>Free Hash Generator Online (MD5, SHA-1, SHA-256, SHA-512) | UsedToTools</title>
+<meta name="description" content="Free online hash generator tool. Generate MD5, SHA-1, SHA-256, and SHA-512 hashes instantly. Fast, secure, and developer-friendly cryptographic hash utility by UsedToTools.">
+<meta name="keywords" content="Hash Generator, MD5 Generator, SHA1 Generator, SHA256 Generator, SHA512 Generator, Online Hash Tool, Cryptographic Hash">
+<meta name="robots" content="index, follow">
+<meta name="author" content="UsedToTools">
+
+<link rel="canonical" href="https://usedtotools.com/dtools/hash.html">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Free Hash Generator (MD5, SHA-256, SHA-512) | UsedToTools">
+<meta property="og:description" content="Generate MD5, SHA-1, SHA-256 and SHA-512 hashes instantly with this free online hash generator.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://usedtotools.com/dtools/hash.html">
+<meta property="og:site_name" content="UsedToTools">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Free Hash Generator Online | UsedToTools">
+<meta name="twitter:description" content="Generate MD5, SHA-1, SHA-256 and SHA-512 hashes instantly. Free developer tool.">
 
 <link rel="stylesheet" href="../style.css">
 
@@ -75,6 +91,30 @@ small { opacity: 0.8; }
 
 .content-section { margin-top: 40px; }
 </style>
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Hash Generator",
+  "operatingSystem": "All",
+  "applicationCategory": "DeveloperApplication",
+  "description": "Online hash generator supporting MD5, SHA-1, SHA-256 and SHA-512 algorithms.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "url": "https://usedtotools.com/dtools/hash.html",
+  "publisher": {
+    "@type": "Organization",
+    "name": "UsedToTools",
+    "url": "https://usedtotools.com/"
+  }
+}
+</script>
+
 </head>
 
 <body>
@@ -82,13 +122,13 @@ small { opacity: 0.8; }
 <!-- ================= HEADER ================= -->
 <header class="header">
   <div class="container header-inner">
-    <a href="../index.html" class="logo">
+    <a href="https://usedtotools.com/" class="logo">
       <span class="logo-text">UsedToTools</span>
     </a>
 
     <nav class="nav">
-      <a href="../index.html">Home</a>
-      <a href="../about.html">About</a>
+      <a href="https://usedtotools.com/">Home</a>
+      <a href="https://usedtotools.com/about.html">About</a>
     </nav>
 
     <button class="theme-toggle" id="themeToggle">🌙 Night</button>
@@ -104,7 +144,7 @@ small { opacity: 0.8; }
 
 <h1 class="section-title">Hash Generator</h1>
 <p class="section-desc">
-Generate cryptographic hashes using MD5, SHA-1, SHA-256, or SHA-512.
+Generate cryptographic hashes using MD5, SHA-1, SHA-256, or SHA-512 instantly with this free online hash generator tool.
 </p>
 
 <div class="tool-box">
@@ -144,8 +184,7 @@ Generate cryptographic hashes using MD5, SHA-1, SHA-256, or SHA-512.
 <section class="content-section">
 <h2>What is a Hash?</h2>
 <p>
-A hash function converts input data into a fixed-length string.
-Even a small change in input produces a completely different hash.
+A cryptographic hash function converts input data into a fixed-length string. Even a small change in the original input produces a completely different hash output, making hash functions useful for data integrity and verification.
 </p>
 
 <h2>Common Uses</h2>
@@ -161,13 +200,13 @@ Even a small change in input produces a completely different hash.
 <h2>FAQs</h2>
 
 <h4>Is MD5 secure?</h4>
-<p>No. MD5 is considered broken and should not be used for security purposes.</p>
+<p>No. MD5 is considered cryptographically broken and should not be used for modern security applications.</p>
 
 <h4>Which hash should I use?</h4>
-<p>Use SHA-256 or SHA-512 for modern applications.</p>
+<p>Use SHA-256 or SHA-512 for modern applications requiring strong cryptographic security.</p>
 
 <h4>Can hashes be reversed?</h4>
-<p>No. Hashing is a one-way function.</p>
+<p>No. Cryptographic hashing is a one-way function.</p>
 </section>
 
 </div>
@@ -205,7 +244,6 @@ async function generateHash() {
     return;
   }
 
-  // MD5 fallback (not in Web Crypto)
   if (algo === "MD5") {
     output.value = md5(text);
     return;
@@ -218,7 +256,6 @@ async function generateHash() {
   output.value = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
-/* Simple MD5 implementation (client-side) */
 function md5(str) {
   return CryptoJS.MD5(str).toString();
 }
@@ -231,36 +268,21 @@ function clearText() {
 (function() {
     const root = document.documentElement;
     const toggleBtn = document.getElementById('themeToggle');
-
-    // Default theme if none is saved
     const defaultTheme = 'light';
-
-    // Apply saved theme or default
     const savedTheme = localStorage.getItem('theme') || defaultTheme;
     root.setAttribute('data-theme', savedTheme);
     toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
 
-    // Toggle function
     toggleBtn.addEventListener('click', () => {
       const current = root.getAttribute('data-theme');
       const next = current === 'night' ? 'light' : 'night';
-
       root.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
       toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
     });
-
-    // Optional: Watch for system preference and apply if first visit
-    // const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    // if (!localStorage.getItem('theme')) {
-    //   const initial = prefersDark ? 'night' : 'light';
-    //   root.setAttribute('data-theme', initial);
-    //   toggleBtn.textContent = initial === 'night' ? '☀️ Day' : '🌙 Night';
-    // }
-  })();
+})();
 </script>
 
-<!-- MD5 LIB (lightweight) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
 </body>

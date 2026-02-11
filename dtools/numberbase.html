@@ -7,8 +7,41 @@
 <title>Number Base Converter | UsedToTools</title>
 <meta name="description" content="Free number base converter. Convert between binary, decimal, octal, and hexadecimal instantly.">
 <meta name="keywords" content="Binary Converter, Decimal Converter, Hex Converter, Number Base Converter">
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="https://usedtotools.com/dtools/numberbase.html">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Number Base Converter | UsedToTools">
+<meta property="og:description" content="Convert numbers between binary, decimal, octal, and hexadecimal instantly with our free number base converter.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://usedtotools.com/dtools/numberbase.html">
+<meta property="og:site_name" content="UsedToTools">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Number Base Converter | UsedToTools">
+<meta name="twitter:description" content="Convert binary, decimal, octal, and hexadecimal numbers instantly.">
 
 <link rel="stylesheet" href="../style.css">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Number Base Converter",
+  "url": "https://usedtotools.com/dtools/numberbase.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "description": "Convert numbers between binary, decimal, octal, and hexadecimal instantly.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "UsedToTools",
+    "url": "https://usedtotools.com"
+  }
+}
+</script>
 
 <style>
 .tool-box {
@@ -78,13 +111,13 @@ input, select {
 <!-- HEADER -->
 <header class="header">
   <div class="container header-inner">
-    <a href="../index.html" class="logo">
+    <a href="https://usedtotools.com/" class="logo">
       <span class="logo-text">UsedToTools</span>
     </a>
 
     <nav class="nav">
-      <a href="../index.html">Home</a>
-      <a href="../about.html">About</a>
+      <a href="https://usedtotools.com/">Home</a>
+      <a href="https://usedtotools.com/about.html">About</a>
     </nav>
 
     <button class="theme-toggle" id="themeToggle">🌙 Night</button>
@@ -138,6 +171,19 @@ Convert numbers between binary, decimal, octal, and hexadecimal.
   <li>Octal (Base 8)</li>
   <li>Hexadecimal (Base 16)</li>
 </ul>
+</section>
+
+<section class="content-section">
+<h2>Related Developer Tools</h2>
+<p>
+You may also find these tools useful:
+<a href="https://usedtotools.com/dtools/json.html">JSON Formatter</a>,
+<a href="https://usedtotools.com/dtools/base64.html">Base64 Encoder</a>,
+<a href="https://usedtotools.com/dtools/ipsubnet.html">IP Subnet Calculator</a>,
+<a href="https://usedtotools.com/dtools/hash.html">Hash Generator</a>,
+<a href="https://usedtotools.com/dtools/timesmp.html">Timestamp Converter</a>,
+and <a href="https://usedtotools.com/dtools/uuid.html">UUID Generator</a>.
+</p>
 </section>
 
 </div>
@@ -201,15 +247,12 @@ function clearAll() {
     const root = document.documentElement;
     const toggleBtn = document.getElementById('themeToggle');
 
-    // Default theme if none is saved
     const defaultTheme = 'light';
-
-    // Apply saved theme or default
     const savedTheme = localStorage.getItem('theme') || defaultTheme;
+
     root.setAttribute('data-theme', savedTheme);
     toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
 
-    // Toggle function
     toggleBtn.addEventListener('click', () => {
       const current = root.getAttribute('data-theme');
       const next = current === 'night' ? 'light' : 'night';
@@ -218,15 +261,7 @@ function clearAll() {
       localStorage.setItem('theme', next);
       toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
     });
-
-    // Optional: Watch for system preference and apply if first visit
-    // const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    // if (!localStorage.getItem('theme')) {
-    //   const initial = prefersDark ? 'night' : 'light';
-    //   root.setAttribute('data-theme', initial);
-    //   toggleBtn.textContent = initial === 'night' ? '☀️ Day' : '🌙 Night';
-    // }
-  })();
+})();
 </script>
 
 </body>

@@ -1,58 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Root -->
-  <url><loc>https://usedtotools.com/</loc></url>
-  <url><loc>https://usedtotools.com/about.html</loc></url>
-  <url><loc>https://usedtotools.com/cricket.html</loc></url>
-  <url><loc>https://usedtotools.com/dtools.html</loc></url>
-  <url><loc>https://usedtotools.com/emipage.html</loc></url>
-  <url><loc>https://usedtotools.com/finance.html</loc></url>
-  <url><loc>https://usedtotools.com/health.html</loc></url>
-  <url><loc>https://usedtotools.com/lifestyle.html</loc></url>
-  <url><loc>https://usedtotools.com/math-tools.html</loc></url>
+  <!-- Home page -->
+  <url>
+    <loc>https://usedtotools.com/</loc>
+  </url>
 
-  <!-- Cricket -->
-  <url><loc>https://usedtotools.com/cricket/head-to-head.html</loc></url>
-  <url><loc>https://usedtotools.com/cricket/match-prediction.html</loc></url>
-  <url><loc>https://usedtotools.com/cricket/player-stats.html</loc></url>
+  <!-- Finance Calculators -->
+  <url>
+    <loc>https://usedtotools.com/calculator.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/emi-calculators.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/gst.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/fuel.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/incometax.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/SWP-Calculator.html</loc>
+  </url>
+  <!-- Developer Tools (Dtools) -->
+  <url>
+    <loc>https://usedtotools.com/Dtools/base64.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/Dtools/hash.html</loc>
+  </url>
+   <url>
+    <loc>https://usedtotools.com/Dtools/JSON-Formatter-Validator.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/Dtools/number-base-converter.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/Dtools/uuid.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/Dtools/ip-subnet.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/Dtools/timestamp.html</loc>
+  </url>
+  <!-- emi-calculators -->
+   <url>
+    <loc>https://usedtotools.com/other/car-loan.html</loc>
+  </url> 
+   <url>
+    <loc>https://usedtotools.com/other/home-loan-emi.html</loc>
+  </url> 
+   <url>
+    <loc>https://usedtotools.com/other/intrest-rate.html</loc>
+  </url> 
+  <url>
+    <loc>https://usedtotools.com/other/loan-amount.html</loc>
+  </url>  
+   <url>
+    <loc>https://usedtotools.com/other/loantenure.html</loc>
+  </url> 
+   <url>
+    <loc>https://usedtotools.com/other/personalloan.html</loc>
+  </url> 
+   <url>
+    <loc>https://usedtotools.com/other/standard-emi.html</loc>
+  </url> 
+  
+  <!-- Other Calculators -->
+  <url>
+    <loc>https://usedtotools.com/other/bmi.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/other/password-strength.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/other/unit-converter.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/other/typing-speed.html</loc>
+  </url>
 
-  <!-- Dev Tools -->
-  <url><loc>https://usedtotools.com/dtools/base64.html</loc></url>
-  <url><loc>https://usedtotools.com/dtools/hash.html</loc></url>
-  <url><loc>https://usedtotools.com/dtools/ipsubnet.html</loc></url>
-  <url><loc>https://usedtotools.com/dtools/json.html</loc></url>
-  <url><loc>https://usedtotools.com/dtools/numberbase.html</loc></url>
-  <url><loc>https://usedtotools.com/dtools/timesmp.html</loc></url>
-  <url><loc>https://usedtotools.com/dtools/uuid.html</loc></url>
-
-  <!-- Finance -->
-  <url><loc>https://usedtotools.com/finance/carloan.html</loc></url>
-  <url><loc>https://usedtotools.com/finance/emi.html</loc></url>
-  <url><loc>https://usedtotools.com/finance/gst.html</loc></url>
-  <url><loc>https://usedtotools.com/finance/homeloan.html</loc></url>
-  <url><loc>https://usedtotools.com/finance/incometax.html</loc></url>
-  <url><loc>https://usedtotools.com/finance/loan-tenure-amount.html</loc></url>
-  <url><loc>https://usedtotools.com/finance/personalloan.html</loc></url>
-  <url><loc>https://usedtotools.com/finance/sip.html</loc></url>
-  <url><loc>https://usedtotools.com/finance/swp.html</loc></url>
-
-  <!-- Health -->
-  <url><loc>https://usedtotools.com/health/bmi.html</loc></url>
-  <url><loc>https://usedtotools.com/health/bmr.html</loc></url>
-  <url><loc>https://usedtotools.com/health/bodyfat.html</loc></url>
-  <url><loc>https://usedtotools.com/health/tdee.html</loc></url>
-
-  <!-- Math -->
-  <url><loc>https://usedtotools.com/math/basic-calc.html</loc></url>
-  <url><loc>https://usedtotools.com/math/geometry.html</loc></url>
-
-  <!-- Other -->
-  <url><loc>https://usedtotools.com/other/agecalc.html</loc></url>
-  <url><loc>https://usedtotools.com/other/countdown.html</loc></url>
-  <url><loc>https://usedtotools.com/other/fuel.html</loc></url>
-  <url><loc>https://usedtotools.com/other/passwordstrength.html</loc></url>
-  <url><loc>https://usedtotools.com/other/typingspeed.html</loc></url>
-  <url><loc>https://usedtotools.com/other/unitconverter.html</loc></url>
+  <!-- Cricket Tools -->
+  <url>
+    <loc>https://usedtotools.com/cricket/player-stats.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/cricket/match-prediction.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/cricket/head-to-head.html</loc>
+  </url>
 
 </urlset>
