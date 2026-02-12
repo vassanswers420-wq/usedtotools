@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Position Size Calculator – Risk Management Tool | UsedToTools</title>
+<meta name="description" content="Free position size calculator to manage trading risk. Calculate how many shares to buy based on account size, risk percentage and stop loss.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://usedtotools.com/finance/position-size-calculator.html">
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.calculator-box {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 25px;
+  box-shadow: var(--shadow);
+}
+
+/* Form */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  color: var(--muted-text);
+  font-weight: 500;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper span {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  color: var(--muted-text);
+}
+
+.input-prefix { left: 12px; }
+.input-suffix { right: 12px; }
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--text-color);
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.input-wrapper input {
+  padding-left: 32px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(11,184,132,0.15);
+  outline: none;
+}
+
+/* Button */
+.btn-primary {
+  width: 100%;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+/* Results */
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.result-card {
+  background: var(--bg-color);
+  padding: 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.result-card strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  color: var(--muted-text);
+}
+
+.result-card div {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Risk Meter */
+.risk-meter {
+  width: 100%;
+  height: 10px;
+  background: #eee;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+.risk-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, green, orange, red);
+  transition: width 0.5s ease;
+}
+
+@media (max-width: 600px) {
+  .calculator-box {
+    padding: 18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="../index.html" class="logo">
+      <span class="logo-text">UsedToTools.com</span>
+    </a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle">🌙 Night</button>
+  </div>
+</header>
+
+<section class="section">
+<div class="container page-layout">
+
+<div class="left-column">
+
+<h1 class="section-title">Position Size Calculator</h1>
+<p class="section-desc">
+Calculate the optimal number of shares or units to buy based on your account size and risk tolerance.
+</p>
+
+<div class="calculator-box">
+
+<div class="form-grid">
+
+  <div class="form-group">
+    <label>Account Size</label>
+    <div class="input-wrapper">
+      <span class="input-prefix" id="currencySymbol">₹</span>
+      <input type="number" id="account" placeholder="100000">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Risk Per Trade (%)</label>
+    <div class="input-wrapper">
+      <input type="number" id="riskPercent" placeholder="1">
+      <span class="input-suffix">%</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Entry Price</label>
+    <input type="number" id="entry" placeholder="500">
+  </div>
+
+  <div class="form-group">
+    <label>Stop Loss Price</label>
+    <input type="number" id="stop" placeholder="480">
+  </div>
+
+  <div class="form-group">
+    <label>Currency</label>
+    <select id="currency">
+      <option value="₹">INR (₹)</option>
+      <option value="$">USD ($)</option>
+      <option value="€">EUR (€)</option>
+      <option value="£">GBP (£)</option>
+    </select>
+  </div>
+
+</div>
+
+<button class="btn btn-primary" onclick="calculatePosition()">Calculate Position Size</button>
+
+<div class="risk-meter">
+  <div class="risk-bar" id="riskBar"></div>
+</div>
+
+<div class="result-grid">
+
+<div class="result-card">
+<strong>Risk Amount</strong>
+<div id="riskAmount">—</div>
+</div>
+
+<div class="result-card">
+<strong>Risk per Unit</strong>
+<div id="riskPerShare">—</div>
+</div>
+
+<div class="result-card">
+<strong>Position Size</strong>
+<div id="positionSize">—</div>
+</div>
+
+</div>
+
+</div>
+
+<section class="seo-content" style="margin-top:40px;">
+<h2>What Is a Position Size Calculator?</h2>
+<p>
+A position size calculator helps traders determine how many shares or units to buy
+based on their account size and risk management strategy. Proper position sizing
+is essential to protect capital and avoid large losses.
+</p>
+
+<h3>Why Position Sizing Matters</h3>
+<ul>
+<li>Prevents over-leveraging</li>
+<li>Controls emotional trading</li>
+<li>Maintains consistent risk per trade</li>
+<li>Supports long-term profitability</li>
+</ul>
+</section>
+
+</div>
+
+<aside class="right-column">
+<h2 class="section-title">Finance Tools</h2>
+<div class="quick-links">
+  <a href="swp.html">SWP Calculator</a>
+  <a href="emipage.html">EMI Calculators</a>
+  <a href="Gst.html">GST Calculator</a>
+  <a href="incometax.html">Income Tax Calculator</a>
+ 
+</div>
+</aside>
+
+</div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 UsedToTools.com · Finance Tools</p>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const root = document.documentElement;
+  const toggleBtn = document.getElementById('themeToggle');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  root.setAttribute('data-theme', savedTheme);
+  toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
+
+  toggleBtn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'night' ? 'light' : 'night';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+  });
+})();
+
+document.getElementById("currency").addEventListener("change", function() {
+  document.getElementById("currencySymbol").textContent = this.value;
+});
+
+function calculatePosition() {
+  const account = Number(document.getElementById('account').value);
+  const riskPercent = Number(document.getElementById('riskPercent').value);
+  const entry = Number(document.getElementById('entry').value);
+  const stop = Number(document.getElementById('stop').value);
+  const currency = document.getElementById("currency").value;
+
+  if (!account || !riskPercent || !entry || !stop) {
+    alert("Please enter all values");
+    return;
+  }
+
+  const riskAmount = account * (riskPercent / 100);
+  const riskPerShare = Math.abs(entry - stop);
+  const positionSize = Math.floor(riskAmount / riskPerShare);
+
+  document.getElementById('riskAmount').textContent = currency + riskAmount.toFixed(2);
+  document.getElementById('riskPerShare').textContent = currency + riskPerShare.toFixed(2);
+  document.getElementById('positionSize').textContent = positionSize + " units";
+
+  const riskLevel = Math.min(riskPercent * 10, 100);
+  document.getElementById("riskBar").style.width = riskLevel + "%";
+}
+</script>
+
+</body>
+</html>
