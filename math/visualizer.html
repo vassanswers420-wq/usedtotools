@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Data Visualizer – Chart & Graph Generator | UsedToTools</title>
+<meta name="description" content="Free online data visualizer to create bar charts, line graphs and pie charts. Supports multiple datasets, units, date selectors and download as JPEG or PDF.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://usedtotools.com/math/visualizer.html">
+
+<link rel="stylesheet" href="../style.css">
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+<style>
+.visualizer-box {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 25px;
+  box-shadow: var(--shadow);
+}
+
+.selector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.visualizer-box textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  resize: vertical;
+  margin-bottom: 15px;
+  background: var(--surface-color);
+  color: var(--text-color);
+}
+
+.download-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+canvas {
+  margin-top: 25px;
+}
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: 400px;
+  margin-top: 25px;
+}
+
+.chart-wrapper canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (max-width: 768px) {
+  .chart-wrapper {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-wrapper {
+    height: 250px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="../index.html" class="logo">
+      <img src="../assets/logo-day.png" class="logo-img logo-day" alt="UsedToTools">
+      <img src="../assets/logo-night.png" class="logo-img logo-night" alt="UsedToTools">
+      <span class="logo-text">UsedToTools.com</span>
+    </a>
+
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle">🌙 Night</button>
+  </div>
+</header>
+
+<section class="section">
+<div class="container page-layout">
+
+<!-- LEFT COLUMN -->
+<div class="left-column">
+
+<h1 class="section-title">Professional Data Visualizer</h1>
+<p class="section-desc">
+Generate advanced charts with multiple datasets, custom axis labels, units and export options.
+</p>
+
+<div class="visualizer-box">
+
+<div class="selector-grid">
+
+<select id="chartType">
+  <option value="bar">Bar Chart</option>
+  <option value="line">Line Graph</option>
+  <option value="pie">Pie Chart</option>
+</select>
+
+<input type="text" id="xLabel" placeholder="X Axis Label">
+<input type="text" id="yLabel" placeholder="Y Axis Label">
+
+<select id="unit">
+  <option value="">No Unit</option>
+  <option value="₹">Rupees (₹)</option>
+  <option value="$">Dollar ($)</option>
+  <option value="%">Percentage (%)</option>
+  <option value="kg">Kilograms (kg)</option>
+</select>
+
+<input type="month" id="dateSelector">
+
+</div>
+
+<label><strong>Dataset 1 Values</strong></label>
+<textarea id="data1" rows="3" placeholder="10,20,30,40"></textarea>
+
+<label><strong>Dataset 2 Values (Optional)</strong></label>
+<textarea id="data2" rows="3" placeholder="15,25,35,45"></textarea>
+
+<label><strong>X-axis Labels</strong></label>
+<textarea id="labelsInput" rows="3" placeholder="Jan,Feb,Mar,Apr"></textarea>
+
+<button class="btn btn-primary" onclick="generateChart()">Generate Chart</button>
+
+<div class="download-buttons">
+  <button class="btn btn-outline" onclick="downloadJPEG()">Download JPEG</button>
+  <button class="btn btn-outline" onclick="downloadPDF()">Download PDF</button>
+</div>
+
+<div class="chart-wrapper">
+  <canvas id="myChart"></canvas>
+</div>
+
+
+</div>
+
+<!-- WHAT IS THIS SECTION -->
+<section class="seo-content" style="margin-top:40px;">
+<h2>What Is This Data Visualizer Tool?</h2>
+<p>
+This professional data visualizer allows you to convert numerical values into clear,
+interactive charts and graphs. Whether you are analyzing financial data, school
+statistics, business growth, or survey results, this tool helps transform raw
+numbers into meaningful visual insights.
+</p>
+
+<h3>Features of This Chart Generator</h3>
+<ul>
+<li>Bar, Line and Pie chart options</li>
+<li>Multiple dataset comparison</li>
+<li>Custom X and Y axis labels</li>
+<li>Unit selection support</li>
+<li>Date selector for time-based analysis</li>
+<li>Download charts as JPEG or PDF</li>
+<li>Mobile responsive and fast performance</li>
+</ul>
+
+<h3>Who Can Use This?</h3>
+<p>
+Students, teachers, business analysts, marketers, financial planners and
+research professionals can use this tool to create quick visual presentations
+without needing complex software.
+</p>
+</section>
+
+</div>
+
+<!-- RIGHT COLUMN -->
+<div class="right-column">
+  <h2 class="section-title">Quick Links</h2>
+  <div class="quick-links">
+    <a href="geometry.html">Geometry Calculator</a>
+    <a href="Basic-calc.html">Basic Calculator</a>
+  </div>
+</div>
+
+</div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 UsedToTools.com · Data Visualizer Tool</p>
+  </div>
+</footer>
+
+<script>
+/* THEME */
+(function() {
+  const root = document.documentElement;
+  const toggleBtn = document.getElementById('themeToggle');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  root.setAttribute('data-theme', savedTheme);
+  toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
+
+  toggleBtn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'night' ? 'light' : 'night';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+  });
+})();
+
+let chart;
+
+function generateChart() {
+  const type = document.getElementById('chartType').value;
+  const labels = document.getElementById('labelsInput').value.split(',');
+  const data1 = document.getElementById('data1').value.split(',').map(Number);
+  const data2Raw = document.getElementById('data2').value;
+  const data2 = data2Raw ? data2Raw.split(',').map(Number) : null;
+  const yLabel = document.getElementById('yLabel').value;
+  const unit = document.getElementById('unit').value;
+
+  const ctx = document.getElementById('myChart').getContext('2d');
+  if (chart) chart.destroy();
+
+  const datasets = [{
+      label: "Dataset 1",
+      data: data1,
+      borderWidth: 2
+  }];
+
+  if (data2) {
+    datasets.push({
+      label: "Dataset 2",
+      data: data2,
+      borderWidth: 2
+    });
+  }
+
+  chart = new Chart(ctx, {
+    type: type,
+    data: { labels: labels, datasets: datasets },
+	options: {
+	  responsive: true,
+	  maintainAspectRatio: false,
+      scales: type !== 'pie' ? {
+        y: {
+          title: {
+            display: true,
+            text: unit ? yLabel + " (" + unit + ")" : yLabel
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: document.getElementById('xLabel').value
+          }
+        }
+      } : {}
+    }
+  });
+}
+
+function downloadJPEG() {
+  const link = document.createElement('a');
+  link.download = 'chart.jpeg';
+  link.href = document.getElementById('myChart').toDataURL('image/jpeg', 1.0);
+  link.click();
+}
+
+function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF();
+  const imgData = document.getElementById('myChart').toDataURL('image/jpeg', 1.0);
+  pdf.addImage(imgData, 'JPEG', 10, 10, 180, 100);
+  pdf.save("chart.pdf");
+}
+</script>
+
+</body>
+</html>

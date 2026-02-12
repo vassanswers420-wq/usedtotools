@@ -69,7 +69,16 @@
    <url>
     <loc>https://usedtotools.com/other/standard-emi.html</loc>
   </url> 
-  
+    <!-- Math Calculators -->
+	<url>
+    <loc>https://usedtotools.com/math/Basic-calc.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/math/Geometry.html</loc>
+  </url>
+  <url>
+    <loc>https://usedtotools.com/math/visualizer.html</loc>
+  </url>
   <!-- Other Calculators -->
   <url>
     <loc>https://usedtotools.com/other/bmi.html</loc>
