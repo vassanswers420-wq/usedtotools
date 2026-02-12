@@ -398,7 +398,7 @@ html[data-theme="night"] .logo-night {
   display: flex;
   gap: 20px;
   width: max-content;
-  animation: shelf-scroll 25s linear infinite;
+  animation: shelf-scroll 12s linear infinite;
 }
 
 /* Pause on hover */
