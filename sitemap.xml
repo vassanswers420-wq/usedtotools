@@ -25,6 +25,9 @@
     <loc>https://usedtotools.com/emipage.html</loc>
   </url>
   <url>
+    <loc>https://usedtotools.com/imaging.html</loc>
+  </url>
+  <url>
     <loc>https://usedtotools.com/dtools.html</loc>
   </url>
   <url>
@@ -127,8 +130,10 @@
   <url>
     <loc>https://usedtotools.com/cricket/tdee.html</loc>
   </url>
-  
-  
+   <!-- image Calculators -->
+  <url>
+    <loc>https://usedtotools.com/image/photo-editor.html</loc>
+  </url>
    <!--finacne Tools -->
   <url>
     <loc>https://usedtotools.com/cricket/Gst.html</loc>

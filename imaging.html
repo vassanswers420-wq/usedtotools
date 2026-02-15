@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Image Tools | UsedToTools</title>
+  <meta name="description" content="Free online image tools including editor, resize, compress and convert utilities.">
+  <meta name="keywords" content="Image Tools, Image Editor, Resize Image, Compress Image">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <img src="assets/logo-day.png" class="logo-img logo-day" alt="UsedToTools">
+      <img src="assets/logo-night.png" class="logo-img logo-night" alt="UsedToTools">
+      <span class="logo-text">UsedToTools</span>
+    </a>
+
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <h1>Image Tools</h1>
+  <p>
+    Edit, resize, compress and enhance images directly in your browser —
+    fast, secure and free.
+  </p>
+
+  <a href="#tools" class="btn btn-primary">Explore Image Tools</a>
+</section>
+
+<!-- ================= TOOLS ================= -->
+<section class="section" id="tools">
+  <div class="container">
+
+    <h2 class="section-title">Image Utilities</h2>
+    <p class="section-desc">
+      Powerful image editing tools that work instantly in your browser.
+    </p>
+
+    <div class="card-grid">
+
+      <a href="image/photo-editor.html" class="card-link">
+        <div class="card">
+          <h3 class="card-title">🖼 Image Editor</h3>
+          <p class="card-desc">
+            Adjust brightness, contrast, blur, rotate and download instantly.
+          </p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= INFO ================= -->
+<section class="section section-muted">
+  <div class="container">
+    <h2 class="section-title">Why Use Our Image Tools?</h2>
+    <p class="section-desc">
+      Lightweight, private and runs completely in your browser.
+    </p>
+
+    <ul class="feature-list">
+      <li>✔ No upload required</li>
+      <li>✔ Mobile-friendly</li>
+      <li>✔ Fast processing</li>
+      <li>✔ 100% Free</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <p>© 2026 UsedToTools · Image Tools</p>
+</footer>
+
+<!-- ================= THEME SCRIPT ================= -->
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.setAttribute(
+    "data-theme",
+    html.getAttribute("data-theme") === "night" ? "light" : "night"
+  );
+}
+</script>
+
+</body>
+</html>

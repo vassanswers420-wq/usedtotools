@@ -1,0 +1,619 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Free Online Image Editor – Rotate, Blur, Adjust Filters | UsedToTools</title>
+  <meta name="description" content="Free online image editor. Adjust brightness, contrast, blur, saturation, grayscale, rotate and flip images instantly. No upload required.">
+  <meta name="robots" content="index, follow">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://usedtotools.com/tools/image-editor.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free Online Image Editor | UsedToTools">
+  <meta property="og:description" content="Edit images online instantly. Adjust filters, rotate, flip and download your edited image.">
+  <meta property="og:url" content="https://usedtotools.com/tools/image-editor.html">
+  <meta property="og:site_name" content="UsedToTools">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Free Online Image Editor | UsedToTools">
+  <meta name="twitter:description" content="Online image editor with filters and rotation tools. Free and fast.">
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- WebApplication Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Image Editor",
+    "url": "https://usedtotools.com/tools/image-editor.html",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All",
+    "description": "Online image editor with filters, brightness, contrast, blur, rotate and flip features.",
+    "provider": {
+      "@type": "Organization",
+      "name": "UsedToTools",
+      "url": "https://usedtotools.com/"
+    }
+  }
+  </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+/* =========================
+   IMAGE EDITOR ONLY
+   Fully Scoped – Safe
+========================= */
+
+.image-editor-container,
+.image-editor-container * {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.image-editor-container {
+    max-width: 800px;
+    background-color: #F3F4FC;
+    padding: 30px;
+    box-shadow: 1px 1px 10px #00000052;
+    border-radius: 12px;
+    margin-top: 30px;
+}
+/* Night mode editor background */
+[data-theme="night"] .image-editor-container {
+    background-color: #2a2a2a;   /* Soft dark grey */
+}
+
+/* Disable state */
+.image-editor-container.disable :where(.editor-panel, .save-image, .reset-image){
+    opacity: 0.2;
+}
+
+/* Panel */
+.image-editor-container .editor-panel{
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 15px;
+}
+
+.image-editor-container .editor-panel .rotate{
+    margin-top: 15px;
+}
+
+/* Labels */
+.image-editor-container label {
+    margin-bottom: 5px;
+    display: block;
+    color: var(--muted-text);
+    opacity: 1;
+}
+
+.image-editor-container .filter-info .name,
+.image-editor-container .filter-info .value {
+    color: var(--muted-text);
+}
+
+
+/* Filter Info */
+.image-editor-container .filter-info{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+/* Slider */
+.image-editor-container .slider input{
+    margin-top: 5px;
+    width: 100%;
+    accent-color: #ed7575;
+}
+
+/* Filter Buttons */
+.image-editor-container .editor-panel .filter .options{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.image-editor-container .editor-panel .filter .options button{
+    width: calc(100% / 2 - 3px);
+    padding: 8px;
+    margin-top: 6px;
+    border: 1px solid rgba(0,0,0,0.2);
+    background-color: white;
+    cursor: pointer;
+}
+
+.image-editor-container .editor-panel .filter .options button.active{
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+
+/* Rotate */
+.image-editor-container .rotate .options{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image-editor-container .rotate .options button{
+    cursor: pointer;
+    width: calc(100% / 2 - 3px);
+    padding: 8px;
+    margin-top: 6px;
+    border: 1px solid rgba(0,0,0,0.2);
+}
+
+/* Wrapper */
+.image-editor-container .wrapper{
+    display: flex;
+    gap: 20px;
+}
+
+/* Controls */
+.image-editor-container .controls{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.image-editor-container .controls button{
+    background: var(--btn-bg, #ffffff);
+    color: var(--btn-text, #222);
+    border: 1px solid var(--btn-border, rgba(0,0,0,0.2));
+    padding: 8px 14px;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+/* Hover Effect */
+.image-editor-container .controls button:hover{
+    background: var(--primary-color);
+    color: var(--btn-hover-text, #ffffff);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+.image-editor-container .controls .row{
+    display: flex;
+}
+
+.image-editor-container .save-image{
+    margin-left: 8px;
+}
+
+/* Preview */
+.image-editor-container .preview-image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-editor-container .preview-image img{
+    width: 405px;
+    height: 350px;
+    object-fit: contain;
+}
+
+/* Hide file input */
+.image-editor-container .row input{
+    display: none;
+}
+
+/* Responsive */
+@media screen and (max-width: 760px) {
+  .image-editor-container{
+    padding: 25px;
+    width: 100%;
+  }
+
+  .image-editor-container .wrapper{
+    flex-wrap: wrap-reverse;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .image-editor-container .editor-panel{
+    width: 100%;
+  }
+
+  .image-editor-container .preview-image{
+    width: 100%;
+    margin: 0 0 15px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .image-editor-container .controls{
+    flex-direction: column;
+  }
+
+  .image-editor-container .controls button{
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .image-editor-container .controls .row{
+    width: 100%;
+  }
+
+  .image-editor-container .save-image{
+    margin-left: 0;
+  }
+  .image-editor-container .rotate .options button {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="../index.html" class="logo">
+      <img src="../assets/logo-day.png" class="logo-img logo-day">
+      <img src="../assets/logo-night.png" class="logo-img logo-night">
+      <span class="logo-text">UsedToTools</span>
+    </a>
+
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle">🌙 Night</button>
+  </div>
+</header>
+
+
+<section class="section">
+  <div class="container page-layout">
+
+    <!-- LEFT COLUMN -->
+    <div class="left-column">
+
+      <h1 class="section-title">Free Online Image Editor</h1>
+      <p class="section-desc">
+        Edit images instantly with brightness, contrast, blur, grayscale,
+        saturation and rotation tools. No upload required —
+        everything runs in your browser.
+      </p>
+
+      <!-- IMAGE EDITOR -->
+      <div class="image-editor-container disable">
+
+        <div class="wrapper">
+
+          <div class="editor-panel">
+
+            <div class="filter">
+              <label>Filters</label>
+
+              <div class="options">
+                <button id="brightness" class="active">Brightness</button>
+                <button id="contrast">Contrast</button>
+                <button id="blurs">Blur</button>
+                <button id="grayscale">Grayscale</button>
+                <button id="saturate">Saturate</button>
+                <button id="opacity">Opacity</button>
+              </div>
+
+              <div class="slider">
+                <div class="filter-info">
+                  <p class="name">Brightness</p>
+                  <p class="value">100%</p>
+                </div>
+                <input type="range" min="0" max="200" value="100">
+              </div>
+            </div>
+
+            <div class="rotate">
+              <label>Rotate</label>
+              <div class="options">
+				<button id="left" title="Rotate Left">↻</button>
+				<button id="right" title="Rotate Right">↺</button>
+				<button id="vertical" title="Flip Vertical">⇅</button>
+				<button id="horizontal" title="Flip Horizontal">⇄</button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="preview-image">
+            <img src="../assets/placeholder.png" alt="Image preview">
+          </div>
+
+        </div>
+
+		<div class="controls">
+		  <button class="reset-image">
+			↺ Reset Image
+		  </button>
+
+		  <div class="row">
+			<input type="file" class="inp-file" accept="image/*">
+
+			<button class="choose-image">
+			  🖼 Choose Image
+			</button>
+
+			<button class="save-image">
+			  💾 Save Image
+			</button>
+		  </div>
+		</div>
+
+
+      </div>
+      <!-- END IMAGE EDITOR -->
+<!-- SEO CONTENT -->
+<section class="content-section">
+  <h2>Why Use an Online Image Editor?</h2>
+  <p>
+    An online image editor allows you to quickly adjust brightness,
+    contrast, blur and more without installing heavy software.
+    Perfect for quick edits and instant downloads.
+  </p>
+
+  <h2>Features of This Image Editor</h2>
+  <p>
+    Adjust filters, rotate left or right, flip horizontally or vertically,
+    and download your edited image instantly.
+  </p>
+
+  <h2>Frequently Asked Questions</h2>
+
+  <div class="faq">
+    <h3>1. Does this tool upload my image?</h3>
+    <p>No. All editing happens inside your browser for privacy and speed.</p>
+
+    <h3>2. Can I download the edited image?</h3>
+    <p>Yes. Click the save button to download your edited image instantly.</p>
+
+    <h3>3. Is this tool free?</h3>
+    <p>Yes. All tools on UsedToTools are completely free to use.</p>
+  </div>
+</section>
+
+    </div>
+
+
+    <!-- RIGHT COLUMN -->
+
+
+  </div>
+</section>
+
+
+
+
+<footer class="footer">
+  <p>© 2026 UsedToTools · Image Editor</p>
+</footer>
+
+</body>
+
+
+<!-- =========================
+     THEME TOGGLE SCRIPT
+========================= -->
+<script>
+  (function() {
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('themeToggle');
+
+    const defaultTheme = 'light';
+    const savedTheme = localStorage.getItem('theme') || defaultTheme;
+    root.setAttribute('data-theme', savedTheme);
+    toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
+
+    toggleBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'night' ? 'light' : 'night';
+
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+    });
+  })();
+</script>
+
+
+<!-- =========================
+     IMAGE EDITOR SCRIPT
+========================= -->
+<script>
+const fileInput = document.querySelector(".inp-file");
+const chooseImgBtn = document.querySelector(".choose-image");
+const saveImgBtn = document.querySelector(".save-image");
+const previewImg = document.querySelector(".preview-image img");
+const filterOptions = document.querySelectorAll(".filter button");
+const filterName = document.querySelector(".filter-info .name");
+const filterValue = document.querySelector(".filter-info .value");
+const filterSlider = document.querySelector(".slider input");
+const rotateOptions = document.querySelectorAll(".rotate button");
+const resetBtn = document.querySelector(".reset-image");
+const container = document.querySelector(".image-editor-container");
+
+let brightness = 100,
+    contrast = 100,
+    blurs = 0,
+    grayscale = 0,
+    saturate = 100,
+    opacity = 100;
+
+let rotate = 0,
+    flipHorizontal = 1,
+    flipVertical = 1;
+
+
+// APPLY FILTERS
+const applyFilters = () => {
+  previewImg.style.transform =
+    `rotate(${rotate}deg) scale(${flipHorizontal}, ${flipVertical})`;
+
+  previewImg.style.filter =
+    `brightness(${brightness}%)
+     contrast(${contrast}%)
+     blur(${blurs}px)
+     grayscale(${grayscale}%)
+     saturate(${saturate}%)
+     opacity(${opacity}%)`;
+};
+
+
+// LOAD IMAGE
+fileInput.addEventListener("change", () => {
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  previewImg.src = URL.createObjectURL(file);
+  previewImg.addEventListener("load", () => {
+    container.classList.remove("disable");
+    resetFilters();
+  });
+});
+
+chooseImgBtn.addEventListener("click", () => fileInput.click());
+
+
+// FILTER BUTTON CLICK
+filterOptions.forEach(option => {
+  option.addEventListener("click", () => {
+    document.querySelector(".filter .active").classList.remove("active");
+    option.classList.add("active");
+
+    filterName.innerText = option.innerText;
+
+    if (option.id === "brightness") {
+      filterSlider.max = 200;
+      filterSlider.value = brightness;
+      filterValue.innerText = `${brightness}%`;
+    } else if (option.id === "contrast") {
+      filterSlider.max = 200;
+      filterSlider.value = contrast;
+      filterValue.innerText = `${contrast}%`;
+    } else if (option.id === "blurs") {
+      filterSlider.max = 20;
+      filterSlider.value = blurs;
+      filterValue.innerText = `${blurs}px`;
+    } else if (option.id === "grayscale") {
+      filterSlider.max = 100;
+      filterSlider.value = grayscale;
+      filterValue.innerText = `${grayscale}%`;
+    } else if (option.id === "saturate") {
+      filterSlider.max = 200;
+      filterSlider.value = saturate;
+      filterValue.innerText = `${saturate}%`;
+    } else {
+      filterSlider.max = 100;
+      filterSlider.value = opacity;
+      filterValue.innerText = `${opacity}%`;
+    }
+  });
+});
+
+
+// SLIDER CHANGE
+filterSlider.addEventListener("input", () => {
+  filterValue.innerText =
+    filterSlider.parentElement.querySelector(".name").innerText === "Blur"
+      ? `${filterSlider.value}px`
+      : `${filterSlider.value}%`;
+
+  const selected = document.querySelector(".filter .active").id;
+
+  if (selected === "brightness") brightness = filterSlider.value;
+  else if (selected === "contrast") contrast = filterSlider.value;
+  else if (selected === "blurs") blurs = filterSlider.value;
+  else if (selected === "grayscale") grayscale = filterSlider.value;
+  else if (selected === "saturate") saturate = filterSlider.value;
+  else opacity = filterSlider.value;
+
+  applyFilters();
+});
+
+
+// ROTATE + FLIP
+rotateOptions.forEach(option => {
+  option.addEventListener("click", () => {
+    if (option.id === "left") rotate -= 90;
+    else if (option.id === "right") rotate += 90;
+    else if (option.id === "horizontal") flipHorizontal *= -1;
+    else flipVertical *= -1;
+
+    applyFilters();
+  });
+});
+
+
+// RESET
+function resetFilters() {
+  brightness = 100;
+  contrast = 100;
+  blurs = 0;
+  grayscale = 0;
+  saturate = 100;
+  opacity = 100;
+  rotate = 0;
+  flipHorizontal = 1;
+  flipVertical = 1;
+
+  filterOptions[0].click();
+  applyFilters();
+}
+
+resetBtn.addEventListener("click", resetFilters);
+
+
+// SAVE IMAGE
+saveImgBtn.addEventListener("click", () => {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = previewImg.naturalWidth;
+  canvas.height = previewImg.naturalHeight;
+
+  ctx.filter =
+    `brightness(${brightness}%)
+     contrast(${contrast}%)
+     blur(${blurs}px)
+     grayscale(${grayscale}%)
+     saturate(${saturate}%)
+     opacity(${opacity}%)`;
+
+  ctx.translate(canvas.width / 2, canvas.height / 2);
+  ctx.rotate(rotate * Math.PI / 180);
+  ctx.scale(flipHorizontal, flipVertical);
+
+  ctx.drawImage(
+    previewImg,
+    -canvas.width / 2,
+    -canvas.height / 2,
+    canvas.width,
+    canvas.height
+  );
+
+  const link = document.createElement("a");
+  link.download = "edited-image.png";
+  link.href = canvas.toDataURL();
+  link.click();
+});
+</script>
+
+</body>
+</html>
