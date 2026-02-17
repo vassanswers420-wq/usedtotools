@@ -546,9 +546,10 @@ function drawImage() {
 
     ctx.restore();
 
-    if (filters.pixelate > 0) applyPixelate();
-    if (filters.noise > 0) applyNoise();
-    if (filters.vignette > 0) applyVignette();
+		if (filters.pixelate > 0) applyPixelate(ctx, canvas.width, canvas.height);
+		if (filters.noise > 0) applyNoise(ctx, canvas.width, canvas.height);
+		if (filters.vignette > 0) applyVignette(ctx, canvas.width, canvas.height);
+
 }
 
 
@@ -556,13 +557,11 @@ function drawImage() {
    FILTER & EFFECT BUTTONS
 ===================== */
 
+const allButtons = document.querySelectorAll(".filter-grid button, .effects-grid button");
+
 filterButtons.forEach(btn => {
     btn.addEventListener("click", () => {
-
-        document.querySelectorAll(".filter-grid button").forEach(btn => 
-			btn.classList.remove("active")
-		);
-
+        allButtons.forEach(b => b.classList.remove("active")); // remove from all
         btn.classList.add("active");
 
         filterName.innerText = btn.id;
@@ -576,6 +575,7 @@ filterButtons.forEach(btn => {
         updateSliderLabel(btn.id);
     });
 });
+
 
 slider.addEventListener("input", () => {
     const active = document.querySelector(".active").id;
@@ -745,50 +745,60 @@ rotateBtns.forEach(btn => {
    EFFECTS
 ===================== */
 
-function applyNoise() {
-    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+function applyNoise(ctx, width, height, intensity = filters.noise) {
+    if (intensity <= 0) return;
+
+    const imgData = ctx.getImageData(0, 0, width, height);
     const data = imgData.data;
 
     for (let i = 0; i < data.length; i += 4) {
-        const noise = (Math.random() - 0.5) * filters.noise;
-        data[i] += noise;
-        data[i+1] += noise;
-        data[i+2] += noise;
+        const n = (Math.random() - 0.5) * intensity;
+        data[i] = clamp(data[i] + n);
+        data[i + 1] = clamp(data[i + 1] + n);
+        data[i + 2] = clamp(data[i + 2] + n);
     }
 
     ctx.putImageData(imgData, 0, 0);
 }
 
-function applyPixelate() {
-    const size = Math.max(1, Math.floor(filters.pixelate / 5));
+function applyPixelate(ctx, width, height, pixelSize = filters.pixelate) {
+    const size = Math.max(1, Math.floor(pixelSize / 5));
     if (size <= 1) return;
 
     const tempCanvas = document.createElement("canvas");
     const tempCtx = tempCanvas.getContext("2d");
 
-    tempCanvas.width = canvas.width / size;
-    tempCanvas.height = canvas.height / size;
+    tempCanvas.width = Math.ceil(width / size);
+    tempCanvas.height = Math.ceil(height / size);
 
-    tempCtx.drawImage(canvas, 0, 0, tempCanvas.width, tempCanvas.height);
+    tempCtx.drawImage(ctx.canvas, 0, 0, tempCanvas.width, tempCanvas.height);
 
     ctx.imageSmoothingEnabled = false;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, width, height);
     ctx.drawImage(tempCanvas, 0, 0, tempCanvas.width, tempCanvas.height,
-                  0, 0, canvas.width, canvas.height);
+                  0, 0, width, height);
+
+    ctx.imageSmoothingEnabled = true;
 }
 
-function applyVignette() {
+function applyVignette(ctx, width, height, intensity = filters.vignette) {
+    if (intensity <= 0) return;
+
     const gradient = ctx.createRadialGradient(
-        canvas.width/2, canvas.height/2, 0,
-        canvas.width/2, canvas.height/2,
-        Math.max(canvas.width, canvas.height)/1.2
+        width / 2, height / 2, 0,
+        width / 2, height / 2, Math.max(width, height) / 1.2
     );
 
     gradient.addColorStop(0, "rgba(0,0,0,0)");
-    gradient.addColorStop(1, `rgba(0,0,0,${filters.vignette/100})`);
+    gradient.addColorStop(1, `rgba(0,0,0,${intensity / 100})`);
 
     ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, width, height);
+}
+
+// Helper to avoid colors going <0 or >255
+function clamp(value) {
+    return Math.max(0, Math.min(255, value));
 }
 
 
