@@ -160,14 +160,14 @@
   </url>
 	 <!--trade Tools -->
   <url>
-    <loc>https://usedtotools.com/finance/break-even-calculator</loc>
+    <loc>https://usedtotools.com/trade/break-even-calculator</loc>
   </url> 
 	 
   <url>
-    <loc>https://usedtotools.com/finance/position-size-calculator</loc>
+    <loc>https://usedtotools.com/trade/position-size-calculator</loc>
   </url> 
 <url>
-    <loc>https://usedtotools.com/finance/margin-calculator</loc>
+    <loc>https://usedtotools.com/trade/margin-calculator</loc>
   </url> 
 	 
 </urlset>
