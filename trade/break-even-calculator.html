@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Break-Even Calculator – Find Break Even Point in Units | UsedToTools</title>
+  <meta name="description" content="Free Break-Even Calculator to calculate how many units you need to sell to cover fixed and variable costs. Instantly find your break-even point online.">
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://usedtotools.com/trade/break-even-calculator.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Break-Even Calculator – UsedToTools">
+  <meta property="og:description" content="Calculate your break-even point using fixed cost, selling price, and variable cost. Simple and accurate.">
+  <meta property="og:url" content="https://usedtotools.com/trade/break-even-calculator.html">
+  <meta property="og:site_name" content="UsedToTools">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Break-Even Calculator | UsedToTools">
+  <meta name="twitter:description" content="Instantly calculate your business break-even point online for free.">
+
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .tool-box {
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .tool-box label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    .tool-box input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn {
+      margin-top: 15px;
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      background: var(--primary-color);
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    #breakEvenResult {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="../index.html" class="logo">
+      <img src="../assets/logo-day.png" class="logo-img logo-day" alt="UsedToTools">
+      <img src="../assets/logo-night.png" class="logo-img logo-night" alt="UsedToTools">
+      <span class="logo-text">UsedToTools</span>
+    </a>
+
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle">🌙 Night</button>
+  </div>
+</header>
+
+<!-- ================= CONTENT ================= -->
+<section class="section">
+  <div class="container page-layout">
+
+    <!-- LEFT -->
+    <div class="left-column">
+
+      <h1 class="section-title">Break-Even Calculator</h1>
+      <p class="section-desc">
+        Calculate how many units you must sell to cover all business costs and reach break-even.
+      </p>
+
+      <p>
+        This free online Break-Even Calculator helps businesses determine the minimum number of units
+        required to avoid losses. Enter your fixed costs, selling price per unit,
+        and variable cost per unit to instantly calculate your break-even point.
+      </p>
+
+      <!-- TOOL BOX -->
+      <div class="tool-box">
+        <label>Fixed Costs:</label>
+        <input type="number" id="fixedCost" placeholder="Enter total fixed costs">
+
+        <label>Price Per Unit:</label>
+        <input type="number" id="pricePerUnit" placeholder="Enter selling price per unit">
+
+        <label>Variable Cost Per Unit:</label>
+        <input type="number" id="variableCost" placeholder="Enter variable cost per unit">
+
+        <button class="btn" onclick="calculateBreakEven()">Calculate</button>
+
+        <h3 id="breakEvenResult"></h3>
+      </div>
+
+      <!-- SEO CONTENT -->
+      <section class="content-section">
+        <h2>About This Break-Even Calculator</h2>
+        <p>
+          The break-even point shows when total revenue equals total costs.
+          At this stage, your business is not making a profit or loss.
+          Understanding this metric is essential for financial planning.
+        </p>
+
+        <h3>Break-Even Formula</h3>
+        <p>
+          Break-Even Point (Units) = Fixed Costs ÷ (Selling Price − Variable Cost)
+        </p>
+
+        <h3>Why It Matters</h3>
+        <ul>
+          <li>Helps set realistic sales targets</li>
+          <li>Supports pricing strategy decisions</li>
+          <li>Improves financial forecasting</li>
+          <li>Reduces investment risk</li>
+        </ul>
+      </section>
+
+      <!-- FAQ SECTION -->
+      <section class="content-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <h3>What is a break-even point?</h3>
+        <p>
+          It is the number of units you must sell to cover all costs.
+          Beyond this point, your business begins generating profit.
+        </p>
+
+        <h3>What are fixed costs?</h3>
+        <p>
+          Fixed costs remain constant regardless of production volume,
+          such as rent, salaries, and insurance.
+        </p>
+
+        <h3>What are variable costs?</h3>
+        <p>
+          Variable costs change depending on the number of units produced,
+          such as raw materials or packaging.
+        </p>
+
+        <h3>Can this help with pricing strategy?</h3>
+        <p>
+          Yes. Adjusting the selling price shows how your break-even point changes,
+          helping you choose optimal pricing.
+        </p>
+      </section>
+
+    </div>
+
+    <!-- RIGHT -->
+    <aside class="right-column">
+      <h2 class="section-title">Related Tools</h2>
+      <div class="quick-links">
+        <a href="margin-calculator.html">Margin Calculator</a>
+        <a href="position-size-calculator.html">Position Size calculator</a>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <p>© 2026 UsedToTools</p>
+</footer>
+
+<!-- ================= CALCULATOR SCRIPT ================= -->
+<script>
+function calculateBreakEven() {
+  const fixed = parseFloat(document.getElementById('fixedCost').value);
+  const price = parseFloat(document.getElementById('pricePerUnit').value);
+  const variable = parseFloat(document.getElementById('variableCost').value);
+  const resultEl = document.getElementById('breakEvenResult');
+
+  if (isNaN(fixed) || isNaN(price) || isNaN(variable)) {
+    resultEl.innerText = "Please enter all required values.";
+    return;
+  }
+
+  if (price <= variable) {
+    resultEl.innerText = "Price per unit must be greater than variable cost per unit.";
+    return;
+  }
+
+  if (fixed < 0 || price < 0 || variable < 0) {
+    resultEl.innerText = "Values cannot be negative.";
+    return;
+  }
+
+  const breakEven = fixed / (price - variable);
+  resultEl.innerText = "Break-Even Units: " + Math.ceil(breakEven).toLocaleString();
+}
+</script>
+
+<!-- ================= THEME SCRIPT ================= -->
+<script>
+(function() {
+  const root = document.documentElement;
+  const toggleBtn = document.getElementById('themeToggle');
+
+  const defaultTheme = 'light';
+  const savedTheme = localStorage.getItem('theme') || defaultTheme;
+  root.setAttribute('data-theme', savedTheme);
+  toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
+
+  toggleBtn.addEventListener('click', () => {
+    const current = root.getAttribute('data-theme');
+    const next = current === 'night' ? 'light' : 'night';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+  });
+})();
+</script>
+
+</body>
+</html>

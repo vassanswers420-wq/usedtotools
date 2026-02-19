@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ROI Calculator – Return on Investment Calculator | UsedToTools</title>
+  <meta name="description" content="Free ROI Calculator to calculate Return on Investment percentage. Enter investment amount and return amount to instantly calculate ROI online.">
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://usedtotools.com/finance/roi-calculator.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ROI Calculator – UsedToTools">
+  <meta property="og:description" content="Calculate your Return on Investment (ROI) percentage instantly using our free online tool.">
+  <meta property="og:url" content="https://usedtotools.com/finance/roi-calculator.html">
+  <meta property="og:site_name" content="UsedToTools">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ROI Calculator | UsedToTools">
+  <meta name="twitter:description" content="Instantly calculate ROI percentage online for free.">
+
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .tool-box {
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .tool-box label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    .tool-box input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn {
+      margin-top: 15px;
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      background: var(--primary-color);
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    #roiResult {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="../index.html" class="logo">
+      <img src="../assets/logo-day.png" class="logo-img logo-day" alt="UsedToTools">
+      <img src="../assets/logo-night.png" class="logo-img logo-night" alt="UsedToTools">
+      <span class="logo-text">UsedToTools</span>
+    </a>
+
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle">🌙 Night</button>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container page-layout">
+
+    <div class="left-column">
+
+      <h1 class="section-title">ROI Calculator</h1>
+      <p class="section-desc">
+        Calculate your Return on Investment (ROI) percentage instantly.
+      </p>
+
+      <p>
+        This free online ROI Calculator helps investors, businesses, and individuals
+        measure the profitability of an investment. Simply enter your investment amount
+        and total return amount to calculate ROI percentage.
+      </p>
+
+      <div class="tool-box">
+        <label>Investment Amount:</label>
+        <input type="number" id="investment" placeholder="Enter investment amount">
+
+        <label>Return Amount:</label>
+        <input type="number" id="returnAmount" placeholder="Enter total return amount">
+
+        <button class="btn" onclick="calculateROI()">Calculate ROI</button>
+
+        <h3 id="roiResult"></h3>
+      </div>
+
+      <section class="content-section">
+        <h2>About This ROI Calculator</h2>
+        <p>
+          Return on Investment (ROI) is a financial metric used to evaluate
+          the profitability of an investment. It measures how much profit
+          you earned compared to the amount invested.
+        </p>
+
+        <h3>ROI Formula</h3>
+        <p>
+          ROI = (Return − Investment) ÷ Investment × 100
+        </p>
+
+        <h3>Why ROI Matters</h3>
+        <ul>
+          <li>Evaluate investment performance</li>
+          <li>Compare multiple investment options</li>
+          <li>Make data-driven financial decisions</li>
+          <li>Measure business growth efficiency</li>
+        </ul>
+      </section>
+
+      <section class="content-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <h3>What is a good ROI?</h3>
+        <p>
+          A "good" ROI depends on risk level and industry. Higher ROI usually
+          indicates better profitability, but risk must also be considered.
+        </p>
+
+        <h3>Can ROI be negative?</h3>
+        <p>
+          Yes. If your return amount is less than your investment,
+          ROI will be negative, indicating a loss.
+        </p>
+
+        <h3>Is ROI the same as profit?</h3>
+        <p>
+          No. Profit is the actual gain amount, while ROI expresses
+          profit as a percentage of the investment.
+        </p>
+
+        <h3>Can I use this for stock or business investments?</h3>
+        <p>
+          Yes. This calculator works for stocks, real estate,
+          startups, marketing campaigns, and other investments.
+        </p>
+      </section>
+
+    </div>
+
+    <aside class="right-column">
+      <h2 class="section-title">Related Tools</h2>
+      <div class="quick-links">
+		  <a href="sip.html">SIP Calculator</a>
+		  <a href="../emipage.html">EMI Calculators</a>
+		  <a href="Gst.html">GST Calculator</a>
+		  <a href="incometax.html">Income Tax Calculator</a>
+		  <a href="swp.html">SWP Calculator</a>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© 2026 UsedToTools</p>
+</footer>
+
+<script>
+function calculateROI() {
+  const investment = parseFloat(document.getElementById('investment').value);
+  const returns = parseFloat(document.getElementById('returnAmount').value);
+  const resultEl = document.getElementById('roiResult');
+
+  if (isNaN(investment) || isNaN(returns)) {
+    resultEl.innerText = "Please enter valid numbers.";
+    return;
+  }
+
+  if (investment <= 0) {
+    resultEl.innerText = "Investment amount must be greater than zero.";
+    return;
+  }
+
+  const roi = ((returns - investment) / investment) * 100;
+
+  resultEl.innerText =
+    "ROI: " + roi.toFixed(2) + "%";
+}
+</script>
+
+<script>
+(function() {
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('themeToggle');
+
+    const defaultTheme = 'light';
+    const savedTheme = localStorage.getItem('theme') || defaultTheme;
+    root.setAttribute('data-theme', savedTheme);
+    toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
+
+    toggleBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'night' ? 'light' : 'night';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+    });
+})();
+</script>
+
+</body>
+</html>
