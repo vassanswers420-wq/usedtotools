@@ -1,0 +1,365 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Free GST Invoice Generator – Create & Download Tax Invoice Online | UsedToTools</title>
+
+  <meta name="description" content="Generate professional GST invoices online for free. Add items, calculate CGST & SGST automatically, and download invoice as PDF or Excel. Simple and fast invoice maker tool.">
+
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://usedtotools.com/category/tool-name.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free GST Invoice Generator – Create Tax Invoice Online">
+<meta property="og:description" content="Create GST compliant invoices online. Auto calculate tax, download PDF & Excel, and print instantly. 100% free invoice generator.">
+<meta property="og:url" content="https://usedtotools.com/business/gst-invoice-generator.html">
+  <meta property="og:site_name" content="UsedToTools">
+
+  <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Free GST Invoice Generator | UsedToTools">
+<meta name="twitter:description" content="Create GST invoices online with automatic tax calculation and PDF download.">
+
+
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    .tool-box {
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      background: var(--primary-color);
+      color: #fff;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="../index.html" class="logo">
+      <img src="../assets/logo-day.png" class="logo-img logo-day" alt="UsedToTools">
+      <img src="../assets/logo-night.png" class="logo-img logo-night" alt="UsedToTools">
+      <span class="logo-text">UsedToTools</span>
+    </a>
+
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle">🌙 Night</button>
+  </div>
+</header>
+
+<!-- ================= CONTENT ================= -->
+<section class="section">
+  <div class="container page-layout">
+
+    <!-- LEFT -->
+    <div class="left-column">
+
+      <h1 class="section-title">Free GST Invoice Generator</h1>
+
+      <p class="section-desc">
+Create professional GST-compliant invoices online with automatic CGST and SGST calculation. Download as PDF or Excel instantly.
+</p>
+
+
+      <p>
+Our free GST invoice generator helps businesses, shop owners, freelancers, and service providers create professional tax invoices in seconds. Add your business details, client information, and items — and the tool will automatically calculate GST, CGST, SGST, subtotal, and grand total. No registration required.
+</p>
+
+
+      <!-- TOOL BOX (EMPTY TEMPLATE AREA) -->
+	<div class="tool-box">
+
+	  <h3>Business Details</h3>
+	  <input type="file" id="logoUpload">
+	  <input type="text" id="shopName" placeholder="Shop / Business Name">
+	  <input type="text" id="gstin" placeholder="GSTIN Number">
+	  <input type="text" id="shopAddress" placeholder="Business Address">
+
+	  <h3>Invoice Details</h3>
+	  <input type="text" id="invoiceNumber" placeholder="Invoice Number (Auto if empty)">
+	  <input type="date" id="invoiceDate">
+
+	  <h3>Client Details</h3>
+	  <input type="text" id="clientName" placeholder="Client Name">
+	  <input type="text" id="clientAddress" placeholder="Client Address">
+
+	  <h3>Add Item</h3>
+	  <input type="text" id="itemDesc" placeholder="Item Description">
+	  <input type="text" id="hsnCode" placeholder="HSN / SAC Code">
+	  <input type="number" id="quantity" placeholder="Quantity">
+	  <input type="number" id="price" placeholder="Price per Unit">
+
+	  <button class="btn" onclick="addItem()">Add Item</button>
+
+	  <table id="itemTable">
+		<thead>
+		  <tr>
+			<th>Description</th>
+			<th>HSN</th>
+			<th>Qty</th>
+			<th>Price</th>
+			<th>Total</th>
+		  </tr>
+		</thead>
+		<tbody></tbody>
+	  </table>
+
+	  <h3>GST</h3>
+	  <select id="gstRate">
+		<option value="0">0%</option>
+		<option value="5">5%</option>
+		<option value="12">12%</option>
+		<option value="18" selected>18%</option>
+		<option value="28">28%</option>
+	  </select>
+
+	  <br><br>
+	  <button class="btn" onclick="generateInvoice()">Generate Invoice</button>
+	  <button class="btn" onclick="window.print()">Print</button>
+	  <button class="btn" onclick="downloadPDF()">Download PDF</button>
+	  <button class="btn" onclick="exportExcel()">Export Excel</button>
+	  <button class="btn" onclick="saveInvoice()">Save Invoice</button>
+
+	  <h3>Digital Signature</h3>
+	  <input type="file" id="signatureUpload">
+
+	  <div id="invoicePreview" style="margin-top:30px;"></div>
+
+	</div>
+
+
+      <!-- SEO CONTENT -->
+      <section class="content-section">
+        <h2>About This GST Invoice Generator</h2>
+<p>
+This online GST invoice generator is designed for Indian businesses that need fast and accurate invoice creation. It automatically calculates GST based on selected tax rates (0%, 5%, 12%, 18%, or 28%) and splits the tax into CGST and SGST as per standard billing rules.
+</p>
+
+<h3>How It Works</h3>
+<p>
+Enter your business details, GSTIN, client information, and invoice items. The system calculates subtotal, GST amount, CGST, SGST, and grand total automatically. You can then print the invoice or download it as a PDF or Excel file.
+</p>
+
+<h3>Why Use This Tool?</h3>
+<ul>
+  <li>Automatic GST calculation</li>
+  <li>Professional invoice preview</li>
+  <li>Download as PDF or Excel</li>
+  <li>No signup required</li>
+  <li>Works on mobile and desktop</li>
+</ul>
+
+      </section>
+
+      <!-- FAQ SECTION -->
+      <section class="content-section">
+        <h2>Frequently Asked Questions</h2>
+
+<h3>Is this GST invoice generator free?</h3>
+<p>Yes, this tool is completely free and does not require registration.</p>
+
+<h3>Does it calculate CGST and SGST automatically?</h3>
+<p>Yes. Once you select the GST rate, the system automatically splits the tax into CGST and SGST.</p>
+
+<h3>Can I download the invoice as PDF?</h3>
+<p>Yes, you can download the invoice as a PDF file or export it as an Excel file.</p>
+
+<h3>Is my invoice data stored?</h3>
+<p>No. All calculations are performed in your browser. Your data is not stored on any server.</p>
+
+      </section>
+
+    </div>
+
+    <!-- RIGHT -->
+    <aside class="right-column">
+      <h2 class="section-title">Related Tools</h2>
+      <div class="quick-links">
+<a href="#">EMI Calculator</a>
+  <a href="#">GST Calculator</a>
+  <a href="#">Profit Margin Calculator</a>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <p>© 2026 UsedToTools</p>
+</footer>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+(function() {
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('themeToggle');
+
+    const defaultTheme = 'light';
+    const savedTheme = localStorage.getItem('theme') || defaultTheme;
+    root.setAttribute('data-theme', savedTheme);
+    toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
+
+    toggleBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'night' ? 'light' : 'night';
+
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+    });
+})();
+
+let items = [];
+let logoBase64 = "";
+let signatureBase64 = "";
+
+logoUpload.addEventListener('change', function(e){
+  const reader = new FileReader();
+  reader.onload = () => logoBase64 = reader.result;
+  reader.readAsDataURL(e.target.files[0]);
+});
+
+signatureUpload.addEventListener('change', function(e){
+  const reader = new FileReader();
+  reader.onload = () => signatureBase64 = reader.result;
+  reader.readAsDataURL(e.target.files[0]);
+});
+
+function addItem() {
+  const desc = itemDesc.value;
+  const hsn = hsnCode.value;
+  const qty = parseFloat(quantity.value);
+  const priceVal = parseFloat(price.value);
+
+  if (!desc || !qty || !priceVal) return alert("Fill item details");
+
+  const total = qty * priceVal;
+  items.push({ desc, hsn, qty, priceVal, total });
+
+  document.querySelector("#itemTable tbody").innerHTML += `
+    <tr>
+      <td>${desc}</td>
+      <td>${hsn}</td>
+      <td>${qty}</td>
+      <td>${priceVal.toFixed(2)}</td>
+      <td>${total.toFixed(2)}</td>
+    </tr>`;
+
+  itemDesc.value = "";
+  hsnCode.value = "";
+  quantity.value = "";
+  price.value = "";
+}
+
+function generateInvoice() {
+  let invoiceNo = invoiceNumber.value || "INV-" + Date.now();
+  const shop = shopName.value;
+  const gst = gstin.value;
+  const address = shopAddress.value;
+  const client = clientName.value;
+  const clientAddr = clientAddress.value;
+  const date = invoiceDate.value || new Date().toISOString().split('T')[0];
+  const gstRate = parseFloat(gstRateSelect.value || document.getElementById("gstRate").value);
+
+  let subtotal = items.reduce((sum, i) => sum + i.total, 0);
+  let gstAmount = subtotal * (gstRate / 100);
+  let cgst = gstAmount / 2;
+  let sgst = gstAmount / 2;
+  let grandTotal = subtotal + gstAmount;
+
+  let rows = items.map(i => `
+    <tr>
+      <td>${i.desc}</td>
+      <td>${i.hsn}</td>
+      <td>${i.qty}</td>
+      <td>${i.priceVal.toFixed(2)}</td>
+      <td>${i.total.toFixed(2)}</td>
+    </tr>
+  `).join("");
+
+  invoicePreview.innerHTML = `
+    <div id="invoicePDF" style="padding:20px;">
+      ${logoBase64 ? `<img src="${logoBase64}" style="max-height:80px;"><br>` : ""}
+      <h2>${shop}</h2>
+      <p>${address}</p>
+      <p><strong>GSTIN:</strong> ${gst}</p>
+      <hr>
+      <p><strong>Invoice No:</strong> ${invoiceNo}</p>
+      <p><strong>Date:</strong> ${date}</p>
+      <p><strong>Bill To:</strong> ${client}</p>
+      <p>${clientAddr}</p>
+
+      <table border="1" style="width:100%; border-collapse:collapse;">
+        <tr>
+          <th>Description</th>
+          <th>HSN</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+        ${rows}
+      </table>
+
+      <h3>Subtotal: ₹${subtotal.toFixed(2)}</h3>
+      <p>CGST (${gstRate/2}%): ₹${cgst.toFixed(2)}</p>
+      <p>SGST (${gstRate/2}%): ₹${sgst.toFixed(2)}</p>
+      <h2>Grand Total: ₹${grandTotal.toFixed(2)}</h2>
+
+      ${signatureBase64 ? `<br><img src="${signatureBase64}" style="max-height:60px;"><br><strong>Authorized Signature</strong>` : ""}
+    </div>
+  `;
+}
+
+function downloadPDF() {
+  const element = document.getElementById("invoicePDF");
+  html2pdf().from(element).save("invoice.pdf");
+}
+
+function exportExcel() {
+  let data = [
+    ["Description","HSN","Qty","Price","Total"],
+    ...items.map(i => [i.desc, i.hsn, i.qty, i.priceVal, i.total])
+  ];
+
+  let ws = XLSX.utils.aoa_to_sheet(data);
+  let wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Invoice");
+  XLSX.writeFile(wb, "invoice.xlsx");
+}
+
+function saveInvoice() {
+  const invoiceData = {
+    shop: shopName.value,
+    client: clientName.value,
+    items,
+    date: new Date()
+  };
+  localStorage.setItem("lastInvoice", JSON.stringify(invoiceData));
+  alert("Invoice Saved in Browser!");
+}
+</script>
+
+
+</body>
+</html>
