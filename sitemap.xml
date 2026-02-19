@@ -119,16 +119,16 @@
 
   <!--health Tools -->
   <url>
-    <loc>https://usedtotools.com/cricket/bmi</loc>
+    <loc>https://usedtotools.com/health/bmi</loc>
   </url>
   <url>
-    <loc>https://usedtotools.com/cricket/bmr</loc>
+    <loc>https://usedtotools.com/health/bmr</loc>
   </url>
   <url>
-    <loc>https://usedtotools.com/cricket/bodyfat</loc>
+    <loc>https://usedtotools.com/health/bodyfat</loc>
   </url>
   <url>
-    <loc>https://usedtotools.com/cricket/tdee</loc>
+    <loc>https://usedtotools.com/health/tdee</loc>
   </url>
    <!-- image Calculators -->
   <url>
@@ -158,9 +158,16 @@
   <url>
     <loc>https://usedtotools.com/business/gst-invoice-generator</loc>
   </url>
+	 <!--trade Tools -->
+  <url>
+    <loc>https://usedtotools.com/finance/break-even-calculator</loc>
+  </url> 
 	 
-	 
-	 
-	 
+  <url>
+    <loc>https://usedtotools.com/finance/position-size-calculator</loc>
+  </url> 
+<url>
+    <loc>https://usedtotools.com/finance/margin-calculator</loc>
+  </url> 
 	 
 </urlset>
