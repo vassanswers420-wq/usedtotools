@@ -42,6 +42,86 @@
       color: #fff;
       font-size: 0.95rem;
     }
+	/* ================= PRINT STYLES ================= */
+	@media print {
+
+	  body * {
+		visibility: hidden;
+	  }
+
+	  #invoicePDF, #invoicePDF * {
+		visibility: visible;
+	  }
+
+	  #invoicePDF {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+	  }
+
+	  .print-brand {
+		position: fixed;
+		bottom: 5px;
+		right: 10px;
+		font-size: 10px;
+		color: #888;
+	  }
+	  @page {
+		  margin: 10mm;
+		}
+		/* ================= PROFESSIONAL INVOICE STYLE ================= */
+
+	.invoice-container {
+	  width: 210mm;
+	  min-height: 297mm;
+	  margin: auto;
+	  padding: 20mm;
+	  background: #fff;
+	  font-family: Arial, sans-serif;
+	  color: #000;
+	  position: relative;
+	}
+
+	.invoice-header {
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: flex-start;
+	}
+
+	.invoice-table {
+	  width: 100%;
+	  border-collapse: collapse;
+	  margin-top: 20px;
+	}
+
+	.invoice-table th,
+	.invoice-table td {
+	  border: 1px solid #000;
+	  padding: 8px;
+	  text-align: center;
+	}
+
+	.invoice-summary {
+	  margin-top: 20px;
+	  text-align: right;
+	}
+
+	.amount-words {
+	  margin-top: 15px;
+	  font-style: italic;
+	}
+
+	.watermark {
+	  position: absolute;
+	  top: 40%;
+	  left: 20%;
+	  font-size: 70px;
+	  color: rgba(0,0,0,0.05);
+	  transform: rotate(-30deg);
+	  pointer-events: none;
+	}
+	}
   </style>
 </head>
 
@@ -195,9 +275,8 @@ Enter your business details, GSTIN, client information, and invoice items. The s
     <aside class="right-column">
       <h2 class="section-title">Related Tools</h2>
       <div class="quick-links">
-<a href="#">EMI Calculator</a>
-  <a href="#">GST Calculator</a>
-  <a href="#">Profit Margin Calculator</a>
+<a href="../emipage.html">EMI Calculator</a>
+  <a href="../finance/Gst.html">GST Calculator</a>
       </div>
     </aside>
 
@@ -211,6 +290,20 @@ Enter your business details, GSTIN, client information, and invoice items. The s
 
 <!-- ================= SCRIPT ================= -->
 <script>
+
+const invoicePreview = document.getElementById("invoicePreview");
+const itemDesc = document.getElementById("itemDesc");
+const hsnCode = document.getElementById("hsnCode");
+const quantity = document.getElementById("quantity");
+const price = document.getElementById("price");
+const shopName = document.getElementById("shopName");
+const gstin = document.getElementById("gstin");
+const shopAddress = document.getElementById("shopAddress");
+const clientName = document.getElementById("clientName");
+const clientAddress = document.getElementById("clientAddress");
+const invoiceNumber = document.getElementById("invoiceNumber");
+const invoiceDate = document.getElementById("invoiceDate");
+
 (function() {
     const root = document.documentElement;
     const toggleBtn = document.getElementById('themeToggle');
@@ -234,25 +327,53 @@ let items = [];
 let logoBase64 = "";
 let signatureBase64 = "";
 
-logoUpload.addEventListener('change', function(e){
+/* ================= NUMBER TO WORDS ================= */
+function numberToWords(num) {
+  const a = ["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten",
+  "Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"];
+  const b = ["","","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"];
+
+  if (num === 0) return "Zero";
+
+  if (num < 20) return a[num];
+  if (num < 100)
+    return b[Math.floor(num/10)] + " " + a[num%10];
+  if (num < 1000)
+    return a[Math.floor(num/100)] + " Hundred " + numberToWords(num%100);
+  if (num < 100000)
+    return numberToWords(Math.floor(num/1000)) + " Thousand " + numberToWords(num%1000);
+  if (num < 10000000)
+    return numberToWords(Math.floor(num/100000)) + " Lakh " + numberToWords(num%100000);
+
+  return numberToWords(Math.floor(num/10000000)) + " Crore " + numberToWords(num%10000000);
+}
+
+/* ================= FILE UPLOADS ================= */
+document.getElementById("logoUpload").addEventListener('change', function(e){
+  if (!e.target.files[0]) return;
   const reader = new FileReader();
   reader.onload = () => logoBase64 = reader.result;
   reader.readAsDataURL(e.target.files[0]);
 });
 
-signatureUpload.addEventListener('change', function(e){
+document.getElementById("signatureUpload").addEventListener('change', function(e){
+  if (!e.target.files[0]) return;
   const reader = new FileReader();
   reader.onload = () => signatureBase64 = reader.result;
   reader.readAsDataURL(e.target.files[0]);
 });
 
+/* ================= ADD ITEM ================= */
 function addItem() {
   const desc = itemDesc.value;
   const hsn = hsnCode.value;
   const qty = parseFloat(quantity.value);
   const priceVal = parseFloat(price.value);
 
-  if (!desc || !qty || !priceVal) return alert("Fill item details");
+  if (!desc || !qty || !priceVal) {
+    alert("Fill item details");
+    return;
+  }
 
   const total = qty * priceVal;
   items.push({ desc, hsn, qty, priceVal, total });
@@ -272,7 +393,14 @@ function addItem() {
   price.value = "";
 }
 
+/* ================= GENERATE INVOICE ================= */
 function generateInvoice() {
+
+  if (items.length === 0) {
+    alert("Add at least one item");
+    return;
+  }
+
   let invoiceNo = invoiceNumber.value || "INV-" + Date.now();
   const shop = shopName.value;
   const gst = gstin.value;
@@ -280,7 +408,7 @@ function generateInvoice() {
   const client = clientName.value;
   const clientAddr = clientAddress.value;
   const date = invoiceDate.value || new Date().toISOString().split('T')[0];
-  const gstRate = parseFloat(gstRateSelect.value || document.getElementById("gstRate").value);
+  const gstRate = parseFloat(document.getElementById("gstRate").value);
 
   let subtotal = items.reduce((sum, i) => sum + i.total, 0);
   let gstAmount = subtotal * (gstRate / 100);
@@ -299,43 +427,71 @@ function generateInvoice() {
   `).join("");
 
   invoicePreview.innerHTML = `
-    <div id="invoicePDF" style="padding:20px;">
-      ${logoBase64 ? `<img src="${logoBase64}" style="max-height:80px;"><br>` : ""}
-      <h2>${shop}</h2>
-      <p>${address}</p>
-      <p><strong>GSTIN:</strong> ${gst}</p>
-      <hr>
-      <p><strong>Invoice No:</strong> ${invoiceNo}</p>
-      <p><strong>Date:</strong> ${date}</p>
-      <p><strong>Bill To:</strong> ${client}</p>
-      <p>${clientAddr}</p>
+  <div id="invoicePDF" class="invoice-container">
 
-      <table border="1" style="width:100%; border-collapse:collapse;">
-        <tr>
-          <th>Description</th>
-          <th>HSN</th>
-          <th>Qty</th>
-          <th>Price</th>
-          <th>Total</th>
-        </tr>
-        ${rows}
-      </table>
+    <div class="watermark">${shop || "INVOICE"}</div>
 
-      <h3>Subtotal: ₹${subtotal.toFixed(2)}</h3>
+    <div class="invoice-header">
+      <div>
+        ${logoBase64 ? `<img src="${logoBase64}" style="max-height:80px;"><br>` : ""}
+        <h2>${shop}</h2>
+        <p>${address}</p>
+        <p><strong>GSTIN:</strong> ${gst}</p>
+      </div>
+      <div>
+        <h3>Tax Invoice</h3>
+        <p><strong>Invoice No:</strong> ${invoiceNo}</p>
+        <p><strong>Date:</strong> ${date}</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <h4>Bill To:</h4>
+    <p><strong>${client}</strong></p>
+    <p>${clientAddr}</p>
+
+    <table class="invoice-table">
+      <tr>
+        <th>Description</th>
+        <th>HSN</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Total</th>
+      </tr>
+      ${rows}
+    </table>
+
+    <div class="invoice-summary">
+      <p><strong>Subtotal:</strong> ₹${subtotal.toFixed(2)}</p>
       <p>CGST (${gstRate/2}%): ₹${cgst.toFixed(2)}</p>
       <p>SGST (${gstRate/2}%): ₹${sgst.toFixed(2)}</p>
       <h2>Grand Total: ₹${grandTotal.toFixed(2)}</h2>
-
-      ${signatureBase64 ? `<br><img src="${signatureBase64}" style="max-height:60px;"><br><strong>Authorized Signature</strong>` : ""}
     </div>
+
+    <div class="amount-words">
+      Amount in Words: Rupees ${numberToWords(Math.round(grandTotal))} Only
+    </div>
+
+    ${signatureBase64 ? `<br><br><img src="${signatureBase64}" style="max-height:60px;"><br><strong>Authorized Signature</strong>` : ""}
+
+    <div class="print-brand">usedtotools.com</div>
+
+  </div>
   `;
 }
 
+/* ================= PDF ================= */
 function downloadPDF() {
   const element = document.getElementById("invoicePDF");
+  if (!element) {
+    alert("Please generate invoice first.");
+    return;
+  }
   html2pdf().from(element).save("invoice.pdf");
 }
 
+/* ================= EXCEL ================= */
 function exportExcel() {
   let data = [
     ["Description","HSN","Qty","Price","Total"],
@@ -348,6 +504,7 @@ function exportExcel() {
   XLSX.writeFile(wb, "invoice.xlsx");
 }
 
+/* ================= SAVE ================= */
 function saveInvoice() {
   const invoiceData = {
     shop: shopName.value,
