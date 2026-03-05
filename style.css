@@ -1,31 +1,7 @@
 /* =========================
    USEDTOTOOLS – INDEX CSS
 ========================= */
-/* ================= SOCIAL LINKS ================= */
 
-.social-links{
-    margin-top:15px;
-}
-
-.social-links a{
-    display:inline-block;
-    padding:8px 14px;
-    background:#E1306C;
-    color:white;
-    text-decoration:none;
-    border-radius:6px;
-    font-size:14px;
-    font-weight:600;
-    transition:all 0.25s ease;
-}
-
-.social-links a:hover{
-    background:#c72a5f;
-    transform:translateY(-2px);
-}
-.footer .social-links{
-    text-align:center;
-}
 /* ---------- RESET ---------- */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -501,7 +477,31 @@ html[data-theme="night"] .logo-night {
 .search-result-item {
   user-select: none;
 }
+/* ================= SOCIAL LINKS ================= */
 
+.social-links{
+    margin-top:15px;
+}
+
+.social-links a{
+    display:inline-block;
+    padding:8px 14px;
+    background:#E1306C;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+    font-size:14px;
+    font-weight:600;
+    transition:all 0.25s ease;
+}
+
+.social-links a:hover{
+    background:#c72a5f;
+    transform:translateY(-2px);
+}
+.footer .social-links{
+    text-align:center;
+}
 /* =========================
    THEME COLORS
 ========================= */
