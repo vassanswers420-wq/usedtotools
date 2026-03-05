@@ -14,7 +14,7 @@
     <meta name="author" content="Elie Habib" />
     <meta name="theme-color" content="#0a0f0a" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://worldmonitor.app/" />
+    <link rel="canonical" href="https://usedtotools.com/worldmonitor/" />
 
     <!-- Additional Search Discovery -->
     <meta name="application-name" content="World Monitor" />
@@ -26,10 +26,10 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://worldmonitor.app/" />
+    <meta property="og:url" content="https://usedtotools.com/worldmonitor/" />
     <meta property="og:title" content="World Monitor - Real-Time Global Intelligence Dashboard" />
     <meta property="og:description" content="Real-time global intelligence dashboard with live news, markets, military tracking, infrastructure monitoring, and geopolitical data. OSINT in one view." />
-    <meta property="og:image" content="https://worldmonitor.app/favico/og-image.png" />
+    <meta property="og:image" content="https://usedtotools.com/worldmonitor/favico/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="World Monitor" />
@@ -37,10 +37,10 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://worldmonitor.app/" />
+    <meta name="twitter:url" content="https://usedtotools.com/worldmonitor/" />
     <meta name="twitter:title" content="World Monitor - Real-Time Global Intelligence Dashboard" />
     <meta name="twitter:description" content="Real-time global intelligence dashboard with live news, markets, military tracking, infrastructure monitoring, and geopolitical data. OSINT in one view." />
-    <meta name="twitter:image" content="https://worldmonitor.app/favico/og-image.png" />
+    <meta name="twitter:image" content="https://usedtotools.com/worldmonitor/favico/og-image.png" />
     <meta name="twitter:site" content="@worldmonitorapp" />
     <meta name="twitter:creator" content="@eliehabib" />
 
@@ -51,7 +51,7 @@
       "@type": "WebApplication",
       "name": "World Monitor",
       "alternateName": "WorldMonitor",
-      "url": "https://worldmonitor.app/",
+      "url": "https://usedtotools.com/worldmonitor/",
       "description": "AI-powered real-time global intelligence dashboard with live news, markets, military tracking, infrastructure monitoring, and geopolitical data.",
       "applicationCategory": "UtilitiesApplication",
       "operatingSystem": "Web Browser",
@@ -78,16 +78,16 @@
               "Infrastructure monitoring",
               "Geopolitical intelligence"
       ],
-      "screenshot": "https://worldmonitor.app/favico/og-image.png",
+      "screenshot": "https://usedtotools.com/worldmonitor/favico/og-image.png",
       "keywords": "AI, OSINT, intelligence dashboard, geopolitical, real-time monitoring, situation awareness, AI-powered"
     }
     </script>
 
     <!-- Favicons -->
-    <link rel="icon" type="image/x-icon" href="/favico/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favico/apple-touch-icon.png" />
+    <link rel="icon" type="image/x-icon" href="./favico/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./favico/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./favico/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./favico/apple-touch-icon.png" />
 
 
     <!-- Theme: apply stored preference before first paint to prevent FOUC -->
@@ -160,18 +160,39 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/assets/main-BsTvzCd1.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
-    <link rel="modulepreload" crossorigin href="/assets/d3-XmIvo93E.js">
-    <link rel="modulepreload" crossorigin href="/assets/i18n-VWbTNjcU.js">
-    <link rel="modulepreload" crossorigin href="/assets/panels-COHEqP4Q.js">
-    <link rel="modulepreload" crossorigin href="/assets/deck-stack-CUSwuVuo.js">
-    <link rel="modulepreload" crossorigin href="/assets/maplibre-n6D2WG_0.js">
-    <link rel="modulepreload" crossorigin href="/assets/topojson-BwRznoQ3.js">
-    <link rel="modulepreload" crossorigin href="/assets/sentry-CPVEVcfH.js">
-    <link rel="stylesheet" crossorigin href="/assets/maplibre-B1CfjdFi.css">
-    <link rel="stylesheet" crossorigin href="/assets/main-CkbG60VE.css">
-  <link rel="manifest" href="/manifest.webmanifest"></head>
+	<!-- Back Button -->
+	<a href="/" style="
+	position:fixed;
+	top:15px;
+	left:15px;
+	z-index:9999;
+	background:#111;
+	color:white;
+	padding:8px 14px;
+	border-radius:6px;
+	font-family:Arial;
+	text-decoration:none;
+	font-size:14px;
+	border:1px solid #333;
+	">
+	← Back to Home
+	</a>
+
+	<script type="module" crossorigin src="./assets/main-BsTvzCd1.js"></script>
+
+	<link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-B5Qt9EMX.js">
+	<link rel="modulepreload" crossorigin href="./assets/d3-XmIvo93E.js">
+	<link rel="modulepreload" crossorigin href="./assets/i18n-VWbTNjcU.js">
+	<link rel="modulepreload" crossorigin href="./assets/panels-COHEqP4Q.js">
+	<link rel="modulepreload" crossorigin href="./assets/deck-stack-CUSwuVuo.js">
+	<link rel="modulepreload" crossorigin href="./assets/maplibre-n6D2WG_0.js">
+	<link rel="modulepreload" crossorigin href="./assets/topojson-BwRznoQ3.js">
+	<link rel="modulepreload" crossorigin href="./assets/sentry-CPVEVcfH.js">
+
+	<link rel="stylesheet" crossorigin href="./assets/maplibre-B1CfjdFi.css">
+	<link rel="stylesheet" crossorigin href="./assets/main-CkbG60VE.css">
+
+	<link rel="manifest" href="./manifest.webmanifest">
   <body>
     <div id="app">
       <!-- Pre-render skeleton: visible instantly, replaced when JS calls renderLayout() -->
