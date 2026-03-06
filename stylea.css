@@ -19,7 +19,7 @@ body {
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* ---------- THEME VARIABLES ---------- */
+
 /* ---------- THEME VARIABLES ---------- */
 :root{
 
@@ -216,7 +216,48 @@ margin-left:240px;
 padding:60px;
 
 }
+/* MARKET WATCH */
+.market-section {
+  margin-bottom: 20px;
+}
 
+.market-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.market-column {
+  padding: 10px 0;
+}
+
+.market-column h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.market-glass-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.glass-card {
+  padding: 20px;
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+[data-theme="night"] .glass-card {
+  background: rgba(0, 0, 0, 0.25);
+}
 /* ---------- CARDS ---------- */
 
 .card-grid {
@@ -282,13 +323,54 @@ padding:60px;
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+/* ---------- market open shelf ---------- */
+/* ===== macOS Style Session Bar ===== */
 
+.mac-session-bar {
+  position: relative;
+  width: 100%;
+  padding: 10px 20px;
 
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+[data-theme="night"] .mac-session-bar {
+  background: rgba(30, 30, 30, 0.6);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.mac-session-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.mac-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.mac-open {
+  background: #34c759; /* macOS green */
+}
+
+.mac-closed {
+  background: #ff3b30; /* macOS red */
+}
 /* HERO */
 
 .hero{
 
-padding: 40px 0;
+padding: 5px 0;
 
 display:flex;
 
