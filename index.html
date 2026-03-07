@@ -444,17 +444,25 @@ setInterval(loadPrices, 14400000); // refresh every 30 seconds
 function getSessions() {
   const now = new Date();
   const utcHour = now.getUTCHours();
+  const utcDay = now.getUTCDay(); // 0 = Sunday, 6 = Saturday
 
-  const sydney  = utcHour >= 22 || utcHour < 7;
-  const tokyo   = utcHour >= 0  && utcHour < 9;
-  const london  = utcHour >= 7  && utcHour < 16;
-  const newyork = utcHour >= 12 && utcHour < 21;
+  const isWeekend = (utcDay === 0 || utcDay === 6);
+
+  // Market open hours (all in UTC)
+  const sydney  = !isWeekend && (utcHour >= 22 || utcHour < 7);
+  const tokyo   = !isWeekend && (utcHour >= 0  && utcHour < 9);
+  const london  = !isWeekend && (utcHour >= 7  && utcHour < 16);
+  const newyork = !isWeekend && (utcHour >= 12 && utcHour < 21);
+  const nse     = !isWeekend && (utcHour >= 3  && utcHour < 10.5); // 9:30-16:00 IST
+  const bse     = nse; // same as NSE
 
   return [
-    { name: "🇦🇺 Sydney", status: sydney },
-    { name: "🇯🇵 Tokyo", status: tokyo },
-    { name: "🇬🇧 London", status: london },
-    { name: "🇺🇸 New York", status: newyork }
+    { name: "🇦🇺 ASX (Sydney)", status: sydney },
+    { name: "🇯🇵 TSE (Tokyo)", status: tokyo },
+    { name: "🇬🇧 LSE (London)", status: london },
+    { name: "🇺🇸 NYSE/NASDAQ (New York)", status: newyork },
+    { name: "🇮🇳 NSE (India)", status: nse },
+    { name: "🇮🇳 BSE (India)", status: bse }
   ];
 }
 
@@ -466,7 +474,6 @@ function updateSessions() {
 
   sessions.forEach(session => {
     const span = document.createElement("div");
-
     const dotClass = session.status ? "mac-open" : "mac-closed";
 
     span.innerHTML =
