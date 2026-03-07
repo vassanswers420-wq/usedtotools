@@ -432,8 +432,40 @@ transform:translateY(-2px);
   box-shadow:var(--shadow);
 }
 
+/* ----------Insider  (SHORTER HEIGHT) ---------- */
 
+.insider-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
 
+.insider-box {
+  background: var(--card-bg);
+  padding: 15px;
+  border-radius: 14px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.insider-scroll {
+  overflow-y: auto;
+  flex: 1;
+  margin-top: 10px;
+}
+
+.insider-item {
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.insider-item:hover {
+  transform: scale(1.02);
+}
 /* ---------- FEATURED SECTION (SHORTER HEIGHT) ---------- */
 
 .featured-grid{

@@ -172,7 +172,25 @@
   </div>
 
 </section>
+<section id="finance-blitz" class="section">
 
+  <h2 class="section-title">⚡ Finance Blitz</h2>
+
+  <div class="insider-grid">
+
+    <div class="insider-box">
+      <h3>🟢 Insider Buys</h3>
+      <div id="insiderBuys" class="insider-scroll"></div>
+    </div>
+
+    <div class="insider-box">
+      <h3>🔴 Insider Sales</h3>
+      <div id="insiderSells" class="insider-scroll"></div>
+    </div>
+
+  </div>
+
+</section>
 
 <section class="section" id="portfolio">
   <div class="container">
@@ -460,4 +478,63 @@ function updateSessions() {
 
 updateSessions();
 setInterval(updateSessions, 60000);
+</script>
+<script>
+async function loadInsiderTrades() {
+  try {
+
+    const response = await fetch("./data/insider_transactions.json?t=" + Date.now());
+    const data = await response.json();
+
+    const buys = document.getElementById("insiderBuys");
+    const sells = document.getElementById("insiderSells");
+
+    buys.innerHTML = "";
+    sells.innerHTML = "";
+
+    // Sort newest first
+    const sorted = data.items.sort((a, b) =>
+      new Date(b.filedAt) - new Date(a.filedAt)
+    );
+
+    sorted.slice(0, 100).forEach(trade => {
+
+      const item = document.createElement("div");
+      item.className = "insider-item";
+
+      const value = Number(trade.transactionValue || 0);
+
+      // Intensity based on value
+      const intensity = Math.min(value / 1000000, 1);
+
+      if (trade.acquiredDisposed === "A") {
+        item.style.backgroundColor = `rgba(0, 200, 0, ${0.1 + intensity * 0.4})`;
+      }
+
+      if (trade.acquiredDisposed === "D") {
+        item.style.backgroundColor = `rgba(255, 0, 0, ${0.1 + intensity * 0.4})`;
+      }
+
+      item.innerHTML = `
+        <strong>${trade.ticker || "N/A"}</strong><br>
+        ${trade.personName}<br>
+        ${trade.transactionDate}<br>
+        Shares: ${trade.shares}<br>
+        Value: $${value.toLocaleString()}
+      `;
+
+      if (trade.acquiredDisposed === "A") {
+        buys.appendChild(item);
+      } else if (trade.acquiredDisposed === "D") {
+        sells.appendChild(item);
+      }
+
+    });
+
+  } catch (error) {
+    console.error("Insider load failed:", error);
+  }
+}
+
+loadInsiderTrades();
 </script>
