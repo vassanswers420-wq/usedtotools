@@ -483,8 +483,11 @@ setInterval(updateSessions, 60000);
 async function loadInsiderTrades() {
   try {
 
-    const response = await fetch("./data/insider_transactions.json?t=" + Date.now());
-    const data = await response.json();
+	const response = await fetch(
+	  "https://raw.githubusercontent.com/vassanswers420-wq/Used2tools-Web-data/main/data/insider_transactions.json?t=" + Date.now()
+	);
+	
+	const data = await response.json();
 
     const buys = document.getElementById("insiderBuys");
     const sells = document.getElementById("insiderSells");
