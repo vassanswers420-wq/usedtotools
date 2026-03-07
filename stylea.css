@@ -434,27 +434,34 @@ transform:translateY(-2px);
 
 /* ----------Insider  (SHORTER HEIGHT) ---------- */
 
+/* GRID (unchanged) */
 .insider-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
 
+/* BOX → Transparent */
 .insider-box {
-  background: var(--card-bg);
+  background: transparent;   /* removed card background */
   padding: 15px;
   border-radius: 14px;
   height: 500px;
   display: flex;
   flex-direction: column;
+  border: 1px solid var(--border-color); /* optional subtle border */
 }
 
+/* Scroll Area */
 .insider-scroll {
-  overflow-y: auto;
+  overflow-y: auto;     /* vertical only */
+  overflow-x: hidden;   /* prevent horizontal scroll */
   flex: 1;
   margin-top: 10px;
+  padding-right: 6px;   /* space for scrollbar */
 }
 
+/* INSIDER ITEM */
 .insider-item {
   padding: 10px;
   margin-bottom: 8px;
@@ -463,8 +470,31 @@ transform:translateY(-2px);
   transition: 0.2s;
 }
 
+/* Hover effect */
 .insider-item:hover {
   transform: scale(1.02);
+}
+
+/* ===== Custom Thin Scrollbar ===== */
+
+/* Chrome / Edge / Safari */
+.insider-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.insider-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.insider-scroll::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 10px;
+}
+
+/* Firefox */
+.insider-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-color) transparent;
 }
 /* ---------- FEATURED SECTION (SHORTER HEIGHT) ---------- */
 
