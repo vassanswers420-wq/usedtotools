@@ -433,24 +433,6 @@ document.addEventListener('click', (e) => {
   }
 });
 </script>
-
-<script>
-fetch("announcements.html")
-  .then(response => {
-    if (!response.ok) {
-      throw new Error("File not found");
-    }
-    return response.text();
-  })
-  .then(data => {
-    document.getElementById("announcementContent").innerHTML = data;
-  })
-  .catch(error => {
-    console.error("Announcement error:", error);
-    document.getElementById("announcementContent").innerHTML =
-      "Announcements could not be loaded.";
-  });
-</script>
 <script>
 async function loadPrices() {
   const response = await fetch(
