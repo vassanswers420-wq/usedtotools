@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Terminal</title>
+
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<style>
+
+/* =========================
+   THEME VARIABLES
+========================= */
+
+:root{
+
+/* Terminal Dark */
+
+--bg:#050505;
+--panel:#0b0b0b;
+--panel-alt:#111;
+--border:#00ff66;
+
+--text:#00ff66;
+--accent:#00ff66;
+
+--topbar:#020202;
+--tab:#0a0a0a;
+--tab-active:#00ff66;
+
+--button:#001f00;
+--button-hover:#00ff66;
+
+--input:#000;
+--placeholder:#00aa44;
+
+}
+
+
+/* =========================
+   LIGHT THEME
+========================= */
+
+body.light{
+
+--bg:#f2f4f7;
+--panel:#ffffff;
+--panel-alt:#f7f7f7;
+--border:#d0d0d0;
+
+--text:#111;
+--accent:#007acc;
+
+--topbar:#ffffff;
+--tab:#e9e9e9;
+--tab-active:#007acc;
+
+--button:#007acc;
+--button-hover:#005ea6;
+
+--input:#ffffff;
+--placeholder:#777;
+
+}
+
+
+/* =========================
+   WINDOWS 10 THEME
+========================= */
+
+body.win10{
+
+--bg:#1e1e1e;
+--panel:#252526;
+--panel-alt:#2d2d30;
+--border:#3f3f46;
+
+--text:#ffffff;
+--accent:#0078d7;
+
+--topbar:#202020;
+--tab:#2d2d30;
+--tab-active:#0078d7;
+
+--button:#0078d7;
+--button-hover:#005fa3;
+
+--input:#1e1e1e;
+--placeholder:#aaa;
+
+}
+
+
+/* =========================
+   WINDOWS ME RETRO
+========================= */
+
+body.winme{
+
+--bg:#c0c0c0;
+--panel:#ece9d8;      /* classic Windows light beige */
+--panel-alt:#f5f5f5;
+
+--border:#000080;
+
+--text:#111;         /* darker but not pure black */
+
+--accent:#000080;
+
+--topbar:#000080;
+
+--tab:#e4e4e4;
+--tab-active:#000080;
+
+--button:#000080;
+--button-hover:#000060;
+
+--input:#ffffff;
+
+--placeholder:#666;
+
+}
+body.winme .top-bar{
+  color:#ffffff;
+}
+/* =========================
+   TERMINAL BASE STYLE
+========================= */
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Courier New", monospace;
+
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+
+/* HEADER */
+
+header{
+  padding:10px 20px;
+  border-bottom:2px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+}
+
+/* TABS */
+
+.tabs{
+  display:flex;
+  justify-content:center;
+  border-top:2px solid var(--border);
+  margin-top:20px;
+}
+
+.tab{
+  padding:10px 20px;
+  margin:0 5px;
+  cursor:pointer;
+  border:2px solid var(--border);
+  border-bottom:none;
+  background:var(--tab);
+  color:var(--text);
+  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+}
+
+.tab.active{
+  background:var(--tab-active);
+  color:#000;
+}
+/* PANEL TITLE */
+
+.panel-title{
+  position:absolute;
+  top:6px;
+  left:10px;
+  font-size:12px;
+  color:var(--text);
+  background:var(--panel-alt);
+  padding:2px 6px;
+  border:1px solid var(--border);
+  z-index:2;
+  letter-spacing:1px;
+}
+
+/* SECTIONS */
+
+.section{
+  display:none;
+  padding:20px;
+}
+
+.section.active{
+  display:block;
+}
+
+/* HEADER BAR */
+
+.top-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 20px;
+  border-bottom:2px solid var(--border);
+  font-family:"Courier New", monospace;
+
+  background:var(--topbar);
+}
+.left{
+  font-weight:700;
+  letter-spacing:3px;
+  font-family: "Orbitron", "Courier New", monospace;
+  text-transform:uppercase;
+}
+
+.right-group{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.back-btn{
+  background:var(--panel);
+  color:var(--text);
+  border:2px solid var(--border);
+  padding:5px 12px;
+  cursor:pointer;
+  font-family:"Courier New", monospace;
+  text-decoration:none;
+}
+
+.back-btn:hover{
+  background:var(--accent);
+  color:#000;
+}
+
+.status{
+  color:var(--text);
+}
+
+/* =========================
+   TERMINAL GRID LAYOUT
+========================= */
+
+.main-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:15px;
+  height:70vh;
+}
+
+/* PANELS */
+
+.main-layout .panel{
+  display:flex;
+  flex-direction:column;
+  border:2px solid var(--border);
+  background:var(--panel);
+  position:relative;
+  overflow:hidden;
+  width:100%;
+  height:100%;
+  box-sizing:border-box;
+  box-shadow:0 0 10px rgba(0,0,0,0.4);
+}
+
+.panel{
+  padding-top:7px;
+}
+
+/* LEFT PANEL */
+
+.panel:nth-child(1){
+  grid-row:1 / 3;
+  grid-column:1;
+}
+
+/* RIGHT TOP */
+
+.panel:nth-child(2){
+  grid-column:2;
+  grid-row:1;
+}
+
+/* RIGHT BOTTOM */
+
+.panel:nth-child(3){
+  grid-column:2;
+  grid-row:2;
+}
+
+/* =========================
+   LOADER
+========================= */
+
+.loader{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  display:flex;
+  gap:12px;
+}
+
+.loader span{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#300;
+  animation:dotPulse 1s infinite;
+}
+
+.loader span:nth-child(1){animation-delay:0s;}
+.loader span:nth-child(2){animation-delay:0.25s;}
+.loader span:nth-child(3){animation-delay:0.5s;}
+.loader span:nth-child(4){animation-delay:0.75s;}
+
+@keyframes dotPulse{
+  0%{background:#300; transform:scale(1);}
+  25%{background:#f00; transform:scale(1.5);}
+  50%{background:#300; transform:scale(1);}
+  100%{background:#300;}
+}
+
+/* =========================
+   page fixer
+========================= */
+.section{
+  display:none;
+  padding:20px;
+  flex:1;
+}
+
+.section.active{
+  display:block;
+}
+.content-area{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+/* =========================
+   CHART TOOLBAR
+========================= */
+
+.chart-toolbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+/* SEARCH */
+
+.search-area{
+  position:relative;
+}
+
+#symbolSearch{
+  width:220px;
+  padding:8px 12px;
+  border-radius:0;
+  border:1px solid var(--border);
+  background:var(--panel);
+  color:var(--text);
+}
+
+.symbol-results{
+  position:absolute;
+  top:38px;
+  left:0;
+  width:220px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  display:none;
+  max-height:200px;
+  overflow-y:auto;
+  z-index:9999;
+}
+
+.symbol-results div{
+  padding:8px 10px;
+  cursor:pointer;
+}
+
+.symbol-results div:hover{
+  background:var(--accent);
+  color:#000;
+}
+
+/* =========================
+   TIMEFRAMES
+========================= */
+
+.timeframes{
+  display:flex;
+  gap:6px;
+}
+
+.timeframes button{
+  background:var(--panel);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:4px 10px;
+  cursor:pointer;
+}
+
+.timeframes button:hover{
+  background:var(--accent);
+  color:#000;
+}
+button{
+  background:var(--button);
+  color:var(--text);
+  border:1px solid var(--border);
+}
+
+button:hover{
+  background:var(--button-hover);
+  color:#000;
+}
+/* =========================
+   FLOATING TRADE BOX
+========================= */
+
+#tradeBox{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  width:160px;
+  background:var(--panel-alt);
+  border:2px solid var(--border);
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  cursor:move;
+  z-index:99999;
+}
+
+#tradeBox input{
+  margin-bottom:6px;
+  width:90%;
+  padding:4px;
+  background:var(--panel);
+  color:var(--text);
+  border:1px solid var(--border);
+  font-family:"Courier New", monospace;
+}
+
+#tradeBox input::placeholder{
+  color:var(--placeholder);
+  opacity:0.7;
+}
+
+#tradeBox button{
+  width:80%;
+  margin:3px 0;
+  padding:6px;
+  border:none;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+#buyBtn{background:#0f0;color:#000;}
+#sellBtn{background:#f00;color:#000;}
+
+
+/* =========================
+   INTEL BOX ITEMS
+========================= */
+
+.intel-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.intel-item{
+  border:1px solid var(--border);
+  padding:8px 10px;
+  background:var(--panel-alt);
+  font-size:13px;
+  line-height:1.4;
+}
+
+.intel-item a{
+  text-decoration:none;
+  color:var(--text);
+}
+
+.intel-item:hover{
+  background:var(--accent);
+  color:#000;
+}
+
+.intel-item:hover a{
+  color:#000;
+}
+
+.intel-label{
+  font-size:12px;
+  letter-spacing:1px;
+  margin-bottom:8px;
+  opacity:0.7;
+}
+/* =========================
+   MARKET INTEL GRID
+========================= */
+
+.intel-grid{
+display:grid;
+grid-template-columns:1fr 2fr;
+grid-template-rows:1fr 1fr 1fr;
+gap:15px;
+height:65vh;
+}
+/* METRIC PANEL POSITIONS */
+
+.intel-grid .panel:nth-child(1){
+grid-column:1;
+grid-row:1;
+}
+
+.intel-grid .panel:nth-child(2){
+grid-column:1;
+grid-row:2;
+}
+
+.intel-grid .panel:nth-child(3){
+grid-column:1;
+grid-row:3;
+}
+/* CARD STYLE */
+
+.intel-card{
+display:flex;
+flex-direction:column;
+padding:15px;
+}
+
+/* METRIC BOX */
+
+.metric-box{
+border:1px solid var(--border);
+background:var(--panel-alt);
+padding:15px;
+margin-top:8px;
+box-shadow:0 0 8px rgba(0,255,100,0.15);
+
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:20px;
+font-weight:bold;
+min-height:60px;
+}
+
+/* NEWS PANEL */
+
+.news-panel{
+grid-column:2;
+grid-row:1 / span 3;
+
+display:flex;
+flex-direction:column;
+overflow:hidden;
+}
+
+.news-panel .intel-list{
+overflow-y:auto;
+flex:1;
+margin-top:10px;
+}
+/* =========================
+   EXCHANGE TAB LAYOUT
+========================= */
+
+.exchange-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  height:60vh;
+}
+
+.broker-list{
+  padding:15px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  overflow-y:auto;
+}
+
+.broker{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border:1px solid var(--border);
+  padding:8px 10px;
+}
+
+.broker-actions{
+  display:flex;
+  gap:8px;
+}
+
+.broker-actions a{
+  text-decoration:none;
+  border:1px solid var(--border);
+  padding:3px 8px;
+  color:var(--text);
+}
+
+.broker-actions a:hover{
+  background:var(--accent);
+  color:#000;
+}
+
+.exchange-info{
+  padding:15px;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.exchange-info ul{
+  margin-top:10px;
+  padding-left:18px;
+}
+/* =========================
+   BROKER DIRECTORY
+========================= */
+
+.exchange-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  height:60vh;
+}
+
+.broker-list{
+  padding:15px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  overflow-y:auto;
+}
+
+.broker{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border:1px solid var(--border);
+  padding:10px;
+}
+
+.broker-left{
+  display:flex;
+  flex-direction:column;
+}
+
+.broker-name{
+  font-weight:bold;
+}
+
+.broker-meta{
+  font-size:12px;
+  opacity:0.7;
+}
+
+.broker-actions{
+  display:flex;
+  gap:8px;
+}
+
+.broker-actions a{
+  text-decoration:none;
+  border:1px solid var(--border);
+  padding:3px 8px;
+  color:var(--text);
+}
+
+.broker-actions a:hover{
+  background:var(--accent);
+  color:#000;
+}
+/* =========================
+   THEME SWITCHER BUTTONS
+========================= */
+
+.theme-switcher{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.theme-btn{
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  cursor:pointer;
+  border:2px solid #000;
+  transition:transform 0.15s;
+}
+
+.theme-btn:hover{
+  transform:scale(1.2);
+}
+
+/* THEME COLORS */
+
+.theme-btn.terminal{
+  background:#00ff00;
+}
+
+.theme-btn.light{
+  background:#ffffff;
+  border:2px solid #555;
+}
+
+.theme-btn.win10{
+  background:#0078d7;
+}
+
+.theme-btn.winme{
+  background:#000080;
+}
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+  text-align:center;
+  padding:20px;
+  border-top:2px solid var(--border);
+  margin-top:20px;
+}
+.about-content img{
+  border-radius:20px;
+ 
+  width:800px;     /* increase this */
+  height:auto;
+  box-shadow:0 0 10px rgba(0,255,100,0.3);
+}
+
+.about-content a{
+  font-size:16px;
+  margin-top:10px;
+  display:inline-block;
+}
+</style>
+</head>
+
+<body>
+
+
+<header class="top-bar">
+  <div class="left">Avalanche Systems</div>
+	<div class="right-group">
+
+	<a href="../index.html" class="back-btn">⬅ Back</a>
+
+	<div class="theme-switcher">
+
+	<div class="theme-btn terminal" data-theme="dark"></div>
+	<div class="theme-btn light" data-theme="light"></div>
+	<div class="theme-btn win10" data-theme="win10"></div>
+	<div class="theme-btn winme" data-theme="winme"></div>
+
+	</div>
+
+	<div class="status">STATUS: Depriciated</div>
+
+	</div>
+</header>
+
+<div class="content-area">
+
+<!---------------------------------- TAB 1: TERMINAL --------------------->
+<div id="tab1" class="section active">
+  <div class="main-layout">
+
+    <!---------------- BOX 1 (Chart) ------------------->
+    <div class="panel">
+      <div class="chart-toolbar">
+        <div class="search-area">
+          <input type="text" id="symbolSearch" placeholder="Search symbol">
+          <div id="symbolResults" class="symbol-results"></div>
+        </div>
+        <div class="timeframes">
+          <button data-tf="1">1m</button>
+          <button data-tf="5">5m</button>
+          <button data-tf="15">15m</button>
+          <button data-tf="60">1h</button>
+          <button data-tf="D">1D</button>
+        </div>
+      </div>
+      <div id="chart" style="height:100%;"></div>
+    </div>
+
+    <!------------------- BOX 2 -->
+	<div class="panel">
+	  <div class="panel-title">Analytics Core</div>
+
+	  <div class="loader">
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+	  </div>
+	</div>
+
+    <!-------------------- BOX 3 -->
+	<div class="panel">
+	  <div class="panel-title">News Stream</div>
+
+	  <div class="loader">
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+	  </div>
+	</div>
+</div> <!-- content-area -->
+  </div>
+</div>
+
+<!------------------------------------------ TAB 4 ------------------------------>
+<!-- TAB 4 -->
+<div id="tab4" class="section">
+
+	<div class="intel-grid">
+
+		<!-- SENTIMENT -->
+		<div class="panel intel-card">
+
+			<div class="intel-label">Market Sentiment</div>
+
+				<div class="metric-box">
+				<div id="sentimentBox">Loading...</div>
+			</div>
+
+		</div>
+
+		<!-- INDIA VIX -->
+		<div class="panel intel-card">
+
+			<div class="intel-label">India VIX</div>
+
+			<div class="metric-box">
+			<div id="vixBox">Loading...</div>
+			</div>
+
+		</div>
+
+		<!-- CRYPTO -->
+		<div class="panel intel-card">
+
+			<div class="intel-label">Crypto Market</div>
+
+			<div class="metric-box">
+			<div id="cryptoBox">Loading...</div>
+			</div>
+
+		</div>
+
+		<!-- NEWS -->
+			<div class="panel intel-card news-panel">
+
+				<div class="intel-label">Market News</div>
+
+					<div id="newsFeed" class="intel-list">
+					Loading news...
+					</div>
+
+		</div>
+
+	</div>
+
+</div>
+<!------------------------------------------ TAB 2 ------------------------------>
+<div id="tab2" class="section">
+
+<div class="exchange-layout">
+
+  <!-- BROKER LIST -->
+	<div class="panel">
+
+    <div class="broker-list">
+
+      <div class="broker">
+
+		  <div class="broker-left">
+			<span class="broker-name">Zerodha</span>
+			<div class="broker-meta">
+			  API: Kite Connect (API Key + Access Token)
+			</div>
+		  </div>
+
+		  <div class="broker-actions">
+			<a href="https://kite.zerodha.com" target="_blank">Login</a>
+			<a href="https://zerodha.com/open-account/" target="_blank">Open Account</a>
+		  </div>
+
+		</div>
+
+
+		<div class="broker">
+
+		  <div class="broker-left">
+			<span class="broker-name">Upstox</span>
+			<div class="broker-meta">
+			  API: Upstox API (Client ID + Access Token)
+			</div>
+		  </div>
+
+		  <div class="broker-actions">
+			<a href="https://login.upstox.com" target="_blank">Login</a>
+			<a href="https://upstox.com/open-account/" target="_blank">Open Account</a>
+		  </div>
+
+		</div>
+
+
+		<div class="broker">
+
+		  <div class="broker-left">
+			<span class="broker-name">Angel One</span>
+			<div class="broker-meta">
+			  API: SmartAPI (API Key + JWT Token)
+			</div>
+		  </div>
+
+		  <div class="broker-actions">
+			<a href="https://trade.angelone.in" target="_blank">Login</a>
+			<a href="https://www.angelone.in/open-demat-account" target="_blank">Open Account</a>
+		  </div>
+
+		</div>
+
+
+		<div class="broker">
+
+		  <div class="broker-left">
+			<span class="broker-name">Binance</span>
+			<div class="broker-meta">
+			  API: Binance API Key + Secret
+			</div>
+		  </div>
+
+		  <div class="broker-actions">
+			<a href="https://www.binance.com/en/login" target="_blank">Login</a>
+			<a href="https://www.binance.com/en/register" target="_blank">Open Account</a>
+		  </div>
+
+		</div>
+
+    </div>
+
+  </div>
+
+  <!-- INFO PANEL -->
+	<div class="panel">
+
+   <div class="exchange-info">
+
+	  <p><strong>Connection Mode:</strong> External Broker</p>
+
+	  <p>
+	  This terminal does <strong>not execute trades directly</strong>.
+	  Orders are forwarded to your selected broker platform.
+	  </p>
+
+	  <p><strong>Supported Markets</strong></p>
+
+	  <ul>
+		<li>NSE / BSE Equities</li>
+		<li>Cryptocurrency Exchanges</li>
+		<li>Forex Liquidity Providers</li>
+	  </ul>
+
+	  <p style="margin-top:15px;font-size:12px;opacity:0.7;">
+	  Broker API credentials are required to enable order routing. Please obtain your API or authentication key from your broker and configure it here to allow this terminal to send your orders.
+	  </p>
+	  	  <p style="margin-top:15px;font-size:12px;opacity:0.7;">
+		  Alternatively, you can use this terminal for analysis and execute trades directly on your broker’s platform.
+	  </p>
+
+	</div>
+
+  </div>
+
+</div>
+
+</div>
+
+<!-- TAB 3 -->
+<div id="tab3" class="section">
+  <div class="about-content" style="text-align:center;">
+    <img src="assets/dogtag.png" alt="About Image">
+    <div>
+      <a href="https://www.instagram.com/oiled_drummer/" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:bold;">
+        Support IG
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- TAB BUTTONS -->
+<div class="tabs">
+  <div class="tab active" data-target="tab1">Terminal</div>
+  <div class="tab" data-target="tab4">Market Intel</div>
+  <div class="tab" data-target="tab2">Exchange</div>
+  <div class="tab" data-target="tab3">Info</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 Avalanche Trade Systems- USEDTOTOOLS.COM
+</footer>
+
+<!-- TRADE BOX -->
+<div id="tradeBox">
+  <div class="trade-title">Push to Broker</div>
+		<input 
+		  type="number" 
+		  id="lotSelector"
+		  min="0.01"
+		  max="50"
+		  step="0.01"
+		  placeholder="0.01-50"
+		/>
+  <button id="buyBtn">BUY</button>
+  <button id="sellBtn">SELL</button>
+</div>
+
+<script>
+/* ================== TAB SWITCHER ================== */
+const tabs = document.querySelectorAll(".tab");
+const sections = document.querySelectorAll(".section");
+tabs.forEach(tab=>{
+  tab.addEventListener("click",()=>{
+    tabs.forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+    sections.forEach(s=>s.classList.remove("active"));
+    const target = document.getElementById(tab.dataset.target);
+    target.classList.add("active");
+
+    // 👇 If Terminal tab, resize chart
+    if(tab.dataset.target === "tab1"){
+      setTimeout(()=>{
+        chart.timeScale().fitContent(); // fit data
+        chart.resize(document.getElementById("chart").clientWidth, document.getElementById("chart").clientHeight);
+        chart.timeScale().scrollToRealTime(); // optional: focus latest candle
+      }, 100); // small delay ensures DOM is visible
+    }
+  });
+});
+/* ================== CHART & SEARCH ================== */
+let currentSymbol = "^NSEI";
+let currentTF = 1;
+let rawData = [];
+const symbols = [
+  { name:"NIFTY", symbol:"^NSEI" },
+  { name:"BANKNIFTY", symbol:"^NSEBANK" },
+  { name:"RELIANCE", symbol:"RELIANCE.NS" },
+  { name:"TCS", symbol:"TCS.NS" },
+  { name:"HDFCBANK", symbol:"HDFCBANK.NS" },
+  { name:"BTC", symbol:"BTC-USD" },
+  { name:"ETH", symbol:"ETH-USD" },
+  { name:"EURUSD", symbol:"EURUSD=X" },
+  { name:"AUDUSD", symbol:"AUDUSD=X" }
+];
+
+// 1️⃣ Create Chart FIRST
+const chartContainer = document.getElementById("chart");
+
+const chart = LightweightCharts.createChart(chartContainer, {
+  layout: {
+    background: { color: "#000" },
+    textColor: "#0f0"
+  },
+  grid: {
+    vertLines: { color: "#003300" },
+    horzLines: { color: "#003300" }
+  }
+});
+
+// 2️⃣ Add Resize Observer AFTER chart is created
+const resizeObserver = new ResizeObserver(() => {
+  chart.resize(
+    chartContainer.clientWidth,
+    chartContainer.clientHeight
+  );
+});
+
+resizeObserver.observe(chartContainer);
+const candleSeries = chart.addCandlestickSeries();
+
+function aggregateCandles(data, tf){
+  if(tf===1) return data;
+  const result=[];
+  let bucket=null;
+  data.forEach(c=>{
+    const time=Math.floor(c.time/(tf*60))*(tf*60);
+    if(!bucket||bucket.time!==time){
+      if(bucket) result.push(bucket);
+      bucket={ time, open:c.open, high:c.high, low:c.low, close:c.close };
+    } else {
+      bucket.high=Math.max(bucket.high,c.high);
+      bucket.low=Math.min(bucket.low,c.low);
+      bucket.close=c.close;
+    }
+  });
+  if(bucket) result.push(bucket);
+  return result;
+}
+function updateTimeframe(){
+  let data;
+  if(currentTF==="D") data=aggregateCandles(rawData,1440);
+  else data=aggregateCandles(rawData,currentTF);
+  candleSeries.setData(data);
+  chart.timeScale().fitContent();
+  chart.timeScale().scrollToRealTime();
+}
+async function loadChart(symbol){
+  currentSymbol=symbol;
+  try{
+    const response=await fetch(`https://wild-rice-6da1.vassanswers420.workers.dev/?symbol=${symbol}`);
+    rawData=await response.json();
+    updateTimeframe();
+  }catch(err){
+    console.log("Data error",err);
+    chart.timeScale().scrollToRealTime();
+  }
+}
+const search = document.getElementById("symbolSearch");
+const results = document.getElementById("symbolResults");
+search.addEventListener("input",()=>{
+  const query=search.value.toLowerCase();
+  results.innerHTML="";
+  if(query.length===0){ results.style.display="none"; return; }
+  const filtered=symbols.filter(s=>s.name.toLowerCase().includes(query));
+  filtered.forEach(s=>{
+    const div=document.createElement("div");
+    div.textContent=s.name;
+    div.onclick=()=>{ search.value=s.name; results.style.display="none"; loadChart(s.symbol); };
+    results.appendChild(div);
+  });
+  results.style.display=filtered.length? "block":"none";
+});
+document.querySelectorAll(".timeframes button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const tf=btn.dataset.tf;
+    currentTF=tf==="D"? "D":parseInt(tf);
+    updateTimeframe();
+  });
+});
+loadChart("^NSEI");
+
+/* ================== DRAGGABLE TRADE BOX ================== */
+const tradeBox = document.getElementById('tradeBox');
+let isDragging=false;
+let dragOffsetX=0;
+let dragOffsetY=0;
+tradeBox.addEventListener('mousedown', e=>{
+  isDragging=true;
+  dragOffsetX=e.clientX-tradeBox.getBoundingClientRect().left;
+  dragOffsetY=e.clientY-tradeBox.getBoundingClientRect().top;
+});
+document.addEventListener('mousemove', e=>{
+  if(!isDragging) return;
+  tradeBox.style.left=`${e.clientX-dragOffsetX}px`;
+  tradeBox.style.top=`${e.clientY-dragOffsetY}px`;
+  tradeBox.style.bottom='auto';
+  tradeBox.style.right='auto';
+});
+document.addEventListener('mouseup', ()=>{ isDragging=false; });
+
+const buyBtn = document.getElementById('buyBtn');
+const sellBtn = document.getElementById('sellBtn');
+const lotSelector = document.getElementById('lotSelector');
+
+function getLot(){
+  let lot = parseFloat(lotSelector.value);
+
+  if(isNaN(lot) || lot < 0.01){
+    alert("Minimum lot is 0.01");
+    return null;
+  }
+
+  if(lot > 50){
+    alert("Maximum lot is 50");
+    return null;
+  }
+
+  return lot;
+}
+
+buyBtn.addEventListener('click', ()=>{
+  const lot = getLot();
+  if(lot===null) return;
+  alert(`BUY ${lot} lot(s) of ${currentSymbol}`);
+});
+
+sellBtn.addEventListener('click', ()=>{
+  const lot = getLot();
+  if(lot===null) return;
+  alert(`SELL ${lot} lot(s) of ${currentSymbol}`);
+});
+/* ==================
+   MARKET INTEL DATA
+================== */
+
+/* NEWS RSS (via RSS2JSON proxy) */
+
+async function loadNews(){
+
+try{
+
+const res = await fetch(
+"https://api.rss2json.com/v1/api.json?rss_url=https://www.ft.com/rss/home"
+);
+
+const data = await res.json();
+
+let html="";
+
+data.items.slice(0,8).forEach(n=>{
+
+html += `
+<div class="intel-item">
+<a href="${n.link}" target="_blank">
+${n.title}
+</a>
+</div>
+`;
+
+});
+
+document.getElementById("newsFeed").innerHTML = html;
+
+}catch(err){
+
+document.getElementById("newsFeed").innerHTML="News unavailable";
+
+}
+
+}
+
+loadNews();
+
+/* Fear & Greed Index */
+async function loadFearGreed(){
+
+try{
+
+const res = await fetch("https://api.alternative.me/fng/");
+const data = await res.json();
+
+const value = data.data[0].value;
+const text = data.data[0].value_classification;
+
+document.getElementById("sentimentBox").innerHTML = `
+<b>Fear & Greed Index</b><br>
+Score: ${value} / 100<br>
+Sentiment: <b>${text}</b>
+`;
+
+}catch(err){
+
+document.getElementById("sentimentBox").innerHTML = "Sentiment unavailable";
+
+}
+
+}
+
+loadFearGreed();
+/* Crypto */
+async function loadCrypto(){
+
+try{
+
+const res = await fetch(
+"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd"
+);
+
+const data = await res.json();
+
+document.getElementById("cryptoBox").innerHTML = `
+BTC: $${data.bitcoin.usd}<br>
+ETH: $${data.ethereum.usd}<br>
+SOL: $${data.solana.usd}
+`;
+
+}catch(err){
+
+document.getElementById("cryptoBox").innerHTML="Crypto unavailable";
+
+}
+
+}
+
+loadCrypto();
+/* INDIA VIX */
+async function loadIndiaVIX(){
+
+try{
+
+const res = await fetch(
+"https://wild-rice-6da1.vassanswers420.workers.dev/?symbol=%5EVIX"
+);
+
+const data = await res.json();
+
+const last = data[data.length-1];
+
+document.getElementById("vixBox").innerHTML = `
+<b>India VIX</b><br>
+Latest: ${last.close}
+`;
+
+}catch(err){
+
+document.getElementById("vixBox").innerHTML="VIX unavailable";
+
+}
+
+}
+
+loadIndiaVIX();
+/* ==================
+   THEME SWITCHER
+================== */
+
+const themeButtons = document.querySelectorAll(".theme-btn");
+
+const savedTheme = localStorage.getItem("terminalTheme");
+
+if(savedTheme){
+  document.body.className = savedTheme;
+}else{
+  document.body.className = "win10";
+}
+
+themeButtons.forEach(btn => {
+
+  btn.addEventListener("click", () => {
+
+    const theme = btn.dataset.theme;
+
+    document.body.className = theme;
+
+    localStorage.setItem("terminalTheme", theme);
+
+  });
+
+});
+</script>
+
+</body>
+</html>
