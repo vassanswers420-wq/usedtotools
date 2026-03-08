@@ -400,7 +400,8 @@ main {
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
-
+  
+.btn { text-decoration: none; }
   .featured-item img {
     height: 100%;
   }
