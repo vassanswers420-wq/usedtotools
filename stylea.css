@@ -372,7 +372,11 @@ main {
   gap: 20px;
   margin-top: 30px;
 }
-
+.featured-item a.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
 .featured-item {
   background: var(--surface-color);
   border-radius: 14px;
