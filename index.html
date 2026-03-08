@@ -85,11 +85,65 @@
 
 </div>
 
-<div class="card" id="announcementBox">
-  <h2 class="card-title">📢 Announcements</h2>
-  <div id="announcementContent">Loading...</div>
-</div>
+<section class="announcements-section">
 
+  <h2 class="section-title">📢 Announcements & Market Signals</h2>
+
+  <!-- 1️⃣ WEBSITE ANNOUNCEMENTS -->
+  <div class="announce-top">
+    <h3>📰 Website Updates</h3>
+    <div id="websiteAnnouncements">
+      Loading...
+    </div>
+  </div>
+
+  <!-- 2️⃣ BULLISH + BEARISH (50/50) -->
+  <div class="announce-row">
+
+    <div class="announce-box bullish-box">
+      <h3>🟢 Bullish Signals</h3>
+      <div id="bullishSignals">
+        Loading...
+      </div>
+    </div>
+
+    <div class="announce-box bearish-box">
+      <h3>🔴 Bearish Signals</h3>
+      <div id="bearishSignals">
+        Loading...
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 3️⃣ NEUTRAL -->
+  <div class="announce-bottom">
+    <h3>🟡 Neutral Signals</h3>
+    <div id="neutralSignals">
+      Loading...
+    </div>
+  </div>
+
+</section>
+<section id="finance-blitz" class="section">
+
+  <h2 class="section-title">⚡ Finance Blitz</h2>
+
+  <div class="insider-grid">
+
+    <div class="insider-box">
+      <h3>🟢 Insider Buys</h3>
+      <div id="insiderBuys" class="insider-scroll"></div>
+    </div>
+
+    <div class="insider-box">
+      <h3>🔴 Insider Sales</h3>
+      <div id="insiderSells" class="insider-scroll"></div>
+    </div>
+
+  </div>
+
+</section>
 <h2 class="section-title">Most used tools by our visitors.</h2>
 
 			  <div class="shelf">
@@ -173,25 +227,7 @@
   </div>
 
 </section>
-<section id="finance-blitz" class="section">
 
-  <h2 class="section-title">⚡ Finance Blitz</h2>
-
-  <div class="insider-grid">
-
-    <div class="insider-box">
-      <h3>🟢 Insider Buys</h3>
-      <div id="insiderBuys" class="insider-scroll"></div>
-    </div>
-
-    <div class="insider-box">
-      <h3>🔴 Insider Sales</h3>
-      <div id="insiderSells" class="insider-scroll"></div>
-    </div>
-
-  </div>
-
-</section>
 
 <section class="section" id="portfolio">
   <div class="container">
@@ -548,6 +584,51 @@ async function loadInsiderTrades() {
 }
 
 loadInsiderTrades();
+</script>
+
+<script>
+fetch("announcements.html")
+  .then(response => response.text())
+  .then(data => {
+
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = data;
+
+    const items = tempDiv.querySelectorAll("li");
+
+    const websiteBox = document.getElementById("websiteAnnouncements");
+    const bullishBox = document.getElementById("bullishSignals");
+    const bearishBox = document.getElementById("bearishSignals");
+    const neutralBox = document.getElementById("neutralSignals");
+
+    websiteBox.innerHTML = "";
+    bullishBox.innerHTML = "";
+    bearishBox.innerHTML = "";
+    neutralBox.innerHTML = "";
+
+    items.forEach(item => {
+
+      const text = item.innerText.toLowerCase();
+
+      if (text.includes("bullish")) {
+        bullishBox.appendChild(item.cloneNode(true));
+      }
+      else if (text.includes("bearish")) {
+        bearishBox.appendChild(item.cloneNode(true));
+      }
+      else if (text.includes("neutral") || text.includes("volatile")) {
+        neutralBox.appendChild(item.cloneNode(true));
+      }
+      else {
+        websiteBox.appendChild(item.cloneNode(true));
+      }
+
+    });
+
+  })
+  .catch(error => {
+    console.error("Announcement error:", error);
+  });
 </script>
 <script>
 document.body.style.zoom = "0.8"; // 80%
