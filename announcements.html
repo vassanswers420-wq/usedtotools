@@ -1,69 +1,142 @@
+
+/* ================= STYLES ================= */
+
 <style>
-.bullish { color: #00c853; font-weight: 600; }
-.bearish { color: #ff3d00; font-weight: 600; }
-.neutral { color: #ffd600; font-weight: 600; }
+/* Category Colors */
+.positive { color: #00c853; font-weight: 600; }
+.negative { color: #ff3d00; font-weight: 600; }
+.neutral  { color: #ffd600; font-weight: 600; }
 
-.impact-high { color: #ff1744; font-weight: 600; }
+/* Impact Levels */
+.impact-high   { color: #ff1744; font-weight: 600; }
 .impact-medium { color: #ff9100; font-weight: 600; }
-.impact-low { color: #40c4ff; font-weight: 600; }
+.impact-low    { color: #40c4ff; font-weight: 600; }
 
-.meta { color: #9e9e9e; font-size: 0.9em; }
+/* Meta Info */
+.meta {
+  color: #9e9e9e;
+  font-size: 0.9em;
+}
 </style>
-<!-- Website Updates -->
-<li>🤷 I am having identity crisis with the site's direction. Will figure out soon.</li>
 
-<li>📌 Added insider trades information.</li>
 
-<li>🚥 Live charts test run.</li>
+<!-- ================= WEBSITE UPDATES ================= -->
 
-<hr>
-
-<!-- Market Signals -->
-
-<li>
-🤖 AI expansion across industries.
-<span class="meta">Sector: Technology | Impact: High | Timeframe: Long-term</span> |
-<span class="bullish">Bullish</span>
+<li data-category="change">
+🤷 I am having identity crisis with the site's direction. Will figure out soon.
 </li>
 
-<li>
-💻 Rising demand for advanced chips.
-<span class="meta">Sector: Semiconductors | Impact: High | Timeframe: Long-term</span> |
-<span class="bullish">Bullish</span>
+<li data-category="change">
+📌 Added insider trades information.
 </li>
 
-<li>
-🔐 Increased cyber threat activity.
-<span class="meta">Sector: Cybersecurity | Impact: Medium | Timeframe: Long-term</span> |
-<span class="bullish">Bullish</span>
+<li data-category="change">
+🚥 Live charts test run.
 </li>
 
-<li>
-🛢 Geopolitical sensitivity in oil markets.
-<span class="meta">Sector: Energy | Impact: High | Timeframe: Short-term</span> |
-<span class="neutral">Neutral / Volatile</span>
+
+<!-- ================= MARKET SIGNALS ================= -->
+
+
+<li 
+  data-category="positive"
+  data-sectors="technology,ai"
+  data-impact="high"
+  data-timeframe="long">
+
+  🤖 AI expansion across industries.
+  <span class="meta">
+    Sector: Technology | Impact: High | Timeframe: Long-term
+  </span>
 </li>
 
-<li>
-⚡ Expansion in clean energy infrastructure.
-<span class="meta">Sector: Renewable Energy | Impact: Medium | Timeframe: Long-term</span> |
-<span class="bullish">Bullish</span>
+
+<li 
+  data-category="positive"
+  data-sectors="semiconductors,hardware"
+  data-impact="high"
+  data-timeframe="long">
+
+  💻 Rising demand for advanced chips.
+  <span class="meta">
+    Sector: Semiconductors | Impact: High | Timeframe: Long-term
+  </span>
 </li>
 
-<li>
-🏦 Central bank policy tightening environment.
-<span class="meta">Sector: Financials | Impact: High | Timeframe: Short-term</span> |
-<span class="neutral">Neutral / Volatile</span>
+
+<li 
+  data-category="positive"
+  data-sectors="cybersecurity"
+  data-impact="medium"
+  data-timeframe="long">
+
+  🔐 Increased cyber threat activity.
+  <span class="meta">
+    Sector: Cybersecurity | Impact: Medium | Timeframe: Long-term
+  </span>
 </li>
 
-<li>
-🏢 Interest rate sensitivity in property markets.
-<span class="meta">Sector: Real Estate | Impact: High | Timeframe: Short-term</span> |
-<span class="bearish">Bearish</span>
+
+<li 
+  data-category="neutral"
+  data-sectors="energy,oil"
+  data-impact="high"
+  data-timeframe="short">
+
+  🛢 Geopolitical sensitivity in oil markets.
+  <span class="meta">
+    Sector: Energy | Impact: High | Timeframe: Short-term
+  </span>
 </li>
 
-<li>
-⚡ Stable demand for essential services.
-<span class="meta">Sector: Utilities | Impact: Low | Timeframe: Long-term</span> |
-<span class="neutral">Neutral</span>
+
+<li 
+  data-category="positive"
+  data-sectors="renewable-energy,clean-tech"
+  data-impact="medium"
+  data-timeframe="long">
+
+  ⚡ Expansion in clean energy infrastructure.
+  <span class="meta">
+    Sector: Renewable Energy | Impact: Medium | Timeframe: Long-term
+  </span>
+</li>
+
+
+<li 
+  data-category="neutral"
+  data-sectors="financials,banking"
+  data-impact="high"
+  data-timeframe="short">
+
+  🏦 Central bank policy tightening environment.
+  <span class="meta">
+    Sector: Financials | Impact: High | Timeframe: Short-term
+  </span>
+</li>
+
+
+<li 
+  data-category="negative"
+  data-sectors="real-estate"
+  data-impact="high"
+  data-timeframe="short">
+
+  🏢 Interest rate sensitivity in property markets.
+  <span class="meta">
+    Sector: Real Estate | Impact: High | Timeframe: Short-term
+  </span>
+</li>
+
+
+<li 
+  data-category="neutral"
+  data-sectors="utilities"
+  data-impact="low"
+  data-timeframe="long">
+
+  ⚡ Stable demand for essential services.
+  <span class="meta">
+    Sector: Utilities | Impact: Low | Timeframe: Long-term
+  </span>
 </li>

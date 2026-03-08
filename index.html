@@ -94,29 +94,21 @@
       <h2 class="section-title">📢 Announcements & Market Updates</h2>
 
       <!-- Website Announcements -->
-      <div class="announce-top">
-        <h3>📰 Changelogs</h3>
-        <div id="websiteAnnouncements">Loading...</div>
-      </div>
+		<div class="announce-wrapper">
 
-      <!-- Bullish & Bearish -->
-      <div class="announce-row">
-        <div class="announce-box bullish-box">
-          <h3>🟢 Bullish </h3>
-          <div id="bullishSignals">Loading...</div>
-        </div>
+		  <h3>📢 ChangeLogs</h3>
+		  <div id="ChangeLogs"></div>
 
-        <div class="announce-box bearish-box">
-          <h3>🔴 Bearish </h3>
-          <div id="bearishSignals">Loading...</div>
-        </div>
-      </div>
+		  <h3>🟢 Positive Outlook</h3>
+		  <div id="positiveSignals"></div>
 
-      <!-- Neutral Signals -->
-      <div class="announce-bottom">
-        <h3>🟡 Neutral </h3>
-        <div id="neutralSignals">Loading...</div>
-      </div>
+		  <h3>🔴 Negative Outlook </h3>
+		  <div id="negativeSignals"></div>
+
+		  <h3>🟡 Neutral Conditions </h3>
+		  <div id="neutralSignals"></div>
+
+		</div>
     </section>
 
     <!-- ================= FINANCE BLITZ ================= -->
@@ -471,35 +463,48 @@
   </script>
 
   <!-- Announcements loader -->
-  <script>
-    fetch("announcements.html")
-      .then(response => response.text())
-      .then(data => {
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = data;
+<script>
+fetch("announcements.html")
+  .then(response => response.text())
+  .then(data => {
 
-        const items = tempDiv.querySelectorAll("li");
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = data;
 
-        const websiteBox = document.getElementById("websiteAnnouncements");
-        const bullishBox = document.getElementById("bullishSignals");
-        const bearishBox = document.getElementById("bearishSignals");
-        const neutralBox = document.getElementById("neutralSignals");
+    const items = tempDiv.querySelectorAll("li");
 
-        websiteBox.innerHTML = "";
-        bullishBox.innerHTML = "";
-        bearishBox.innerHTML = "";
-        neutralBox.innerHTML = "";
+    const websiteBox  = document.getElementById("ChangeLogs");
+    const positiveBox = document.getElementById("positiveSignals");
+    const negativeBox = document.getElementById("negativeSignals");
+    const neutralBox  = document.getElementById("neutralSignals");
 
-        items.forEach(item => {
-          const text = item.innerText.toLowerCase();
-          if (text.includes("bullish")) bullishBox.appendChild(item.cloneNode(true));
-          else if (text.includes("bearish")) bearishBox.appendChild(item.cloneNode(true));
-          else if (text.includes("neutral") || text.includes("volatile")) neutralBox.appendChild(item.cloneNode(true));
-          else websiteBox.appendChild(item.cloneNode(true));
-        });
-      })
-      .catch(error => console.error("Announcement error:", error));
-  </script>
+    websiteBox.innerHTML = "";
+    positiveBox.innerHTML = "";
+    negativeBox.innerHTML = "";
+    neutralBox.innerHTML = "";
+
+    items.forEach(item => {
+
+      const category = item.getAttribute("data-category");
+
+      if (category === "positive") {
+        positiveBox.appendChild(item.cloneNode(true));
+      }
+      else if (category === "negative") {
+        negativeBox.appendChild(item.cloneNode(true));
+      }
+      else if (category === "neutral") {
+        neutralBox.appendChild(item.cloneNode(true));
+      }
+      else {
+        websiteBox.appendChild(item.cloneNode(true));
+      }
+
+    });
+
+  })
+  .catch(error => console.error("Announcement error:", error));
+</script>
 
   <!-- Page zoom -->
   <script>
