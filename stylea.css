@@ -700,7 +700,11 @@ column-count:1;
   padding: 20px !important;
   color: #222 !important;
 }
-
+.announcements-section {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
 /* Responsive */
 @media (max-width: 768px) {
   .announce-row {
