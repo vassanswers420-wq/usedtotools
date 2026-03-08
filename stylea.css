@@ -687,15 +687,18 @@ column-count:1;
   color: #222;            /* Dark text for contrast */
 }
 
-/* Middle 50/50 layout */
 .announce-row {
-  display: flex;
+  display: flex !important;
   gap: 20px;
   margin-bottom: 20px;
 }
 
 .announce-box {
-  flex: 1;
+  flex: 1 !important;
+  background: #f2f2f2 !important;
+  border-radius: 12px !important;
+  padding: 20px !important;
+  color: #222 !important;
 }
 
 /* Responsive */
