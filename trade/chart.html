@@ -843,6 +843,7 @@ footer{
 
     <!---------------- BOX 1 (Chart) ------------------->
     <div class="panel">
+	
       <div class="chart-toolbar">
         <div class="search-area">
           <input type="text" id="symbolSearch" placeholder="Search symbol">
@@ -857,6 +858,7 @@ footer{
         </div>
       </div>
       <div id="chart" style="height:100%;"></div>
+
     </div>
 
     <!------------------- BOX 2 -->
@@ -1189,22 +1191,50 @@ const resizeObserver = new ResizeObserver(() => {
 resizeObserver.observe(chartContainer);
 const candleSeries = chart.addCandlestickSeries();
 
+/**
+ * Aggregates raw price/time data into timeframe candles
+ * @param {Array} data - array of {time, open, high, low, close}
+ * @param {number|string} tf - minutes (1,5,15,60) or 'D' for daily
+ * @returns {Array} aggregated candles
+ */
 function aggregateCandles(data, tf){
-  if(tf===1) return data;
-  const result=[];
-  let bucket=null;
-  data.forEach(c=>{
-    const time=Math.floor(c.time/(tf*60))*(tf*60);
-    if(!bucket||bucket.time!==time){
-      if(bucket) result.push(bucket);
-      bucket={ time, open:c.open, high:c.high, low:c.low, close:c.close };
+  if(!data || !data.length) return [];
+
+  // Ensure ascending order
+  data.sort((a,b)=>a.time - b.time);
+
+  const result = [];
+  let bucket = null;
+
+  data.forEach(c => {
+    let time;
+    if(tf === "D"){
+      // Get UTC start of the day
+      const date = new Date(c.time * 1000); // assuming c.time in seconds
+      time = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) / 1000;
     } else {
-      bucket.high=Math.max(bucket.high,c.high);
-      bucket.low=Math.min(bucket.low,c.low);
-      bucket.close=c.close;
+      // Floor to nearest tf minutes
+      time = Math.floor(c.time / (tf*60)) * (tf*60);
+    }
+
+    if(!bucket || bucket.time !== time){
+      if(bucket) result.push(bucket);
+      bucket = {
+        time,
+        open: c.open,
+        high: c.high,
+        low: c.low,
+        close: c.close
+      };
+    } else {
+      bucket.high = Math.max(bucket.high, c.high);
+      bucket.low  = Math.min(bucket.low, c.low);
+      bucket.close = c.close; // last price in bucket
     }
   });
+
   if(bucket) result.push(bucket);
+
   return result;
 }
 function updateTimeframe(){
@@ -1214,20 +1244,77 @@ function updateTimeframe(){
   candleSeries.setData(data);
   chart.timeScale().fitContent();
   chart.timeScale().scrollToRealTime();
+  
+}
+async function loadAvailableSymbols() {
+  try {
+    const res = await fetch(`${WORKER_BASE}/fetch?allSymbols=true`);
+    const data = await res.json();
+
+    // data keys are your available symbols
+    symbols = Object.keys(data).map(sym => ({
+      symbol: sym,
+      name: beautifySymbol(sym) // display-friendly, e.g. "%5ENSEI" -> "^NSEI"
+    }));
+
+    initSearch(); // populate the search box
+  } catch (err) {
+    console.error("Failed to load available symbols:", err);
+  }
+}
+function beautifySymbol(sym) {
+  return decodeURIComponent(sym); // %5E → ^
+}
+async function loadChart(displaySymbol) {
+  const symbol = encodeURIComponent(displaySymbol); // match Worker keys
+  try {
+    const res = await fetch(`${WORKER_BASE}/?symbol=${symbol}`);
+    const data = await res.json();
+
+    rawData = data[symbol] || [];
+    if(!rawData.length){
+      console.warn("No data for", displaySymbol);
+      candleSeries.setData([]);
+      return;
+    }
+    updateTimeframe();
+  } catch(err) {
+    console.error("Failed to load chart:", err);
+    candleSeries.setData([]);
+  }
 }
 async function loadChart(symbol){
   currentSymbol = symbol;
   try {
-    // Fetch from your Worker
-    const response = await fetch(`https://wild-rice-6da1.vassanswers420.workers.dev/?symbol=${symbol}`);
+    const response = await fetch(`${WORKER_BASE}/?symbol=${symbol}`);
     const data = await response.json();
+    rawData = data[symbol] || [];
 
-    // ✅ Extract only the array of candles for this symbol
-    rawData = data[symbol] || []; 
+    // ✅ Ensure data is sorted ascending by time
+    rawData.sort((a, b) => a.time - b.time);
 
-    // Update the chart with the new data
     updateTimeframe();
-  } catch(err) {
+
+    // Optional: beautify symbol in input
+    document.getElementById("symbolSearch").value = beautifySymbol(symbol);
+
+    // 🔹 Focus on latest candle/price
+    if(rawData.length){
+      setTimeout(() => {
+        chart.timeScale().scrollToRealTime();
+        // Optional: highlight last candle visually
+        const last = rawData[rawData.length - 1];
+        candleSeries.update({
+          time: last.time,
+          open: last.open,
+          high: last.high,
+          low: last.low,
+          close: last.close
+        });
+      }, 50); // small delay to ensure chart is fully rendered
+    }
+
+  } catch(err){
     console.log("Data error", err);
     chart.timeScale().scrollToRealTime();
   }
