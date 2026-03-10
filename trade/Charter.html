@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Candlestick Chart</title>
+<style>
+body {
+    background: #050505;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header {
+    padding: 10px;
+    background: #111;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+select {
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #888;
+    background: #111;
+    color: #fff;
+    cursor: pointer;
+}
+select:hover { border-color: #fff; }
+canvas { display: block; margin: 0; background: #050505; cursor: grab; }
+canvas.hovered { cursor: crosshair; }
+
+/* Settings gear */
+#settingsWrapper  {
+    position: absolute;
+    top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+#settingsWrapper { right: 10px; }
+
+
+#gear {
+    font-size: 20px;
+    cursor: pointer;
+    user-select: none;
+    color: #888;
+    transition: color 0.2s;
+}
+#gear:hover, #indicatorsGear:hover { color: #fff; }
+
+#settingsMenu {
+    display: none;
+    background: #111;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #888;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    z-index: 10;
+    white-space: nowrap;
+}
+#settingsMenu.show { display: block; }
+#indicatorsMenu input[type=number] {
+    background: #222; border: 1px solid #555; color: #fff; border-radius: 3px; padding: 2px 4px;
+}
+#indicatorsWidget {
+  display: none; /* hidden by default */
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background: #111;
+  border: 1px solid #888;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  color: #fff;
+  font-size: 14px;
+  user-select: none;
+  cursor: grab;
+  width: 180px;
+  z-index: 20;
+}
+
+#indicatorsHeader {
+  padding: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  border-bottom: 1px solid #555;
+}
+
+#indicatorsBody {
+  display: none; /* collapsed by default */
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.indicatorRow input[type=number] {
+  width: 50px;
+  background: #222;
+  border: 1px solid #555;
+  border-radius: 3px;
+  color: #fff;
+  padding: 2px 4px;
+}
+
+.indicatorRow label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div style="display:flex; align-items:center; gap:10px;">
+        <label for="symbolSelect">Symbol:</label>
+        <select id="symbolSelect"><option>Loading...</option></select>
+    </div>
+
+	<!-- Indicators toggle button -->
+	<div id="indicatorsWrapper">
+	  <button id="indicatorsButton">&#128202; Indicators</button>
+	  
+	  <div id="indicatorsWidget">
+		<div id="indicatorsHeader">
+		  Indicators <span id="indicatorsClose" style="float:right; cursor:pointer;">&#10006;</span>
+		</div>
+		<div id="indicatorsBody">
+		  <div class="indicatorRow">
+			<label><input type="checkbox" id="smaToggle"> SMA</label>
+			<label>Period: <input type="number" id="smaPeriod" value="20" min="1"></label>
+		  </div>
+		  <div class="indicatorRow">
+			<label><input type="checkbox" id="emaToggle"> EMA</label>
+			<label>Period: <input type="number" id="emaPeriod" value="9" min="1"></label>
+		  </div>
+		  <div class="indicatorRow">
+			<label><input type="checkbox" id="vwapToggle"> VWAP</label>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+    <!-- Settings gear -->
+    <div id="settingsWrapper">
+        <div id="gear">&#9881;</div>
+        <div id="settingsMenu">
+			<div>
+				<label><input type="checkbox" id="autoScrollToggle"> Auto-Scroll</label>
+			</div>
+            <label for="themeSelect">Theme:</label>
+            <select id="themeSelect">
+                <option value="dark">Dark</option>
+                <option value="win98">Win 98</option>
+                <option value="win10">Win 10</option>
+            </select>
+        </div>
+    </div>
+</header>
+
+<canvas id="chart" width="1200" height="600"></canvas>
+<div id="tooltip" style="
+    position:absolute; background:rgba(0,0,0,0.8); color:#fff; padding:6px;
+    font-size:12px; border-radius:4px; pointer-events:none; display:none;"></div>
+
+<script>
+const themes = {
+    dark: { 
+        bg:'#121212', 
+        grid:'#2A2A2A', 
+        text:'#CCCCCC', 
+        candleUp:'#39FF14', 
+        candleDown:'#FF5555', 
+        volume:'#444444', 
+        axis:'#777777' 
+    },
+    win98: { 
+        bg:'#008080',        
+        grid:'#2A2A2A',      
+        text:'#111111',      
+        candleUp:'#38a169',  
+        candleDown:'#e53e3e',
+        volume:'#63b3ed',    
+        axis:'#333'       
+    },
+    win10: { 
+        bg:'#f3f3f3', 
+        grid:'#2A2A2A', 
+        text:'#333', 
+        candleUp:'#0078d7', 
+        candleDown:'#e81123', 
+        volume:'#999', 
+        axis:'#666' 
+    }
+};
+let currentTheme = 'dark';
+const canvas = document.getElementById('chart');
+const ctx = canvas.getContext('2d');
+const symbolSelect = document.getElementById('symbolSelect');
+const tooltip = document.getElementById('tooltip');
+
+let candles=[], offsetX=0, offsetY=0, candleWidth=8, isDragging=false, dragStartX=0, dragStartY=0, blinkVisible=true;
+let hoveredCandleIndex=null;
+let autoScrollEnabled = true;
+document.getElementById('autoScrollToggle').checked = true;
+let idleTimer = null;
+const idleDelay = 2000; // 5 seconds
+
+const smaToggle = document.getElementById('smaToggle');
+const smaPeriod = document.getElementById('smaPeriod');
+const emaToggle = document.getElementById('emaToggle');
+const emaPeriod = document.getElementById('emaPeriod');
+const vwapToggle = document.getElementById('vwapToggle');
+const indicatorsWidget = document.getElementById('indicatorsWidget');
+const indicatorsHeader = document.getElementById('indicatorsHeader');
+const indicatorsBody = document.getElementById('indicatorsBody');
+
+
+// --- NEW: Indicators toggle functionality
+const indicatorsButton = document.getElementById('indicatorsButton');
+const indicatorsClose = document.getElementById('indicatorsClose');
+
+// Toggle indicators panel
+indicatorsButton.addEventListener('click', () => {
+    indicatorsWidget.style.display = indicatorsWidget.style.display === 'block' ? 'none' : 'block';
+});
+
+// Close button inside panel
+indicatorsClose.addEventListener('click', () => {
+    indicatorsWidget.style.display = 'none';
+});
+
+// Click outside to close
+document.addEventListener('click', e => {
+    if (!indicatorsWidget.contains(e.target) && !indicatorsButton.contains(e.target)) {
+        indicatorsWidget.style.display = 'none';
+    }
+});
+indicatorsHeader.addEventListener('click', ()=>{
+    indicatorsBody.style.display = indicatorsBody.style.display === 'none' ? 'flex' : 'none';
+});
+// ----------------------------
+// Fetch symbols
+async function loadSymbols(){
+    try{
+        const res = await fetch('https://nse-market-engine.vassanswers420.workers.dev/symbols');
+        const symbols = await res.json();
+        symbolSelect.innerHTML = '';
+        symbols.forEach(s => { 
+            const opt = document.createElement('option'); opt.value=s; opt.textContent=s;
+            symbolSelect.appendChild(opt);
+        });
+        loadCandles(symbols[0]);
+    }catch(e){ console.error(e); }
+}
+
+// ----------------------------
+// Fetch candles
+async function loadCandles(symbol){
+    try{
+        const res = await fetch(`https://nse-market-engine.vassanswers420.workers.dev?symbol=${symbol}`);
+        candles = await res.json();
+
+        // Auto-scroll to newest candle in the MIDDLE of canvas
+        const spacing = candleWidth * 1.5;
+        const lastIndex = candles.length - 1;
+
+        // Compute targetOffset so last candle is centered
+        const targetOffset = canvas.width/2 - (80 + lastIndex * spacing); 
+        smoothScrollTo(targetOffset, 700); // 700ms animation
+    }catch(e){ console.error(e); }
+}
+
+// ----------------------------
+// Gear menus
+const gear = document.getElementById('gear'), settingsMenu = document.getElementById('settingsMenu');
+gear.addEventListener('click', ()=>settingsMenu.classList.toggle('show'));
+document.addEventListener('click', e=>{ if(!settingsMenu.contains(e.target) && !gear.contains(e.target)) settingsMenu.classList.remove('show'); });
+
+// ----------------------------
+// Theme change
+document.getElementById('themeSelect').addEventListener('change', e=>{
+    currentTheme=e.target.value; drawChart();
+});
+
+// ----------------------------
+// Symbol change
+symbolSelect.addEventListener('change', e=>loadCandles(e.target.value));
+
+// ----------------------------
+// Drag & Zoom
+canvas.addEventListener('mousedown', e => {
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    canvas.style.cursor = 'grabbing';
+});canvas.addEventListener('mouseup', ()=>{ isDragging=false; canvas.style.cursor=hoveredCandleIndex!==null?'crosshair':'grab'; });
+canvas.addEventListener('mouseleave', ()=>{ isDragging=false; canvas.style.cursor='grab'; hoveredCandleIndex=null; tooltip.style.display='none'; drawChart(); });
+canvas.addEventListener('mousemove', e => {
+	const padding = {top:50, bottom:50, left:80, right:20};
+	const volumeHeight = 50;
+	const chartHeight = canvas.height - padding.top - padding.bottom - volumeHeight;
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    if (isDragging) {
+	// clamp vertical scrolling
+		const maxOffsetY = chartHeight * 0.5;   // adjust as needed
+		offsetY = Math.min(Math.max(offsetY, -maxOffsetY), maxOffsetY);
+        const dx = e.clientX - dragStartX;
+        const dy = e.clientY - dragStartY;
+        offsetX += dx;  // horizontal scroll
+        offsetY += dy;  // vertical scroll
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        drawChart();
+        return;
+	}
+    // --- Hover candle ---
+    const spacing=candleWidth*1.5;
+    const firstVisible=Math.max(0, Math.floor(-offsetX/spacing));
+    const lastVisible=Math.min(candles.length, Math.ceil((canvas.width - 80 - offsetX)/spacing));
+    let nearestDist=Infinity, nearestIndex=null;
+
+    for(let i=firstVisible;i<lastVisible;i++){
+        const x=80 + i*spacing + offsetX;
+        const dist=Math.abs(x-mouseX);
+        if(dist<nearestDist){ nearestDist=dist; nearestIndex=i; }
+    }
+    if(nearestIndex!==null && nearestDist<spacing){
+        hoveredCandleIndex=nearestIndex;
+        const c=candles[nearestIndex];
+        const d=new Date(c.time*1000);
+        tooltip.innerHTML=`<strong>${symbolSelect.value}</strong><br>Time: ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}<br>O:${c.open}<br>H:${c.high}<br>L:${c.low}<br>C:${c.close}`;
+        tooltip.style.left=(e.clientX+15)+'px';
+        tooltip.style.top=(e.clientY+15)+'px';
+        tooltip.style.display='block';
+    } else { hoveredCandleIndex=null; tooltip.style.display='none'; }
+    drawChart();
+});
+canvas.addEventListener('wheel', e=>{ e.preventDefault(); candleWidth=Math.min(Math.max(candleWidth + (e.deltaY>0?-1:1), 2), 30); drawChart(); });
+
+// ----------------------------
+// Indicator event listeners
+[smaToggle,smaPeriod,emaToggle,emaPeriod,vwapToggle].forEach(el=>el.addEventListener('input', drawChart));
+setInterval(()=>{ if(symbolSelect.value) loadCandles(symbolSelect.value); }, 60000);
+
+// ----------------------------
+// Indicators calculation
+function calculateSMA(period){ const sma=[]; for(let i=0;i<candles.length;i++){ if(i<period-1){sma.push(null); continue;} let sum=0; for(let j=0;j<period;j++) sum+=candles[i-j].close; sma.push(sum/period);} return sma; }
+function calculateEMA(period){ const ema=[]; const k=2/(period+1); let prev=candles[0]?.close||0; for(let i=0;i<candles.length;i++){ prev=i===0?candles[i].close:candles[i].close*k + prev*(1-k); ema.push(prev);} return ema; }
+function calculateVWAP(){ let cumPV=0, cumVol=0; const vwap=[]; candles.forEach(c=>{ const tp=(c.high+c.low+c.close)/3; cumPV+=tp*c.volume; cumVol+=c.volume; vwap.push(cumPV/cumVol);}); return vwap; }
+function drawIndicator(values,color){
+    if(!values || values.length===0) return;
+    ctx.strokeStyle=color; ctx.lineWidth=2; ctx.beginPath();
+    const spacing=candleWidth*1.5, padding={top:50,bottom:50,left:80,right:20}, volumeHeight=50;
+    const chartHeight=canvas.height-padding.top-padding.bottom-volumeHeight;
+    const priceMax=Math.max(...candles.map(c=>c.high)), priceMin=Math.min(...candles.map(c=>c.low));
+    const scaleY = price => padding.top + (priceMax - price) * chartHeight / (priceMax - priceMin) + offsetY;
+    let firstVisible=Math.max(0,Math.floor(-offsetX/spacing)), lastVisible=Math.min(candles.length, Math.ceil((canvas.width-padding.left-offsetX)/spacing));
+    values.forEach((val,i)=>{
+        if(val===null || i<firstVisible || i>lastVisible) return;
+        const x=padding.left+i*spacing+offsetX, y=scaleY(val);
+        if(i===firstVisible || values[i-1]===null) ctx.moveTo(x,y);
+        else ctx.lineTo(x,y);
+    });
+    ctx.stroke();
+}
+
+// ----------------------------
+// autoscroll
+function smoothScrollTo(targetOffset, duration = 500) {
+    const startOffset = offsetX;
+    const startTime = performance.now();
+
+    function animate(now) {
+        const elapsed = now - startTime;
+        const t = Math.min(elapsed / duration, 1); // progress 0 → 1
+        // easeOutQuad easing for smooth effect
+        const easedT = 1 - (1 - t) * (1 - t);
+        offsetX = startOffset + (targetOffset - startOffset) * easedT;
+        drawChart();
+        if (t < 1) requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+}
+// ----------------------------
+// FULL drawChart
+function drawChart(){
+    if(candles.length===0) return;
+    const theme=themes[currentTheme], padding={top:50,bottom:50,left:80,right:20}, volumeHeight=50;
+    const chartHeight=canvas.height-padding.top-padding.bottom-volumeHeight, chartWidth=canvas.width-padding.left-padding.right;
+    const spacing=candleWidth*1.5;
+
+    // Background
+	if(currentTheme==='win98'){ 
+		const grad = ctx.createLinearGradient(0,0,0,canvas.height);
+		grad.addColorStop(0,'#e0f0fa'); // top light
+		grad.addColorStop(1,'#a8cfe8'); // bottom darker
+		ctx.fillStyle = grad;
+	} else {
+		ctx.fillStyle=theme.bg;
+	}
+	ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    // Price & volume ranges
+    const priceMin=Math.min(...candles.map(c=>c.low)), priceMax=Math.max(...candles.map(c=>c.high));
+    const volMax=Math.max(...candles.map(c=>c.volume||0));
+    const scaleY = price => padding.top + (priceMax - price) * chartHeight / (priceMax - priceMin) + offsetY;
+    const scaleVol=vol=> (vol||0)*volumeHeight/volMax;
+
+    // Grid & price labels
+    ctx.strokeStyle=theme.grid; ctx.lineWidth=0.5;
+    ctx.fillStyle=theme.text; ctx.textAlign='right'; ctx.font='12px Arial';
+    for(let i=0;i<=5;i++){
+        const priceValue = priceMax - (priceMax - priceMin) * i / 5;
+	const y = scaleY(priceValue); // scaleY already includes offsetY
+        const price=(priceMax-(priceMax-priceMin)*i/5).toFixed(2);
+        ctx.beginPath(); ctx.moveTo(padding.left,y); ctx.lineTo(canvas.width-padding.right,y); ctx.stroke();
+        ctx.fillText(price,padding.left-10,y+3);
+    }
+    ctx.strokeStyle=theme.text; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(padding.left-5,padding.top); ctx.lineTo(padding.left-5,canvas.height-padding.bottom); ctx.stroke();
+
+	// Candles & Volume clipping
+	const chartTop = padding.top;
+	const chartBottom = canvas.height - padding.bottom - volumeHeight;
+	const chartLeft = padding.left;
+	const chartRight = canvas.width - padding.right;
+
+	ctx.save(); 
+	ctx.beginPath();
+	ctx.rect(chartLeft, chartTop, chartRight - chartLeft, chartBottom - chartTop); // clip to chart area
+	ctx.clip();
+
+	const firstVisible = Math.max(0, Math.floor(-offsetX / spacing));
+	const lastVisible = Math.min(candles.length, Math.ceil((chartWidth - offsetX) / spacing));
+
+	for (let i = firstVisible; i < lastVisible; i++) {
+		const c = candles[i], x = padding.left + i * spacing + offsetX;
+		const yOpen = scaleY(c.open), yClose = scaleY(c.close), yHigh = scaleY(c.high), yLow = scaleY(c.low);
+		const color = c.close >= c.open ? theme.candleUp : theme.candleDown;
+
+		// Wick
+		ctx.strokeStyle = color; 
+		ctx.beginPath(); 
+		ctx.moveTo(x, yHigh); 
+		ctx.lineTo(x, yLow); 
+		ctx.stroke();
+
+		// Body
+		ctx.fillStyle = color; 
+		ctx.fillRect(x - candleWidth / 2, Math.min(yOpen, yClose), candleWidth, Math.max(Math.abs(yClose - yOpen), 1));
+	}
+	// Flashing stroke for the latest candle
+	if(candles.length > 0 && blinkVisible) {
+		const latestIndex = candles.length - 1;
+		const c = candles[latestIndex];
+		const x = padding.left + latestIndex * spacing + offsetX;
+		const yOpen = scaleY(c.open), yClose = scaleY(c.close);
+
+		ctx.strokeStyle = '#FF00FF'; // flashing color (magenta)
+		ctx.lineWidth = 2;
+		ctx.strokeRect(x - candleWidth / 2 - 2, Math.min(yOpen, yClose) - 2, candleWidth + 4, Math.max(Math.abs(yClose - yOpen), 1) + 4);
+	}
+	ctx.restore(); // remove clipping
+    ctx.strokeStyle=theme.grid; ctx.lineWidth=0.5; ctx.beginPath(); ctx.moveTo(padding.left,canvas.height-padding.bottom-volumeHeight); ctx.lineTo(canvas.width-padding.right,canvas.height-padding.bottom-volumeHeight); ctx.stroke();
+
+	// Time labels (allow labels even for offscreen candles)
+	ctx.fillStyle = theme.text;
+	ctx.textAlign = 'center';
+	ctx.font = '10px Arial';
+	let lastX = -Infinity;
+	const minLabelSpacing = 50;
+
+	for (let i = 0; i < candles.length; i++) {
+		const c = candles[i];
+		const x = padding.left + i * spacing + offsetX;
+
+		// Only draw if inside chart area plus a little buffer
+		if (x < padding.left - 20 || x > canvas.width - padding.right + 20) continue;
+		if (x - lastX < minLabelSpacing) continue; // spacing between labels
+		lastX = x;
+
+		const d = new Date(c.time * 1000);
+		ctx.fillText(
+			`${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`,
+			x,
+			canvas.height - padding.bottom + 15
+		);
+	}
+
+    // Indicators
+    if(smaToggle.checked) drawIndicator(calculateSMA(parseInt(smaPeriod.value)),'#FFD700');
+    if(emaToggle.checked) drawIndicator(calculateEMA(parseInt(emaPeriod.value)),'#1E90FF');
+    if(vwapToggle.checked) drawIndicator(calculateVWAP(),'#00FFFF');
+
+    // Hover marker
+    if(hoveredCandleIndex!==null && blinkVisible){
+        const x=padding.left+hoveredCandleIndex*spacing+offsetX;
+        const c=candles[hoveredCandleIndex];
+        const y=scaleY(c.high)-8;
+        ctx.fillStyle='red'; ctx.beginPath(); ctx.arc(x,y,5,0,Math.PI*2); ctx.fill();
+    }
+}
+
+// --- Blink interval
+setInterval(()=>{ blinkVisible=!blinkVisible; drawChart(); },500);
+
+// Initialize
+loadSymbols();
+
+const autoScrollToggle = document.getElementById('autoScrollToggle');
+autoScrollToggle.addEventListener('change', e => {
+    autoScrollEnabled = e.target.checked;
+    if(autoScrollEnabled) resetIdleTimer();
+});
+
+
+// Call resetIdleTimer on user actions:
+canvas.addEventListener('mousemove', resetIdleTimer);
+canvas.addEventListener('mousedown', resetIdleTimer);
+canvas.addEventListener('wheel', resetIdleTimer);
+symbolSelect.addEventListener('change', resetIdleTimer);
+document.getElementById('themeSelect').addEventListener('change', resetIdleTimer);
+function scrollToLatestCandle() {
+    if(candles.length === 0) return;
+    const spacing = candleWidth * 1.5;
+    const lastIndex = candles.length - 1;
+
+    // Horizontal offset (center latest candle)
+    const targetOffsetX = canvas.width/2 - (80 + lastIndex * spacing);
+
+    // Vertical offset (center based on last candle's OHLC range)
+    const padding = { top:50, bottom:50, left:80, right:20 };
+    const volumeHeight = 50;
+    const chartHeight = canvas.height - padding.top - padding.bottom - volumeHeight;
+
+    const c = candles[lastIndex];
+    const priceMin = Math.min(...candles.map(c=>c.low));
+    const priceMax = Math.max(...candles.map(c=>c.high));
+    
+    // ScaleY: y = padding.top + (priceMax - price) * chartHeight / (priceMax - priceMin) + offsetY
+    // To center vertically, we want the candle middle at canvas.height/2
+    const candleMiddlePrice = (c.high + c.low)/2;
+    const targetOffsetY = canvas.height/2 - (padding.top + (priceMax - candleMiddlePrice) * chartHeight / (priceMax - priceMin));
+
+    // Animate horizontally and vertically
+    smoothScrollToXY(targetOffsetX, targetOffsetY, 700);
+}
+function resetIdleTimer() {
+    if(idleTimer) clearTimeout(idleTimer);
+    if(!autoScrollEnabled) return;
+    idleTimer = setTimeout(() => {
+        scrollToLatestCandle(); // reuse smoothScrollTo
+    }, idleDelay);
+}
+function smoothScrollToXY(targetX, targetY, duration = 500) {
+    const startX = offsetX;
+    const startY = offsetY;
+    const startTime = performance.now();
+
+    function animate(now) {
+        const elapsed = now - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        const easedT = 1 - (1 - t) * (1 - t); // easeOutQuad
+
+        offsetX = startX + (targetX - startX) * easedT;
+        offsetY = startY + (targetY - startY) * easedT;
+        drawChart();
+
+        if(t < 1) requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+}
+</script>
+
+</body>
+</html>

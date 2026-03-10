@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Market Terminal</title>
-
-<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 <style>
 
@@ -633,6 +631,7 @@ margin-top:10px;
   margin-top:10px;
   padding-left:18px;
 }
+
 /* =========================
    BROKER DIRECTORY
 ========================= */
@@ -802,6 +801,19 @@ footer{
   margin-top:10px;
   display:inline-block;
 }
+.iframe-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;   /* hides scrollbars */
+}
+
+.iframe-wrapper iframe {
+  width: 125%;           /* compensate for scaling */
+  height: 125%;
+  transform: scale(0.8); 
+  transform-origin: top left;
+  border: none;         /* optional */
+}
 </style>
 </head>
 
@@ -842,24 +854,15 @@ footer{
   <div class="main-layout">
 
     <!---------------- BOX 1 (Chart) ------------------->
-    <div class="panel">
-	
-      <div class="chart-toolbar">
-        <div class="search-area">
-          <input type="text" id="symbolSearch" placeholder="Search symbol">
-          <div id="symbolResults" class="symbol-results"></div>
-        </div>
-        <div class="timeframes">
-          <button data-tf="1">1m</button>
-          <button data-tf="5">5m</button>
-          <button data-tf="15">15m</button>
-          <button data-tf="60">1h</button>
-          <button data-tf="D">1D</button>
-        </div>
-      </div>
-      <div id="chart" style="height:100%;"></div>
+	<div class="panel">
 
-    </div>
+	<div class="iframe-wrapper">
+	  <iframe 
+		  src="Charter.html" 
+		  scrolling="no"
+	  ></iframe>
+	</div>
+	</div>
 
     <!------------------- BOX 2 -->
 	<div class="panel">
@@ -1106,242 +1109,17 @@ tabs.forEach(tab=>{
   tab.addEventListener("click",()=>{
     tabs.forEach(t=>t.classList.remove("active"));
     tab.classList.add("active");
+
     sections.forEach(s=>s.classList.remove("active"));
-    const target = document.getElementById(tab.dataset.target);
-    target.classList.add("active");
-
-    // 👇 If Terminal tab, resize chart
-    if(tab.dataset.target === "tab1"){
-      setTimeout(()=>{
-        chart.timeScale().fitContent(); // fit data
-        chart.resize(document.getElementById("chart").clientWidth, document.getElementById("chart").clientHeight);
-        chart.timeScale().scrollToRealTime(); // optional: focus latest candle
-      }, 100); // small delay ensures DOM is visible
-    }
+    document.getElementById(tab.dataset.target).classList.add("active");
   });
 });
-/* ================== CHART & SEARCH ================== */
-let currentSymbol = "^NSEI";
-let currentTF = 1;
-let rawData = [];
-let symbols = [];
 
-async function loadSymbolsFromKV(){
-  try{
-    const res = await fetch(`${WORKER_BASE}/fetch?listSymbols=true`);
-    const data = await res.json();
-    symbols = data.symbols.map(s => ({ name: s, symbol: s }));
-    initSearch(); // ✅ only start search after symbols are ready
-  }catch(err){
-    console.error("Failed to load symbols from KV", err);
-  }
-}
 
-function initSearch(){
-  const search = document.getElementById("symbolSearch");
-  const results = document.getElementById("symbolResults");
 
-  search.addEventListener("input", ()=>{
-    const query = search.value.toLowerCase();
-    results.innerHTML = "";
-    if(query.length === 0){ results.style.display="none"; return; }
 
-    const filtered = symbols.filter(s => s.name.toLowerCase().includes(query));
 
-    filtered.forEach(s => {
-      const div = document.createElement("div");
-      div.textContent = s.name;
-      div.onclick = () => { 
-        search.value = s.name;
-        results.style.display = "none";
-        loadChart(s.symbol);
-      };
-      results.appendChild(div);
-    });
 
-    results.style.display = filtered.length ? "block" : "none";
-  });
-}
-
-// Start by loading symbols from KV
-loadSymbolsFromKV();
-
-// 1️⃣ Create Chart FIRST
-const chartContainer = document.getElementById("chart");
-
-const chart = LightweightCharts.createChart(chartContainer, {
-  layout: {
-    background: { color: "#000" },
-    textColor: "#0f0"
-  },
-  grid: {
-    vertLines: { color: "#003300" },
-    horzLines: { color: "#003300" }
-  }
-});
-
-// 2️⃣ Add Resize Observer AFTER chart is created
-const resizeObserver = new ResizeObserver(() => {
-  chart.resize(
-    chartContainer.clientWidth,
-    chartContainer.clientHeight
-  );
-});
-
-resizeObserver.observe(chartContainer);
-const candleSeries = chart.addCandlestickSeries();
-
-/**
- * Aggregates raw price/time data into timeframe candles
- * @param {Array} data - array of {time, open, high, low, close}
- * @param {number|string} tf - minutes (1,5,15,60) or 'D' for daily
- * @returns {Array} aggregated candles
- */
-function aggregateCandles(data, tf){
-  if(!data || !data.length) return [];
-
-  // Ensure ascending order
-  data.sort((a,b)=>a.time - b.time);
-
-  const result = [];
-  let bucket = null;
-
-  data.forEach(c => {
-    let time;
-    if(tf === "D"){
-      // Get UTC start of the day
-      const date = new Date(c.time * 1000); // assuming c.time in seconds
-      time = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) / 1000;
-    } else {
-      // Floor to nearest tf minutes
-      time = Math.floor(c.time / (tf*60)) * (tf*60);
-    }
-
-    if(!bucket || bucket.time !== time){
-      if(bucket) result.push(bucket);
-      bucket = {
-        time,
-        open: c.open,
-        high: c.high,
-        low: c.low,
-        close: c.close
-      };
-    } else {
-      bucket.high = Math.max(bucket.high, c.high);
-      bucket.low  = Math.min(bucket.low, c.low);
-      bucket.close = c.close; // last price in bucket
-    }
-  });
-
-  if(bucket) result.push(bucket);
-
-  return result;
-}
-function updateTimeframe(){
-  let data;
-  if(currentTF==="D") data=aggregateCandles(rawData,1440);
-  else data=aggregateCandles(rawData,currentTF);
-  candleSeries.setData(data);
-  chart.timeScale().fitContent();
-  chart.timeScale().scrollToRealTime();
-  
-}
-async function loadAvailableSymbols() {
-  try {
-    const res = await fetch(`${WORKER_BASE}/fetch?allSymbols=true`);
-    const data = await res.json();
-
-    // data keys are your available symbols
-    symbols = Object.keys(data).map(sym => ({
-      symbol: sym,
-      name: beautifySymbol(sym) // display-friendly, e.g. "%5ENSEI" -> "^NSEI"
-    }));
-
-    initSearch(); // populate the search box
-  } catch (err) {
-    console.error("Failed to load available symbols:", err);
-  }
-}
-function beautifySymbol(sym) {
-  return decodeURIComponent(sym); // %5E → ^
-}
-async function loadChart(displaySymbol) {
-  const symbol = encodeURIComponent(displaySymbol); // match Worker keys
-  try {
-    const res = await fetch(`${WORKER_BASE}/?symbol=${symbol}`);
-    const data = await res.json();
-
-    rawData = data[symbol] || [];
-    if(!rawData.length){
-      console.warn("No data for", displaySymbol);
-      candleSeries.setData([]);
-      return;
-    }
-    updateTimeframe();
-  } catch(err) {
-    console.error("Failed to load chart:", err);
-    candleSeries.setData([]);
-  }
-}
-async function loadChart(symbol){
-  currentSymbol = symbol;
-  try {
-    const response = await fetch(`${WORKER_BASE}/?symbol=${symbol}`);
-    const data = await response.json();
-    rawData = data[symbol] || [];
-
-    // ✅ Ensure data is sorted ascending by time
-    rawData.sort((a, b) => a.time - b.time);
-
-    updateTimeframe();
-
-    // Optional: beautify symbol in input
-    document.getElementById("symbolSearch").value = beautifySymbol(symbol);
-
-    // 🔹 Focus on latest candle/price
-    if(rawData.length){
-      setTimeout(() => {
-        chart.timeScale().scrollToRealTime();
-        // Optional: highlight last candle visually
-        const last = rawData[rawData.length - 1];
-        candleSeries.update({
-          time: last.time,
-          open: last.open,
-          high: last.high,
-          low: last.low,
-          close: last.close
-        });
-      }, 50); // small delay to ensure chart is fully rendered
-    }
-
-  } catch(err){
-    console.log("Data error", err);
-    chart.timeScale().scrollToRealTime();
-  }
-}
-const search = document.getElementById("symbolSearch");
-const results = document.getElementById("symbolResults");
-search.addEventListener("input",()=>{
-  const query=search.value.toLowerCase();
-  results.innerHTML="";
-  if(query.length===0){ results.style.display="none"; return; }
-  const filtered=symbols.filter(s=>s.name.toLowerCase().includes(query));
-  filtered.forEach(s=>{
-    const div=document.createElement("div");
-    div.textContent=s.name;
-    div.onclick=()=>{ search.value=s.name; results.style.display="none"; loadChart(s.symbol); };
-    results.appendChild(div);
-  });
-  results.style.display=filtered.length? "block":"none";
-});
-document.querySelectorAll(".timeframes button").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const tf=btn.dataset.tf;
-    currentTF=tf==="D"? "D":parseInt(tf);
-    updateTimeframe();
-  });
-});
-loadChart("^NSEI");
 
 /* ================== DRAGGABLE TRADE BOX ================== */
 const tradeBox = document.getElementById('tradeBox');
@@ -1385,13 +1163,13 @@ function getLot(){
 buyBtn.addEventListener('click', ()=>{
   const lot = getLot();
   if(lot===null) return;
-  alert(`BUY ${lot} lot(s) of ${currentSymbol}`);
+  alert(`BUY ${lot} lot(s)`);
 });
 
 sellBtn.addEventListener('click', ()=>{
   const lot = getLot();
   if(lot===null) return;
-  alert(`SELL ${lot} lot(s) of ${currentSymbol}`);
+  alert(`SELL ${lot} lot(s)`);
 });
 /* ==================
    MARKET INTEL DATA
