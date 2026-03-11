@@ -17,6 +17,7 @@ header {
     background: #111;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
 }
 select {
@@ -54,120 +55,344 @@ canvas.hovered { cursor: crosshair; }
 
 #settingsMenu {
     display: none;
-    background: #111;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #888;
     position: absolute;
-    top: 30px;
+    top: 35px;
     right: 0;
-    z-index: 10;
-    white-space: nowrap;
-}
-#settingsMenu.show { display: block; }
-#indicatorsMenu input[type=number] {
-    background: #222; border: 1px solid #555; color: #fff; border-radius: 3px; padding: 2px 4px;
-}
-#indicatorsWidget {
-  display: none; /* hidden by default */
-  position: absolute;
-  top: 50px;
-  right: 10px;
-  background: #111;
-  border: 1px solid #888;
-  border-radius: 6px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  color: #fff;
-  font-size: 14px;
-  user-select: none;
-  cursor: grab;
-  width: 180px;
-  z-index: 20;
+
+    width: 280px;
+    max-height: 70vh;   /* dynamic height */
+    overflow-y: auto;   /* allow scrolling */
+
+    background: #111;
+    border: 1px solid #444;
+    border-radius: 8px;
+
+    padding: 16px;
+
+    flex-direction: column;
+    gap: 14px;
+
+    font-size: 14px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+
+    z-index: 100;
 }
 
-#indicatorsHeader {
-  padding: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-  border-bottom: 1px solid #555;
+#settingsMenu.show{
+    display:flex;
+}
+#settingsMenu label{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
 }
 
-#indicatorsBody {
-  display: none; /* collapsed by default */
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+#settingsMenu select,
+#settingsMenu input{
+    background:#222;
+    border:1px solid #555;
+    color:#fff;
+    border-radius:4px;
+    padding:4px 6px;
+}
+.settingsSection{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
 }
 
-.indicatorRow input[type=number] {
-  width: 50px;
-  background: #222;
-  border: 1px solid #555;
-  border-radius: 3px;
-  color: #fff;
-  padding: 2px 4px;
+.settingsTitle{
+    font-size:12px;
+    color:#aaa;
+    text-transform:uppercase;
+    border-bottom:1px solid #333;
+    padding-bottom:4px;
 }
 
-.indicatorRow label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 5px;
+
+
+@media (max-width:768px){
+
+header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+    padding:8px;
+}
+
+#settingsWrapper{
+    position:static;
+}
+
+select{
+    font-size:16px;
+    padding:8px;
+}
+
+canvas{
+    touch-action:none;
+}
+button{
+padding:10px 14px;
+font-size:16px;
+border-radius:6px;
+border:1px solid #666;
+background:#222;
+color:#fff;
+}
+
+
+
+
+
+
+
+
+
+
+/* S/R wrapper */
+
+#srWrapper{
+position:relative;
+}
+
+/* toggle button */
+
+#srButton{
+cursor:pointer;
+padding:6px 10px;
+background:#222;
+border:1px solid #444;
+border-radius:4px;
+font-size:12px;
+}
+
+#srButton:hover{
+background:#333;
+}
+
+/* settings panel */
+
+#srWidget{
+
+position:absolute;
+top:35px;
+right:0;
+
+background:#111;
+border:1px solid #444;
+border-radius:6px;
+
+padding:10px;
+width:160px;
+
+display:none;
+
+flex-direction:column;
+gap:8px;
+
+font-size:12px;
+
+z-index:1000;
+}
+
+#srWidget label{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+gap:8px;
+}
+
+#srWidget input{
+
+width:60px;
+
+background:#222;
+color:#fff;
+
+border:1px solid #444;
+border-radius:3px;
+
+padding:2px 4px;
+}
+
+/* =========================
+   MOBILE OPTIMIZATION
+========================= */
+
+@media (max-width:768px){
+
+header{
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
+}
+
+header > div{
+    width:100%;
+}
+
+select,button{
+    width:100%;
+    font-size:16px;
+    padding:10px;
+}
+
+#settingsWrapper{
+    position:static;
+    justify-content:flex-end;
+}
+
+#settingsMenu{
+    right:0;
+    left:auto;
+}
+
+#indicatorsWidget{
+    width:90%;
+    right:5%;
+    top:80px;
+}
+
+#indicatorsBody{
+    font-size:16px;
+}
+
+canvas{
+    touch-action:none;
+}
+
+}
+@media (max-width:768px){
+header{
+position:sticky;
+top:0;
+z-index:50;
+}
+}
 }
 </style>
 </head>
 <body>
 
 <header>
+
+    <!-- Left side -->
     <div style="display:flex; align-items:center; gap:10px;">
         <label for="symbolSelect">Ticker:</label>
         <select id="symbolSelect"><option>Loading...</option></select>
     </div>
 
-	<!-- Indicators toggle button -->
-	<div id="indicatorsWrapper">
-	  <button id="indicatorsButton">&#128202; Indicators</button>
-	  
-	  <div id="indicatorsWidget">
-		<div id="indicatorsHeader">
-		  Indicators <span id="indicatorsClose" style="float:right; cursor:pointer;">&#10006;</span>
-		</div>
-		<div id="indicatorsBody">
-		  <div class="indicatorRow">
-			<label><input type="checkbox" id="smaToggle"> SMA</label>
-			<label>Period: <input type="number" id="smaPeriod" value="20" min="1"></label>
-		  </div>
-		  <div class="indicatorRow">
-			<label><input type="checkbox" id="emaToggle"> EMA</label>
-			<label>Period: <input type="number" id="emaPeriod" value="9" min="1"></label>
-		  </div>
-		  <div class="indicatorRow">
-			<label><input type="checkbox" id="vwapToggle"> VWAP</label>
-		  </div>
-		</div>
-	  </div>
-	</div>
+    <!-- Right side icons -->
+    <div id="headerIcons" style="display:flex; align-items:center; gap:12px;">
+        <!-- Settings -->
+        <div id="settingsWrapper">
+            <div id="gear">&#9881;</div>
 
-    <!-- Settings gear -->
-    <div id="settingsWrapper">
-        <div id="gear">&#9881;</div>
-        <div id="settingsMenu">
-			<div>
-				<label><input type="checkbox" id="autoScrollToggle"> Auto-Scroll</label>
-			</div>
-            <label for="themeSelect">Theme:</label>
-            <select id="themeSelect">
-                <option value="dark">Dark</option>
-                <option value="win98">Win 98</option>
-                <option value="win10">Win 10</option>
-            </select>
+				<div id="settingsMenu">
+
+					<div class="settingsSection">
+						<div class="settingsTitle">Chart</div>
+
+						<label>
+							Auto Scroll
+							<input type="checkbox" id="autoScrollToggle">
+						</label>
+
+						<label>
+							Theme
+							<select id="themeSelect">
+								<option value="dark">Dark</option>
+								<option value="win98">Win 98</option>
+								<option value="win10">Win 10</option>
+							</select>
+						</label>
+					</div>
+
+					<div class="settingsSection">
+						<div class="settingsTitle">Support / Resistance</div>
+
+						<div id="srWrapper">
+
+							<label>
+								Enable
+								<input type="checkbox" id="srToggle" checked>
+							</label>
+
+							<label>
+								Max Levels
+								<input type="number" id="srLevels" min="1" max="10" value="3">
+							</label>
+
+							<label>
+								Min Touches
+								<input type="number" id="srTouches" min="1" max="10" value="2">
+							</label>
+
+							<label>
+								Tolerance %
+								<input type="number" id="srTolerance" step="0.001" value="0.002">
+							</label>
+
+						</div>
+					</div>
+					<div class="settingsSection" id="smtSettings">
+
+						<div class="settingsTitle">Smart Micro Target</div>
+
+						<label class="settingItem">
+						<input type="checkbox" id="smtToggle" checked>
+						Enable SMT Indicator
+						</label>
+
+						<label class="settingItem">
+						Lookback Candles
+						<input type="number" id="smtLookback" value="20" min="5" max="50">
+						</label>
+
+				    </div>
+					<div class="settingsSection">
+
+						<div class="settingsTitle">Indicators</div>
+
+						<label>
+							SMA
+							<input type="checkbox" id="smaToggle">
+						</label>
+
+						<label>
+							SMA Period
+							<input type="number" id="smaPeriod" value="20" min="1">
+						</label>
+
+						<label>
+							EMA
+							<input type="checkbox" id="emaToggle">
+						</label>
+
+						<label>
+							EMA Period
+							<input type="number" id="emaPeriod" value="9" min="1">
+						</label>
+
+						<label>
+							VWAP
+							<input type="checkbox" id="vwapToggle">
+						</label>
+
+					</div>
+
+				</div>
         </div>
-    </div>
-</header>
 
-<canvas id="chart" width="1200" height="600"></canvas>
+    </div>
+
+</header>
+<canvas id="chart"></canvas>
 <div id="tooltip" style="
     position:absolute; background:rgba(0,0,0,0.8); color:#fff; padding:6px;
     font-size:12px; border-radius:4px; pointer-events:none; display:none;"></div>
@@ -209,6 +434,7 @@ const symbolSelect = document.getElementById('symbolSelect');
 const tooltip = document.getElementById('tooltip');
 
 let candles=[], offsetX=0, offsetY=0, candleWidth=8, isDragging=false, dragStartX=0, dragStartY=0, blinkVisible=true;
+let smtBlink = 0;
 let hoveredCandleIndex=null;
 let autoScrollEnabled = true;
 document.getElementById('autoScrollToggle').checked = true;
@@ -220,34 +446,8 @@ const smaPeriod = document.getElementById('smaPeriod');
 const emaToggle = document.getElementById('emaToggle');
 const emaPeriod = document.getElementById('emaPeriod');
 const vwapToggle = document.getElementById('vwapToggle');
-const indicatorsWidget = document.getElementById('indicatorsWidget');
-const indicatorsHeader = document.getElementById('indicatorsHeader');
-const indicatorsBody = document.getElementById('indicatorsBody');
 
 
-// --- NEW: Indicators toggle functionality
-const indicatorsButton = document.getElementById('indicatorsButton');
-const indicatorsClose = document.getElementById('indicatorsClose');
-
-// Toggle indicators panel
-indicatorsButton.addEventListener('click', () => {
-    indicatorsWidget.style.display = indicatorsWidget.style.display === 'block' ? 'none' : 'block';
-});
-
-// Close button inside panel
-indicatorsClose.addEventListener('click', () => {
-    indicatorsWidget.style.display = 'none';
-});
-
-// Click outside to close
-document.addEventListener('click', e => {
-    if (!indicatorsWidget.contains(e.target) && !indicatorsButton.contains(e.target)) {
-        indicatorsWidget.style.display = 'none';
-    }
-});
-indicatorsHeader.addEventListener('click', ()=>{
-    indicatorsBody.style.display = indicatorsBody.style.display === 'none' ? 'flex' : 'none';
-});
 // ----------------------------
 // Fetch symbols
 async function loadSymbols(){
@@ -279,7 +479,14 @@ async function loadCandles(symbol){
         smoothScrollTo(targetOffset, 700); // 700ms animation
     }catch(e){ console.error(e); }
 }
+function resizeCanvas(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - document.querySelector("header").offsetHeight;
+    drawChart();
+}
 
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
 // ----------------------------
 // Gear menus
 const gear = document.getElementById('gear'), settingsMenu = document.getElementById('settingsMenu');
@@ -348,9 +555,86 @@ canvas.addEventListener('mousemove', e => {
     } else { hoveredCandleIndex=null; tooltip.style.display='none'; }
     drawChart();
 });
-canvas.addEventListener('wheel', e=>{ e.preventDefault(); candleWidth=Math.min(Math.max(candleWidth + (e.deltaY>0?-1:1), 2), 30); drawChart(); });
+canvas.addEventListener('wheel', e => {
+    e.preventDefault();
 
-// ----------------------------
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+
+    const oldSpacing = candleWidth * 1.5;
+
+    // Slower zoom speed
+    const zoomSpeed = 0.25;
+
+    candleWidth = Math.min(
+        Math.max(candleWidth + (e.deltaY > 0 ? -zoomSpeed : zoomSpeed), 2),
+        30
+    );
+
+    const newSpacing = candleWidth * 1.5;
+
+    // Keep zoom centered at cursor
+    offsetX = mouseX - ((mouseX - offsetX) * newSpacing / oldSpacing);
+
+    drawChart();
+});
+/* =========================
+   MOBILE TOUCH DRAG SUPPORT
+========================= */
+
+canvas.addEventListener("touchstart", e=>{
+    const touch = e.touches[0];
+    isDragging = true;
+    dragStartX = touch.clientX;
+    dragStartY = touch.clientY;
+});
+canvas.addEventListener("touchmove", e=>{
+    e.preventDefault();
+
+    if(e.touches.length === 1){
+        const touch = e.touches[0];
+
+        const dx = touch.clientX - dragStartX;
+        const dy = touch.clientY - dragStartY;
+
+        offsetX += dx;
+        offsetY += dy;
+
+        dragStartX = touch.clientX;
+        dragStartY = touch.clientY;
+
+        drawChart();
+    }
+
+    if(e.touches.length === 2){
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        const distance = Math.sqrt(dx*dx + dy*dy);
+
+        if(lastPinchDistance){
+            if(distance > lastPinchDistance){
+                candleWidth = Math.min(candleWidth + 1, 30);
+            } else {
+                candleWidth = Math.max(candleWidth - 1, 2);
+            }
+            drawChart();
+        }
+
+        lastPinchDistance = distance;
+    }
+});
+
+canvas.addEventListener("touchend", ()=>{
+    isDragging = false;
+});
+let lastPinchDistance = null;
+
+
+
+canvas.addEventListener("touchend", ()=>{
+    lastPinchDistance = null;
+});
+
 // Indicator event listeners
 [smaToggle,smaPeriod,emaToggle,emaPeriod,vwapToggle].forEach(el=>el.addEventListener('input', drawChart));
 setInterval(()=>{ if(symbolSelect.value) loadCandles(symbolSelect.value); }, 60000);
@@ -402,7 +686,7 @@ function drawChart(){
     const theme=themes[currentTheme], padding={top:50,bottom:50,left:80,right:20}, volumeHeight=50;
     const chartHeight=canvas.height-padding.top-padding.bottom-volumeHeight, chartWidth=canvas.width-padding.left-padding.right;
     const spacing=candleWidth*1.5;
-
+	smtBlink += 0.1;
     // Background
 	if(currentTheme==='win98'){ 
 		const grad = ctx.createLinearGradient(0,0,0,canvas.height);
@@ -470,7 +754,7 @@ function drawChart(){
 		const x = padding.left + latestIndex * spacing + offsetX;
 		const yOpen = scaleY(c.open), yClose = scaleY(c.close);
 
-		ctx.strokeStyle = '#FF00FF'; // flashing color (magenta)
+		ctx.strokeStyle = '#8B0000'; // dark red flash
 		ctx.lineWidth = 2;
 		ctx.strokeRect(x - candleWidth / 2 - 2, Math.min(yOpen, yClose) - 2, candleWidth + 4, Math.max(Math.abs(yClose - yOpen), 1) + 4);
 	}
@@ -501,11 +785,13 @@ function drawChart(){
 		);
 	}
 
-    // Indicators
-    if(smaToggle.checked) drawIndicator(calculateSMA(parseInt(smaPeriod.value)),'#FFD700');
-    if(emaToggle.checked) drawIndicator(calculateEMA(parseInt(emaPeriod.value)),'#1E90FF');
-    if(vwapToggle.checked) drawIndicator(calculateVWAP(),'#00FFFF');
+	// Indicators
+	if(smaToggle.checked) drawIndicator(calculateSMA(parseInt(smaPeriod.value)),'#FFD700');
+	if(emaToggle.checked) drawIndicator(calculateEMA(parseInt(emaPeriod.value)),'#1E90FF');
+	if(vwapToggle.checked) drawIndicator(calculateVWAP(),'#00FFFF');
 
+	updateSupportResistance();
+	drawSMTFlash();
     // Hover marker
     if(hoveredCandleIndex!==null && blinkVisible){
         const x=padding.left+hoveredCandleIndex*spacing+offsetX;
@@ -585,6 +871,348 @@ function smoothScrollToXY(targetX, targetY, duration = 500) {
 
     requestAnimationFrame(animate);
 }
+
+
+
+
+
+function calculateSupportResistance(data, maxLevels = 3, tolerance = 0.002) {
+
+    let levels = [];
+
+    // detect pivots
+    for (let i = 2; i < data.length - 2; i++) {
+
+        let high = data[i].high;
+        let low = data[i].low;
+
+        if (
+				high > data[i-1].high &&
+				high > data[i-2].high &&
+				high > data[i+1].high &&
+				high > data[i+2].high
+				) {
+            levels.push({price: high, touches: 0});
+        }
+
+        if (
+			low < data[i-1].low &&
+			low < data[i-2].low &&
+			low < data[i+1].low &&
+			low < data[i+2].low
+			) {
+            levels.push({price: low, touches: 0});
+        }
+    }
+
+    // count touches
+    levels.forEach(level => {
+
+        data.forEach(candle => {
+
+            let tol = level.price * tolerance;
+
+            if (
+                candle.high >= level.price - tol &&
+                candle.low <= level.price + tol
+            ) {
+                level.touches++;
+            }
+
+        });
+
+    });
+
+    // sort strongest first
+    levels.sort((a,b)=>b.touches - a.touches);
+
+    // return only strongest
+    return levels.slice(0, maxLevels);
+}
+
+
+function getSRSettings(){
+
+return {
+
+enabled: document.getElementById("srToggle").checked,
+
+maxLevels: parseInt(
+document.getElementById("srLevels").value
+),
+
+minTouches: parseInt(
+document.getElementById("srTouches").value
+),
+
+tolerance: parseFloat(
+document.getElementById("srTolerance").value
+)
+
+};
+
+}
+function getSMTSettings(){
+
+return {
+
+enabled: document.getElementById("smtToggle").checked,
+
+lookback: parseInt(
+document.getElementById("smtLookback").value
+)
+
+};
+
+}
+function updateSupportResistance(){
+
+const settings = getSRSettings();
+
+if(!settings.enabled) return;
+
+let levels = calculateSupportResistance(
+candles,
+50,
+settings.tolerance
+);
+
+// 🔹 MERGE duplicates
+levels = mergeCloseLevels(levels, settings.tolerance);
+
+// 🔹 remove weak levels
+levels = levels.filter(
+l => l.touches >= settings.minTouches
+);
+
+// 🔹 strongest first
+levels.sort((a,b)=>b.touches - a.touches);
+
+// 🔹 limit count
+levels = levels.slice(0, settings.maxLevels);
+
+drawSR(levels);
+
+}
+function drawSR(levels){
+
+    const padding = {top:50, bottom:50, left:80, right:20};
+    const volumeHeight = 50;
+    const chartHeight = canvas.height - padding.top - padding.bottom - volumeHeight;
+
+    const priceMin = Math.min(...candles.map(c=>c.low));
+    const priceMax = Math.max(...candles.map(c=>c.high));
+
+    const scaleY = price =>
+        padding.top + (priceMax - price) * chartHeight / (priceMax - priceMin) + offsetY;
+
+    ctx.save();
+
+    ctx.strokeStyle = "#FFD700";
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([6,6]);
+
+    levels.forEach(level => {
+
+        const y = scaleY(level.price);
+
+        ctx.beginPath();
+        ctx.moveTo(padding.left, y);
+        ctx.lineTo(canvas.width - padding.right, y);
+        ctx.stroke();
+
+        ctx.fillStyle = "#FFD700";
+        ctx.font = "11px Arial";
+        ctx.textAlign = "left";
+        const label = level.price.toFixed(2) + " (" + level.touches + ")";
+		const textWidth = ctx.measureText(label).width;
+
+		ctx.fillText(
+			label,
+			canvas.width - padding.right - textWidth - 5,
+			y + 3
+		);
+
+    });
+
+    ctx.setLineDash([]);
+    ctx.restore();
+}
+function mergeCloseLevels(levels, tolerance){
+
+    let merged = [];
+
+    levels.forEach(level => {
+
+        let found = false;
+
+        for(let m of merged){
+
+            let tol = m.price * tolerance * 2;
+
+            if(Math.abs(level.price - m.price) < tol){
+
+                // merge levels
+                m.price = (m.price * m.touches + level.price * level.touches) / (m.touches + level.touches);
+                m.touches += level.touches;
+
+                found = true;
+                break;
+            }
+
+        }
+
+        if(!found){
+            merged.push({...level});
+        }
+
+    });
+
+    return merged;
+}
+function calculateSMT(){
+
+const settings = getSMTSettings();
+if(!settings.enabled) return null;
+
+const lookback = settings.lookback;
+
+if(candles.length < lookback) return null;
+
+const recent = candles.slice(-lookback);
+
+const first = recent[0].close;
+const last = recent[recent.length-1].close;
+
+const high = Math.max(...recent.map(c=>c.high));
+const low = Math.min(...recent.map(c=>c.low));
+
+let direction = null;
+let target = null;
+
+if(last > first){
+    direction = "UP";
+    target = high;
+}
+else{
+    direction = "DOWN";
+    target = low;
+}
+
+return {
+direction,
+target
+};
+
+}
+function getSMTDirection(){
+
+const settings = getSMTSettings();
+
+if(!settings.enabled) return null;
+
+if(candles.length < settings.lookback) return null;
+
+const recent = candles.slice(-settings.lookback);
+
+const first = recent[0].close;
+const last = recent[recent.length-1].close;
+
+return last > first ? "UP" : "DOWN";
+
+}
+function drawSMTFlash(){
+
+const direction = getSMTDirection();
+if(!direction) return;
+
+const padding = {top:50, bottom:50, left:80, right:20};
+const volumeHeight = 50;
+const spacing = candleWidth * 1.5;
+
+const chartHeight = canvas.height - padding.top - padding.bottom - volumeHeight;
+
+const priceMin = Math.min(...candles.map(c=>c.low));
+const priceMax = Math.max(...candles.map(c=>c.high));
+
+const scaleY = price =>
+padding.top + (priceMax - price) * chartHeight / (priceMax - priceMin) + offsetY;
+
+const lastIndex = candles.length - 1;
+const last = candles[lastIndex];
+
+const candleX = padding.left + lastIndex * spacing + offsetX;
+const candleY = scaleY((last.open + last.close)/2);
+
+/* --- calculate trend slope --- */
+
+const lookback = 8;
+let slope = 0;
+
+if(candles.length > lookback){
+
+    const prev = candles[lastIndex - lookback];
+    const prevY = scaleY(prev.close);
+
+    slope = (candleY - prevY) / (lookback * spacing);
+
+}
+
+/* --- beam direction --- */
+
+const beamLength = canvas.width * 2;
+const beamWidth = candleWidth * 40;
+let angle = Math.atan(-slope);
+
+if(direction === "UP"){
+    angle = -Math.abs(angle);   // tilt upward-right
+}else{
+    angle = Math.abs(angle);    // tilt downward-right
+}
+
+/* --- animation pulse --- */
+
+const pulse = (Math.sin(smtBlink) + 1) / 2;
+
+ctx.save();
+
+ctx.translate(candleX, candleY);
+ctx.rotate(angle);
+
+ctx.globalAlpha = 0.2 + pulse * 0.3;
+
+const color = direction === "UP" ? "#00ffaa" : "#ff7a00";
+
+ctx.fillStyle = color;
+ctx.shadowColor = color;
+ctx.shadowBlur = 30;
+
+/* --- infinite beam --- */
+
+ctx.beginPath();
+
+ctx.moveTo(0,0);
+
+if(direction === "UP"){
+
+    // project forward & up
+    ctx.lineTo(beamLength,-beamWidth/2);
+    ctx.lineTo(beamLength,beamWidth/2);
+
+}else{
+
+    // project forward & down
+    ctx.lineTo(beamLength,-beamWidth/2);
+    ctx.lineTo(beamLength,beamWidth/2);
+
+}
+ctx.closePath();
+ctx.fill();
+
+ctx.restore();
+
+}
+
 </script>
 
 </body>
