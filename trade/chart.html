@@ -264,12 +264,40 @@ footer * {            /* all children inside footer */
   gap: 15px;
 }
 
-/* TAB 3 */
+/* ---------- MARKET INTEL TAB GRID ---------- */
 #tab3.section.active {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;       /* 3 columns for row 1 */
+  grid-template-rows: auto 2fr 1fr;         /* row heights: small, big, medium */
+  grid-template-areas:
+    "sentiment vix crypto"
+    "news news news"
+    "empty1 empty2 empty2";
   gap: 15px;
+  height: 100%;
+}
+
+/* Row 1 panels (small info) */
+#tab3 .panel-sentiment { grid-area: sentiment; }
+#tab3 .panel-vix       { grid-area: vix; }
+#tab3 .panel-crypto    { grid-area: crypto; }
+
+/* Row 2: Market News full width */
+#tab3 .panel-news      { grid-area: news; }
+
+/* Row 3: two half panels */
+#tab3 .panel-empty1    { grid-area: empty1; }
+#tab3 .panel-empty2    { grid-area: empty2; }
+
+/* Optional: style empty panels */
+#tab3 .panel-empty1,
+#tab3 .panel-empty2 {
+  border: 2px dashed var(--panel-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--subtext);
+  font-size: 12px;
 }
 
 /* TAB 4 */
@@ -529,6 +557,100 @@ header.top-bar .right-group {
   font-size:12px;
   opacity:0.6;
 }
+#newsFeed .news-item {
+    font-size: 12px;
+    line-height: 1.4;
+    padding: 4px 6px;
+    cursor: pointer;
+    user-select: text;        /* allows selecting text */
+    border-radius: 3px;
+    transition: background 0.2s, color 0.2s;
+}
+
+#newsFeed .news-item:hover {
+    background: var(--accent);
+    color: var(--btn-text);
+}
+
+.news-time {
+    opacity: 0.6;
+    margin-right: 4px;
+}
+/* Half-moon sentiment meter */
+.sentiment-meter-half {
+  width: 120px;
+  height: 60px;  /* half circle */
+  border-radius: 120px 120px 0 0; /* top half circle */
+  background: conic-gradient(
+    #ff3b3b 0deg,     /* bearish red */
+    #ff3b3b 180deg,   /* default fill (updated by JS) */
+    #0078d7 180deg,   /* bullish blue/green */
+    #0078d7 360deg
+  );
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* Wrapper for small scall indicator */
+.sentiment-scall {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text);
+}
+
+/* Triangle arrow pointing up/down/left/right */
+.scall-arrow {
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 16px solid #0078d7; /* default: bullish */
+  margin-bottom: 4px;
+  transition: all 0.5s ease;
+}
+
+/* Label below arrow */
+.scall-label {
+  font-weight: bold;
+}
+#tab3 .panel-news .news-item {
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 4px 6px;
+  cursor: pointer;
+  user-select: text;
+}
+#tab3 .panel-news .news-item:hover {
+  background: var(--accent);
+  color: var(--btn-text);
+}
+.channel-tab {
+  padding: 4px 10px;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.channel-tab:hover {
+  background: var(--accent-hover);
+  color: var(--btn-text);
+}
+
+.channel-tab.active {
+  background: var(--accent);
+  color: var(--btn-text);
+  font-weight: bold;
+  border-color: var(--accent);
+}
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 900px) {
   .content-area {
@@ -671,11 +793,43 @@ header.top-bar .right-group {
 
   <!-- TAB 3 -->
   <div id="tab3" class="section">
-    <div class="panel panel-sentiment"><div class="panel-header">Market Sentiment</div><div class="panel-body"></div></div>
-    <div class="panel panel-vix"><div class="panel-header">India VIX</div><div class="panel-body"></div></div>
+	<div class="panel panel-sentiment">
+	  <div class="panel-header">Sentiment</div>
+	  <div class="panel-body" style="display:flex; justify-content:center; align-items:center; height:100%;">
+		<div id="sentimentScall" class="sentiment-scall">
+		  <div class="scall-arrow"></div>
+		  <div class="scall-label" id="sentimentText">Loading...</div>
+		</div>
+	  </div>
+	</div>
+    <div class="panel panel-vix">
+  <div class="panel-header">India VIX</div>
+	  <div class="panel-body" style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
+		<div id="vixValue" style="font-weight:bold; font-size:16px;">--</div>
+		<div id="vixInfo" style="font-size:12px; opacity:0.8;">Loading...</div>
+		<div id="vixTrend" style="font-size:18px;"></div>
+	  </div>
+	</div>
     <div class="panel panel-crypto"><div class="panel-header">Crypto Market</div><div class="panel-body"></div></div>
-    <div class="panel panel-news"><div class="panel-header">Market News</div><div class="panel-body"></div></div>
-  </div>
+
+	<div class="panel panel-news">
+	  <div class="panel-header">Market News</div>
+		<div class="panel-body" style="display:flex; flex-direction:column; height:100%;">
+		<!-- Horizontal channel tabs -->
+			<div class="channel-tabs" style="display:flex; gap:8px; margin-bottom:6px; justify-content:center;">
+			  <div class="channel-tab active" data-channel="et">ET</div>
+			  <div class="channel-tab" data-channel="moneycontrol">MoneyControl</div>
+			  <div class="channel-tab" data-channel="business-standard">Business Standard</div>
+			</div>
+
+		<!-- News container -->
+		<div id="marketNewsContainer" style="flex:1; overflow:auto;"></div>
+	  </div>
+	</div>
+	<!-- Row 3: empty panels -->
+	<div class="panel panel-empty1">Working</div>
+	<div class="panel panel-empty2">Working</div> 
+ </div>
 
   <!-- TAB 4 -->
 <div id="tab4" class="section">
@@ -869,16 +1023,13 @@ const res = await fetch(
 
 const data = await res.json();
 
-data.items.slice(0,3).forEach(n=>{
-
-const time = new Date(n.pubDate).toLocaleTimeString();
-
-html += `
-<div style="margin-bottom:8px; font-size:12px;">
-[${time}] ${n.title}
-</div>
-`;
-
+data.items.slice(0,8).forEach(n => {
+    const time = new Date(n.pubDate).toLocaleTimeString();
+    html += `
+    <div class="news-item" data-link="${n.link}">
+        <span class="news-time">[${time}]</span> 
+        <span class="news-title">${n.title}</span>
+    </div>`;
 });
 
 }catch(e){}
@@ -886,11 +1037,257 @@ html += `
 }
 
 document.getElementById("newsFeed").innerHTML = html;
-
+document.querySelectorAll('#newsFeed .news-item').forEach(item => {
+    item.addEventListener('click', () => {
+        const link = item.dataset.link;
+        window.open(link, '_blank'); // open article in new tab// open article in new tab// open article in new tab// open article in new tab
+    });
+});
 }
 
 loadMarketNews();
 setInterval(loadMarketNews,60000);
+
+
+
+function updateScallSentiment(score) {
+  const arrow = document.querySelector(".scall-arrow");
+  const label = document.getElementById("sentimentText");
+
+  if (score <= 30) {             // Bearish
+    arrow.style.borderBottomColor = "#ff3b3b";
+    arrow.style.transform = "rotate(180deg)"; // point down
+    label.innerText = "Bearish";
+  } else if (score < 70) {       // Neutral
+    arrow.style.borderBottomColor = "#cccc00";
+    arrow.style.transform = "rotate(90deg)";  // point sideways
+    label.innerText = "Neutral";
+  } else {                        // Bullish
+    arrow.style.borderBottomColor = "#0078d7";
+    arrow.style.transform = "rotate(0deg)";   // point up
+    label.innerText = "Bullish";
+  }
+}
+
+// Fetch API and update
+async function loadScallSentiment() {
+  try {
+    const res = await fetch("https://api.alternative.me/fng/?limit=1");
+    const data = await res.json();
+    const score = parseInt(data.data[0].value); // 0–100
+    updateScallSentiment(score);
+  } catch (e) {
+    console.error("Sentiment API error", e);
+  }
+}
+
+loadScallSentiment();
+setInterval(loadScallSentiment, 60000);
+
+
+
+let prevVix = null;
+
+async function loadIndiaVIX() {
+  try {
+    // Placeholder API / demo VIX value
+    const vix = (Math.random() * 25 + 12).toFixed(2); // 12–37
+
+    const valueEl = document.getElementById("vixValue");
+    const infoEl = document.getElementById("vixInfo");
+    const trendEl = document.getElementById("vixTrend");
+
+    valueEl.innerText = `VIX: ${vix}`;
+
+    // Determine volatility severity
+    let text = "";
+    let color = "";
+    if (vix < 15) {           // Low
+      text = "Low Volatility — Markets Calm";
+      color = "#00ff66";       // green
+    } else if (vix < 25) {    // Moderate
+      text = "Moderate Volatility — Watch Market";
+      color = "#ffcc00";       // yellow/orange
+    } else {                  // High
+      text = "High Volatility — Caution Advised!";
+      color = "#ff3b3b";       // red
+    }
+
+    // Update info text with color and bold if high
+    infoEl.innerText = text;
+    infoEl.style.color = color;
+    infoEl.style.fontWeight = vix >= 25 ? "bold" : "normal";
+
+    // Trend arrow
+    if (prevVix !== null) {
+      if (vix > prevVix) {
+        trendEl.innerText = "⬆"; // VIX up
+        trendEl.style.color = "#ff3b3b";
+      } else if (vix < prevVix) {
+        trendEl.innerText = "⬇"; // VIX down
+        trendEl.style.color = "#00ff66";
+      } else {
+        trendEl.innerText = "→"; // No change
+        trendEl.style.color = "#cccc00";
+      }
+    }
+
+    prevVix = parseFloat(vix);
+
+  } catch (e) {
+    console.error("VIX error", e);
+  }
+}
+
+// Initial load and refresh every 60s
+loadIndiaVIX();
+setInterval(loadIndiaVIX, 60000);
+
+
+async function loadCryptoPrices() {
+  try {
+    const res = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd"
+    );
+    const data = await res.json();
+
+    const btc = data.bitcoin.usd;
+    const eth = data.ethereum.usd;
+
+    document.querySelector(
+      "#tab3 .panel-crypto .panel-body"
+    ).innerHTML = `
+      <div>BTC: $${btc.toLocaleString()}</div>
+      <div>ETH: $${eth.toLocaleString()}</div>
+    `;
+  } catch (e) {
+    console.error("Crypto API error", e);
+  }
+}
+
+loadCryptoPrices();
+setInterval(loadCryptoPrices, 15000); // update every 15s
+
+
+
+// ----------------------------
+// Market Intel News Module
+// ----------------------------
+
+const newsFeeds = {
+  et: "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",
+  moneycontrol: "https://www.moneycontrol.com/rss/MCtopnews.xml",
+  "business-standard": "https://www.business-standard.com/rss/markets-106.rss"
+};
+
+const newsContainer = document.getElementById("marketNewsContainer");
+const channelTabs = document.querySelectorAll(".channel-tab");
+let currentChannel = "et"; // default feed
+
+/**
+ * Fetch and display RSS feed items for a given channel
+ * @param {string} channel - key from newsFeeds
+ */
+async function loadMarketIntelNews(channel) {
+  const feedUrl = newsFeeds[channel];
+  if (!feedUrl) return;
+
+  // Use AllOrigins proxy to bypass CORS
+  const proxy = "https://api.allorigins.win/get?url=";
+
+  try {
+    const res = await fetch(proxy + encodeURIComponent(feedUrl));
+    const data = await res.json();
+
+    // Parse XML from proxy response
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(data.contents, "text/xml");
+
+    // RSS item nodes
+    const items = xml.querySelectorAll("item");
+    if (!items || items.length === 0) {
+      newsContainer.innerHTML = "No news available.";
+      return;
+    }
+
+    let html = "";
+
+    items.forEach((item, idx) => {
+      if (idx >= 15) return; // max 15 items
+      const titleNode = item.querySelector("title");
+      const linkNode = item.querySelector("link");
+      const dateNode = item.querySelector("pubDate");
+
+      const title = titleNode ? titleNode.textContent : "No title";
+      const link = linkNode ? linkNode.textContent : "#";
+      const pubDate = dateNode
+        ? new Date(dateNode.textContent).toLocaleTimeString()
+        : "";
+
+      html += `
+        <div class="news-item" data-link="${link}">
+          <span class="news-time">[${pubDate}]</span>
+          <span class="news-title">${title}</span>
+        </div>
+      `;
+    });
+
+    newsContainer.innerHTML = html;
+
+    // Add click event to open news links
+    newsContainer.querySelectorAll(".news-item").forEach(item => {
+      item.addEventListener("click", () => {
+        const link = item.dataset.link;
+        if (link && link !== "#") window.open(link, "_blank");
+      });
+    });
+  } catch (err) {
+    console.error("Market Intel news error:", err);
+    newsContainer.innerHTML = "Failed to load news.";
+  }
+}
+
+// ----------------------------
+// Initialize: load default channel
+// ----------------------------
+loadMarketIntelNews(currentChannel);
+
+// Reload every 60 seconds
+setInterval(() => loadMarketIntelNews(currentChannel), 60000);
+
+// ----------------------------
+// Handle channel tab clicks
+// ----------------------------
+channelTabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    // Remove active from all tabs
+    channelTabs.forEach(t => t.classList.remove("active"));
+    // Add active to clicked tab
+    tab.classList.add("active");
+
+    // Update current channel and reload news
+    currentChannel = tab.dataset.channel;
+    loadMarketIntelNews(currentChannel);
+  });
+});
+
+
+
+
+const chartFrame = document.querySelector(".chart-frame");
+
+// Reload chart every 30 seconds
+setInterval(() => {
+  const src = chartFrame.src;
+  chartFrame.src = src; // forces iframe reload
+}, 30000); // 30,000 ms = 30s
+const calendarFrame = document.querySelector(".calendar-frame");
+
+// Reload calendar every 60 seconds
+setInterval(() => {
+  const src = calendarFrame.src;
+  calendarFrame.src = src;
+}, 60000); // 1 minute
 </script>
 
 </body>
