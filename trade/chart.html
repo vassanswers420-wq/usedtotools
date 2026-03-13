@@ -3,660 +3,463 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Market Terminal</title>
+<title>Market Terminal - Fixed Footer Tabs</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 <style>
-
-/* =========================
-   THEME VARIABLES
-========================= */
-
-:root{
-
-/* Terminal Dark */
-
---bg:#050505;
---panel:#0b0b0b;
---panel-alt:#111;
---border:#00ff66;
-
---text:#00ff66;
---accent:#00ff66;
-
---topbar:#020202;
---tab:#0a0a0a;
---tab-active:#00ff66;
-
---button:#001f00;
---button-hover:#00ff66;
-
---input:#000;
---placeholder:#00aa44;
-
+/* ---------- THEME CLASSES ---------- */
+/* ---------- DEFAULT GREEN-BLACK ---------- */
+body {
+  --bg: #121212;        /* dark background */
+  --text: #00ff66;      /* bright green text */
+  --subtext: #33ff99;   /* lighter green */
+  --panel-bg: #0b0b0b;  
+  --panel-border: #333333;
+  --header-bg: #141414;
+  --footer-bg: #141414;
+  --accent: #00ff66;
+  --accent-hover: #33ff99;
+  --btn-text: #ffffff;
+  --shadow: rgba(0,255,102,0.25);
 }
 
-
-/* =========================
-   LIGHT THEME
-========================= */
-
-body.light{
-
---bg:#f2f4f7;
---panel:#ffffff;
---panel-alt:#f7f7f7;
---border:#d0d0d0;
-
---text:#111;
---accent:#007acc;
-
---topbar:#ffffff;
---tab:#e9e9e9;
---tab-active:#007acc;
-
---button:#007acc;
---button-hover:#005ea6;
-
---input:#ffffff;
---placeholder:#777;
-
+/* Blue-Gray (keep existing) */
+body.theme-ocean {
+  --bg: #1b1b2f;
+  --text: #66ccff;
+  --subtext: #99ccff;
+  --panel-bg: #2a2a3d;
+  --panel-border: #3a3a5a;
+  --header-bg: #14142b;
+  --footer-bg: #14142b;
+  --accent: #3399ff;
+  --accent-hover: #55bbff;
+  --btn-text: #ffffff;
+  --shadow: rgba(51,153,255,0.25);
 }
 
-
-/* =========================
-   WINDOWS 10 THEME
-========================= */
-
-body.win10{
+/* ---------- WINDOWS 10 THEME ---------- */
+body.theme-modern {
+  --bg: #0078D7;        /* Windows 10 blue background */
+  --text: #ffffff;      /* White text */
+  --subtext: #cce6ff;   /* Light blue subtext */
+  --panel-bg: #1a1a1a;  /* Dark panels */
+  --panel-border: #ffffff33;
+  --header-bg: #005a9e;
+  --footer-bg: #005a9e;
+  --accent: #00bcf2;
+  --accent-hover: #33d0ff;
+  --btn-text: #ffffff;
+  --shadow: rgba(0,188,242,0.3);
+}
+/* ---------- WINDOWS 10 DARK TERMINAL ---------- */
+body.theme-win10dark{
 
 --bg:#1e1e1e;
---panel:#252526;
---panel-alt:#2d2d30;
---border:#3f3f46;
-
 --text:#ffffff;
+--subtext:#cfcfcf;
+
+--panel-bg:#252526;
+--panel-border:#3f3f46;
+
+--header-bg:#202020;
+--footer-bg:#202020;
+
 --accent:#0078d7;
+--accent-hover:#005fa3;
 
---topbar:#202020;
---tab:#2d2d30;
---tab-active:#0078d7;
+--btn-text:#ffffff;
 
---button:#0078d7;
---button-hover:#005fa3;
-
---input:#1e1e1e;
---placeholder:#aaa;
-
+--shadow:rgba(0,120,215,0.25);
 }
 
 
-/* =========================
-   WINDOWS ME RETRO
-========================= */
-
-body.winme{
+/* ---------- WINDOWS ME RETRO ---------- */
+body.theme-winme{
 
 --bg:#c0c0c0;
---panel:#ece9d8;      /* classic Windows light beige */
---panel-alt:#f5f5f5;
+--text:#111;
+--subtext:#333;
 
---border:#000080;
+--panel-bg:#ece9d8;
+--panel-border:#000080;
 
---text:#111;         /* darker but not pure black */
+--header-bg:#000080;
+--footer-bg:#000080;
 
 --accent:#000080;
+--accent-hover:#000060;
 
---topbar:#000080;
+--btn-text:#ffffff;
 
---tab:#e4e4e4;
---tab-active:#000080;
-
---button:#000080;
---button-hover:#000060;
-
---input:#ffffff;
-
---placeholder:#666;
-
+--shadow:rgba(0,0,0,0.2);
 }
-body.winme .top-bar{
+
+/* make header text white in WinME */
+body.theme-winme .top-bar{
   color:#ffffff;
 }
-/* =========================
-   TERMINAL BASE STYLE
-========================= */
-
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:"Courier New", monospace;
-
-  display:flex;
-  flex-direction:column;
-  min-height:100vh;
+/* ---------- WINDOWS XP THEME ---------- */
+body.theme-classic {
+  --bg: #c0dfff;        /* XP light blue background */
+  --text: #000000;      /* Black text */
+  --subtext: #333333;   /* Dark gray subtext */
+  --panel-bg: #e5f1ff;  /* Slightly darker panels */
+  --panel-border: #7a7a7a;
+  --header-bg: #3399ff; /* XP top blue bar */
+  --footer-bg: #3399ff;
+  --accent: #0078d7;
+  --accent-hover: #3399ff;
+  --btn-text: #ffffff;
+  --shadow: rgba(0,0,0,0.15);
 }
 
-/* HEADER */
-
-header{
-  padding:10px 20px;
-  border-bottom:2px solid var(--border);
-  display:flex;
-  justify-content:space-between;
+/* ---------- MONO / NEUTRAL THEME ---------- */
+body.theme-neutral {
+  --bg: #d8d6d6;       /* Light gray background */
+  --text: #1a1a1a;      /* Dark gray text */
+  --subtext: #555555;   /* Medium gray */
+  --panel-bg: #ffffff;  /* White panels */
+  --panel-border: #cccccc;
+  --header-bg: #5c5c5c;
+  --footer-bg: #5c5c5c;
+  --accent: #0078d7;
+  --accent-hover: #3399ff;
+  --btn-text: #ffffff;
+  --shadow: rgba(0,0,0,0.1);
 }
 
-/* TABS */
+/* ---------- RESET ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-.tabs{
+/* ---------- HEADER ---------- */
+header.top-bar {
+  background: var(--header-bg);
+  border-bottom: 2px solid var(--panel-border);
+  height: 60px;
+  padding: 0 20px; /* remove vertical padding */
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 60px; /* vertically center text */
+}
+header.top-bar .left{
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+/* ---------- FOOTER ---------- */
+footer {
+  height: 60px;          /* fixed height */
+  display: flex;
+  flex-direction: column; /* stack copyright and tabs */
+  justify-content: center; /* vertically center */
+  align-items: center;     /* horizontally center */
+  text-align: center;
+  border-top: 2px solid var(--panel-border);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background: var(--footer-bg);
+  padding: 0;            /* remove vertical padding */
+}
+
+/* ---------- CONTENT AREA ---------- */
+.content-area {
+  margin-top: 60px;   /* match header */
+  margin-bottom: 60px; /* match footer */
+  padding: 10px 15px;
+  display: grid;
+  width: 100%;
+  height: calc(100vh - 60px - 60px); /* header + footer */
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 15px;
+  background: var(--panel-bg);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ---------- FOOTER TABS ---------- */
+.footer-tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-tab {
+ color: var(--btn-text); /* default tab text */
+  padding: 5px 14px;
+  background: var(--panel-bg);
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #404040;
+  border-right: 2px solid #404040;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text);
+  border-radius: 2px;
+  transition: all 0.1s;
+  user-select: none;
+}
+footer, 
+footer * {            /* all children inside footer */
+  color: var(--btn-text); /* white text */
+}
+
+.footer-tab:hover {
+  background: var(--accent);
+  color: var(--btn-text);
+}
+
+.footer-tab.active {
+  background: var(--accent);
+  color: var(--btn-text);
+  font-weight: bold;
+  border-top: 2px solid #404040;
+  border-left: 2px solid #404040;
+  border-bottom: 2px solid #fff;
+  border-right: 2px solid #fff;
+}
+
+/* ---------- TAB SECTIONS ---------- */
+.section {
+  display: none;
+  width: 100%;
+  height: 100%;
+  gap: 15px;
+}
+
+.section.active {
+  display: grid;
+  width: 100%;
+  height: 100%;
+}
+
+/* TAB 1: Chart + right panels */
+#tab1.section.active {
+  /* shrink terminal (chart) a bit from sides */
+  grid-template-columns: 1.5fr 1.5fr; /* more balanced width */
+  grid-template-rows: 1fr 1fr;
+  gap: 15px;
+  max-width: 1200px;       /* optional: center terminal horizontally */
+  margin: 0 auto;          /* centers the content area */
+  padding: 0 15px;         /* small padding from sides */
+}
+
+/* TAB 2 */
+#tab2.section.active {
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+/* TAB 3 */
+#tab3.section.active {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 15px;
+}
+
+/* TAB 4 */
+#tab4.section.active {
   display:flex;
   justify-content:center;
-  border-top:2px solid var(--border);
-  margin-top:20px;
-}
-
-.tab{
-  padding:10px 20px;
-  margin:0 5px;
-  cursor:pointer;
-  border:2px solid var(--border);
-  border-bottom:none;
-  background:var(--tab);
-  color:var(--text);
-  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
-}
-
-.tab.active{
-  background:var(--tab-active);
-  color:#000;
-}
-/* PANEL TITLE */
-
-.panel-title{
-  position:absolute;
-  top:6px;
-  left:10px;
-  font-size:12px;
-  color:var(--text);
-  background:var(--panel-alt);
-  padding:2px 6px;
-  border:1px solid var(--border);
-  z-index:2;
-  letter-spacing:1px;
-}
-
-/* SECTIONS */
-
-.section{
-  display:none;
-  padding:20px;
-}
-
-.section.active{
-  display:block;
-}
-
-/* HEADER BAR */
-
-.top-bar{
-  display:flex;
-  justify-content:space-between;
   align-items:center;
-  padding:10px 20px;
-  border-bottom:2px solid var(--border);
-  font-family:"Courier New", monospace;
-
-  background:var(--topbar);
-}
-.left{
-  font-weight:700;
-  letter-spacing:3px;
-  font-family: "Orbitron", "Courier New", monospace;
-  text-transform:uppercase;
 }
 
-.right-group{
-  display:flex;
-  align-items:center;
-  gap:15px;
+/* ---------- PANELS ---------- */
+.panel {
+  background: var(--panel-bg);
+  border: 2px solid var(--panel-border);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-shadow: 0 0 8px var(--shadow);
 }
 
-.back-btn{
-  background:var(--panel);
-  color:var(--text);
-  border:2px solid var(--border);
-  padding:5px 12px;
-  cursor:pointer;
-  font-family:"Courier New", monospace;
-  text-decoration:none;
+.panel-header {
+ color: var(--text);
+  padding: 6px 10px;
+  font-weight: bold;
+  font-size: 13px;
+  border-bottom: 1px solid var(--panel-border);
 }
 
-.back-btn:hover{
-  background:var(--accent);
-  color:#000;
+.panel-body {
+color: var(--subtext);
+
+  flex: 1 1 auto;
+  padding: 10px;
+  overflow: auto; /* scroll content inside panel */
+}
+.content-area {
+  scroll-behavior: smooth;
+}
+/* ---------- TAB1 PANELS ---------- */
+/* Chart panel stays taller */
+#tab1 .panel-chart {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+  min-height: 400px;
+  
 }
 
-.status{
-  color:var(--text);
+/* Calendar wider */
+#tab1 .panel-calendar {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  min-width: 300px;  /* give more horizontal space */
 }
 
-/* =========================
-   TERMINAL GRID LAYOUT
-========================= */
-
-.main-layout{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  grid-template-rows:1fr 1fr;
-  gap:15px;
-  height:70vh;
+/* News wider */
+#tab1 .panel-news {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  min-width: 300px;  /* give more horizontal space */
 }
 
-/* PANELS */
+/* ---------- TAB4 PANELS ---------- */
+#tab4 .panel-sentiment { grid-column:1; grid-row:1; }
+#tab4 .panel-vix { grid-column:1; grid-row:2; }
+#tab4 .panel-crypto { grid-column:1; grid-row:3; }
+#tab4 .panel-news { grid-column:2; grid-row:1 / span 3; }
 
-.main-layout .panel{
-  display:flex;
-  flex-direction:column;
-  border:2px solid var(--border);
-  background:var(--panel);
-  position:relative;
-  overflow:hidden;
+/* ---------- SETTINGS POPUP ---------- */
+
+#settings-btn {
+  background: transparent;
+  border: none;
+  color: var(--btn-text);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: transform 0.4s ease, color 0.2s ease;
+}
+#settings-btn.active {
+  transform: rotate(90deg) scale(1.2); /* rotates 90° + slightly bigger */
+  color: var(--accent);               /* optional highlight */
+}
+
+#settings-btn:hover {
+  color: var(--accent);      /* subtle highlight on hover */
+}
+.settings-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--panel-bg);
+  border: 2px solid var(--panel-border);
+  padding: 20px;
+  z-index: 100;
+  width: 400px;
+  max-width: 90%;
+  border-radius: 6px;
+  box-shadow: 0 0 15px var(--shadow);
+}
+
+.settings-popup h2 {
+  margin-bottom: 15px;
+  color: var(--text);
+}
+
+.settings-section {
+  border: 1px solid #111;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.section-header {
+  background: var(--header-bg);
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--text);
+}
+
+.section-body {
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-body label {
+  display: block;
+  cursor: pointer;
+  color: var(--text);
+}
+
+#close-settings {
+  margin-top: 10px;
+  padding: 8px 15px;
+  cursor: pointer;
+  background: var(--accent);
+  border: none;
+  color: var(--btn-text);
+  font-weight: bold;
+  width: 100%;
+  border-radius: 4px;
+}
+header.top-bar, 
+header.top-bar .left, 
+header.top-bar .right-group {
+  color: var(--btn-text);
+}
+.chart-frame{
   width:100%;
   height:100%;
-  box-sizing:border-box;
-  box-shadow:0 0 10px rgba(0,0,0,0.4);
-}
-
-.panel{
-  padding-top:7px;
-}
-
-/* LEFT PANEL */
-
-.panel:nth-child(1){
-  grid-row:1 / 3;
-  grid-column:1;
-}
-
-/* RIGHT TOP */
-
-.panel:nth-child(2){
-  grid-column:2;
-  grid-row:1;
-}
-
-/* RIGHT BOTTOM */
-
-.panel:nth-child(3){
-  grid-column:2;
-  grid-row:2;
-}
-
-/* =========================
-   LOADER
-========================= */
-
-.loader{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  display:flex;
-  gap:12px;
-}
-
-.loader span{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#300;
-  animation:dotPulse 1s infinite;
-}
-
-.loader span:nth-child(1){animation-delay:0s;}
-.loader span:nth-child(2){animation-delay:0.25s;}
-.loader span:nth-child(3){animation-delay:0.5s;}
-.loader span:nth-child(4){animation-delay:0.75s;}
-
-@keyframes dotPulse{
-  0%{background:#300; transform:scale(1);}
-  25%{background:#f00; transform:scale(1.5);}
-  50%{background:#300; transform:scale(1);}
-  100%{background:#300;}
-}
-
-/* =========================
-   page fixer
-========================= */
-.section{
-  display:none;
-  padding:20px;
-  flex:1;
-}
-
-.section.active{
+  border:none;
   display:block;
 }
-.content-area{
-  flex:1;
+
+.panel-chart,
+.panel-chart .panel-body{
+  overflow:hidden;
+}
+.calendar-frame{
+  width:100%;
+  height:120%;
+  border:none;
+  transform:translateY(-60px); /* hides investing header */
+}
+#newsFeed{
+  font-size:12px;
+  line-height:1.4;
   display:flex;
   flex-direction:column;
-}
-/* =========================
-   CHART TOOLBAR
-========================= */
-
-.chart-toolbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
-}
-
-/* SEARCH */
-
-.search-area{
-  position:relative;
-}
-
-#symbolSearch{
-  width:220px;
-  padding:8px 12px;
-  border-radius:0;
-  border:1px solid var(--border);
-  background:var(--panel);
-  color:var(--text);
-}
-
-.symbol-results{
-  position:absolute;
-  top:38px;
-  left:0;
-  width:220px;
-  background:var(--panel);
-  border:1px solid var(--border);
-  display:none;
-  max-height:200px;
-  overflow-y:auto;
-  z-index:9999;
-}
-
-.symbol-results div{
-  padding:8px 10px;
-  cursor:pointer;
-}
-
-.symbol-results div:hover{
-  background:var(--accent);
-  color:#000;
-}
-
-/* =========================
-   TIMEFRAMES
-========================= */
-
-.timeframes{
-  display:flex;
   gap:6px;
 }
-
-.timeframes button{
-  background:var(--panel);
-  border:1px solid var(--border);
-  color:var(--text);
-  padding:4px 10px;
-  cursor:pointer;
-}
-
-.timeframes button:hover{
-  background:var(--accent);
-  color:#000;
-}
-button{
-  background:var(--button);
-  color:var(--text);
-  border:1px solid var(--border);
-}
-
-button:hover{
-  background:var(--button-hover);
-  color:#000;
-}
-/* =========================
-   FLOATING TRADE BOX
-========================= */
-
-#tradeBox{
-  position:fixed;
-  bottom:30px;
-  right:30px;
-  width:160px;
-  background:var(--panel-alt);
-  border:2px solid var(--border);
-  padding:10px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  cursor:move;
-  z-index:99999;
-}
-
-#tradeBox input{
-  margin-bottom:6px;
-  width:90%;
-  padding:4px;
-  background:var(--panel);
-  color:var(--text);
-  border:1px solid var(--border);
-  font-family:"Courier New", monospace;
-}
-
-#tradeBox input::placeholder{
-  color:var(--placeholder);
-  opacity:0.7;
-}
-
-#tradeBox button{
-  width:80%;
-  margin:3px 0;
-  padding:6px;
-  border:none;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-#buyBtn{background:#0f0;color:#000;}
-#sellBtn{background:#f00;color:#000;}
-
-
-/* =========================
-   INTEL BOX ITEMS
-========================= */
-
-.intel-list{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.intel-item{
-  border:1px solid var(--border);
-  padding:8px 10px;
-  background:var(--panel-alt);
-  font-size:13px;
-  line-height:1.4;
-}
-
-.intel-item a{
-  text-decoration:none;
-  color:var(--text);
-}
-
-.intel-item:hover{
-  background:var(--accent);
-  color:#000;
-}
-
-.intel-item:hover a{
-  color:#000;
-}
-
-.intel-label{
-  font-size:12px;
-  letter-spacing:1px;
-  margin-bottom:8px;
-  opacity:0.7;
-}
-/* =========================
-   MARKET INTEL GRID
-========================= */
-
-.intel-grid{
-display:grid;
-grid-template-columns:1fr 2fr;
-grid-template-rows:1fr 1fr 1fr;
-gap:15px;
-height:65vh;
-}
-/* METRIC PANEL POSITIONS */
-
-.intel-grid .panel:nth-child(1){
-grid-column:1;
-grid-row:1;
-}
-
-.intel-grid .panel:nth-child(2){
-grid-column:1;
-grid-row:2;
-}
-
-.intel-grid .panel:nth-child(3){
-grid-column:1;
-grid-row:3;
-}
-/* CARD STYLE */
-
-.intel-card{
-display:flex;
-flex-direction:column;
-padding:15px;
-}
-
-/* METRIC BOX */
-
-.metric-box{
-border:1px solid var(--border);
-background:var(--panel-alt);
-padding:15px;
-margin-top:8px;
-box-shadow:0 0 8px rgba(0,255,100,0.15);
-
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-font-size:20px;
-font-weight:bold;
-min-height:60px;
-}
-
-/* NEWS PANEL */
-
-.news-panel{
-grid-column:2;
-grid-row:1 / span 3;
-
-display:flex;
-flex-direction:column;
-overflow:hidden;
-}
-
-.news-panel .intel-list{
-overflow-y:auto;
-flex:1;
-margin-top:10px;
-}
-/* =========================
-   EXCHANGE TAB LAYOUT
-========================= */
-
-.exchange-layout{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-  height:60vh;
-}
-
 .broker-list{
-  padding:15px;
   display:flex;
   flex-direction:column;
   gap:10px;
-  overflow-y:auto;
 }
 
 .broker{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  border:1px solid var(--border);
+  border:1px solid var(--panel-border);
   padding:8px 10px;
-}
-
-.broker-actions{
-  display:flex;
-  gap:8px;
-}
-
-.broker-actions a{
-  text-decoration:none;
-  border:1px solid var(--border);
-  padding:3px 8px;
-  color:var(--text);
-}
-
-.broker-actions a:hover{
-  background:var(--accent);
-  color:#000;
-}
-
-.exchange-info{
-  padding:15px;
-  font-size:14px;
-  line-height:1.6;
-}
-
-.exchange-info ul{
-  margin-top:10px;
-  padding-left:18px;
-}
-
-/* =========================
-   BROKER DIRECTORY
-========================= */
-
-.exchange-layout{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-  height:60vh;
-}
-
-.broker-list{
-  padding:15px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  overflow-y:auto;
-}
-
-.broker{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border:1px solid var(--border);
-  padding:10px;
 }
 
 .broker-left{
@@ -680,526 +483,371 @@ margin-top:10px;
 
 .broker-actions a{
   text-decoration:none;
-  border:1px solid var(--border);
+  border:1px solid var(--panel-border);
   padding:3px 8px;
   color:var(--text);
 }
 
 .broker-actions a:hover{
   background:var(--accent);
-  color:#000;
+  color:var(--btn-text);
 }
-/* =========================
-   THEME SWITCHER BUTTONS
-========================= */
-
-.theme-switcher{
-  display:flex;
-  gap:8px;
-  align-items:center;
-}
-
-.theme-btn{
-  width:16px;
-  height:16px;
-  border-radius:50%;
-  cursor:pointer;
-  border:2px solid #000;
-  transition:transform 0.15s;
-}
-
-.theme-btn:hover{
-  transform:scale(1.2);
-}
-
-/* THEME COLORS */
-
-.theme-btn.terminal{
-  background:#00ff00;
-}
-
-.theme-btn.light{
-  background:#ffffff;
-  border:2px solid #555;
-}
-
-.theme-btn.win10{
-  background:#0078d7;
-}
-
-.theme-btn.winme{
-  background:#000080;
-}
-
-
-#mobileWarning{
-  position:fixed;
-  top:0; left:0;
+.about-content{
+  max-width:600px;
   width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.9);
-  color:#0f0;
   display:flex;
+  flex-direction:column;
   justify-content:center;
   align-items:center;
-  z-index:100000; /* very high to overlay everything */
-  font-family:"Courier New", monospace;
   text-align:center;
-  padding:20px;
-  box-sizing:border-box;
-  opacity:1;
-  transition: opacity 0.5s ease;
+  gap:15px;
+   color: var(--btn-text);
 }
 
-#mobileWarning.hidden{
-  opacity:0;
-  pointer-events:none;
-}
-
-.warning-content{
-  background:var(--panel-alt);
-  border:2px solid var(--border);
-  padding:30px 20px;
-  border-radius:15px;
-  max-width:400px;
-}
-
-.warning-content button{
-  margin-top:15px;
-  padding:8px 20px;
-  border:none;
-  background:var(--accent);
-  color:#000;
-  font-weight:bold;
-  cursor:pointer;
-  border-radius:5px;
-  font-family:"Courier New", monospace;
-}
-.warning-content button:hover{
-  background:#00cc44;
-}
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-  text-align:center;
-  padding:20px;
-  border-top:2px solid var(--border);
-  margin-top:20px;
-}
 .about-content img{
-  border-radius:20px;
+  max-width:400px;
   width:100%;
-  max-width:600px;
-  height:auto;
-  box-shadow:0 0 10px rgba(0,255,100,0.3);
+  border-radius:15px;
+  box-shadow:0 0 10px var(--shadow);
 }
 
 .about-content a{
-  font-size:16px;
-  margin-top:10px;
-  display:inline-block;
-}
-.iframe-wrapper {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;   /* hides scrollbars */
-}
 
-.iframe-wrapper iframe {
-  width: 125%;           /* compensate for scaling */
-  height: 125%;
-  transform: scale(0.8); 
-  transform-origin: top left;
-  border: none;         /* optional */
-}
-/* =========================
-   SETTINGS DROPDOWN
-========================= */
-
-.settings-menu select{
-
-  background:var(--panel);
-  color:var(--text);
-  border:1px solid var(--border);
-  padding:4px 8px;
-  font-family:"Courier New", monospace;
-  cursor:pointer;
-
-}
-
-.settings-menu select:hover{
+  text-decoration:none;
   background:var(--accent);
-  color:#000;
+  color:var(--btn-text);
+  padding:8px 16px;
+  border-radius:4px;
+  font-weight:bold;
 }
-#terminalNews{
-  overflow-y:auto;
+
+.about-content a:hover{
+  background:var(--accent-hover);
+}
+
+.info-meta{
   font-size:12px;
-  display:flex;
-  flex-direction:column;
-  gap:5px;
+  opacity:0.6;
 }
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .content-area {
+    display: flex !important;
+    flex-direction: column;
+    height: calc(100vh - 60px - 60px); /* header + footer */
+  }
+  
+  .section.active {
+    display: flex !important;
+    flex-direction: column;
+    gap: 15px; /* spacing between stacked panels */
+  }
 
-.intel-item{
-  border-left:3px solid var(--accent);
-  padding:6px 8px;
-}
-.calendar-wrapper{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  position:relative;
-}
-
-.calendar-wrapper iframe{
-  width:100%;
-  height:120%;
-  border:none;
-
-  /* hide investing top bar */
-  transform:translateY(-60px);
-}
-#marketStatus{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-family:'Orbitron', monospace;
-  font-size:13px;
-  letter-spacing:1px;
-}
-
-/* status dot */
-#marketDot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#888;
-}
-
-/* blinking animation */
-@keyframes blink{
-  0%{opacity:1;}
-  50%{opacity:0.2;}
-  100%{opacity:1;}
-}
-
-.market-open #marketDot{
-  background:#00ff7f;
-  animation:blink 1.2s infinite;
-}
-
-.market-closed #marketDot{
-  background:#ff4f4f;
+  .panel {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 200px;
+  }
 }
 </style>
 </head>
-
-<body>
-<!-- MOBILE WARNING OVERLAY -->
-<div id="mobileWarning">
-  <div class="warning-content">
-    <p>⚠For the best experience, please use a desktop or tablet. This terminal is not optimized for mobile devices.⚠ </p>
-    <button id="okBtn">OK</button>
-  </div>
-</div>
+<body class="theme-win10dark">
 
 <header class="top-bar">
   <div class="left">Avalanche Systems</div>
-	<div class="right-group">
-
-	<a href="../index.html" class="back-btn">⬅ Back</a>
-
-		<div class="settings-menu">
-
-		<select id="themeSelect">
-		  <option value="dark">Terminal</option>
-		  <option value="light">Light</option>
-		  <option value="win10">Windows 10</option>
-		  <option value="winme">Windows ME</option>
-		</select>
-
-		</div>
-
-
-	<div id="marketStatus">
-	  <span id="marketDot"></span>
-	  <span id="marketText">CHECKING MARKET...</span>
-	</div>
-	</div>
+  <div class="right-group">
+    Status / Controls
+    <button id="settings-btn">⚙️</button>
+  </div>
 </header>
-
 <div class="content-area">
 
-<!---------------------------------- TAB 1: TERMINAL --------------------->
-<div id="tab1" class="section active">
-  <div class="main-layout">
-
-    <!---------------- BOX 1 (Chart) ------------------->
-	<div class="panel">
-
-	<div class="iframe-wrapper">
-	  <iframe 
-		  src="Charter.html" 
-		  scrolling="no"
-	  ></iframe>
-	</div>
-	</div>
-
-    <!------------------- BOX 2 -->
-	<div class="calendar-wrapper">
-	  <iframe
-		src="https://sslecal2.investing.com"
-		scrolling="yes">
-	  </iframe>
-	</div>
-    <!-------------------- BOX 3 -->
-	<div class="panel">
-	  <div class="panel-title"/div>
-
-	  <div id="terminalNews" class="intel-list">
-		Loading Indian market news...
+  <!-- TAB 1 -->
+  <div id="tab1" class="section active">
+	<div class="panel panel-chart">
+	  <div class="panel-header">Chart</div>
+	  <div class="panel-body">
+		<iframe src="Charter.html" class="chart-frame" scrolling="no"></iframe>
 	  </div>
-
 	</div>
-</div> <!-- content-area -->
+    <div class="panel panel-calendar">
+	  <div class="panel-header">Calendar</div>
+		  <div class="panel-body">
+			<iframe
+			  src="https://sslecal2.investing.com"
+			  style="width:100%; height:120%; border:none; transform:translateY(-60px);"
+			  scrolling="yes">
+			</iframe>
+		  </div>
+	</div>
+    <div class="panel panel-news">
+	  <div class="panel-header">Market News</div>
+	  <div class="panel-body" id="newsFeed">
+		Loading news...
+	  </div>
+	</div>
   </div>
-</div>
 
-<!------------------------------------------ TAB 4 ------------------------------>
-<!-- TAB 4 -->
+  <!-- TAB 2 -->
+  <div id="tab2" class="section">
+    <div class="panel panel-brokers">
+	  <div class="panel-header">Broker Directory</div>
+		<div class="panel-body broker-list">
+
+			<div class="broker">
+			  <div class="broker-left">
+				<div class="broker-name">Zerodha</div>
+				<div class="broker-meta">API: Kite Connect</div>
+			  </div>
+			  <div class="broker-actions">
+				<a href="https://kite.zerodha.com" target="_blank">Login</a>
+				<a href="https://zerodha.com/open-account/" target="_blank">Open</a>
+			  </div>
+			</div>
+
+			<div class="broker">
+			  <div class="broker-left">
+				<div class="broker-name">Upstox</div>
+				<div class="broker-meta">API: Upstox API</div>
+			  </div>
+			  <div class="broker-actions">
+				<a href="https://login.upstox.com" target="_blank">Login</a>
+				<a href="https://upstox.com/open-account/" target="_blank">Open</a>
+			  </div>
+			</div>
+
+			<div class="broker">
+			  <div class="broker-left">
+				<div class="broker-name">Angel One</div>
+				<div class="broker-meta">API: SmartAPI</div>
+			  </div>
+			  <div class="broker-actions">
+				<a href="https://trade.angelone.in" target="_blank">Login</a>
+				<a href="https://www.angelone.in/open-demat-account" target="_blank">Open</a>
+			  </div>
+			</div>
+
+			<div class="broker">
+			  <div class="broker-left">
+				<div class="broker-name">Binance</div>
+				<div class="broker-meta">API: Binance API</div>
+			  </div>
+			  <div class="broker-actions">
+				<a href="https://www.binance.com/en/login" target="_blank">Login</a>
+				<a href="https://www.binance.com/en/register" target="_blank">Open</a>
+			  </div>
+			</div>
+
+	  </div>
+	</div>
+    <div class="panel panel-exchange-info">
+		<div class="panel-header">Exchange Connection</div>
+			<div class="panel-body">
+
+			<p><strong>Connection Mode:</strong> External Broker</p>
+			<br>
+			<p>
+			This terminal does <strong>not execute trades directly</strong>.
+			Orders are forwarded to your broker platform.
+			</p>
+<br>
+			<p><strong>Supported Markets</strong></p>
+<br>
+			<ul>
+			  <li>NSE / BSE Equities</li>
+			  <li>Cryptocurrency Exchanges</li>
+			  <li>Forex Liquidity Providers</li>
+			</ul>
+<br>
+			<p style="margin-top:10px;font-size:12px;opacity:0.7;">
+			Broker API credentials are required for automated order routing.
+			You can also use this terminal purely for analysis and execute
+			trades manually on your broker platform.
+			</p>
+
+		  </div>
+	</div>
+ </div>
+
+  <!-- TAB 3 -->
+  <div id="tab3" class="section">
+    <div class="panel panel-sentiment"><div class="panel-header">Market Sentiment</div><div class="panel-body"></div></div>
+    <div class="panel panel-vix"><div class="panel-header">India VIX</div><div class="panel-body"></div></div>
+    <div class="panel panel-crypto"><div class="panel-header">Crypto Market</div><div class="panel-body"></div></div>
+    <div class="panel panel-news"><div class="panel-header">Market News</div><div class="panel-body"></div></div>
+  </div>
+
+  <!-- TAB 4 -->
 <div id="tab4" class="section">
 
-	<div class="intel-grid">
+  <div class="about-content">
 
-		<!-- SENTIMENT -->
-		<div class="panel intel-card">
+    <img src="../assets/dogtag.png" alt="Avalanche Systems">
 
-			<div class="intel-label">Market Sentiment</div>
+    <p>
+      Avalanche Systems is a lightweight trading terminal built for
+      market monitoring, analysis, and broker connectivity.
+    </p>
 
-				<div class="metric-box">
-				<div id="sentimentBox">Loading...</div>
-			</div>
+    <a href="https://www.instagram.com/oiled_drummer/" target="_blank">
+      Support / Contact
+    </a>
 
-		</div>
+    <div class="info-meta">
+      Terminal Version: 0.10<br>
+      Ticker time: 60,000,000 (µs)
+    </div>
 
-		<!-- INDIA VIX -->
-		<div class="panel intel-card">
+  </div>
 
-			<div class="intel-label">India VIX</div>
+</div>
 
-			<div class="metric-box">
-			<div id="vixBox">Loading...</div>
-			</div>
+<div id="settings-popup" class="settings-popup">
+  <h2>Settings</h2>
 
-		</div>
 
-		<!-- CRYPTO -->
-		<div class="panel intel-card">
+	<!-- Theme Section -->
+	<div class="settings-section">
+	  <div class="section-header">Themes</div>
+	  <div class="section-body">
+		<label>
+		  <input type="radio" name="theme" value="default">
+		  Green-Black
+		</label>
+		<label>
+		  <input type="radio" name="theme" value="blue">
+		  Ocean
+		</label>
+		<label>
+		  <input type="radio" name="theme" value="win10">
+		  Modern
+		</label>
+		<label>
+		  <input type="radio" name="theme" value="winxp">
+		  Classic
+		</label>
+		<label>
+		  <input type="radio" name="theme" value="mono">
+		  Neutral
+		</label>
+		<label>
+		  <input type="radio" name="theme" value="win10dark" checked>
+		  Win10 Dark
+		</label>
 
-			<div class="intel-label">Crypto Market</div>
-
-			<div class="metric-box">
-			<div id="cryptoBox">Loading...</div>
-			</div>
-
-		</div>
-
-		<!-- NEWS -->
-			<div class="panel intel-card news-panel">
-
-				<div class="intel-label">Market News</div>
-
-					<div id="newsFeed" class="intel-list">
-					Loading news...
-					</div>
-
-		</div>
-
+		<label>
+		  <input type="radio" name="theme" value="winme">
+		  Windows ME
+		</label>
+	  </div>
 	</div>
 
-</div>
-<!------------------------------------------ TAB 2 ------------------------------>
-<div id="tab2" class="section">
-
-<div class="exchange-layout">
-
-  <!-- BROKER LIST -->
-	<div class="panel">
-
-    <div class="broker-list">
-
-      <div class="broker">
-
-		  <div class="broker-left">
-			<span class="broker-name">Zerodha</span>
-			<div class="broker-meta">
-			  API: Kite Connect (API Key + Access Token)
-			</div>
-		  </div>
-
-		  <div class="broker-actions">
-			<a href="https://kite.zerodha.com" target="_blank">Login</a>
-			<a href="https://zerodha.com/open-account/" target="_blank">Open Account</a>
-		  </div>
-
-		</div>
-
-
-		<div class="broker">
-
-		  <div class="broker-left">
-			<span class="broker-name">Upstox</span>
-			<div class="broker-meta">
-			  API: Upstox API (Client ID + Access Token)
-			</div>
-		  </div>
-
-		  <div class="broker-actions">
-			<a href="https://login.upstox.com" target="_blank">Login</a>
-			<a href="https://upstox.com/open-account/" target="_blank">Open Account</a>
-		  </div>
-
-		</div>
-
-
-		<div class="broker">
-
-		  <div class="broker-left">
-			<span class="broker-name">Angel One</span>
-			<div class="broker-meta">
-			  API: SmartAPI (API Key + JWT Token)
-			</div>
-		  </div>
-
-		  <div class="broker-actions">
-			<a href="https://trade.angelone.in" target="_blank">Login</a>
-			<a href="https://www.angelone.in/open-demat-account" target="_blank">Open Account</a>
-		  </div>
-
-		</div>
-
-
-		<div class="broker">
-
-		  <div class="broker-left">
-			<span class="broker-name">Binance</span>
-			<div class="broker-meta">
-			  API: Binance API Key + Secret
-			</div>
-		  </div>
-
-		  <div class="broker-actions">
-			<a href="https://www.binance.com/en/login" target="_blank">Login</a>
-			<a href="https://www.binance.com/en/register" target="_blank">Open Account</a>
-		  </div>
-
-		</div>
-
+  <!-- Terminal Section -->
+  <div class="settings-section">
+    <div class="section-header">Terminal</div>
+    <div class="section-body">
+      <label>
+        <input type="checkbox" id="show-grid" checked>
+        Show Grid Lines
+      </label>
+      <label>
+        <input type="checkbox" id="show-tooltip" checked>
+        Show Tooltips
+      </label>
     </div>
-
   </div>
 
-  <!-- INFO PANEL -->
-	<div class="panel">
-
-   <div class="exchange-info">
-
-	  <p><strong>Connection Mode:</strong> External Broker</p>
-
-	  <p>
-	  This terminal does <strong>not execute trades directly</strong>.
-	  Orders are forwarded to your selected broker platform.
-	  </p>
-
-	  <p><strong>Supported Markets</strong></p>
-
-	  <ul>
-		<li>NSE / BSE Equities</li>
-		<li>Cryptocurrency Exchanges</li>
-		<li>Forex Liquidity Providers</li>
-	  </ul>
-
-	  <p style="margin-top:15px;font-size:12px;opacity:0.7;">
-	  Broker API credentials are required to enable order routing. Please obtain your API or authentication key from your broker and configure it here to allow this terminal to send your orders.
-	  </p>
-	  	  <p style="margin-top:15px;font-size:12px;opacity:0.7;">
-		  Alternatively, you can use this terminal for analysis and execute trades directly on your broker’s platform.
-	  </p>
-
-	</div>
-
-  </div>
-
+  <button id="close-settings">Close</button>
+</div>
 </div>
 
-</div>
-
-<!-- TAB 3 -->
-<div id="tab3" class="section">
-  <div class="about-content" style="text-align:center;">
-    <img src="../assets/dogtag.png" alt="About Image">
-    <div>
-      <a href="https://www.instagram.com/oiled_drummer/" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:bold;">
-        Support? Hit IG
-      </a>
-    </div>
-
-    <div style="margin-top:6px; font-size:12px; opacity:0.7;">
-      Ticker update time: 1 min
-    </div>
-
-  </div>
-</div>
-
-<!-- TAB BUTTONS -->
-<div class="tabs">
-  <div class="tab active" data-target="tab1">Terminal</div>
-  <div class="tab" data-target="tab4">Market Intel</div>
-  <div class="tab" data-target="tab2">Exchange</div>
-  <div class="tab" data-target="tab3">Info</div>
-</div>
-
-<!-- FOOTER -->
 <footer>
-  © 2026 Avalanche Trade Systems- USEDTOTOOLS.COM
+  <div class="footer-tabs">
+    <div class="footer-tab active" data-target="tab1">Terminal</div>
+    <div class="footer-tab" data-target="tab2">Exchange</div>
+    <div class="footer-tab" data-target="tab3">Market Intel</div>
+    <div class="footer-tab" data-target="tab4">Info</div>
+  </div>
+  © 2026 Avalanche Trade Systems
 </footer>
 
-<!-- TRADE BOX -->
-<div id="tradeBox">
-  <div class="trade-title">Push to Broker</div>
-		<input 
-		  type="number" 
-		  id="lotSelector"
-		  min="0.01"
-		  max="50"
-		  step="0.01"
-		  placeholder="0.01-50"
-		/>
-  <button id="buyBtn">BUY</button>
-  <button id="sellBtn">SELL</button>
-</div>
-
 <script>
-const WORKER_BASE = "https://wild-rice-6da1.vassanswers420.workers.dev";
-/* ================== TAB SWITCHER ================== */
-const tabs = document.querySelectorAll(".tab");
+const footerTabs = document.querySelectorAll(".footer-tab");
 const sections = document.querySelectorAll(".section");
-tabs.forEach(tab=>{
-  tab.addEventListener("click",()=>{
-    tabs.forEach(t=>t.classList.remove("active"));
+
+footerTabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    footerTabs.forEach(t => t.classList.remove("active"));
     tab.classList.add("active");
 
-    sections.forEach(s=>s.classList.remove("active"));
+    sections.forEach(s => s.classList.remove("active"));
     document.getElementById(tab.dataset.target).classList.add("active");
   });
 });
 
 
+const settingsBtn = document.getElementById("settings-btn");
+const settingsPopup = document.getElementById("settings-popup");
+const closeSettings = document.getElementById("close-settings");
+
+// Open popup + rotate gear
+settingsBtn.addEventListener("click", () => {
+  settingsPopup.style.display = "block";
+  settingsBtn.classList.add("active");  // gear rotates
+});
+
+// Close popup + reset gear
+closeSettings.addEventListener("click", () => {
+  settingsPopup.style.display = "none";
+  settingsBtn.classList.remove("active"); // gear back to normal
+});
+// Toggle section dropdowns
+document.querySelectorAll('.section-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const body = header.nextElementSibling;
+    body.style.display = body.style.display === 'flex' ? 'none' : 'flex';
+  });
+});
+
+// Close button
+closeSettings.addEventListener("click", () => settingsPopup.style.display = "none");
+
+// Theme change
+document.querySelectorAll('input[name="theme"]').forEach(radio => {
+  radio.addEventListener("change", () => {
+    // Remove all previous theme classes
+    document.body.classList.remove(
+	  "theme-ocean",
+	  "theme-modern",
+	  "theme-classic",
+	  "theme-neutral",
+	  "theme-win10dark",
+	  "theme-winme"
+	);
+
+    // Add the selected theme
+	if (radio.value === "default") {
+		document.body.className = ""; // default Green-Black
+	} else if (radio.value === "blue") {
+		document.body.className = "theme-ocean";
+	} else if (radio.value === "win10") {
+		document.body.className = "theme-modern";
+	} else if (radio.value === "winxp") {
+		document.body.className = "theme-classic";
+	} else if (radio.value === "mono") {
+		document.body.className = "theme-neutral";
+	}
+	else if (radio.value === "win10dark") {
+	  document.body.className = "theme-win10dark";
+	}
+	else if (radio.value === "winme") {
+	  document.body.className = "theme-winme";
+	}
+  });
+});
 
 
-
-async function loadIndianNews(){
+async function loadMarketNews(){
 
 const feeds = [
 
@@ -1226,7 +874,7 @@ data.items.slice(0,3).forEach(n=>{
 const time = new Date(n.pubDate).toLocaleTimeString();
 
 html += `
-<div class="intel-item">
+<div style="margin-bottom:8px; font-size:12px;">
 [${time}] ${n.title}
 </div>
 `;
@@ -1237,267 +885,12 @@ html += `
 
 }
 
-document.getElementById("terminalNews").innerHTML = html;
-
-}
-
-loadIndianNews();
-
-/* refresh every 30 seconds */
-setInterval(loadIndianNews,30000);
-
-/* ================== DRAGGABLE TRADE BOX ================== */
-const tradeBox = document.getElementById('tradeBox');
-let isDragging=false;
-let dragOffsetX=0;
-let dragOffsetY=0;
-tradeBox.addEventListener('mousedown', e=>{
-  isDragging=true;
-  dragOffsetX=e.clientX-tradeBox.getBoundingClientRect().left;
-  dragOffsetY=e.clientY-tradeBox.getBoundingClientRect().top;
-});
-document.addEventListener('mousemove', e=>{
-  if(!isDragging) return;
-  tradeBox.style.left=`${e.clientX-dragOffsetX}px`;
-  tradeBox.style.top=`${e.clientY-dragOffsetY}px`;
-  tradeBox.style.bottom='auto';
-  tradeBox.style.right='auto';
-});
-document.addEventListener('mouseup', ()=>{ isDragging=false; });
-
-const buyBtn = document.getElementById('buyBtn');
-const sellBtn = document.getElementById('sellBtn');
-const lotSelector = document.getElementById('lotSelector');
-
-function getLot(){
-  let lot = parseFloat(lotSelector.value);
-
-  if(isNaN(lot) || lot < 0.01){
-    alert("Minimum lot is 0.01");
-    return null;
-  }
-
-  if(lot > 50){
-    alert("Maximum lot is 50");
-    return null;
-  }
-
-  return lot;
-}
-
-buyBtn.addEventListener('click', ()=>{
-  const lot = getLot();
-  if(lot===null) return;
-  alert(`BUY ${lot} lot(s)`);
-});
-
-sellBtn.addEventListener('click', ()=>{
-  const lot = getLot();
-  if(lot===null) return;
-  alert(`SELL ${lot} lot(s)`);
-});
-/* ==================
-   MARKET INTEL DATA
-================== */
-
-/* NEWS RSS (via RSS2JSON proxy) */
-
-async function loadNews(){
-
-try{
-
-const res = await fetch(
-"https://api.rss2json.com/v1/api.json?rss_url=https://www.ft.com/rss/home"
-);
-
-const data = await res.json();
-
-let html="";
-
-data.items.slice(0,8).forEach(n=>{
-
-html += `
-<div class="intel-item">
-<a href="${n.link}" target="_blank">
-${n.title}
-</a>
-</div>
-`;
-
-});
-
 document.getElementById("newsFeed").innerHTML = html;
 
-}catch(err){
-
-document.getElementById("newsFeed").innerHTML="News unavailable";
-
 }
 
-}
-
-loadNews();
-setInterval(loadNews,60000);
-/* Fear & GrsetInterval(loadNews,60000);eed Index */
-async function loadFearGreed(){
-
-try{
-
-const res = await fetch("https://api.alternative.me/fng/");
-const data = await res.json();
-
-const value = data.data[0].value;
-const text = data.data[0].value_classification;
-
-document.getElementById("sentimentBox").innerHTML = `
-<b>Fear & Greed Index</b><br>
-Score: ${value} / 100<br>
-Sentiment: <b>${text}</b>
-`;
-
-}catch(err){
-
-document.getElementById("sentimentBox").innerHTML = "Sentiment unavailable";
-
-}
-
-}
-
-loadFearGreed();
-/* Crypto */
-async function loadCrypto(){
-
-try{
-
-const res = await fetch(
-"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd"
-);
-
-const data = await res.json();
-
-document.getElementById("cryptoBox").innerHTML = `
-BTC: $${data.bitcoin.usd}<br>
-ETH: $${data.ethereum.usd}<br>
-SOL: $${data.solana.usd}
-`;
-
-}catch(err){
-
-document.getElementById("cryptoBox").innerHTML="Crypto unavailable";
-
-}
-
-}
-
-loadCrypto();
-/* INDIA VIX */
-async function loadIndiaVIX(){
-
-try{
-
-const res = await fetch(
-"https://wild-rice-6da1.vassanswers420.workers.dev/?symbol=%5EVIX"
-);
-
-const data = await res.json();
-
-const last = data[data.length-1];
-
-document.getElementById("vixBox").innerHTML = `
-<b>India VIX</b><br>
-Latest: ${last.close}
-`;
-
-}catch(err){
-
-document.getElementById("vixBox").innerHTML="VIX unavailable";
-
-}
-
-}
-
-loadIndiaVIX();
-
-function updateMarketStatus(){
-
-  const now = new Date();
-  const ist = new Date(now.toLocaleString("en-US",{timeZone:"Asia/Kolkata"}));
-
-  const hours = ist.getHours();
-  const minutes = ist.getMinutes();
-  const day = ist.getDay();
-
-  const time = hours*60 + minutes;
-
-  const openTime = 9*60 + 15;
-  const closeTime = 15*60 + 30;
-
-  const status = document.getElementById("marketStatus");
-  const text = document.getElementById("marketText");
-
-  if(day===0 || day===6){
-      text.textContent="INDIAN MARKET CLOSED (WEEKEND)";
-      status.className="market-closed";
-      return;
-  }
-
-  if(time>=openTime && time<=closeTime){
-      text.textContent="INDIAN MARKET OPEN";
-      status.className="market-open";
-  }else{
-      text.textContent="INDIAN MARKET CLOSED";
-      status.className="market-closed";
-  }
-
-}
-
-updateMarketStatus();
-setInterval(updateMarketStatus,60000);
-
-/* ==================
-   THEME SWITCHER
-================== */
-
-const themeSelect = document.getElementById("themeSelect");
-
-const savedTheme = localStorage.getItem("terminalTheme");
-
-if(savedTheme){
-  document.body.className = savedTheme;
-  themeSelect.value = savedTheme;
-}else{
-  document.body.className = "win10";
-  themeSelect.value = "win10";
-}
-
-themeSelect.addEventListener("change", ()=>{
-
-  const theme = themeSelect.value;
-
-  document.body.className = theme;
-
-  localStorage.setItem("terminalTheme", theme);
-
-});
-
-// Detect mobile/tablet devices
-function isMobileDevice() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
-const mobileWarning = document.getElementById('mobileWarning');
-const okBtn = document.getElementById('okBtn');
-
-if(isMobileDevice()){
-  mobileWarning.style.display = 'flex';
-} else {
-  mobileWarning.style.display = 'none';
-}
-
-okBtn.addEventListener('click', ()=>{
-  mobileWarning.classList.add('hidden');
-  setTimeout(()=>{ mobileWarning.style.display='none'; }, 500);
-});
+loadMarketNews();
+setInterval(loadMarketNews,60000);
 </script>
 
 </body>

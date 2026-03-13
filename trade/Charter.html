@@ -20,6 +20,15 @@ header {
     justify-content: space-between;
     gap: 10px;
 }
+select{
+  background:#1b1b1b;
+  color:#ffffff;
+}
+
+select option{
+  background:#1b1b1b;
+  color:#ffffff;
+}
 select {
     padding: 6px 12px;
     font-size: 14px;
@@ -141,21 +150,46 @@ canvas.hovered { cursor: crosshair; }
 @media (max-width:768px){
 
 header{
-    flex-direction:column;
-    align-items:flex-start;
-    gap:8px;
-    padding:8px;
-}
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 
+  padding:8px 14px;
+  background:var(--panel);
+  border-bottom:1px solid var(--border);
+}
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
 #settingsWrapper{
     position:static;
 }
 
 select{
-    font-size:16px;
-    padding:8px;
+  background:var(--panel);
+  color:var(--text);
+  border:1px solid var(--border);
+
+  padding:4px 8px;
+  font-size:13px;
+}
+#headerIcons{
+  display:flex;
+  align-items:center;
 }
 
+#gear{
+  width:30px;
+  height:30px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+}
 canvas{
     touch-action:none;
 }
@@ -331,9 +365,37 @@ padding:2px 4px;
 @media (max-width:768px){
 
 header{
-    flex-direction:column;
-    align-items:stretch;
-    gap:10px;
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    gap:6px;
+    padding:6px 8px;
+}
+
+/* selectors container */
+#timeframeSelector,
+header > div:first-child{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+/* shrink dropdowns */
+select{
+    font-size:13px;
+    padding:4px 6px;
+}
+
+/* keep icons small */
+#headerIcons{
+    gap:6px;
+}
+
+#gear{
+    width:28px;
+    height:28px;
+    font-size:14px;
+}
 }
 
 header > div{
@@ -371,6 +433,31 @@ canvas{
 }
 
 }
+/* keep ticker + timeframe in one row */
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+/* stop them from becoming full width */
+.header-left > div{
+    width:auto;
+}
+
+/* dropdowns stay compact */
+.header-left select{
+    width:auto;
+    padding:4px 6px;
+    font-size:13px;
+}
+
+/* labels smaller */
+.header-left label{
+    font-size:12px;
+}
+
+}
 @media (max-width:768px){
 header{
 position:sticky;
@@ -392,7 +479,16 @@ z-index:50;
         <button id="tutorialClose">Got it!</button>
     </div>
 </div>
+
+
 <header>
+  <div class="header-left">
+
+    <div style="display:flex; align-items:center; gap:10px;">
+        <label for="symbolSelect">Ticker:</label>
+        <select id="symbolSelect"><option>Loading...</option></select>
+    </div>
+	
 	<div id="timeframeSelector">
 		<label for="tfSelect">Timeframe:</label>
 		<select id="tfSelect">
@@ -403,11 +499,15 @@ z-index:50;
 			<option value="60">1 Hour</option>
 		</select>
 	</div>
-    <!-- Left side -->
-    <div style="display:flex; align-items:center; gap:10px;">
-        <label for="symbolSelect">Ticker:</label>
-        <select id="symbolSelect"><option>Loading...</option></select>
-    </div>
+ </div>
+<div id="candleTimer" style="
+    font-size:13px;
+    color:#00ffcc;
+    font-weight:bold;
+    margin-left:8px;
+">
+    ⏱ --:--
+</div>
 
     <!-- Right side icons -->
     <div id="headerIcons" style="display:flex; align-items:center; gap:12px;">
@@ -721,18 +821,37 @@ canvas.addEventListener('mousemove', e => {
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    if (isDragging) {
-	// clamp vertical scrolling
-		const maxOffsetY = chartHeight * 0.5;   // adjust as needed
-		offsetY = Math.min(Math.max(offsetY, -maxOffsetY), maxOffsetY);
-        const dx = e.clientX - dragStartX;
-        const dy = e.clientY - dragStartY;
-        offsetX += dx;  // horizontal scroll
-        offsetY += dy;  // vertical scroll
-        dragStartX = e.clientX;
-        dragStartY = e.clientY;
-        drawChart();
-        return;
+	if (isDragging) {
+
+		const dx = e.clientX - dragStartX;
+		const dy = e.clientY - dragStartY;
+
+		offsetX += dx;
+
+		// apply vertical drag
+		// scale drag relative to zoom
+		offsetY += dy / priceZoom;
+
+		// calculate visible range
+		// calculate full price range
+		const priceMin = Math.min(...candles.map(c => c.low));
+		const priceMax = Math.max(...candles.map(c => c.high));
+		const fullRange = priceMax - priceMin;
+
+		// visible range after zoom
+		const visibleRange = fullRange / priceZoom;
+
+		// convert price movement into pixel space
+		const maxOffsetY = chartHeight * priceZoom;
+
+		// clamp pan to visible bounds
+		offsetY = Math.max(-maxOffsetY, Math.min(maxOffsetY, offsetY));
+
+		dragStartX = e.clientX;
+		dragStartY = e.clientY;
+
+		drawChart();
+		return;
 	}
     // --- Hover candle ---
     const spacing=candleWidth*1.5;
@@ -825,20 +944,30 @@ canvas.addEventListener("touchmove", e=>{
         drawChart();
     }
 
-    if(e.touches.length === 2){
-        const dx = e.touches[0].clientX - e.touches[1].clientX;
-        const dy = e.touches[0].clientY - e.touches[1].clientY;
-        const distance = Math.sqrt(dx*dx + dy*dy);
+	if(e.touches.length === 2){
+
+		const dx = e.touches[0].clientX - e.touches[1].clientX;
+		const dy = e.touches[0].clientY - e.touches[1].clientY;
+		const distance = Math.sqrt(dx*dx + dy*dy);
 
 		if(lastPinchDistance){
-			const scale = distance / lastPinchDistance;
-			candleWidth = Math.min(Math.max(candleWidth * scale, 2), 30);
-			lastPinchDistance = distance; // update for next move
+
+			let scale = distance / lastPinchDistance;
+
+			// limit scale change per frame
+			scale = Math.max(0.98, Math.min(1.02, scale));
+
+			const zoomSpeed = 0.4; // lower = slower zoom
+
+			candleWidth = candleWidth * (1 + (scale - 1) * zoomSpeed);
+
+			candleWidth = Math.min(Math.max(candleWidth, 2), 30);
+
 			drawChart();
 		}
 
-        lastPinchDistance = distance;
-    }
+		lastPinchDistance = distance;
+	}
 });
 
 canvas.addEventListener("touchend", ()=>{
@@ -1057,28 +1186,35 @@ canvas.addEventListener('wheel', resetIdleTimer);
 symbolSelect.addEventListener('change', resetIdleTimer);
 document.getElementById('themeSelect').addEventListener('change', resetIdleTimer);
 function scrollToLatestCandle() {
+
     if(candles.length === 0) return;
+
     const spacing = candleWidth * 1.5;
     const lastIndex = candles.length - 1;
 
-    // Horizontal offset (center latest candle)
-    const targetOffsetX = canvas.width/2 - (80 + lastIndex * spacing);
-
-    // Vertical offset (center based on last candle's OHLC range)
     const padding = { top:50, bottom:50, left:80, right:20 };
     const volumeHeight = 50;
+
     const chartHeight = canvas.height - padding.top - padding.bottom - volumeHeight;
 
-    const c = candles[lastIndex];
+    const last = candles[lastIndex];
+
     const priceMin = Math.min(...candles.map(c=>c.low));
     const priceMax = Math.max(...candles.map(c=>c.high));
-    
-    // ScaleY: y = padding.top + (priceMax - price) * chartHeight / (priceMax - priceMin) + offsetY
-    // To center vertically, we want the candle middle at canvas.height/2
-    const candleMiddlePrice = (c.high + c.low)/2;
-    const targetOffsetY = canvas.height/2 - (padding.top + (priceMax - candleMiddlePrice) * chartHeight / (priceMax - priceMin));
 
-    // Animate horizontally and vertically
+    const candleMiddlePrice = (last.high + last.low) / 2;
+
+    const visibleRange = (priceMax - priceMin) / priceZoom;
+
+    const targetOffsetX = canvas.width/2 - (padding.left + lastIndex * spacing);
+
+    const targetOffsetY =
+        canvas.height/2 -
+        (
+            padding.top +
+            (priceMax - candleMiddlePrice) * chartHeight / visibleRange
+        );
+
     smoothScrollToXY(targetOffsetX, targetOffsetY, 700);
 }
 function resetIdleTimer() {
@@ -1470,7 +1606,33 @@ document.getElementById('tutorialClose').addEventListener('click', ()=>{
     document.getElementById('tutorialOverlay').style.display = 'none';
     localStorage.setItem('tutorialShown', 'true'); // remember for next time
 });
+const candleTimer = document.getElementById("candleTimer");
 
+function updateCandleTimer(){
+
+    if(!candles || candles.length === 0) return;
+
+    const tf = currentTF * 60; // timeframe seconds
+
+    const lastCandle = candles[candles.length - 1];
+    const candleStart = lastCandle.time;
+
+    const closeTime = candleStart + tf;
+
+    const now = Math.floor(Date.now() / 1000);
+
+    let remaining = closeTime - now;
+
+    if(remaining < 0) remaining = 0;
+
+    const minutes = Math.floor(remaining / 60);
+    const seconds = remaining % 60;
+
+    candleTimer.textContent =
+        `⏱ ${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+}
+
+setInterval(updateCandleTimer,1000);
 </script>
 
 </body>
