@@ -543,7 +543,7 @@ z-index:50;
 
 							<label>
 								Enable
-								<input type="checkbox" id="srToggle" checked>
+								<input type="checkbox" id="srToggle">
 							</label>
 
 							<label>
@@ -578,6 +578,21 @@ z-index:50;
 						</label>
 
 				    </div>
+					<div class="settingsSection" id="alpSettings">
+
+						<div class="settingsTitle">Avalanche Liquidity Pulse (custom High TF)</div>
+
+							<label class="settingItem">
+							<input type="checkbox" id="alpToggle">
+							Enable ALP Indicator
+							</label>
+
+							<label class="settingItem">
+							Lookback Candles
+							<input type="number" id="alpLookback" value="30" min="10" max="100">
+							</label>
+
+					</div>
 					<div class="settingsSection">
 
 						<div class="settingsTitle">Indicators</div>
@@ -680,6 +695,7 @@ let priceZoom = 1; // vertical zoom factor
 const idleDelay = 2000; // 5 seconds
 let allCandles = []; // raw 1-min candles
 let currentTF = 1;   // default timeframe
+let alpBlink = 0;
 
 const smaToggle = document.getElementById('smaToggle');
 const smaPeriod = document.getElementById('smaPeriod');
@@ -1157,6 +1173,7 @@ function drawChart(){
 
 	updateSupportResistance();
 	drawSMTFlash();
+	drawALPZone();
     // Hover marker
     if(hoveredCandleIndex!==null && blinkVisible){
         const x=padding.left+hoveredCandleIndex*spacing+offsetX;
@@ -1166,8 +1183,13 @@ function drawChart(){
     }
 }
 
+
 // --- Blink interval
-setInterval(()=>{ blinkVisible=!blinkVisible; drawChart(); },500);
+setInterval(()=>{ 
+    blinkVisible = !blinkVisible;
+    alpBlink += 0.15;   // animation for ALP zone
+    drawChart(); 
+},500);
 
 // Initialize
 loadSymbols();
@@ -1657,6 +1679,119 @@ window.addEventListener("message", (event) => {
             break;
     }
 });
+function calculateALP(){
+
+const settings = {
+enabled: document.getElementById("alpToggle").checked,
+lookback: parseInt(document.getElementById("alpLookback").value)
+};
+
+if(!settings.enabled) return null;
+if(candles.length < settings.lookback) return null;
+
+const recent = candles.slice(-settings.lookback);
+
+const high = Math.max(...recent.map(c=>c.high));
+const low = Math.min(...recent.map(c=>c.low));
+
+const midpoint = (high + low) / 2;
+
+const last = candles[candles.length-1].close;
+
+let direction;
+
+if(last > midpoint){
+    direction = "DOWN";
+}else{
+    direction = "UP";
+}
+
+return {
+direction,
+price: midpoint
+};
+
+}
+
+function calculateALP(){
+
+const settings = {
+enabled: document.getElementById("alpToggle").checked,
+lookback: parseInt(document.getElementById("alpLookback").value)
+};
+
+if(!settings.enabled) return null;
+if(candles.length < settings.lookback) return null;
+
+const recent = candles.slice(-settings.lookback);
+
+const high = Math.max(...recent.map(c=>c.high));
+const low = Math.min(...recent.map(c=>c.low));
+
+const midpoint = (high + low) / 2;
+
+const last = candles[candles.length-1].close;
+
+let direction;
+
+if(last > midpoint){
+    direction = "DOWN";
+}else{
+    direction = "UP";
+}
+
+return {
+direction,
+price: midpoint
+};
+
+}
+
+function drawALPZone(){
+
+const alp = calculateALP();
+
+if(!alp) return;
+
+const padding = {top:50, bottom:50, left:80, right:20};
+const volumeHeight = 50;
+
+const chartHeight = canvas.height - padding.top - padding.bottom - volumeHeight;
+
+const priceMin = Math.min(...candles.map(c=>c.low));
+const priceMax = Math.max(...candles.map(c=>c.high));
+
+const scaleY = price =>
+padding.top +
+(priceMax - price) * chartHeight / ((priceMax - priceMin) / priceZoom)
++ offsetY;
+
+const y = scaleY(alp.price);
+
+const zoneHeight = 14;
+
+const pulse = (Math.sin(alpBlink) + 1)/2;
+
+ctx.save();
+
+const color = alp.direction === "UP"
+? `rgba(0,170,255,${0.25 + pulse*0.35})`
+: `rgba(255,170,0,${0.25 + pulse*0.35})`;
+
+ctx.fillStyle = color;
+ctx.shadowColor = color;
+ctx.shadowBlur = 25;
+
+ctx.fillRect(
+80,
+y - zoneHeight/2,
+canvas.width - 100,
+zoneHeight
+);
+
+ctx.restore();
+
+}
 </script>
 
 </body>
