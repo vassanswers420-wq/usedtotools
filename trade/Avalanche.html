@@ -651,6 +651,140 @@ header.top-bar .right-group {
   font-weight: bold;
   border-color: var(--accent);
 }
+/* ---------- COMMODITY GRID ---------- */
+
+.commodity-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:8px;
+  height:100%;
+}
+
+.commodity-box{
+  border:1px solid var(--panel-border);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  font-size:12px;
+  padding:6px;
+  background:var(--panel-bg);
+  transition:all 0.2s;
+}
+
+.commodity-box:hover{
+  background:var(--accent);
+  color:var(--btn-text);
+}
+
+.commodity-name{
+  font-weight:bold;
+  font-size:11px;
+  opacity:0.8;
+}
+/* commodity movement */
+
+.commodity-price{
+  font-size:14px;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+
+.price-up{
+  color:#00ff66;
+}
+
+.price-down{
+  color:#ff3b3b;
+}
+
+.price-flat{
+  color:#cccc00;
+}
+
+.price-arrow{
+  font-size:12px;
+}
+.breadth-grid{
+display:flex;
+flex-direction:column;
+gap:6px;
+font-size:12px;
+}
+
+.breadth-row{
+display:flex;
+justify-content:space-between;
+border-bottom:1px solid var(--panel-border);
+padding:2px 0;
+}
+
+.breadth-meter{
+height:10px;
+background:#222;
+border:1px solid var(--panel-border);
+margin-top:6px;
+position:relative;
+}
+
+.breadth-fill{
+height:100%;
+background:#00ff66;
+width:50%;
+transition:width 0.5s;
+}
+.panel-controls{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.panel-btn{
+cursor:pointer;
+padding:2px 6px;
+border:1px solid var(--panel-border);
+font-size:12px;
+user-select:none;
+}
+
+.panel-btn:hover{
+background:var(--accent);
+color:var(--btn-text);
+}
+.panel-chart.expanded{
+position:fixed;
+top:0;
+left:0;
+width:100vw;
+height:100vh;
+z-index:9999;
+background:var(--panel-bg);
+border:none;
+border-radius:0;
+}
+.panel-chart.expanded .panel-body{
+height:calc(100vh - 35px);
+padding:0;
+}
+.panel-chart.expanded .chart-frame{
+width:100%;
+height:100%;
+}
+@media (max-width: 900px){
+
+.panel-chart.expanded{
+height:100dvh; /* fixes mobile browser UI bars */
+}
+
+.panel-chart.expanded .panel-body{
+height:calc(100dvh - 35px);
+}
+
+}
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 900px) {
   .content-area {
@@ -687,7 +821,11 @@ header.top-bar .right-group {
   <!-- TAB 1 -->
   <div id="tab1" class="section active">
 	<div class="panel panel-chart">
-	  <div class="panel-header">Chart</div>
+		<div class="panel-header panel-controls">
+		  <span>Chart</span>
+
+		  <span id="chartExpandBtn" class="panel-btn">[ ]</span>
+		</div>
 	  <div class="panel-body">
 		<iframe src="Charter.html" class="chart-frame" scrolling="no"></iframe>
 	  </div>
@@ -827,8 +965,18 @@ header.top-bar .right-group {
 	  </div>
 	</div>
 	<!-- Row 3: empty panels -->
-	<div class="panel panel-empty1">Working</div>
-	<div class="panel panel-empty2">Working</div> 
+	<div class="panel panel-empty1">
+	  <div class="panel-header">Commodities</div>
+	  <div class="panel-body" id="commoditiesPanel">
+		Loading commodities...
+	  </div>
+	</div>
+	<div class="panel panel-empty2">
+	  <div class="panel-header">Market Breadth</div>
+	  <div class="panel-body" id="breadthPanel">
+		Loading breadth...
+	  </div>
+	</div>
  </div>
 
   <!-- TAB 4 -->
@@ -1316,6 +1464,198 @@ setInterval(() => {
   const src = calendarFrame.src;
   calendarFrame.src = src;
 }, 60000); // 1 minute
+
+
+
+let prevCommodity = {
+  gold:null,
+  silver:null,
+  crude:null,
+  gas:null
+};
+
+async function loadCommodities(){
+
+try{
+
+/* demo values (replace later with real API) */
+
+const gold = (1900 + Math.random()*50).toFixed(2);
+const silver = (22 + Math.random()*3).toFixed(2);
+const crude = (70 + Math.random()*10).toFixed(2);
+const gas = (2 + Math.random()*1).toFixed(2);
+
+function movement(newVal, oldVal){
+
+if(oldVal === null){
+return {class:"price-flat",arrow:"→"};
+}
+
+if(newVal > oldVal){
+return {class:"price-up",arrow:"⬆"};
+}
+
+if(newVal < oldVal){
+return {class:"price-down",arrow:"⬇"};
+}
+
+return {class:"price-flat",arrow:"→"};
+
+}
+
+const g = movement(gold,prevCommodity.gold);
+const s = movement(silver,prevCommodity.silver);
+const c = movement(crude,prevCommodity.crude);
+const n = movement(gas,prevCommodity.gas);
+
+document.getElementById("commoditiesPanel").innerHTML = `
+
+<div class="commodity-grid">
+
+<div class="commodity-box">
+<div class="commodity-name">Gold</div>
+<div class="commodity-price ${g.class}">
+<span>$${gold}</span>
+<span class="price-arrow">${g.arrow}</span>
+</div>
+</div>
+
+<div class="commodity-box">
+<div class="commodity-name">Silver</div>
+<div class="commodity-price ${s.class}">
+<span>$${silver}</span>
+<span class="price-arrow">${s.arrow}</span>
+</div>
+</div>
+
+<div class="commodity-box">
+<div class="commodity-name">Crude</div>
+<div class="commodity-price ${c.class}">
+<span>$${crude}</span>
+<span class="price-arrow">${c.arrow}</span>
+</div>
+</div>
+
+<div class="commodity-box">
+<div class="commodity-name">Nat Gas</div>
+<div class="commodity-price ${n.class}">
+<span>$${gas}</span>
+<span class="price-arrow">${n.arrow}</span>
+</div>
+</div>
+
+</div>
+`;
+
+prevCommodity.gold = gold;
+prevCommodity.silver = silver;
+prevCommodity.crude = crude;
+prevCommodity.gas = gas;
+
+}catch(e){
+console.error("Commodity error",e);
+}
+
+}
+
+loadCommodities();
+setInterval(loadCommodities,15000);
+
+async function loadMarketBreadth(){
+
+/* demo numbers for now */
+
+const adv = Math.floor(800 + Math.random()*800);
+const dec = Math.floor(600 + Math.random()*800);
+const unc = Math.floor(50 + Math.random()*200);
+
+const ratio = (adv/dec).toFixed(2);
+
+let bias="Neutral";
+let meter=50;
+
+if(ratio>1.2){
+bias="Bullish";
+meter=70;
+}
+
+if(ratio>1.5){
+bias="Strong Bullish";
+meter=85;
+}
+
+if(ratio<0.8){
+bias="Bearish";
+meter=30;
+}
+
+if(ratio<0.6){
+bias="Strong Bearish";
+meter=15;
+}
+
+document.getElementById("breadthPanel").innerHTML = `
+
+<div class="breadth-grid">
+
+<div class="breadth-row">
+<span>Advancing</span>
+<span>${adv}</span>
+</div>
+
+<div class="breadth-row">
+<span>Declining</span>
+<span>${dec}</span>
+</div>
+
+<div class="breadth-row">
+<span>Unchanged</span>
+<span>${unc}</span>
+</div>
+
+<div class="breadth-row">
+<span>A/D Ratio</span>
+<span>${ratio}</span>
+</div>
+
+<div class="breadth-row">
+<span>Market Bias</span>
+<span>${bias}</span>
+</div>
+
+<div class="breadth-meter">
+<div class="breadth-fill" style="width:${meter}%"></div>
+</div>
+
+</div>
+`;
+
+}
+
+loadMarketBreadth();
+setInterval(loadMarketBreadth,30000);
+
+
+const chartPanel = document.querySelector(".panel-chart");
+const chartExpandBtn = document.getElementById("chartExpandBtn");
+
+chartExpandBtn.addEventListener("click", () => {
+
+if(chartPanel.classList.contains("expanded")){
+
+chartPanel.classList.remove("expanded");
+document.body.classList.remove("chart-fullscreen");
+chartExpandBtn.textContent = "[ ]";
+
+}else{
+
+chartPanel.classList.add("expanded");
+document.body.classList.add("chart-fullscreen");
+chartExpandBtn.textContent = "[]";
+
+}
+
+});
 </script>
 
 </body>

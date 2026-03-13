@@ -164,7 +164,9 @@ header{
   gap:10px;
 }
 #settingsWrapper{
-    position:static;
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
 select{
@@ -392,9 +394,9 @@ select{
 }
 
 #gear{
-    width:28px;
-    height:28px;
-    font-size:14px;
+    width:32px;
+    height:32px;
+    font-size:16px;
 }
 }
 
@@ -414,8 +416,13 @@ select,button{
 }
 
 #settingsMenu{
-    right:0;
+    right:10px;
     left:auto;
+
+    width:90vw;
+    max-width:320px;
+
+    top:45px;
 }
 
 #indicatorsWidget{
@@ -485,12 +492,12 @@ z-index:50;
   <div class="header-left">
 
     <div style="display:flex; align-items:center; gap:10px;">
-        <label for="symbolSelect">Ticker:</label>
+        <label for="symbolSelect">Tick:</label>
         <select id="symbolSelect"><option>Loading...</option></select>
     </div>
 	
 	<div id="timeframeSelector">
-		<label for="tfSelect">Timeframe:</label>
+		<label for="tfSelect">TF:</label>
 		<select id="tfSelect">
 			<option value="1">1 Min</option>
 			<option value="5">5 Min</option>
@@ -500,14 +507,7 @@ z-index:50;
 		</select>
 	</div>
  </div>
-<div id="candleTimer" style="
-    font-size:13px;
-    color:#00ffcc;
-    font-weight:bold;
-    margin-left:8px;
-">
-    ⏱ --:--
-</div>
+
 
     <!-- Right side icons -->
     <div id="headerIcons" style="display:flex; align-items:center; gap:12px;">
@@ -1606,33 +1606,6 @@ document.getElementById('tutorialClose').addEventListener('click', ()=>{
     document.getElementById('tutorialOverlay').style.display = 'none';
     localStorage.setItem('tutorialShown', 'true'); // remember for next time
 });
-const candleTimer = document.getElementById("candleTimer");
-
-function updateCandleTimer(){
-
-    if(!candles || candles.length === 0) return;
-
-    const tf = currentTF * 60; // timeframe seconds
-
-    const lastCandle = candles[candles.length - 1];
-    const candleStart = lastCandle.time;
-
-    const closeTime = candleStart + tf;
-
-    const now = Math.floor(Date.now() / 1000);
-
-    let remaining = closeTime - now;
-
-    if(remaining < 0) remaining = 0;
-
-    const minutes = Math.floor(remaining / 60);
-    const seconds = remaining % 60;
-
-    candleTimer.textContent =
-        `⏱ ${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
-}
-
-setInterval(updateCandleTimer,1000);
 
 
 // Listen for messages from parent (e.g., new candles, SR, indicator changes)
