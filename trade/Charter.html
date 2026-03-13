@@ -1633,6 +1633,57 @@ function updateCandleTimer(){
 }
 
 setInterval(updateCandleTimer,1000);
+
+
+// Listen for messages from parent (e.g., new candles, SR, indicator changes)
+window.addEventListener("message", (event) => {
+    const data = event.data;
+    if(!data || !data.type) return;
+
+    switch(data.type) {
+        case "updateCandles":
+            if(Array.isArray(data.candles)) {
+                allCandles = data.candles;
+                aggregateCandles(); // rebuild based on current TF
+            }
+            break;
+
+        case "updateSR":
+            // Update SR settings if provided
+            if(data.srSettings) {
+                document.getElementById("srToggle").checked = !!data.srSettings.enabled;
+                document.getElementById("srLevels").value = data.srSettings.maxLevels || 3;
+                document.getElementById("srTouches").value = data.srSettings.minTouches || 2;
+                document.getElementById("srTolerance").value = data.srSettings.tolerance || 0.002;
+            }
+            drawChart();
+            break;
+
+        case "updateIndicators":
+            // Example: toggle SMA/EMA/VWAP
+            if(data.indicators) {
+                smaToggle.checked = !!data.indicators.sma;
+                smaPeriod.value = data.indicators.smaPeriod || smaPeriod.value;
+                emaToggle.checked = !!data.indicators.ema;
+                emaPeriod.value = data.indicators.emaPeriod || emaPeriod.value;
+                vwapToggle.checked = !!data.indicators.vwap;
+            }
+            drawChart();
+            break;
+
+        case "setTimeframe":
+            if(data.tf) {
+                currentTF = parseInt(data.tf);
+                tfSelect.value = currentTF;
+                aggregateCandles();
+            }
+            break;
+
+        case "scrollToLatest":
+            scrollToLatestCandle();
+            break;
+    }
+});
 </script>
 
 </body>

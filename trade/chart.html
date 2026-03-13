@@ -1273,14 +1273,41 @@ channelTabs.forEach(tab => {
 
 
 
-
 const chartFrame = document.querySelector(".chart-frame");
 
-// Reload chart every 30 seconds
-setInterval(() => {
-  const src = chartFrame.src;
-  chartFrame.src = src; // forces iframe reload
-}, 30000); // 30,000 ms = 30s
+// Example: send new candle data to iframe
+function sendCandleToChart(candle) {
+  chartFrame.contentWindow.postMessage(
+    { type: "newCandle", payload: candle },
+    "*"
+  );
+}
+
+// Example usage:
+sendCandleToChart({
+  time: Date.now(),
+  open: 100,
+  high: 105,
+  low: 98,
+  close: 102,
+  volume: 1500
+});
+
+// Example: send support/resistance update
+function sendSRLevels(levels) {
+  chartFrame.contentWindow.postMessage(
+    { type: "updateSR", payload: levels },
+    "*"
+  );
+}
+
+// Example: send indicator update
+function sendIndicator(name, value) {
+  chartFrame.contentWindow.postMessage(
+    { type: "indicator", payload: { name, value } },
+    "*"
+  );
+}
 const calendarFrame = document.querySelector(".calendar-frame");
 
 // Reload calendar every 60 seconds
