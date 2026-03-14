@@ -760,14 +760,15 @@ position:fixed;
 top:0;
 left:0;
 width:100vw;
-height:100vh;
+height:100vh !important;
 z-index:9999;
 background:var(--panel-bg);
 border:none;
 border-radius:0;
 }
+
 .panel-chart.expanded .panel-body{
-height:calc(100vh - 35px);
+height:calc(100vh - 35px) !important;
 padding:0;
 }
 .panel-chart.expanded .chart-frame{
@@ -834,6 +835,7 @@ height:calc(100dvh - 35px);
 	  <div class="panel-header">Calendar</div>
 		  <div class="panel-body">
 			<iframe
+			  class="calendar-frame"
 			  src="https://sslecal2.investing.com"
 			  style="width:100%; height:120%; border:none; transform:translateY(-60px);"
 			  scrolling="yes">
@@ -965,17 +967,18 @@ height:calc(100dvh - 35px);
 	  </div>
 	</div>
 	<!-- Row 3: empty panels -->
-	<div class="panel panel-empty1">
-	  <div class="panel-header">Commodities</div>
-	  <div class="panel-body" id="commoditiesPanel">
-		Loading commodities...
-	  </div>
+	<div class="panel panel-global">
+	<div class="panel-header">Global Macro Signals</div>
+
+	<div class="panel-body">
+
+	<div id="oilPrice">Loading Oil...</div>
+
+	<div id="spFutures">Loading S&P Futures...</div>
+
+	<div id="dxyValue">Loading DXY...</div>
+
 	</div>
-	<div class="panel panel-empty2">
-	  <div class="panel-header">Market Breadth</div>
-	  <div class="panel-body" id="breadthPanel">
-		Loading breadth...
-	  </div>
 	</div>
  </div>
 
@@ -1112,8 +1115,6 @@ document.querySelectorAll('.section-header').forEach(header => {
   });
 });
 
-// Close button
-closeSettings.addEventListener("click", () => settingsPopup.style.display = "none");
 
 // Theme change
 document.querySelectorAll('input[name="theme"]').forEach(radio => {
@@ -1230,67 +1231,105 @@ async function loadScallSentiment() {
   }
 }
 
-loadScallSentiment();
-setInterval(loadScallSentiment, 60000);
 
+async function loadGlobalSignals() {
+  try {
+    const urls = {
+      oil: "https://query1.finance.yahoo.com/v8/finance/chart/BZ=F",
+      sp:  "https://query1.finance.yahoo.com/v8/finance/chart/ES=F",
+      dxy: "https://query1.finance.yahoo.com/v8/finance/chart/DX-Y.NYB"
+    };
+
+    const results = {};
+
+    for (const key in urls) {
+      try {
+        const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(urls[key])}`);
+        const text = await res.json();
+        const data = JSON.parse(text.contents);
+
+        const price = data?.chart?.result?.[0]?.meta?.regularMarketPrice ?? null;
+        results[key] = price;
+      } catch (e) {
+        console.error(`Error fetching ${key}:`, e);
+        results[key] = null;
+      }
+    }
+
+    document.getElementById("oilPrice").innerText =
+      results.oil !== null ? `Brent: $${results.oil.toFixed(2)}` : "Brent: N/A";
+
+    document.getElementById("spFutures").innerText =
+      results.sp !== null ? `S&P Futures: ${results.sp.toFixed(2)}` : "S&P Futures: N/A";
+
+    document.getElementById("dxyValue").innerText =
+      results.dxy !== null ? `DXY: ${results.dxy.toFixed(2)}` : "DXY: N/A";
+
+  } catch (e) {
+    console.error("Global signals error", e);
+  }
+}
 
 
 let prevVix = null;
 
-async function loadIndiaVIX() {
-  try {
-    // Placeholder API / demo VIX value
-    const vix = (Math.random() * 25 + 12).toFixed(2); // 12–37
+async function loadIndiaVIX(){
 
-    const valueEl = document.getElementById("vixValue");
-    const infoEl = document.getElementById("vixInfo");
-    const trendEl = document.getElementById("vixTrend");
+try{
 
-    valueEl.innerText = `VIX: ${vix}`;
+const res = await fetch(
+"https://api.allorigins.win/raw?url=" +
+encodeURIComponent("https://query1.finance.yahoo.com/v8/finance/chart/%5EINDIAVIX")
+);
 
-    // Determine volatility severity
-    let text = "";
-    let color = "";
-    if (vix < 15) {           // Low
-      text = "Low Volatility — Markets Calm";
-      color = "#00ff66";       // green
-    } else if (vix < 25) {    // Moderate
-      text = "Moderate Volatility — Watch Market";
-      color = "#ffcc00";       // yellow/orange
-    } else {                  // High
-      text = "High Volatility — Caution Advised!";
-      color = "#ff3b3b";       // red
-    }
+const data = await res.json();
 
-    // Update info text with color and bold if high
-    infoEl.innerText = text;
-    infoEl.style.color = color;
-    infoEl.style.fontWeight = vix >= 25 ? "bold" : "normal";
+const vix = data.chart.result[0].meta.regularMarketPrice;
 
-    // Trend arrow
-    if (prevVix !== null) {
-      if (vix > prevVix) {
-        trendEl.innerText = "⬆"; // VIX up
-        trendEl.style.color = "#ff3b3b";
-      } else if (vix < prevVix) {
-        trendEl.innerText = "⬇"; // VIX down
-        trendEl.style.color = "#00ff66";
-      } else {
-        trendEl.innerText = "→"; // No change
-        trendEl.style.color = "#cccc00";
-      }
-    }
+const valueEl = document.getElementById("vixValue");
+const infoEl = document.getElementById("vixInfo");
+const trendEl = document.getElementById("vixTrend");
 
-    prevVix = parseFloat(vix);
+valueEl.innerText = `VIX: ${vix.toFixed(2)}`;
 
-  } catch (e) {
-    console.error("VIX error", e);
-  }
+let text="";
+let color="";
+
+if(vix < 15){
+text="Low Volatility — Markets Calm";
+color="#00ff66";
+}
+else if(vix < 25){
+text="Moderate Volatility — Watch Market";
+color="#ffcc00";
+}
+else{
+text="High Volatility — Caution Advised";
+color="#ff3b3b";
 }
 
-// Initial load and refresh every 60s
-loadIndiaVIX();
-setInterval(loadIndiaVIX, 60000);
+infoEl.innerText=text;
+infoEl.style.color=color;
+
+if(prevVix !== null){
+  if(vix > prevVix){
+    trendEl.innerHTML = "▲";
+    trendEl.style.color="#ff3b3b";
+  } else if(vix < prevVix){
+    trendEl.innerHTML = "▼";
+    trendEl.style.color="#00ff66";
+  } else {
+    trendEl.innerHTML = "■";
+    trendEl.style.color="#cccc00";
+  }
+}
+prevVix = vix;
+}catch(e){
+console.error("VIX API error",e);
+}
+}
+
+
 
 
 async function loadCryptoPrices() {
@@ -1303,19 +1342,30 @@ async function loadCryptoPrices() {
     const btc = data.bitcoin.usd;
     const eth = data.ethereum.usd;
 
-    document.querySelector(
-      "#tab3 .panel-crypto .panel-body"
-    ).innerHTML = `
-      <div>BTC: $${btc.toLocaleString()}</div>
-      <div>ETH: $${eth.toLocaleString()}</div>
-    `;
+	document.querySelector(
+	"#tab3 .panel-crypto .panel-body"
+	).innerHTML = `
+	<div class="commodity-grid">
+
+	<div class="commodity-box">
+	<div class="commodity-name">Bitcoin</div>
+	<div class="commodity-price">$${btc.toLocaleString()}</div>
+	</div>
+
+	<div class="commodity-box">
+	<div class="commodity-name">Ethereum</div>
+	<div class="commodity-price">$${eth.toLocaleString()}</div>
+	</div>
+
+	</div>
+	`;
   } catch (e) {
     console.error("Crypto API error", e);
   }
 }
 
-loadCryptoPrices();
-setInterval(loadCryptoPrices, 15000); // update every 15s
+
+
 
 
 
@@ -1422,8 +1472,6 @@ channelTabs.forEach(tab => {
 
 
 
-const chartFrame = document.querySelector(".chart-frame");
-
 // Example: send new candle data to iframe
 function sendCandleToChart(candle) {
   chartFrame.contentWindow.postMessage(
@@ -1433,14 +1481,20 @@ function sendCandleToChart(candle) {
 }
 
 // Example usage:
+const chartFrame = document.querySelector(".chart-frame");
+
+chartFrame.onload = () => {
+
 sendCandleToChart({
-  time: Date.now(),
-  open: 100,
-  high: 105,
-  low: 98,
-  close: 102,
-  volume: 1500
+time: Date.now(),
+open:100,
+high:105,
+low:98,
+close:102,
+volume:1500
 });
+
+};
 
 // Example: send support/resistance update
 function sendSRLevels(levels) {
@@ -1474,166 +1528,8 @@ let prevCommodity = {
   gas:null
 };
 
-async function loadCommodities(){
 
-try{
 
-/* demo values (replace later with real API) */
-
-const gold = (1900 + Math.random()*50).toFixed(2);
-const silver = (22 + Math.random()*3).toFixed(2);
-const crude = (70 + Math.random()*10).toFixed(2);
-const gas = (2 + Math.random()*1).toFixed(2);
-
-function movement(newVal, oldVal){
-
-if(oldVal === null){
-return {class:"price-flat",arrow:"→"};
-}
-
-if(newVal > oldVal){
-return {class:"price-up",arrow:"⬆"};
-}
-
-if(newVal < oldVal){
-return {class:"price-down",arrow:"⬇"};
-}
-
-return {class:"price-flat",arrow:"→"};
-
-}
-
-const g = movement(gold,prevCommodity.gold);
-const s = movement(silver,prevCommodity.silver);
-const c = movement(crude,prevCommodity.crude);
-const n = movement(gas,prevCommodity.gas);
-
-document.getElementById("commoditiesPanel").innerHTML = `
-
-<div class="commodity-grid">
-
-<div class="commodity-box">
-<div class="commodity-name">Gold</div>
-<div class="commodity-price ${g.class}">
-<span>$${gold}</span>
-<span class="price-arrow">${g.arrow}</span>
-</div>
-</div>
-
-<div class="commodity-box">
-<div class="commodity-name">Silver</div>
-<div class="commodity-price ${s.class}">
-<span>$${silver}</span>
-<span class="price-arrow">${s.arrow}</span>
-</div>
-</div>
-
-<div class="commodity-box">
-<div class="commodity-name">Crude</div>
-<div class="commodity-price ${c.class}">
-<span>$${crude}</span>
-<span class="price-arrow">${c.arrow}</span>
-</div>
-</div>
-
-<div class="commodity-box">
-<div class="commodity-name">Nat Gas</div>
-<div class="commodity-price ${n.class}">
-<span>$${gas}</span>
-<span class="price-arrow">${n.arrow}</span>
-</div>
-</div>
-
-</div>
-`;
-
-prevCommodity.gold = gold;
-prevCommodity.silver = silver;
-prevCommodity.crude = crude;
-prevCommodity.gas = gas;
-
-}catch(e){
-console.error("Commodity error",e);
-}
-
-}
-
-loadCommodities();
-setInterval(loadCommodities,15000);
-
-async function loadMarketBreadth(){
-
-/* demo numbers for now */
-
-const adv = Math.floor(800 + Math.random()*800);
-const dec = Math.floor(600 + Math.random()*800);
-const unc = Math.floor(50 + Math.random()*200);
-
-const ratio = (adv/dec).toFixed(2);
-
-let bias="Neutral";
-let meter=50;
-
-if(ratio>1.2){
-bias="Bullish";
-meter=70;
-}
-
-if(ratio>1.5){
-bias="Strong Bullish";
-meter=85;
-}
-
-if(ratio<0.8){
-bias="Bearish";
-meter=30;
-}
-
-if(ratio<0.6){
-bias="Strong Bearish";
-meter=15;
-}
-
-document.getElementById("breadthPanel").innerHTML = `
-
-<div class="breadth-grid">
-
-<div class="breadth-row">
-<span>Advancing</span>
-<span>${adv}</span>
-</div>
-
-<div class="breadth-row">
-<span>Declining</span>
-<span>${dec}</span>
-</div>
-
-<div class="breadth-row">
-<span>Unchanged</span>
-<span>${unc}</span>
-</div>
-
-<div class="breadth-row">
-<span>A/D Ratio</span>
-<span>${ratio}</span>
-</div>
-
-<div class="breadth-row">
-<span>Market Bias</span>
-<span>${bias}</span>
-</div>
-
-<div class="breadth-meter">
-<div class="breadth-fill" style="width:${meter}%"></div>
-</div>
-
-</div>
-`;
-
-}
-
-loadMarketBreadth();
-setInterval(loadMarketBreadth,30000);
 
 
 const chartPanel = document.querySelector(".panel-chart");
@@ -1644,17 +1540,43 @@ chartExpandBtn.addEventListener("click", () => {
 if(chartPanel.classList.contains("expanded")){
 
 chartPanel.classList.remove("expanded");
-document.body.classList.remove("chart-fullscreen");
-chartExpandBtn.textContent = "[ ]";
+chartExpandBtn.textContent = "⤢";
 
 }else{
 
 chartPanel.classList.add("expanded");
-document.body.classList.add("chart-fullscreen");
-chartExpandBtn.textContent = "[]";
+chartExpandBtn.textContent = "⤡";
 
 }
 
+});
+let intelBusy=false;
+
+async function refreshIntel(){
+
+if(intelBusy) return;
+intelBusy=true;
+
+await loadScallSentiment();
+await loadIndiaVIX();
+await loadCryptoPrices();
+await loadGlobalSignals();
+
+intelBusy=false;
+
+}
+
+/* first run immediately */
+
+refreshIntel();
+
+
+
+/* refresh every 30s */
+setInterval(refreshIntel,30000);
+window.addEventListener('DOMContentLoaded', () => {
+    refreshIntel();
+    setInterval(refreshIntel, 60000);
 });
 </script>
 
