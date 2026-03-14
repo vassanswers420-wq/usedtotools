@@ -2,8 +2,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>BMI Calculator – Calculate Body Mass Index Online | UsedToTools</title>
-  <meta name="description" content="Free BMI calculator to calculate your Body Mass Index using height and weight. Instantly check BMI value, category, and healthy weight range.">
+  <title>BMI Calculator - Calculate Your Body Mass Index Instantly | UsedToTools</title>
+  <meta name="description" content="Calculate your BMI instantly with our free online BMI calculator. Know your Body Mass Index, weight category, and healthy range in seconds.">
   <meta name="robots" content="index, follow">
 
   <!-- Canonical -->
@@ -11,15 +11,15 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="BMI Calculator – Calculate Body Mass Index | UsedToTools">
-  <meta property="og:description" content="Instantly calculate your BMI using height and weight. Check BMI category and understand your health range with our free online calculator.">
+  <meta property="og:title" content="BMI Calculator - Calculate Your Body Mass Index Instantly | UsedToTools">
+  <meta property="og:description" content="Free online BMI calculator to instantly calculate Body Mass Index, weight category, and healthy range. Works on all devices.">
   <meta property="og:url" content="https://usedtotools.com/health/bmi">
   <meta property="og:site_name" content="UsedToTools">
 
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="BMI Calculator | UsedToTools">
-  <meta name="twitter:description" content="Free BMI calculator to check body mass index, category and health range instantly. Works on mobile and desktop.">
+  <meta name="twitter:description" content="Free BMI calculator to instantly calculate your Body Mass Index, category, and healthy weight range. Works on mobile and desktop.">
 
   <link rel="stylesheet" href="../style.css">
 
@@ -38,6 +38,34 @@
       "name": "UsedToTools",
       "url": "https://usedtotools.com/"
     }
+  }
+  </script>
+
+  <!-- HowTo Structured Data for BMI Calculation -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Calculate BMI",
+    "description": "Step-by-step guide to calculate Body Mass Index using height and weight.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Enter your height",
+        "text": "Input your height in centimeters in the calculator."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Enter your weight",
+        "text": "Input your weight in kilograms in the calculator."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Calculate BMI",
+        "text": "Click the 'Calculate BMI' button to get your BMI value and category."
+      }
+    ],
+    "tool": "BMI Calculator"
   }
   </script>
 
@@ -69,6 +97,22 @@
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "No, BMI is a screening tool and should not replace professional medical advice."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this calculator work on mobile?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, it is fully responsive and works on all devices including mobile, tablet, and desktop."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a healthy BMI range?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A BMI between 18.5 and 24.9 is considered healthy for most adults."
         }
       }
     ]
@@ -114,6 +158,11 @@
       display: block;
       margin-bottom: 5px;
     }
+
+    .bmi-chart {
+      max-width: 100%;
+      margin: 20px 0;
+    }
   </style>
 </head>
 
@@ -151,21 +200,23 @@
 
       <div class="tool-box">
 
-        <div class="form-group">
-          <label><strong>Height (cm)</strong></label>
-          <input id="height" type="number" placeholder="e.g. 170">
-        </div>
+		  <div class="form-group">
+			<label><strong>Height (cm)</strong></label>
+			<input id="height" type="number" placeholder="e.g. 170">
+		  </div>
 
-        <div class="form-group">
-          <label><strong>Weight (kg)</strong></label>
-          <input id="weight" type="number" placeholder="e.g. 65">
-        </div>
+		  <div class="form-group">
+			<label><strong>Weight (kg)</strong></label>
+			<input id="weight" type="number" placeholder="e.g. 65">
+		  </div>
 
-        <button class="btn" onclick="calculateBMI()">Calculate BMI</button>
+		  <button class="btn" onclick="calculateBMI()">Calculate BMI</button>
 
-        <div class="result" id="result"></div>
+		  <div class="result" id="result"></div>
 
-      </div>
+		  <!-- Interactive BMI Chart -->
+		  <canvas id="bmiChart" width="300" height="30" style="margin-top:20px;"></canvas>
+		</div>
 
       <!-- EXISTING INFO -->
       <section class="content-section">
@@ -194,27 +245,19 @@
           instantly so you don’t need to remember the formula.
         </p>
 
-        <h3>Why Use a BMI Calculator?</h3>
-        <ul>
-          <li>Quickly check your weight category</li>
-          <li>Simple and easy health assessment</li>
-          <li>No manual calculations required</li>
-          <li>Free and instant results</li>
-        </ul>
+        <h2>How to Use the BMI Calculator</h2>
+		<p>Follow these simple steps:</p>
+		<ol>
+		  <li>Enter your height in centimeters.</li>
+		  <li>Enter your weight in kilograms.</li>
+		  <li>Click "Calculate BMI" to see your result.</li>
+		</ol>
 
-        <h3>Frequently Asked Questions</h3>
-
-        <p><strong>Is this BMI calculator accurate?</strong><br>
-        Yes, it follows the standard BMI formula used worldwide.</p>
-
-        <p><strong>Can BMI be used for everyone?</strong><br>
-        BMI is a general guideline for adults and does not directly measure body fat.</p>
-
-        <p><strong>Is this a medical diagnosis?</strong><br>
-        No, BMI is a screening tool and not a medical diagnosis.</p>
-
-        <p><strong>Does this calculator work on mobile?</strong><br>
-        Yes, it is fully responsive and works on all devices.</p>
+		<h2>Frequently Asked Questions</h2>
+		<p><strong>Is this BMI calculator accurate?</strong> Yes, it uses the standard BMI formula.</p>
+		<p><strong>Can BMI be used for everyone?</strong> BMI is a general guideline and not perfect for athletes or children.</p>
+		<p><strong>What is a healthy BMI?</strong> 18.5 to 24.9 is considered healthy for most adults.</p>
+		<p><strong>Does this calculator work on mobile?</strong> Yes, it is fully responsive and works on all devices.</p>
       </section>
 
     </div>
@@ -240,27 +283,66 @@
 <!-- ================= SCRIPT (UNCHANGED) ================= -->
 <script>
 function calculateBMI() {
-  const height = parseFloat(document.getElementById("height").value) / 100;
-  const weight = parseFloat(document.getElementById("weight").value);
+  const heightInput = document.getElementById("height").value;
+  const weightInput = document.getElementById("weight").value;
   const result = document.getElementById("result");
+  const chart = document.getElementById("bmiChart");
+  const ctx = chart.getContext("2d");
+
+  const height = parseFloat(heightInput) / 100;
+  const weight = parseFloat(weightInput);
 
   if (!height || !weight) {
     result.innerHTML = "Please enter valid height and weight.";
+    ctx.clearRect(0, 0, chart.width, chart.height);
     return;
   }
 
   const bmi = (weight / (height * height)).toFixed(1);
   let category = "";
+  let color = "";
 
-  if (bmi < 18.5) category = "Underweight";
-  else if (bmi < 25) category = "Normal weight";
-  else if (bmi < 30) category = "Overweight";
-  else category = "Obese";
+  if (bmi < 18.5) {
+    category = "Underweight";
+    color = "#3498db"; // blue
+  } else if (bmi < 25) {
+    category = "Normal weight";
+    color = "#2ecc71"; // green
+  } else if (bmi < 30) {
+    category = "Overweight";
+    color = "#f1c40f"; // yellow
+  } else {
+    category = "Obese";
+    color = "#e74c3c"; // red
+  }
 
-  result.innerHTML = `
-    <strong>Your BMI: ${bmi}</strong>
-    Category: ${category}
-  `;
+  result.innerHTML = `<strong>Your BMI: ${bmi}</strong>Category: ${category}`;
+
+  // Draw color-coded BMI chart
+  ctx.clearRect(0, 0, chart.width, chart.height);
+
+  const chartSegments = [
+    { max: 18.5, color: "#3498db" },
+    { max: 24.9, color: "#2ecc71" },
+    { max: 29.9, color: "#f1c40f" },
+    { max: 40, color: "#e74c3c" } // extend beyond for visualization
+  ];
+
+  let startX = 0;
+  const totalWidth = chart.width;
+  const maxBMI = 40; // for scaling chart
+
+  chartSegments.forEach(seg => {
+    const width = (seg.max / maxBMI) * totalWidth;
+    ctx.fillStyle = seg.color;
+    ctx.fillRect(startX, 0, width, chart.height);
+    startX += width;
+  });
+
+  // Draw user BMI marker
+  const bmiX = Math.min((bmi / maxBMI) * totalWidth, totalWidth - 2);
+  ctx.fillStyle = "#000000";
+  ctx.fillRect(bmiX - 1, 0, 3, chart.height);
 }
 
 (function() {
