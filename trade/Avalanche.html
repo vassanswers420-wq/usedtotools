@@ -318,8 +318,12 @@ footer * {            /* all children inside footer */
   height: 100%;
   overflow: hidden;
   box-shadow: 0 0 8px var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
+.panel:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 0 14px var(--shadow);
+}
 .panel-header {
  color: var(--text);
   padding: 6px 10px;
@@ -337,6 +341,23 @@ color: var(--subtext);
 }
 .content-area {
   scroll-behavior: smooth;
+}
+.skeleton{
+height:12px;
+background:linear-gradient(
+90deg,
+#222 25%,
+#333 50%,
+#222 75%
+);
+background-size:200% 100%;
+animation:skeletonMove 1.5s infinite;
+border-radius:3px;
+}
+
+@keyframes skeletonMove{
+0%{background-position:200% 0;}
+100%{background-position:-200% 0;}
 }
 /* ---------- TAB1 PANELS ---------- */
 /* Chart panel stays taller */
@@ -450,7 +471,10 @@ color: var(--subtext);
 header.top-bar, 
 header.top-bar .left, 
 header.top-bar .right-group {
-  color: var(--btn-text);
+  display: flex;           /* enable flex layout */
+  align-items: center;     /* vertically center all items */
+  gap: 10px;               /* optional spacing between items */
+  color: var(--btn-text);  /* text color */
 }
 .chart-frame{
   width:100%;
@@ -467,7 +491,8 @@ header.top-bar .right-group {
   width:100%;
   height:120%;
   border:none;
-  transform:translateY(-60px); /* hides investing header */
+  transform:translateY(-60px); 
+  overflow: hidden;
 }
 #newsFeed{
   font-size:12px;
@@ -829,6 +854,12 @@ color:var(--btn-text);
 cursor:pointer;
 font-weight:bold;
 }
+#terminalClock{
+font-size:12px;
+margin-right:10px;
+font-weight:bold;
+opacity:0.8;
+}
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 900px) {
   .content-area {
@@ -855,10 +886,15 @@ font-weight:bold;
 
 <header class="top-bar">
   <div class="left">Avalanche Systems</div>
+
   <div class="right-group">
-    Status / Controls
+    <div id="marketStatus" style="display:flex; align-items:center; gap:6px;">
+	  <div id="marketLight" style="width:12px; height:12px; border-radius:50%; background:red;"></div>
+	  <span id="marketText" style="font-size:12px; font-weight:bold;">Closed</span>
+	</div>
     <button id="settings-btn">⚙️</button>
   </div>
+
 </header>
 <div class="content-area">
 
@@ -868,7 +904,7 @@ font-weight:bold;
 		<div class="panel-header panel-controls">
 		  <span>Chart</span>
 
-		  <span id="chartExpandBtn" class="panel-btn">[ ]</span>
+		  <span id="chartExpandBtn" class="panel-btn">⤢</span>
 		</div>
 	  <div class="panel-body">
 		<iframe src="Charter.html" class="chart-frame" scrolling="no"></iframe>
@@ -888,7 +924,9 @@ font-weight:bold;
     <div class="panel panel-news">
 	  <div class="panel-header">Market News</div>
 	  <div class="panel-body" id="newsFeed">
-		Loading news...
+		<div class="skeleton" style="width:80%"></div>
+		<div class="skeleton" style="width:60%"></div>
+		<div class="skeleton" style="width:90%"></div>
 	  </div>
 	</div>
   </div>
@@ -1015,11 +1053,17 @@ font-weight:bold;
 
 	<div class="panel-body">
 
-	<div id="oilPrice">Loading Oil...</div>
+	<div id="oilPrice"><div class="skeleton" style="width:80%"></div>
+<div class="skeleton" style="width:60%"></div>
+<div class="skeleton" style="width:90%"></div></div>
 
-	<div id="spFutures">Loading S&P Futures...</div>
+	<div id="spFutures"><div class="skeleton" style="width:80%"></div>
+<div class="skeleton" style="width:60%"></div>
+<div class="skeleton" style="width:90%"></div></div>
 
-	<div id="dxyValue">Loading DXY...</div>
+	<div id="dxyValue"><div class="skeleton" style="width:80%"></div>
+<div class="skeleton" style="width:60%"></div>
+<div class="skeleton" style="width:90%"></div></div>
 
 	</div>
 	</div>
@@ -1032,11 +1076,11 @@ font-weight:bold;
 
     <img src="../assets/dogtag.png" alt="Avalanche Systems">
 
-    <p style="font-size:12px; opacity:0.7;">
-      Avalanche Terminal is proprietary software provided free for personal use.
-      Unauthorized copying, modification, or redistribution of the source code
-      is strictly prohibited. © 2026 All Rights Reserved.
-    </p>
+		<p style="font-size:12px; font-family: 'Orbitron', sans-serif; opacity:0.7;">
+		  Avalanche Terminal is proprietary software provided free for personal use.
+		  Unauthorized copying, modification, or redistribution of the source code
+		  is strictly prohibited. © 2026 All Rights Reserved.
+		</p>
 
     <a href="https://www.instagram.com/oiled_drummer/" target="_blank">
       Support? Hit IG
@@ -1122,8 +1166,59 @@ font-weight:bold;
 
 <script>
 const footerTabs = document.querySelectorAll(".footer-tab");
-const sections = document.querySelectorAll(".section");
+// Load saved theme
+const savedTheme = localStorage.getItem("terminalTheme");
 
+if(savedTheme){
+
+const radio = document.querySelector(`input[value="${savedTheme}"]`);
+
+if(radio) radio.checked = true;
+
+if(savedTheme === "default"){
+document.body.className = "";
+}
+else if(savedTheme === "blue"){
+document.body.className = "theme-ocean";
+}
+else if(savedTheme === "win10"){
+document.body.className = "theme-modern";
+}
+else if(savedTheme === "winxp"){
+document.body.className = "theme-classic";
+}
+else if(savedTheme === "mono"){
+document.body.className = "theme-neutral";
+}
+else if(savedTheme === "win10dark"){
+document.body.className = "theme-win10dark";
+}
+else if(savedTheme === "winme"){
+document.body.className = "theme-winme";
+}
+
+}
+const sections = document.querySelectorAll(".section");
+/* ---------- API CACHE SYSTEM ---------- */
+
+let apiCache = {};
+
+async function cachedFetch(url){
+
+if(apiCache[url] && Date.now() - apiCache[url].time < 20000){
+return apiCache[url].data;
+}
+
+const res = await fetch(url);
+const data = await res.json();
+
+apiCache[url] = {
+time: Date.now(),
+data: data
+};
+
+return data;
+}
 footerTabs.forEach(tab => {
   tab.addEventListener("click", () => {
     footerTabs.forEach(t => t.classList.remove("active"));
@@ -1162,34 +1257,37 @@ document.querySelectorAll('.section-header').forEach(header => {
 // Theme change
 document.querySelectorAll('input[name="theme"]').forEach(radio => {
   radio.addEventListener("change", () => {
-    // Remove all previous theme classes
-    document.body.classList.remove(
-	  "theme-ocean",
-	  "theme-modern",
-	  "theme-classic",
-	  "theme-neutral",
-	  "theme-win10dark",
-	  "theme-winme"
-	);
 
-    // Add the selected theme
-	if (radio.value === "default") {
-		document.body.className = ""; // default Green-Black
-	} else if (radio.value === "blue") {
-		document.body.className = "theme-ocean";
-	} else if (radio.value === "win10") {
-		document.body.className = "theme-modern";
-	} else if (radio.value === "winxp") {
-		document.body.className = "theme-classic";
-	} else if (radio.value === "mono") {
-		document.body.className = "theme-neutral";
-	}
-	else if (radio.value === "win10dark") {
-	  document.body.className = "theme-win10dark";
-	}
-	else if (radio.value === "winme") {
-	  document.body.className = "theme-winme";
-	}
+    // Remove old themes
+    document.body.classList.remove(
+      "theme-ocean",
+      "theme-modern",
+      "theme-classic",
+      "theme-neutral",
+      "theme-win10dark",
+      "theme-winme"
+    );
+
+    // Apply theme
+    if (radio.value === "default") {
+      document.body.className = "";
+    } else if (radio.value === "blue") {
+      document.body.className = "theme-ocean";
+    } else if (radio.value === "win10") {
+      document.body.className = "theme-modern";
+    } else if (radio.value === "winxp") {
+      document.body.className = "theme-classic";
+    } else if (radio.value === "mono") {
+      document.body.className = "theme-neutral";
+    } else if (radio.value === "win10dark") {
+      document.body.className = "theme-win10dark";
+    } else if (radio.value === "winme") {
+      document.body.className = "theme-winme";
+    }
+
+    // ⭐ SAVE THEME HERE
+    localStorage.setItem("terminalTheme", radio.value);
+
   });
 });
 
@@ -1265,8 +1363,7 @@ function updateScallSentiment(score) {
 // Fetch API and update
 async function loadScallSentiment() {
   try {
-    const res = await fetch("https://api.alternative.me/fng/?limit=1");
-    const data = await res.json();
+	const data = await cachedFetch("https://api.alternative.me/fng/?limit=1");
     const score = parseInt(data.data[0].value); // 0–100
     updateScallSentiment(score);
   } catch (e) {
@@ -1287,8 +1384,9 @@ async function loadGlobalSignals() {
 
     for (const key in urls) {
       try {
-        const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(urls[key])}`);
-        const text = await res.json();
+		const text = await cachedFetch(
+		`https://api.allorigins.win/get?url=${encodeURIComponent(urls[key])}`
+		);
         const data = JSON.parse(text.contents);
 
         const price = data?.chart?.result?.[0]?.meta?.regularMarketPrice ?? null;
@@ -1320,12 +1418,10 @@ async function loadIndiaVIX(){
 
 try{
 
-const res = await fetch(
+const data = await cachedFetch(
 "https://api.allorigins.win/raw?url=" +
 encodeURIComponent("https://query1.finance.yahoo.com/v8/finance/chart/%5EINDIAVIX")
 );
-
-const data = await res.json();
 
 const vix = data.chart.result[0].meta.regularMarketPrice;
 
@@ -1377,10 +1473,9 @@ console.error("VIX API error",e);
 
 async function loadCryptoPrices() {
   try {
-    const res = await fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd"
-    );
-    const data = await res.json();
+	const data = await cachedFetch(
+	"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd"
+	);
 
     const btc = data.bitcoin.usd;
     const eth = data.ethereum.usd;
@@ -1616,10 +1711,10 @@ refreshIntel();
 
 
 /* refresh every 30s */
-setInterval(refreshIntel,30000);
+
 window.addEventListener('DOMContentLoaded', () => {
     refreshIntel();
-    setInterval(refreshIntel, 60000);
+    setInterval(refreshIntel,30000);
 });
 
 function detectMobileDevice(){
@@ -1641,6 +1736,47 @@ detectMobileDevice();
 document.getElementById("mobileGuideClose").onclick=()=>{
 document.getElementById("mobileGuide").style.display="none";
 };
+function updateMarketStatus() {
+  const now = new Date();
+  
+  // Convert to IST (UTC+5:30)
+  const istOffset = 5.5 * 60; // minutes
+  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+  const istTime = new Date(utc + (istOffset * 60 * 1000));
+
+  const day = istTime.getDay(); // 0=Sunday, 1=Monday...6=Saturday
+  const hours = istTime.getHours();
+  const minutes = istTime.getMinutes();
+
+  const openHour = 9, openMin = 15;
+  const closeHour = 15, closeMin = 30;
+
+  let isOpen = false;
+
+  if(day >= 1 && day <= 5) { // Monday-Friday
+    const nowMinutes = hours * 60 + minutes;
+    const openMinutes = openHour * 60 + openMin;
+    const closeMinutes = closeHour * 60 + closeMin;
+
+    isOpen = nowMinutes >= openMinutes && nowMinutes <= closeMinutes;
+  }
+
+  const light = document.getElementById("marketLight");
+  const text = document.getElementById("marketText");
+
+  if(isOpen){
+    light.style.background = "#00ff66"; // green
+    text.innerText = "Open";
+  } else {
+    light.style.background = "#ff3b3b"; // red
+    text.innerText = "Closed";
+  }
+}
+
+// Update every 30 seconds
+updateMarketStatus();
+setInterval(updateMarketStatus, 30000);
+
 </script>
 <div id="mobileGuide" class="mobile-guide">
   <div class="mobile-guide-box">
