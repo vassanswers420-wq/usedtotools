@@ -786,6 +786,49 @@ height:calc(100dvh - 35px);
 }
 
 }
+.mobile-guide{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:99999;
+}
+
+.mobile-guide-box{
+background:var(--panel-bg);
+border:2px solid var(--panel-border);
+padding:20px;
+width:320px;
+text-align:center;
+border-radius:6px;
+box-shadow:0 0 12px var(--shadow);
+}
+
+.mobile-guide-box h3{
+margin-bottom:10px;
+color:var(--text);
+}
+
+.mobile-steps{
+font-size:13px;
+margin:10px 0;
+line-height:1.5;
+}
+
+.mobile-guide-box button{
+margin-top:10px;
+padding:6px 14px;
+border:none;
+background:var(--accent);
+color:var(--btn-text);
+cursor:pointer;
+font-weight:bold;
+}
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 900px) {
   .content-area {
@@ -1578,7 +1621,51 @@ window.addEventListener('DOMContentLoaded', () => {
     refreshIntel();
     setInterval(refreshIntel, 60000);
 });
-</script>
 
+function detectMobileDevice(){
+
+const isMobile =
+/Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i
+.test(navigator.userAgent);
+
+if(isMobile){
+
+document.getElementById("mobileGuide").style.display="flex";
+
+}
+
+}
+
+detectMobileDevice();
+
+document.getElementById("mobileGuideClose").onclick=()=>{
+document.getElementById("mobileGuide").style.display="none";
+};
+</script>
+<div id="mobileGuide" class="mobile-guide">
+  <div class="mobile-guide-box">
+
+    <h3>Desktop Mode Recommended</h3>
+
+    <p>
+      Avalanche Terminal is designed for desktop screens.
+    </p>
+
+    <p>
+      For the best experience on mobile, enable <b>Desktop Site</b> in your browser.
+    </p>
+
+    <div class="mobile-steps">
+      <p><b>Chrome / Edge</b></p>
+      <p>Tap <b>⋮ menu → Desktop Site</b></p>
+
+      <p><b>Safari</b></p>
+      <p>Tap <b>aA → Request Desktop Website</b></p>
+    </div>
+
+    <button id="mobileGuideClose">Continue Anyway</button>
+
+  </div>
+</div>
 </body>
 </html>
