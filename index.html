@@ -3,512 +3,347 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Free Online Calculators & Utility Tools | Finance, Health, Math – UsedToTools</title>
-  <meta name="description" content="Use free online calculators and utility tools for finance, health, math, conversions, lifestyle, business and daily needs. Fast, accurate, and easy tools at UsedToTools." />
-
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="stylea.css" />
-
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://usedtotools.com/">
+<meta name="keywords" content="EMI calculator, BMI calculator, tax calculator India, age calculator, online tools, free calculators, unit converter">
+  <title>Free Online Calculators (EMI, BMI, Tax, Age) | UsedToTools</title>
+  <meta name="description" content="Use free online calculators and utility tools for finance, health, math, conversions, lifestyle, and daily needs. Fast, accurate, and easy tools at UsedToTools." />
+<link rel="canonical" href="https://usedtotools.com/">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preload" href="style.css" as="style">
+  <meta name="geo.region" content="IN">
+<meta name="geo.placename" content="India">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "UsedToTools",
+  "url": "https://usedtotools.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://usedtotools.com/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
 </head>
-
 <body>
+
   <!-- ================= HEADER ================= -->
   <header class="header">
     <div class="container header-inner">
-      <!-- Logo -->
       <a href="index.html" class="logo">
-        <img src="assets/logo-day.png" alt="UsedToTools" class="logo-img logo-day">
-        <img src="assets/logo-night.png" alt="UsedToTools" class="logo-img logo-night">
-        <span class="logo-text">Usedtotools.com</span>
-      </a>
+        <img src="assets/logo-day.png" alt="UsedToTools Free Online Calculators Logo" class="logo-img logo-day">
+        <img src="assets/logo-day.png" alt="UsedToTools Free Online Calculators Logo" class="logo-img logo-night">    
+		<span class="logo-text">Usedtotools.com</span>	
+	</a>
 
-      <!-- Search bar -->
-      <div class="search-container">
-        <input type="text" id="toolSearch" placeholder="Search tools..." autocomplete="off" />
-        <button class="search-btn" id="searchBtn" aria-label="Search tools">🔍</button>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+      </nav>
 
-        <!-- Search results dropdown -->
-        <div id="searchResults" class="search-results"></div>
-      </div>
+		<div class="search-container">
+		  <input type="text" id="toolSearch" placeholder="Search tools..." autocomplete="off" />
+		  <button class="search-btn" id="searchBtn" aria-label="Search tools">🔍</button>
 
-      <!-- Theme toggle button -->
-      <button class="theme-toggle" id="themeToggle">🌙</button>
+		  <!-- 🔽 Search results dropdown -->
+		  <div id="searchResults" class="search-results"></div>
+		</div>
+
+
+
+      <button class="theme-toggle" id="themeToggle">🌙 Night</button>
     </div>
   </header>
 
-  <!-- ================= SIDEBAR ================= -->
-  <nav class="sidebar">
-    <a href="#home">Home</a>
-    <a href="#featured">Featured</a>
-    <a href="#finance-blitz">Finance-blitz</a>
-    <a href="#portfolio">Categories</a>
-  </nav>
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="container">
+	  <h1>Free Online Calculators – EMI, BMI, Tax, Age & More</h1>
+	   <p>Calculate EMI, BMI, age, tax, conversions, geometry, and more with fast, accurate, and easy-to-use online tools.</p>
 
-  <!-- ================= MAIN CONTENT ================= -->
-  <main>
-    <!-- 🖥 Market Sessions -->
-    <div class="mac-session-bar">
-      <div class="mac-session-content" id="sessionStatus">
-        Loading sessions...
+
+      <div class="hero-actions">
+        <a href="#categories" class="btn btn-primary">Explore Tools</a>
+        <a href="#popular" class="btn btn-outline">Popular Calculators</a>
       </div>
     </div>
+  </section>
 
-    <!-- ================= HERO / MARKET OVERVIEW ================= -->
-    <section id="home" class="hero">
-      <h2 class="section-title">📊 Market Overview</h2>
-      <h3>Values in USD</h3>
+<!-- ================= CATEGORIES ================= -->
+<section class="section" id="categories">
+  <div class="container">
+    <h2 class="section-title">Finance, Health, Math & Daily Utility Tools</h2>
+    <p class="section-desc">Browse calculators and utilities by category.</p>
+	<p>
+      UsedToTools provides free online calculators and utility tools including
+      finance calculators, health calculators, math tools, unit converters,
+      developer utilities, and lifestyle tools. All tools are fast, accurate,
+      mobile-friendly, and require no sign-up.
+    </p>
 
-      <div class="market-glass-grid">
-        <!-- Currencies -->
-        <div class="glass-card">
-          <h3>💱 Currencies</h3>
-          <p>🇦🇺 AUD/USD: <span id="audusd">-</span></p>
-          <p>🇨🇳 CNH/USD: <span id="cnhusd">-</span></p>
-          <p>🇮🇳 INR/USD: <span id="inrusd">-</span></p>
+    <div class="card-grid">
+
+      <a href="math-tools.html" class="card-link">
+        <div class="card">
+          <div class="card-title">🧮 Math & Calculators</div>
+		  <div class="card-desc">Basic, scientific, geometry, and everyday math calculators.</div>
         </div>
+      </a>
 
-        <!-- Crypto -->
-        <div class="glass-card">
-          <h3>₿ Crypto</h3>
-          <p>₿ BTC: <span id="btc">-</span></p>
-          <p>✕ XRP: <span id="xrp">-</span></p>
+      <a href="finance.html" class="card-link">
+        <div class="card">
+          <div class="card-title">💰 Finance Calculators</div>
+          <div class="card-desc">EMI, home loan, interest, tax, and investment calculators.</div>
+		  </div>
+      </a>
+
+      <a href="health.html" class="card-link">
+        <div class="card">
+          <div class="card-title">❤️ Health Calculators</div>
+          <div class="card-desc">BMI, BMR, calorie, and fitness-related health tools.</div>
         </div>
+      </a>
 
-        <!-- Commodities -->
-        <div class="glass-card">
-          <h3>🛢️ Commodities</h3>
-          <p>🥇 Gold: <span id="gold">-</span></p>
-          <p>🥈 Silver: <span id="silver">-</span></p>
-          <p>🔩 Copper: <span id="copper">-</span></p>
-          <p>⚙ Nickel: <span id="nickel">-</span></p>
-          <p>🪨 Aluminium: <span id="aluminium">-</span></p>
+      <a href="dtools.html" class="card-link">
+        <div class="card">
+          <div class="card-title">🧑‍💻 Developer Tools</div>
+          <div class="card-desc">Hash generators, encoders, formatters, and utility tools for developers.</div>
+		 </div>
+      </a>
+
+      <a href="lifestyle.html" class="card-link">
+        <div class="card">
+          <div class="card-title">🧩 Lifestyle Utilities</div>
+          <div class="card-desc">Age calculator, password strength checker, typing speed, and daily utilities.</div>
+		 </div>
+      </a>
+
+	  <a href="cricket.html" class="card-link">
+        <div class="card">
+          <div class="card-title">🏏 Cricket Tools & Stats</div>
+          <div class="card-desc">Cricket match analysis, head-to-head stats, and player performance tools.</div>
+
         </div>
-      </div>
-    </section>
+      </a>
+		<a href="trading-tools.html" class="card-link">
+		  <div class="card">
+			<div class="card-title">📊 Trading Suite</div>
+			<div class="card-desc">Calculate Position size, Margin.</div>
+		  </div>
+		</a>
+		<a href="business/gst-invoice-generator.html" class="card-link">
+		  <div class="card">
+			<div class="card-title">🧾 GST Invoice Generator</div>
+			<div class="card-desc">Create professional GST invoices instantly with tax calculation and download options.</div>
+		  </div>
+		</a>
+		<a href="image/photo-editor.html" class="card-link">
+		  <div class="card">
+			<div class="card-title">🖼️ Image Editor</div>
+			<div class="card-desc">Edit, crop, resize, and enhance images quickly with easy-to-use tools.</div>
+		  </div>
+		</a>
+    </div>
 
-    <!-- ================= ANNOUNCEMENTS & SIGNALS ================= -->
-    <section class="announcements-section">
-      <h2 class="section-title">📢 Announcements & Market Updates</h2>
+  </div>
+</section>
 
-      <!-- Website Announcements -->
-		<div class="announce-wrapper">
+<!-- ================= FEATURED ================= -->
+<section class="section featured" id="featured">
+  <div class="container">
+    <h2 class="section-title">Featured Tools</h2>
+    <p class="section-desc">Top tools you should try right now.</p>
 
-		  <h3>📢 ChangeLogs</h3>
-		  <div id="ChangeLogs"></div>
+    <div class="card-grid featured-grid">
 
-		  <h3>🟢 Positive Outlook</h3>
-		  <div id="positiveSignals"></div>
-
-		  <h3>🔴 Negative Outlook </h3>
-		  <div id="negativeSignals"></div>
-
-		  <h3>🟡 Neutral </h3>
-		  <div id="neutralSignals"></div>
-
-		</div>
-    </section>
-
-    <!-- ================= FINANCE BLITZ ================= -->
-    <section id="finance-blitz" class="section">
-      <h2 class="section-title">⚡ Finance Blitz</h2>
-
-      <div class="insider-grid">
-        <div class="insider-box">
-          <h3>🟢 Insider Buys</h3>
-          <div id="insiderBuys" class="insider-scroll"></div>
+      <a href="worldmonitor/" class="card-link">
+        <div class="card featured-card">
+          <div class="badge">🔥 Trending</div>
+          <div class="card-title">World Monitor</div>
+          <div class="card-desc">Watch out global intelligence dashboard.</div>
         </div>
+      </a>
 
-        <div class="insider-box">
-          <h3>🔴 Insider Sales</h3>
-          <div id="insiderSells" class="insider-scroll"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= MOST USED TOOLS ================= -->
-    <h2 class="section-title">Most used tools by our visitors.</h2>
-    <div class="shelf">
+    </div>
+  </div>
+</section>
+  <!-- ================= POPULAR TOOLS ================= -->
+<section class="section" id="popular">
+  <div class="container">
+    <h2 class="section-title">Popular Tools</h2>
+	<p class="section-desc">Most used tools by our visitors.</p>
+	  <div class="shelf">
       <div class="shelf-track">
-        <!-- Example Tool Card -->
-			<a href="finance/homeloan.html" class="card-link">
-			  <div class="card">
-				<div class="card-title">Home Loan EMI Calculator</div>
-				<div class="card-desc">Calculate monthly EMI, interest, and loan tenure instantly.</div>
-			  </div>
-			</a>
-			 <a href="dtools/hash.html" class="card-link">
-				<div class="card">
-				  <div class="card-title">Hash Generator Tool</div>
-				  <div class="card-desc">Generate MD5, SHA-1, SHA-256 hashes online.</div>
-				</div>
-			 </a>
-			 
-			 <a href="health/bmi.html" class="card-link">
-				<div class="card">
-				  <div class="card-title">BMI Calculator</div>
-				  <div class="card-desc">Check your Body Mass Index based on height and weight.</div>
-				</div>
-			 </a>
-			 
-			 <a href="other/unitconverter.html" class="card-link">
-				<div class="card">
-				  <div class="card-title">Unit Converter</div>
-				  <div class="card-desc">Convert length, weight, temperature, and more units easily.</div>
-				</div>
-			 </a>
+        
+	 <a href="finance/homeloan.html" class="card-link">
+        <div class="card">
+          <div class="card-title">Home Loan EMI Calculator</div>
+          <div class="card-desc">Calculate monthly EMI, interest, and loan tenure instantly.</div>
+        </div>
+	 </a>
+ 
+	 <a href="dtools/hash.html" class="card-link">
+        <div class="card">
+          <div class="card-title">Hash Generator Tool</div>
+          <div class="card-desc">Generate MD5, SHA-1, SHA-256 hashes online.</div>
+        </div>
+	 </a>
+	 
+	 <a href="health/bmi.html" class="card-link">
+        <div class="card">
+          <div class="card-title">BMI Calculator</div>
+          <div class="card-desc">Check your Body Mass Index based on height and weight.</div>
+        </div>
+	 </a>
+	 
+	 <a href="other/unitconverter.html" class="card-link">
+        <div class="card">
+          <div class="card-title">Unit Converter</div>
+          <div class="card-desc">Convert length, weight, temperature, and more units easily.</div>
+        </div>
+	 </a>
 
-			<a href="other/agecalc.html" class="card-link">
-				<div class="card">
-				  <div class="card-title">Age Calculator</div>
-				  <div class="card-desc">Calculate your exact age in years, months, and days.</div>
-				</div>
-			 </a>
-			
-			<a href="math/visualizer.html" class="card-link">
-				<div class="card">
-				  <div class="card-title">Data Visualizer</div>
-				  <div class="card-desc"> Generate advanced charts with datasets, custom labels, units and export options.</div>
-				</div>
-			 </a>
-			
-			<a href="trading-tools.html" class="card-link">
-			  <div class="card">
-				<div class="card-title">📈 Trading Tools & Calculators</div>
-				<div class="card-desc">
-				  Free trading calculators for profit & loss, position size, risk-reward ratio, brokerage, and more.
-				</div>
-			  </div>
-			</a>
-        <!-- Repeat for other tools -->
+	<a href="other/agecalc.html" class="card-link">
+        <div class="card">
+          <div class="card-title">Age Calculator</div>
+          <div class="card-desc">Calculate your exact age in years, months, and days.</div>
+        </div>
+	 </a>
+	
+	<a href="math/geometry.html" class="card-link">
+        <div class="card">
+          <div class="card-title">Geometry Calculator</div>
+          <div class="card-desc">Calculate area, perimeter, and volume with unit support.</div>
+        </div>
+	 </a>
+	
       </div>
     </div>
+  </section>
+<section class="seo-content container">
+  <h2>Free Online Calculators for Everyday Use</h2>
+  <p>
+    Our free online calculators help you solve daily problems quickly. Whether you need to calculate EMI for a home loan, check your BMI, convert units, or calculate your exact age, UsedToTools provides fast and accurate tools.
+  </p>
 
-    <!-- ================= FEATURED TOOLS ================= -->
-    <section id="featured" class="featured-grid">
-      <h2 class="section-title">Featured</h2>
+  <p>
+    All tools are mobile-friendly, require no signup, and work instantly in your browser. We focus on finance calculators, health tools, math utilities, and everyday converters.
+  </p>
+</section>
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 UsedToTools.com · Free Online Calculators & Utilities</p>
+    </div>
+  </footer>
 
-      <div class="featured-item">
-        <img src="assets/worldmonitor.PNG" alt="Global Stability Monitor">
-        <div class="featured-content">
-          <h2>🌍 Global Stability & Intelligence Monitor</h2>
-          <p>Real-time global intelligence dashboard showing casualty rates, economic signals, military flights, maritime activity and live world news.</p>
-          <a href="/worldmonitor/" class="btn">Visit</a>
-        </div>
-      </div>
-
-      <div class="featured-item">
-        <img src="assets/tradeterminal.jpg" alt="Avalanche Terminal">
-        <div class="featured-content">
-          <h2>Tix Watcher(Avalanche)</h2>
-          <p>Advanced trading platform featuring real-time charts, market analytics, and integrated global intelligence monitoring. Desktop/tablet devices compatible.</p>
-          <a href="https://tixwatcher.com/" class="btn">Visit</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= ALL CATEGORIES / PORTFOLIO ================= -->
-    <section class="section" id="portfolio">
-      <div class="container">
-        <h2 class="section-title">All-in-One Online Calculator Platform</h2>
-        <p class="section-desc">Browse calculators and utilities by category.</p>
-
-        <div class="card-grid">
-          <!-- Example Category -->
-			 <a href="math-tools.html" class="card-link">
-				<div class="card">
-				  <div class="card-title">🧮 Math & Calculators</div>
-				  <div class="card-desc">Basic, scientific, geometry, and everyday math calculators.</div>
-				</div>
-			  </a>
-			 <a href="finance.html" class="card-link">
-				<div class="card">
-				  <div class="card-title">💰 Finance Calculators</div>
-				  <div class="card-desc">EMI, home loan, interest, tax, and investment calculators.</div>
-				  </div>
-			  </a>
-
-			  <a href="health.html" class="card-link">
-				<div class="card">
-				  <div class="card-title">❤️ Health Calculators</div>
-				  <div class="card-desc">BMI, BMR, calorie, and fitness-related health tools.</div>
-				</div>
-			  </a>
-
-			  <a href="dtools.html" class="card-link">
-				<div class="card">
-				  <div class="card-title">🧑‍💻 Developer Tools</div>
-				  <div class="card-desc">Hash generators, encoders, formatters, and utility tools for developers.</div>
-				 </div>
-			  </a>
-
-			  <a href="lifestyle.html" class="card-link">
-				<div class="card">
-				  <div class="card-title">🧩 Lifestyle Utilities</div>
-				  <div class="card-desc">Age calculator, password strength checker, typing speed, and daily utilities.</div>
-				 </div>
-			  </a>
-			  
-				<a href="imaging.html" class="card-link">
-				  <div class="card">
-					<div class="card-title">🖼 Image Tools & 📄 PDF Tools</div>
-					<div class="card-desc">
-					  Image editor, Merge, split, compress, convert and edit PDF files easily.
-					</div>
-				  </div>
-				</a>
-
-			  <a href="cricket.html" class="card-link">
-				<div class="card">
-				  <div class="card-title">🏏 Cricket Tools & Stats</div>
-				  <div class="card-desc">Cricket match analysis, head-to-head stats, and player performance tools.</div>
-
-				</div>
-			  </a>
-			  
-				<a href="business/gst-invoice-generator.html" class="card-link">
-				  <div class="card">
-					<div class="card-title">🧾 GST Invoice Generator</div>
-					<div class="card-desc">
-					  Create GST invoices online with automatic CGST & SGST calculation. Download PDF or Excel instantly.
-					</div>
-				  </div>
-				</a>
-			<a href="trading-tools.html" class="card-link">
-			  <div class="card">
-				<div class="card-title">📈 Trading Tools & Calculators</div>
-				<div class="card-desc">
-				  Free trading calculators for profit & loss, position size, risk-reward ratio, brokerage, and more.
-				</div>
-			  </div>
-			</a>
-          <!-- Repeat other categories -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= FOOTER ================= -->
-    <footer class="footer">
-      <div class="container">
-        <p>© 2026 UsedToTools.com · Free Online Calculators & Utilities</p>
-        <div class="social-links">
-          <a href="https://instagram.com/oiled_drummer" target="_blank">📸 Instagram</a>💼DOGTAGS?
-        </div>
-      </div>
-    </footer>
-  </main>
-
-  <!-- ================= SCRIPTS ================= -->
-
-  <!-- Theme toggle script -->
+  <!-- ================= THEME SCRIPT ================= -->
   <script>
-    (function() {
-      const root = document.documentElement;
-      const toggleBtn = document.getElementById('themeToggle');
-      const defaultTheme = 'light';
-      const savedTheme = localStorage.getItem('theme') || defaultTheme;
+  (function() {
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('themeToggle');
 
-      root.setAttribute('data-theme', savedTheme);
-      toggleBtn.textContent = savedTheme === 'night' ? '☀️' : '🌙';
+    // Default theme if none is saved
+    const defaultTheme = 'light';
 
-      toggleBtn.addEventListener('click', () => {
-        const current = root.getAttribute('data-theme');
-        const next = current === 'night' ? 'light' : 'night';
-        root.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-        toggleBtn.textContent = next === 'night' ? '☀️' : '🌙';
-      });
-    })();
-  </script>
+    // Apply saved theme or default
+    const savedTheme = localStorage.getItem('theme') || defaultTheme;
+    root.setAttribute('data-theme', savedTheme);
+    toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
 
-  <!-- Search script -->
-  <script>
-    const searchInput = document.getElementById('toolSearch');
-    const searchResults = document.getElementById('searchResults');
+    // Toggle function
+    toggleBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'night' ? 'light' : 'night';
 
-    const tools = [
-      { name: "Home Loan EMI Calculator", url: "finance/emi/homeloan.html" },
-      { name: "EMI Calculator", url: "finance/finance.html" },
-      { name: "Income Tax Calculator", url: "finance/finance.html" },
-      { name: "BMI Calculator", url: "health/bmi.html" },
-      { name: "Age Calculator", url: "other/Agecalc.html" },
-      { name: "Unit Converter", url: "other/unitconverter.html" },
-      { name: "Geometry Calculator", url: "math/geometry.html" },
-      { name: "Hash Generator", url: "dtool/hash.html" }
-    ];
-
-    searchInput.addEventListener('input', () => {
-      const query = searchInput.value.toLowerCase().trim();
-      searchResults.innerHTML = '';
-      if (!query) return searchResults.style.display = 'none';
-
-      const matches = tools.filter(tool => tool.name.toLowerCase().includes(query));
-      if (!matches.length) return searchResults.style.display = 'none';
-
-      matches.forEach(tool => {
-        const item = document.createElement('div');
-        item.className = 'search-result-item';
-        item.textContent = tool.name;
-        item.addEventListener('click', () => window.location.href = tool.url);
-        searchResults.appendChild(item);
-      });
-
-      searchResults.style.display = 'block';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
     });
 
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.search-container')) searchResults.style.display = 'none';
-    });
+    // Optional: Watch for system preference and apply if first visit
+    // const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // if (!localStorage.getItem('theme')) {
+    //   const initial = prefersDark ? 'night' : 'light';
+    //   root.setAttribute('data-theme', initial);
+    //   toggleBtn.textContent = initial === 'night' ? '☀️ Day' : '🌙 Night';
+    // }
+  })();
   </script>
-
-  <!-- Market prices fetch -->
-  <script>
-    async function loadPrices() {
-      const response = await fetch("https://cdn.jsdelivr.net/gh/vassanswers420-wq/Used2tools-Web-data@main/data/prices.json?t=" + Date.now());
-      const data = await response.json();
-
-      document.getElementById("btc").textContent = data.assets.btc.toFixed(2);
-      document.getElementById("xrp").textContent = data.assets.xrp.toFixed(4);
-      document.getElementById("gold").textContent = data.assets.gold.toFixed(2);
-      document.getElementById("silver").textContent = data.assets.silver.toFixed(2);
-      document.getElementById("copper").textContent = data.assets.copper.toFixed(2);
-      document.getElementById("nickel").textContent = data.assets.nickel.toFixed(2);
-      document.getElementById("aluminium").textContent = data.assets.aluminium.toFixed(2);
-
-      document.getElementById("audusd").textContent = data.assets.audusd.toFixed(5);
-      document.getElementById("cnhusd").textContent = data.assets.cnhusd.toFixed(5);
-      document.getElementById("inrusd").textContent = data.assets.inrusd.toFixed(5);
-    }
-
-    loadPrices();
-    setInterval(loadPrices, 14400000); // refresh every 4 hours
-  </script>
-
-  <!-- Market sessions script -->
-  <script>
-    function getSessions() {
-      const now = new Date();
-      const utcHour = now.getUTCHours();
-      const utcDay = now.getUTCDay(); // 0 = Sunday, 6 = Saturday
-      const isWeekend = (utcDay === 0 || utcDay === 6);
-
-      return [
-        { name: "🇦🇺 ASX (Sydney)", status: !isWeekend && (utcHour >= 22 || utcHour < 7) },
-        { name: "🇯🇵 TSE (Tokyo)", status: !isWeekend && (utcHour >= 0 && utcHour < 9) },
-        { name: "🇬🇧 LSE (London)", status: !isWeekend && (utcHour >= 7 && utcHour < 16) },
-        { name: "🇺🇸 NYSE/NASDAQ (New York)", status: !isWeekend && (utcHour >= 12 && utcHour < 21) },
-        { name: "🇮🇳 NSE (India)", status: !isWeekend && (utcHour >= 3 && utcHour < 10.5) },
-        { name: "🇮🇳 BSE (India)", status: !isWeekend && (utcHour >= 3 && utcHour < 10.5) }
-      ];
-    }
-
-    function updateSessions() {
-      const container = document.getElementById("sessionStatus");
-      container.innerHTML = "";
-      getSessions().forEach(session => {
-        const span = document.createElement("div");
-        const dotClass = session.status ? "mac-open" : "mac-closed";
-        span.innerHTML = `<span class="mac-dot ${dotClass}"></span>${session.name} — ${session.status ? "Open" : "Closed"}`;
-        container.appendChild(span);
-      });
-    }
-
-    updateSessions();
-    setInterval(updateSessions, 60000);
-  </script>
-
-  <!-- Insider trades script -->
-  <script>
-    async function loadInsiderTrades() {
-      try {
-        const response = await fetch("https://raw.githubusercontent.com/vassanswers420-wq/Used2tools-Web-data/main/data/insider_transactions.json?t=" + Date.now());
-        const data = await response.json();
-
-        const buys = document.getElementById("insiderBuys");
-        const sells = document.getElementById("insiderSells");
-
-        buys.innerHTML = "";
-        sells.innerHTML = "";
-
-        const sorted = data.items.sort((a, b) => new Date(b.filedAt) - new Date(a.filedAt));
-        sorted.slice(0, 100).forEach(trade => {
-          const item = document.createElement("div");
-          item.className = "insider-item";
-
-          const value = Number(trade.transactionValue || 0);
-          const intensity = Math.min(value / 1000000, 1);
-
-          if (trade.acquiredDisposed === "A") item.style.backgroundColor = `rgba(0,200,0,${0.1 + intensity * 0.4})`;
-          if (trade.acquiredDisposed === "D") item.style.backgroundColor = `rgba(255,0,0,${0.1 + intensity * 0.4})`;
-
-          item.innerHTML = `
-            <strong>${trade.ticker || "N/A"}</strong><br>
-            ${trade.personName}<br>
-            ${trade.transactionDate}<br>
-            Shares: ${trade.shares}<br>
-            Value: $${value.toLocaleString()}
-          `;
-
-          if (trade.acquiredDisposed === "A") buys.appendChild(item);
-          else if (trade.acquiredDisposed === "D") sells.appendChild(item);
-        });
-      } catch (error) {
-        console.error("Insider load failed:", error);
-      }
-    }
-
-    loadInsiderTrades();
-  </script>
-
-  <!-- Announcements loader -->
+  
+  
+   <!-- ================= Search SCRIPT ================= -->
 <script>
-fetch("announcements.html")
-  .then(response => response.text())
-  .then(data => {
+const searchInput = document.getElementById('toolSearch');
+const searchResults = document.getElementById('searchResults');
 
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = data;
+// Tool list
+const tools = [
+  { name: "Home Loan EMI Calculator", url: "finance/homeloan.html" },
+  { name: "EMI Calculator", url: "finance/finance.html" },
+  { name: "Income Tax Calculator", url: "finance/finance.html" },
 
-    const items = tempDiv.querySelectorAll("li");
+  { name: "BMI Calculator", url: "health/bmi.html" },
 
-    const websiteBox  = document.getElementById("ChangeLogs");
-    const positiveBox = document.getElementById("positiveSignals");
-    const negativeBox = document.getElementById("negativeSignals");
-    const neutralBox  = document.getElementById("neutralSignals");
+  { name: "Age Calculator", url: "other/agecalc.html" }, // fixed case
+  { name: "Unit Converter", url: "other/unitconverter.html" },
 
-    websiteBox.innerHTML = "";
-    positiveBox.innerHTML = "";
-    negativeBox.innerHTML = "";
-    neutralBox.innerHTML = "";
+  { name: "Geometry Calculator", url: "math/geometry.html" },
 
-    items.forEach(item => {
+  { name: "Hash Generator", url: "dtools/hash.html" }, // fixed path
 
-      const category = item.getAttribute("data-category");
+  // ✅ NEW ADDITIONS
+  { name: "GST Invoice Generator", url: "business/gst-invoice-generator.html" },
+  { name: "Image Editor", url: "image/photo-editor.html" },
 
-      if (category === "positive") {
-        positiveBox.appendChild(item.cloneNode(true));
-      }
-      else if (category === "negative") {
-        negativeBox.appendChild(item.cloneNode(true));
-      }
-      else if (category === "neutral") {
-        neutralBox.appendChild(item.cloneNode(true));
-      }
-      else {
-        websiteBox.appendChild(item.cloneNode(true));
-      }
+  // Optional extras (recommended for better UX)
+  { name: "Trading Calculator", url: "trading-tools.html" },
+  { name: "Cricket Stats Tools", url: "cricket.html" }
+];
 
+// Show matching results
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.toLowerCase().trim();
+  searchResults.innerHTML = '';
+
+  if (!query) {
+    searchResults.style.display = 'none';
+    return;
+  }
+
+  const matches = tools.filter(tool =>
+    tool.name.toLowerCase().includes(query)
+  );
+
+  if (matches.length === 0) {
+    searchResults.style.display = 'none';
+    return;
+  }
+
+  matches.forEach(tool => {
+    const item = document.createElement('div');
+    item.className = 'search-result-item';
+    item.textContent = tool.name;
+
+    item.addEventListener('click', () => {
+      window.location.href = tool.url;
     });
 
-  })
-  .catch(error => console.error("Announcement error:", error));
+    searchResults.appendChild(item);
+  });
+
+  searchResults.style.display = 'block';
+});
+
+// Hide dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-container')) {
+    searchResults.style.display = 'none';
+  }
+});
 </script>
 
-  <!-- Page zoom -->
-  <script>
-    document.body.style.zoom = "0.8"; // 80%
-  </script>
+
+
 </body>
 </html>
