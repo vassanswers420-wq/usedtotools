@@ -3,347 +3,433 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="keywords" content="EMI calculator, BMI calculator, tax calculator India, age calculator, online tools, free calculators, unit converter">
-  <title>Free Online Calculators (EMI, BMI, Tax, Age) | UsedToTools</title>
+  <meta name="keywords" content="EMI calculator, BMI calculator, tax calculator India, age calculator, online tools, free calculators, unit converter">
+  <title>Free Online Calculators – EMI, BMI, Tax, Age & More | UsedToTools</title>
   <meta name="description" content="Use free online calculators and utility tools for finance, health, math, conversions, lifestyle, and daily needs. Fast, accurate, and easy tools at UsedToTools." />
-<link rel="canonical" href="https://usedtotools.com/">
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preload" href="style.css" as="style">
+  <link rel="canonical" href="https://usedtotools.com/">
   <meta name="geo.region" content="IN">
-<meta name="geo.placename" content="India">
+  <meta name="geo.placename" content="India">
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "UsedToTools",
-  "url": "https://usedtotools.com",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://usedtotools.com/?q={search_term_string}",
-    "query-input": "required name=search_term_string"
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "UsedToTools",
+    "url": "https://usedtotools.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://usedtotools.com/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
   }
-}
-</script>
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+ 
 </head>
+  <link rel="stylesheet" href="abc.css">
 <body>
 
-  <!-- ================= HEADER ================= -->
+  <!-- HEADER -->
   <header class="header">
-    <div class="container header-inner">
+    <div class="header-inner">
       <a href="index.html" class="logo">
-        <img src="assets/logo-day.png" alt="UsedToTools Free Online Calculators Logo" class="logo-img logo-day">
-        <img src="assets/logo-day.png" alt="UsedToTools Free Online Calculators Logo" class="logo-img logo-night">    
-		<span class="logo-text">Usedtotools.com</span>	
-	</a>
+        <div class="logo-mark">
+          <svg viewBox="0 0 18 18"><path d="M3 9l5 5 7-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <span class="logo-text">Used<span>To</span>Tools</span>
+      </a>
 
       <nav class="nav">
         <a href="index.html">Home</a>
+        <a href="finance.html">Finance</a>
+        <a href="health.html">Health</a>
+        <a href="math-tools.html">Math</a>
         <a href="about.html">About</a>
       </nav>
 
-		<div class="search-container">
-		  <input type="text" id="toolSearch" placeholder="Search tools..." autocomplete="off" />
-		  <button class="search-btn" id="searchBtn" aria-label="Search tools">🔍</button>
+      <div class="search-wrap">
+        <input type="text" id="toolSearch" placeholder="Search calculators…" autocomplete="off" />
+        <span class="search-icon">⌕</span>
+        <div id="searchResults" class="search-results"></div>
+      </div>
 
-		  <!-- 🔽 Search results dropdown -->
-		  <div id="searchResults" class="search-results"></div>
-		</div>
-
-
-
-      <button class="theme-toggle" id="themeToggle">🌙 Night</button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M2 4.5h14M2 9h14M2 13.5h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
   </header>
 
-  <!-- ================= HERO ================= -->
-  <section class="hero">
-    <div class="container">
-	  <h1>Free Online Calculators – EMI, BMI, Tax, Age & More</h1>
-	   <p>Calculate EMI, BMI, age, tax, conversions, geometry, and more with fast, accurate, and easy-to-use online tools.</p>
+  <!-- MOBILE NAV DRAWER -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-inner">
+      <div class="mobile-nav-header">
+        <span style="font-family:var(--font-display);font-weight:800;font-size:1rem;color:var(--ink)">Menu</span>
+        <button class="mobile-nav-close" id="mobileNavClose">✕</button>
+      </div>
+      <div class="search-wrap" style="max-width:100%;margin-bottom:10px">
+        <input type="text" id="toolSearchMobile" placeholder="Search calculators…" autocomplete="off" />
+        <span class="search-icon">⌕</span>
+        <div id="searchResultsMobile" class="search-results"></div>
+      </div>
+      <div class="mobile-nav-divider"></div>
+      <a href="index.html">🏠 Home</a>
+      <a href="finance.html">💰 Finance</a>
+      <a href="health.html">❤️ Health</a>
+      <a href="math-tools.html">🧮 Math</a>
+      <a href="dtools.html">🧑‍💻 Developer</a>
+      <a href="lifestyle.html">🧩 Lifestyle</a>
+      <a href="cricket.html">🏏 Cricket</a>
+      <a href="trading-tools.html">📊 Trading</a>
+      <div class="mobile-nav-divider"></div>
+      <a href="about.html">About</a>
+    </div>
+  </div>
 
-
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-tag">Free · No Sign-up · India</div>
+      <h1>Every calculator<br>you'll ever <em>need</em></h1>
+      <p class="hero-desc">Finance, health, math, conversions, developer utilities — all in one place. Fast, accurate, and works on any device.</p>
       <div class="hero-actions">
-        <a href="#categories" class="btn btn-primary">Explore Tools</a>
+        <a href="#categories" class="btn btn-primary">Browse All Tools →</a>
         <a href="#popular" class="btn btn-outline">Popular Calculators</a>
       </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">50+</div>
+          <div class="stat-label">Tools available</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">9</div>
+          <div class="stat-label">Categories</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Free, always</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <a href="worldmonitor/" class="hero-card featured-top">
+        <span class="hero-card-icon">🌍</span>
+        <div>
+          <div class="hero-card-title">World Monitor <span style="font-size:0.7rem;background:rgba(232,83,26,0.12);color:var(--accent);padding:2px 7px;border-radius:6px;margin-left:6px;font-weight:700">🔥 Trending</span></div>
+          <div class="hero-card-desc">Global intelligence dashboard — watch markets, news, and data worldwide</div>
+        </div>
+      </a>
+      <a href="finance/homeloan.html" class="hero-card">
+        <span class="hero-card-icon">🏠</span>
+        <div class="hero-card-title">Home Loan EMI</div>
+        <div class="hero-card-desc">Monthly payment breakdown</div>
+      </a>
+      <a href="health/bmi.html" class="hero-card">
+        <span class="hero-card-icon">❤️</span>
+        <div class="hero-card-title">BMI Calculator</div>
+        <div class="hero-card-desc">Body mass index check</div>
+      </a>
+      <a href="dtools/hash.html" class="hero-card">
+        <span class="hero-card-icon">🔐</span>
+        <div class="hero-card-title">Hash Generator</div>
+        <div class="hero-card-desc">MD5, SHA-256 and more</div>
+      </a>
+      <a href="other/agecalc.html" class="hero-card">
+        <span class="hero-card-icon">🎂</span>
+        <div class="hero-card-title">Age Calculator</div>
+        <div class="hero-card-desc">Years, months, and days</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CATEGORIES -->
+  <section class="section" id="categories">
+    <div class="section-label">All Categories</div>
+    <h2 class="section-title">What do you need to calculate?</h2>
+    <p class="section-desc">Browse by category or search above. Every tool is free, instant, and mobile-ready.</p>
+
+    <div class="cat-grid">
+      <a href="math-tools.html" class="cat-card">
+        <div class="cat-card-icon">🧮</div>
+        <div class="cat-card-title">Math & Calculators</div>
+        <div class="cat-card-desc">Basic, scientific, geometry, and everyday math calculators.</div>
+        <div class="cat-card-arrow">Explore →</div>
+      </a>
+      <a href="finance.html" class="cat-card">
+        <div class="cat-card-icon">💰</div>
+        <div class="cat-card-title">Finance Calculators</div>
+        <div class="cat-card-desc">EMI, home loan, interest, income tax, and investment calculators.</div>
+        <div class="cat-card-arrow">Explore →</div>
+      </a>
+      <a href="health.html" class="cat-card">
+        <div class="cat-card-icon">❤️</div>
+        <div class="cat-card-title">Health Calculators</div>
+        <div class="cat-card-desc">BMI, BMR, calorie needs, and fitness-related health tools.</div>
+        <div class="cat-card-arrow">Explore →</div>
+      </a>
+      <a href="dtools.html" class="cat-card">
+        <div class="cat-card-icon">🧑‍💻</div>
+        <div class="cat-card-title">Developer Tools</div>
+        <div class="cat-card-desc">Hash generators, encoders, formatters, and utility tools.</div>
+        <div class="cat-card-arrow">Explore →</div>
+      </a>
+      <a href="lifestyle.html" class="cat-card">
+        <div class="cat-card-icon">🧩</div>
+        <div class="cat-card-title">Lifestyle Utilities</div>
+        <div class="cat-card-desc">Age calculator, password checker, typing speed, and daily utilities.</div>
+        <div class="cat-card-arrow">Explore →</div>
+      </a>
+      <a href="cricket.html" class="cat-card">
+        <div class="cat-card-icon">🏏</div>
+        <div class="cat-card-title">Cricket Tools</div>
+        <div class="cat-card-desc">Match analysis, head-to-head stats, and player performance tools.</div>
+        <div class="cat-card-arrow">Explore →</div>
+      </a>
+      <a href="trading-tools.html" class="cat-card">
+        <div class="cat-card-icon">📊</div>
+        <div class="cat-card-title">Trading Suite</div>
+        <div class="cat-card-desc">Position size, margin, and risk management calculators.</div>
+        <div class="cat-card-arrow">Explore →</div>
+      </a>
+      <a href="business/gst-invoice-generator.html" class="cat-card">
+        <div class="cat-card-icon">🧾</div>
+        <div class="cat-card-title">GST Invoice Generator</div>
+        <div class="cat-card-desc">Create professional GST invoices with tax calculation and PDF download.</div>
+        <div class="cat-card-arrow">Explore →</div>
+      </a>
+      <a href="image/photo-editor.html" class="cat-card">
+        <div class="cat-card-icon">🖼️</div>
+        <div class="cat-card-title">Image Editor</div>
+        <div class="cat-card-desc">Crop, resize, and enhance images quickly in your browser.</div>
+        <div class="cat-card-arrow">Explore →</div>
+      </a>
     </div>
   </section>
 
-<!-- ================= CATEGORIES ================= -->
-<section class="section" id="categories">
-  <div class="container">
-    <h2 class="section-title">Finance, Health, Math & Daily Utility Tools</h2>
-    <p class="section-desc">Browse calculators and utilities by category.</p>
-	<p>
-      UsedToTools provides free online calculators and utility tools including
-      finance calculators, health calculators, math tools, unit converters,
-      developer utilities, and lifestyle tools. All tools are fast, accurate,
-      mobile-friendly, and require no sign-up.
-    </p>
+  <div class="divider"></div>
 
-    <div class="card-grid">
-
-      <a href="math-tools.html" class="card-link">
-        <div class="card">
-          <div class="card-title">🧮 Math & Calculators</div>
-		  <div class="card-desc">Basic, scientific, geometry, and everyday math calculators.</div>
-        </div>
-      </a>
-
-      <a href="finance.html" class="card-link">
-        <div class="card">
-          <div class="card-title">💰 Finance Calculators</div>
-          <div class="card-desc">EMI, home loan, interest, tax, and investment calculators.</div>
-		  </div>
-      </a>
-
-      <a href="health.html" class="card-link">
-        <div class="card">
-          <div class="card-title">❤️ Health Calculators</div>
-          <div class="card-desc">BMI, BMR, calorie, and fitness-related health tools.</div>
-        </div>
-      </a>
-
-      <a href="dtools.html" class="card-link">
-        <div class="card">
-          <div class="card-title">🧑‍💻 Developer Tools</div>
-          <div class="card-desc">Hash generators, encoders, formatters, and utility tools for developers.</div>
-		 </div>
-      </a>
-
-      <a href="lifestyle.html" class="card-link">
-        <div class="card">
-          <div class="card-title">🧩 Lifestyle Utilities</div>
-          <div class="card-desc">Age calculator, password strength checker, typing speed, and daily utilities.</div>
-		 </div>
-      </a>
-
-	  <a href="cricket.html" class="card-link">
-        <div class="card">
-          <div class="card-title">🏏 Cricket Tools & Stats</div>
-          <div class="card-desc">Cricket match analysis, head-to-head stats, and player performance tools.</div>
-
-        </div>
-      </a>
-		<a href="trading-tools.html" class="card-link">
-		  <div class="card">
-			<div class="card-title">📊 Trading Suite</div>
-			<div class="card-desc">Calculate Position size, Margin.</div>
-		  </div>
-		</a>
-		<a href="business/gst-invoice-generator.html" class="card-link">
-		  <div class="card">
-			<div class="card-title">🧾 GST Invoice Generator</div>
-			<div class="card-desc">Create professional GST invoices instantly with tax calculation and download options.</div>
-		  </div>
-		</a>
-		<a href="image/photo-editor.html" class="card-link">
-		  <div class="card">
-			<div class="card-title">🖼️ Image Editor</div>
-			<div class="card-desc">Edit, crop, resize, and enhance images quickly with easy-to-use tools.</div>
-		  </div>
-		</a>
+  <!-- FEATURED -->
+  <section class="section">
+    <div class="section-label">Featured</div>
+    <div class="featured-banner">
+      <div class="featured-banner-left">
+        <div class="featured-badge">🔥 Trending Now</div>
+        <h3>World Monitor Dashboard</h3>
+        <p>Global intelligence at a glance — markets, news, weather, and real-time data from around the world.</p>
+        <a href="worldmonitor/" class="btn btn-primary" style="margin-top:18px">Open Dashboard →</a>
+      </div>
+      <div style="font-size:5rem;line-height:1;opacity:0.8;flex-shrink:0">🌍</div>
     </div>
+  </section>
 
-  </div>
-</section>
+  <div class="divider"></div>
 
-<!-- ================= FEATURED ================= -->
-<section class="section featured" id="featured">
-  <div class="container">
-    <h2 class="section-title">Featured Tools</h2>
-    <p class="section-desc">Top tools you should try right now.</p>
+  <!-- POPULAR TOOLS SHELF -->
+  <section class="section" id="popular">
+    <div class="section-label">Most Used</div>
+    <h2 class="section-title">Popular calculators</h2>
+    <p class="section-desc">Tools our visitors reach for every day.</p>
 
-    <div class="card-grid featured-grid">
-
-      <a href="worldmonitor/" class="card-link">
-        <div class="card featured-card">
-          <div class="badge">🔥 Trending</div>
-          <div class="card-title">World Monitor</div>
-          <div class="card-desc">Watch out global intelligence dashboard.</div>
-        </div>
-      </a>
-
-    </div>
-  </div>
-</section>
-  <!-- ================= POPULAR TOOLS ================= -->
-<section class="section" id="popular">
-  <div class="container">
-    <h2 class="section-title">Popular Tools</h2>
-	<p class="section-desc">Most used tools by our visitors.</p>
-	  <div class="shelf">
-      <div class="shelf-track">
-        
-	 <a href="finance/homeloan.html" class="card-link">
-        <div class="card">
-          <div class="card-title">Home Loan EMI Calculator</div>
-          <div class="card-desc">Calculate monthly EMI, interest, and loan tenure instantly.</div>
-        </div>
-	 </a>
- 
-	 <a href="dtools/hash.html" class="card-link">
-        <div class="card">
-          <div class="card-title">Hash Generator Tool</div>
-          <div class="card-desc">Generate MD5, SHA-1, SHA-256 hashes online.</div>
-        </div>
-	 </a>
-	 
-	 <a href="health/bmi.html" class="card-link">
-        <div class="card">
-          <div class="card-title">BMI Calculator</div>
-          <div class="card-desc">Check your Body Mass Index based on height and weight.</div>
-        </div>
-	 </a>
-	 
-	 <a href="other/unitconverter.html" class="card-link">
-        <div class="card">
-          <div class="card-title">Unit Converter</div>
-          <div class="card-desc">Convert length, weight, temperature, and more units easily.</div>
-        </div>
-	 </a>
-
-	<a href="other/agecalc.html" class="card-link">
-        <div class="card">
-          <div class="card-title">Age Calculator</div>
-          <div class="card-desc">Calculate your exact age in years, months, and days.</div>
-        </div>
-	 </a>
-	
-	<a href="math/geometry.html" class="card-link">
-        <div class="card">
-          <div class="card-title">Geometry Calculator</div>
-          <div class="card-desc">Calculate area, perimeter, and volume with unit support.</div>
-        </div>
-	 </a>
-	
+    <div class="shelf-wrap">
+      <div class="shelf-track" id="shelfTrack">
+        <a href="finance/homeloan.html" class="shelf-card">
+          <div class="shelf-card-title">🏠 Home Loan EMI</div>
+          <div class="shelf-card-desc">Monthly EMI, interest breakdown, and loan tenure calculator.</div>
+        </a>
+        <a href="dtools/hash.html" class="shelf-card">
+          <div class="shelf-card-title">🔐 Hash Generator</div>
+          <div class="shelf-card-desc">Generate MD5, SHA-1, SHA-256 hashes online instantly.</div>
+        </a>
+        <a href="health/bmi.html" class="shelf-card">
+          <div class="shelf-card-title">❤️ BMI Calculator</div>
+          <div class="shelf-card-desc">Check Body Mass Index based on your height and weight.</div>
+        </a>
+        <a href="other/unitconverter.html" class="shelf-card">
+          <div class="shelf-card-title">📐 Unit Converter</div>
+          <div class="shelf-card-desc">Convert length, weight, temperature, and more instantly.</div>
+        </a>
+        <a href="other/agecalc.html" class="shelf-card">
+          <div class="shelf-card-title">🎂 Age Calculator</div>
+          <div class="shelf-card-desc">Your exact age in years, months, and days.</div>
+        </a>
+        <a href="math/geometry.html" class="shelf-card">
+          <div class="shelf-card-title">📐 Geometry Calculator</div>
+          <div class="shelf-card-desc">Area, perimeter, and volume with full unit support.</div>
+        </a>
+        <a href="trading-tools.html" class="shelf-card">
+          <div class="shelf-card-title">📊 Trading Calculator</div>
+          <div class="shelf-card-desc">Position sizing and margin calculations for traders.</div>
+        </a>
+        <a href="business/gst-invoice-generator.html" class="shelf-card">
+          <div class="shelf-card-title">🧾 GST Invoice</div>
+          <div class="shelf-card-desc">Professional GST invoices with one-click PDF download.</div>
+        </a>
+        <!-- duplicate for seamless loop -->
+        <a href="finance/homeloan.html" class="shelf-card">
+          <div class="shelf-card-title">🏠 Home Loan EMI</div>
+          <div class="shelf-card-desc">Monthly EMI, interest breakdown, and loan tenure calculator.</div>
+        </a>
+        <a href="dtools/hash.html" class="shelf-card">
+          <div class="shelf-card-title">🔐 Hash Generator</div>
+          <div class="shelf-card-desc">Generate MD5, SHA-1, SHA-256 hashes online instantly.</div>
+        </a>
+        <a href="health/bmi.html" class="shelf-card">
+          <div class="shelf-card-title">❤️ BMI Calculator</div>
+          <div class="shelf-card-desc">Check Body Mass Index based on your height and weight.</div>
+        </a>
+        <a href="other/unitconverter.html" class="shelf-card">
+          <div class="shelf-card-title">📐 Unit Converter</div>
+          <div class="shelf-card-desc">Convert length, weight, temperature, and more instantly.</div>
+        </a>
+        <a href="other/agecalc.html" class="shelf-card">
+          <div class="shelf-card-title">🎂 Age Calculator</div>
+          <div class="shelf-card-desc">Your exact age in years, months, and days.</div>
+        </a>
+        <a href="math/geometry.html" class="shelf-card">
+          <div class="shelf-card-title">📐 Geometry Calculator</div>
+          <div class="shelf-card-desc">Area, perimeter, and volume with full unit support.</div>
+        </a>
+        <a href="trading-tools.html" class="shelf-card">
+          <div class="shelf-card-title">📊 Trading Calculator</div>
+          <div class="shelf-card-desc">Position sizing and margin calculations for traders.</div>
+        </a>
+        <a href="business/gst-invoice-generator.html" class="shelf-card">
+          <div class="shelf-card-title">🧾 GST Invoice</div>
+          <div class="shelf-card-desc">Professional GST invoices with one-click PDF download.</div>
+        </a>
       </div>
     </div>
   </section>
-<section class="seo-content container">
-  <h2>Free Online Calculators for Everyday Use</h2>
-  <p>
-    Our free online calculators help you solve daily problems quickly. Whether you need to calculate EMI for a home loan, check your BMI, convert units, or calculate your exact age, UsedToTools provides fast and accurate tools.
-  </p>
 
-  <p>
-    All tools are mobile-friendly, require no signup, and work instantly in your browser. We focus on finance calculators, health tools, math utilities, and everyday converters.
-  </p>
-</section>
-  <!-- ================= FOOTER ================= -->
+  <div class="divider"></div>
+
+  <!-- SEO CONTENT -->
+  <div class="seo-section">
+    <div class="seo-inner">
+      <div>
+        <h2>Free Online Calculators for Everyday Use</h2>
+        <p>UsedToTools provides free online calculators and utility tools for finance, health, math, unit conversions, developer utilities, and lifestyle needs. All tools are fast, accurate, mobile-friendly, and require no sign-up.</p>
+        <p>Whether you need to calculate EMI for a home loan, check your BMI, convert units, generate hashes, or calculate your exact age — we've built the right tool for it.</p>
+      </div>
+      <div>
+        <div class="seo-features">
+          <div class="seo-feature"><div class="seo-feature-dot">✓</div><span>No account required — use any tool instantly</span></div>
+          <div class="seo-feature"><div class="seo-feature-dot">✓</div><span>Works on mobile, tablet, and desktop</span></div>
+          <div class="seo-feature"><div class="seo-feature-dot">✓</div><span>Accurate results with India-specific data</span></div>
+          <div class="seo-feature"><div class="seo-feature-dot">✓</div><span>Privacy-first — no data leaves your device</span></div>
+          <div class="seo-feature"><div class="seo-feature-dot">✓</div><span>Regularly updated and expanded tool set</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
   <footer class="footer">
-    <div class="container">
-      <p>© 2026 UsedToTools.com · Free Online Calculators & Utilities</p>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo-text">Used<span>To</span>Tools</div>
+        <p>Free online calculators and utility tools for finance, health, math, and everyday needs. Built for India, works everywhere.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Tools</div>
+        <div class="footer-links">
+          <a href="finance.html">Finance Calculators</a>
+          <a href="health.html">Health Tools</a>
+          <a href="math-tools.html">Math Calculators</a>
+          <a href="dtools.html">Developer Tools</a>
+          <a href="trading-tools.html">Trading Suite</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Site</div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+		  <a href="https://tixwatcher.com/">Trading?</a>
+		  
+          <a href="worldmonitor/">World Monitor</a>
+          <a href="cricket.html">Cricket Tools</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 UsedToTools.com · Free Online Calculators & Utilities</span>
+      <span style="color:rgba(240,237,232,0.35)">Made with ♥ for India</span>
     </div>
   </footer>
 
-  <!-- ================= THEME SCRIPT ================= -->
   <script>
+  /* ── THEME ── */
   (function() {
     const root = document.documentElement;
-    const toggleBtn = document.getElementById('themeToggle');
-
-    // Default theme if none is saved
-    const defaultTheme = 'light';
-
-    // Apply saved theme or default
-    const savedTheme = localStorage.getItem('theme') || defaultTheme;
-    root.setAttribute('data-theme', savedTheme);
-    toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
-
-    // Toggle function
-    toggleBtn.addEventListener('click', () => {
-      const current = root.getAttribute('data-theme');
-      const next = current === 'night' ? 'light' : 'night';
-
+    const btn  = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('theme') || 'light';
+    root.setAttribute('data-theme', saved);
+    btn.textContent = saved === 'night' ? '☀️' : '🌙';
+    btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'night' ? 'light' : 'night';
       root.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
-      toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+      btn.textContent = next === 'night' ? '☀️' : '🌙';
     });
-
-    // Optional: Watch for system preference and apply if first visit
-    // const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    // if (!localStorage.getItem('theme')) {
-    //   const initial = prefersDark ? 'night' : 'light';
-    //   root.setAttribute('data-theme', initial);
-    //   toggleBtn.textContent = initial === 'night' ? '☀️ Day' : '🌙 Night';
-    // }
   })();
-  </script>
-  
-  
-   <!-- ================= Search SCRIPT ================= -->
-<script>
-const searchInput = document.getElementById('toolSearch');
-const searchResults = document.getElementById('searchResults');
 
-// Tool list
-const tools = [
-  { name: "Home Loan EMI Calculator", url: "finance/homeloan.html" },
-  { name: "EMI Calculator", url: "finance/finance.html" },
-  { name: "Income Tax Calculator", url: "finance/finance.html" },
+  /* ── MOBILE NAV ── */
+  const mobileNav      = document.getElementById('mobileNav');
+  const mobileMenuBtn  = document.getElementById('mobileMenuBtn');
+  const mobileNavClose = document.getElementById('mobileNavClose');
+  mobileMenuBtn.addEventListener('click', () => mobileNav.classList.add('open'));
+  mobileNavClose.addEventListener('click', () => mobileNav.classList.remove('open'));
+  mobileNav.addEventListener('click', e => { if (e.target === mobileNav) mobileNav.classList.remove('open'); });
 
-  { name: "BMI Calculator", url: "health/bmi.html" },
+  /* ── SEARCH ── */
+  const tools = [
+    { name: "Home Loan EMI Calculator",  url: "finance/homeloan.html",                  icon: "🏠" },
+    { name: "EMI Calculator",            url: "finance/finance.html",                    icon: "💰" },
+    { name: "Income Tax Calculator",     url: "finance/finance.html",                    icon: "🧾" },
+    { name: "BMI Calculator",            url: "health/bmi.html",                         icon: "❤️" },
+    { name: "Age Calculator",            url: "other/agecalc.html",                      icon: "🎂" },
+    { name: "Unit Converter",            url: "other/unitconverter.html",                icon: "📐" },
+    { name: "Geometry Calculator",       url: "math/geometry.html",                      icon: "📐" },
+    { name: "Hash Generator",            url: "dtools/hash.html",                        icon: "🔐" },
+    { name: "GST Invoice Generator",     url: "business/gst-invoice-generator.html",    icon: "🧾" },
+    { name: "Image Editor",              url: "image/photo-editor.html",                 icon: "🖼️" },
+    { name: "Trading Calculator",        url: "trading-tools.html",                      icon: "📊" },
+    { name: "Cricket Stats Tools",       url: "cricket.html",                            icon: "🏏" },
+    { name: "World Monitor",             url: "worldmonitor/",                           icon: "🌍" },
+  ];
 
-  { name: "Age Calculator", url: "other/agecalc.html" }, // fixed case
-  { name: "Unit Converter", url: "other/unitconverter.html" },
-
-  { name: "Geometry Calculator", url: "math/geometry.html" },
-
-  { name: "Hash Generator", url: "dtools/hash.html" }, // fixed path
-
-  // ✅ NEW ADDITIONS
-  { name: "GST Invoice Generator", url: "business/gst-invoice-generator.html" },
-  { name: "Image Editor", url: "image/photo-editor.html" },
-
-  // Optional extras (recommended for better UX)
-  { name: "Trading Calculator", url: "trading-tools.html" },
-  { name: "Cricket Stats Tools", url: "cricket.html" }
-];
-
-// Show matching results
-searchInput.addEventListener('input', () => {
-  const query = searchInput.value.toLowerCase().trim();
-  searchResults.innerHTML = '';
-
-  if (!query) {
-    searchResults.style.display = 'none';
-    return;
-  }
-
-  const matches = tools.filter(tool =>
-    tool.name.toLowerCase().includes(query)
-  );
-
-  if (matches.length === 0) {
-    searchResults.style.display = 'none';
-    return;
-  }
-
-  matches.forEach(tool => {
-    const item = document.createElement('div');
-    item.className = 'search-result-item';
-    item.textContent = tool.name;
-
-    item.addEventListener('click', () => {
-      window.location.href = tool.url;
+  function bindSearch(inputId, resultsId) {
+    const inp = document.getElementById(inputId);
+    const box = document.getElementById(resultsId);
+    if (!inp) return;
+    inp.addEventListener('input', () => {
+      const q = inp.value.toLowerCase().trim();
+      box.innerHTML = '';
+      if (!q) { box.style.display = 'none'; return; }
+      const hits = tools.filter(t => t.name.toLowerCase().includes(q));
+      if (!hits.length) { box.style.display = 'none'; return; }
+      hits.forEach(t => {
+        const item = document.createElement('div');
+        item.className = 'search-result-item';
+        item.innerHTML = `${t.icon} ${t.name}`;
+        item.addEventListener('click', () => window.location.href = t.url);
+        box.appendChild(item);
+      });
+      box.style.display = 'block';
     });
-
-    searchResults.appendChild(item);
-  });
-
-  searchResults.style.display = 'block';
-});
-
-// Hide dropdown when clicking outside
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.search-container')) {
-    searchResults.style.display = 'none';
+    document.addEventListener('click', e => {
+      if (!e.target.closest(`#${inputId}`) && !e.target.closest(`#${resultsId}`)) box.style.display = 'none';
+    });
   }
-});
-</script>
-
-
-
+  bindSearch('toolSearch', 'searchResults');
+  bindSearch('toolSearchMobile', 'searchResultsMobile');
+  </script>
 </body>
 </html>
