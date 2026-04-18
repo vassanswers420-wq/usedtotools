@@ -1,871 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Free Online Image Editor – Rotate, Blur, Adjust Filters | UsedToTools</title>
-  <meta name="description" content="Free online image editor. Adjust brightness, contrast, blur, saturation, grayscale, rotate, flip, crop and download your edited image instantly.">
-  <meta name="robots" content="index, follow">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  <!-- Canonical -->
-  <link rel="canonical" href="https://usedtotools.com/image/photo-editor">
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Free Online Image Editor | UsedToTools">
-  <meta property="og:description" content="Edit images online instantly. Adjust filters, rotate, flip and download your edited image.">
-  <meta property="og:url" content="https://usedtotools.com/image/photo-editor">
-  <meta property="og:site_name" content="UsedToTools">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Free Online Image Editor | UsedToTools">
-  <meta name="twitter:description" content="Online image editor with filters, crop, rotate and flip tools. Free and fast.">
-
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Image Editor",
-    "url": "https://usedtotools.com/image/photo-editor",
-    "applicationCategory": "MultimediaApplication",
-    "operatingSystem": "All",
-    "description": "Online image editor with filters, brightness, contrast, blur, rotate, flip and crop features.",
-    "provider": {
-      "@type": "Organization",
-      "name": "UsedToTools",
-      "url": "https://usedtotools.com/"
-    }
-  }
-  </script>
-
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-
-    :root {
-      --primary-color: #ed7575;
-      --background-main: #f3f4fc;
-      --background-card: #fff;
-      --border-color: rgba(0, 0, 0, 0.1);
-      --text-primary: #222;
-      --text-secondary: #666;
-      --success-color: #16a34a;
-      --danger-color: #dc2626;
-      --transition-speed: 0.2s;
-    }
-
-    [data-theme="night"] {
-      --background-main: #1f1f1f;
-      --background-card: #2a2a2a;
-      --border-color: rgba(255, 255, 255, 0.1);
-      --text-primary: #f5f5f5;
-      --text-secondary: #bbb;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--background-main);
-      color: var(--text-primary);
-      margin: 0;
-      padding: 0;
-    }
-
-    header.header {
-      background: var(--background-card);
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    header .logo-text {
-      font-weight: 600;
-      margin-left: 10px;
-    }
-
-    header .nav a {
-      margin-left: 20px;
-      color: var(--text-primary);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    header .theme-toggle {
-      cursor: pointer;
-      padding: 8px 14px;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-      background: var(--background-card);
-    }
-
-    section.section {
-      padding: 30px;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    .section-title {
-      font-size: 2rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    .section-desc {
-      font-size: 1rem;
-      margin-bottom: 30px;
-      color: var(--text-secondary);
-    }
-
-    /* Editor Container */
-    .image-editor-container {
-      max-width: 950px;
-      background: var(--background-card);
-      border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-      margin-bottom: 40px;
-    }
-
-    .image-editor-container.disable {
-      opacity: 0.3;
-      pointer-events: none;
-    }
-
-    .editor-main {
-      display: grid;
-      grid-template-columns: 300px 1fr;
-      gap: 20px;
-    }
-
-    .editor-sidebar {
-      background: var(--background-card);
-      border-radius: 12px;
-      padding: 20px;
-      border: 1px solid var(--border-color);
-      max-height: 650px;
-      overflow-y: auto;
-    }
-
-    .editor-sidebar h3 {
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      margin-bottom: 12px;
-    }
-
-    .filter-grid,
-    .transform-grid,
-    .effects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    .filter-grid button,
-    .transform-grid button,
-    .effects-grid button {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.85rem;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      background: var(--background-card);
-      color: var(--text-primary);
-      cursor: pointer;
-      transition: all var(--transition-speed);
-    }
-
-    .filter-grid button.active,
-    .transform-grid button.active,
-    .effects-grid button.active {
-      background: var(--primary-color);
-      color: #fff;
-      border-color: var(--primary-color);
-    }
-
-    .filter-grid button:hover,
-    .transform-grid button:hover,
-    .effects-grid button:hover {
-      background: var(--primary-color);
-      color: #fff;
-      transform: translateY(-2px);
-    }
-
-    .editor-content {
-      background: var(--background-card);
-      border-radius: 12px;
-      padding: 20px;
-      border: 1px solid var(--border-color);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .view_img {
-      width: 100%;
-      height: 500px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #f1f3ff;
-      border-radius: 12px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    [data-theme="night"] .view_img {
-      background: #181818;
-    }
-
-    #previewCanvas {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-
-    .editor-footer {
-      display: flex;
-      justify-content: flex-end;
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .editor-footer button {
-      padding: 12px 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all var(--transition-speed);
-      color: #fff;
-    }
-
-    .reset {
-      background: var(--danger-color);
-    }
-
-    .save {
-      background: var(--success-color);
-    }
-
-    .cropBtn {
-      display: none;
-      margin-top: 15px;
-      padding: 10px 16px;
-      background: var(--primary-color);
-    }
-
-    .cropBtn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    @media (max-width: 1024px) {
-      .editor-main {
-        grid-template-columns: 1fr;
-      }
-    }
-	.beader {
-		position: sticky;
-		top: 0;
-		z-index: 1000;
-		background: var(--surface-color);
-	}.logo-text {
-	  font-size: 1.7rem;
-	  font-weight: 800;
-	  color: var(--primary-color);
-	  letter-spacing: 0.3px;
-	  line-height: 1;
-	  white-space: nowrap;
-	}
-	.logo {
-	  text-decoration: none;
-	}
-	.logo-img {
-	  height: 38px;
-	  display: none;
-	}
-	/* ---------- FOOTER ---------- */
-	.foooter {
-	  background: var(--surface-color);
-	  border-top: 1px solid var(--border-color);
-	  padding: 40px 20px;
-	  margin-top: 60px;
-	}
-
-	.foooter p {
-	  text-align: center;
-	  font-size: 0.9rem;
-	  color: var(--muted-text);
-	}
-
-}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Editor – UsedToTools</title>
+<meta name="description" content="Free online image editor. Adjust brightness, contrast, blur, saturation, grayscale, rotate, flip, crop and download your edited image instantly.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="ss.css">
 </head>
-
 <body>
-  <!-- HEADER -->
-  <header class="beader">
-    <div class="container header-inner" style="display:flex;justify-content:space-between;align-items:center;">
-    <a href="../index.html" class="logo">
-      <img src="../assets/logo-day.png" class="logo-img logo-day">
-      <span class="logo-text">UsedToTools</span>
-    </a>
-      <nav class="nav">
-        <a href="../index.html">Home</a>
-        <a href="../about.html">About</a>
-      </nav>
-      <button class="theme-toggle" id="themeToggle">🌙 Night</button>
+  <link rel="stylesheet" href="abc.css">
+<header>
+  <a href="#" class="logo">UsedToTools</a>
+  <nav class="header-nav">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+  </nav>
+</header>
+
+<div class="app">
+
+  <!-- ── LEFT: TOOLS ── -->
+  <aside class="tools-panel">
+
+    <div class="panel-section">
+      <div class="panel-label">Open</div>
+      <div class="upload-zone" id="uploadZone">
+        <i class="fas fa-image"></i>
+        <span>Drop image or click to upload</span>
+      </div>
+      <input type="file" id="imageUploader" accept="image/*" hidden>
     </div>
-  </beader>
 
-  <section class="section">
-    <div class="container page-layout">
-
-      <h1 class="section-title">Free Online Image Editor</h1>
-      <p class="section-desc">
-        Edit images instantly with brightness, contrast, blur, grayscale, saturation,
-        rotate, flip, crop, and effects like vignette, noise, pixelate. No upload required —
-        everything runs in your browser.
-      </p>
-
-      <!-- IMAGE EDITOR -->
-      <div class="image-editor-container">
-        <div class="editor-main">
-          <div class="editor-sidebar">
-            <div class="tool-section">
-              <h3>Upload</h3>
-              <button class="upload-btn"><i class="fas fa-cloud-upload-alt"></i> Upload Image</button>
-              <input type="file" id="imageUploader" accept="image/*" hidden />
-            </div>
-
-            <div class="tool-section">
-              <h3>Filters</h3>
-              <div class="filter-grid">
-                <button id="brightness" class="active"><i class="fas fa-sun"></i> Brightness</button>
-                <button id="contrast"><i class="fas fa-adjust"></i> Contrast</button>
-                <button id="saturate"><i class="fas fa-palette"></i> Saturate</button>
-                <button id="invert"><i class="fas fa-inverse"></i> Invert</button>
-                <button id="blur"><i class="fas fa-blur"></i> Blur</button>
-                <button id="grayscale"><i class="fas fa-circle-half-stroke"></i> Grayscale</button>
-                <button id="sepia"><i class="fas fa-image"></i> Sepia</button>
-                <button id="hue"><i class="fas fa-rainbow"></i> Hue</button>
-              </div>
-              <div class="slider">
-                <div class="filter-info"><span class="name">Brightness</span> <span class="value">100%</span></div>
-                <input type="range" id="filterSlider" min="0" max="200" value="100">
-              </div>
-            </div>
-
-            <div class="tool-section">
-              <h3>Transform</h3>
-              <div class="transform-grid">
-                <button id="rotate_left"><i class="fas fa-undo"></i> Rotate Left</button>
-                <button id="rotate_right"><i class="fas fa-redo"></i> Rotate Right</button>
-                <button id="flip_x"><i class="fas fa-arrows-alt-h"></i> Flip H</button>
-                <button id="flip_y"><i class="fas fa-arrows-alt-v"></i> Flip V</button>
-                <button id="crop"><i class="fas fa-crop"></i> Crop</button>
-              </div>
-            </div>
-
-            <div class="tool-section">
-              <h3>Effects</h3>
-              <div class="effects-grid">
-                <button id="vignette"><i class="fas fa-circle"></i> Vignette</button>
-                <button id="noise"><i class="fas fa-brush"></i> Noise</button>
-                <button id="pixelate"><i class="fas fa-th"></i> Pixelate</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="editor-content">
-            <div class="view_img"><canvas id="previewCanvas"></canvas></div>
-            <button class="cropBtn">Apply Crop</button>
-          </div>
-        </div>
-
-        <div class="editor-footer">
-          <button class="reset"><i class="fas fa-undo"></i> Reset All</button>
-          <button class="save"><i class="fas fa-download"></i> Save Image</button>
-        </div>
+    <div class="panel-section">
+      <div class="panel-label">Looks (Presets)</div>
+      <div class="preset-grid">
+        <button class="preset-btn" data-preset="none">Original</button>
+        <button class="preset-btn" data-preset="vivid">Vivid</button>
+        <button class="preset-btn" data-preset="matte">Matte</button>
+        <button class="preset-btn" data-preset="chrome">Chrome</button>
+        <button class="preset-btn" data-preset="fade">Fade</button>
+        <button class="preset-btn" data-preset="noir">Noir</button>
+        <button class="preset-btn" data-preset="warm">Warm</button>
+        <button class="preset-btn" data-preset="cool">Cool</button>
+        <button class="preset-btn" data-preset="portrait">Portrait</button>
+        <button class="preset-btn" data-preset="landscape">Landscape</button>
       </div>
     </div>
-  </section>
-
-  <footer class="foooter">
-    <p>© 2026 UsedToTools · Image Editor</p>
-  </footer>
-
-  <!-- THEME TOGGLE -->
-	<script>
-	  (function() {
-		const root = document.documentElement;
-		const toggleBtn = document.getElementById('themeToggle');
-
-		const defaultTheme = 'light';
-		const savedTheme = localStorage.getItem('theme') || defaultTheme;
-		root.setAttribute('data-theme', savedTheme);
-		toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
-
-		toggleBtn.addEventListener('click', () => {
-		  const current = root.getAttribute('data-theme');
-		  const next = current === 'night' ? 'light' : 'night';
-
-		  root.setAttribute('data-theme', next);
-		  localStorage.setItem('theme', next);
-		  toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
-		});
-	  })();
-	</script>
-
-  <!-- IMAGE EDITOR SCRIPT -->
-  <script>
-const chooseBtn = document.querySelector(".upload-btn");
-const chooseInput = document.getElementById("imageUploader");
-const canvas = document.getElementById("previewCanvas");
-const ctx = canvas.getContext("2d");
-
-const filterButtons = document.querySelectorAll(".filter-grid button, .effects-grid button");
-const slider = document.querySelector(".slider input");
-const filterName = document.querySelector(".filter-info .name");
-const sliderValue = document.querySelector(".filter-info .value");
-
-const rotateBtns = document.querySelectorAll(".transform-grid button");
-const resetBtn = document.querySelector(".reset");
-const saveBtn = document.querySelector(".save");
-
-let image = new Image();
-let imageLoaded = false;
-let baseImageSrc = null;
-
-
-let filters = {
-    brightness: 100,
-    contrast: 100,
-    saturate: 100,
-    invert: 0,
-    blur: 0,
-    grayscale: 0,
-    sepia: 0,
-    hue: 0,
-    noise: 0,
-    pixelate: 0,
-    vignette: 0
-};
-
-let transform = {
-    rotate: 0,
-    flip_x: 1,
-    flip_y: 1
-};
-
-
-/* =====================
-   IMAGE LOAD
-===================== */
-
-chooseBtn.addEventListener("click", () => chooseInput.click());
-
-chooseInput.addEventListener("change", () => {
-    const file = chooseInput.files[0];
-    if (!file || !file.type.startsWith("image/")) return;
-
-    const reader = new FileReader();
-    reader.onload = e => {
-    baseImageSrc = e.target.result;  // store base
-    image.src = baseImageSrc;
-};
-
-    reader.readAsDataURL(file);
-});
-
-image.onload = () => {
-    imageLoaded = true;
-	if (!baseImageSrc) {
-    baseImageSrc = image.src;
-	}
-
-    // scale to fit container width
-	const maxWidth = canvas.parentElement.clientWidth;
-	const maxHeight = canvas.parentElement.clientHeight;
-
-	const ratio = Math.min(
-		maxWidth / image.width,
-		maxHeight / image.height
-	);
-
-	canvas.width = image.width * ratio;
-	canvas.height = image.height * ratio;
-
-    drawImage();
-};
-
-
-/* =====================
-   DRAW FUNCTION
-===================== */
-
-function drawImage() {
-    if (!imageLoaded) return;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.save();
-
-    ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(transform.rotate * Math.PI / 180);
-    ctx.scale(transform.flip_x, transform.flip_y);
-
-    ctx.filter = `
-        brightness(${filters.brightness}%)
-        contrast(${filters.contrast}%)
-        saturate(${filters.saturate}%)
-        invert(${filters.invert}%)
-        blur(${filters.blur}px)
-        grayscale(${filters.grayscale}%)
-        sepia(${filters.sepia}%)
-        hue-rotate(${filters.hue}deg)
-    `;
-
-    ctx.drawImage(
-        image,
-        -canvas.width / 2,
-        -canvas.height / 2,
-        canvas.width,
-        canvas.height
-    );
-
-    ctx.restore();
-
-		if (filters.pixelate > 0) applyPixelate(ctx, canvas.width, canvas.height);
-		if (filters.noise > 0) applyNoise(ctx, canvas.width, canvas.height);
-		if (filters.vignette > 0) applyVignette(ctx, canvas.width, canvas.height);
-
-}
-
-
-/* =====================
-   FILTER & EFFECT BUTTONS
-===================== */
-
-const allButtons = document.querySelectorAll(".filter-grid button, .effects-grid button");
-
-filterButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-        allButtons.forEach(b => b.classList.remove("active")); // remove from all
-        btn.classList.add("active");
-
-        filterName.innerText = btn.id;
-
-        if (["brightness","contrast","saturate"].includes(btn.id)) slider.max = 200;
-        else if (btn.id === "hue") slider.max = 360;
-        else if (btn.id === "blur") slider.max = 20;
-        else slider.max = 100;
-
-        slider.value = filters[btn.id];
-        updateSliderLabel(btn.id);
-    });
-});
-
-
-slider.addEventListener("input", () => {
-    const active = document.querySelector(".active").id;
-    filters[active] = parseInt(slider.value);
-    updateSliderLabel(active);
-    drawImage();
-});
-
-function updateSliderLabel(type) {
-    if (type === "blur") {
-        sliderValue.innerText = slider.value + "px";
-    } else if (type === "hue") {
-        sliderValue.innerText = slider.value + "°";
-    } else {
-        sliderValue.innerText = slider.value + "%";
-    }
-}
-/* =====================
-   IMPROVED CROP SYSTEM
-===================== */
-
-/* =====================
-   NEW PROFESSIONAL CROP SYSTEM
-===================== */
 
-let cropMode = false;
-let isDragging = false;
-let cropStartX = 0;
-let cropStartY = 0;
-let cropEndX = 0;
-let cropEndY = 0;
-
-const cropBtn = document.getElementById("crop");
-const applyCropBtn = document.querySelector(".cropBtn");
-
-/* ACTIVATE CROP MODE */
-cropBtn.addEventListener("click", () => {
-    if (!imageLoaded) return;
-
-    cropMode = true;
-    isDragging = false;
-
-    cropBtn.classList.add("active");
-    applyCropBtn.style.display = "block";
-});
-
-/* START DRAG */
-canvas.addEventListener("mousedown", (e) => {
-    if (!cropMode) return;
-
-    const rect = canvas.getBoundingClientRect();
-    cropStartX = e.clientX - rect.left;
-    cropStartY = e.clientY - rect.top;
-    cropEndX = cropStartX;
-    cropEndY = cropStartY;
-    isDragging = true;
-});
-
-/* DRAGGING */
-canvas.addEventListener("mousemove", (e) => {
-    if (!cropMode || !isDragging) return;
-
-    const rect = canvas.getBoundingClientRect();
-    cropEndX = e.clientX - rect.left;
-    cropEndY = e.clientY - rect.top;
-
-    drawImage();
-    drawCropOverlay();
-});
-
-/* STOP DRAG */
-canvas.addEventListener("mouseup", () => {
-    if (!cropMode) return;
-    isDragging = false;
-    drawImage();
-    drawCropOverlay();
-});
-
-/* DRAW OVERLAY */
-function drawCropOverlay() {
-    const x = Math.min(cropStartX, cropEndX);
-    const y = Math.min(cropStartY, cropEndY);
-    const w = Math.abs(cropEndX - cropStartX);
-    const h = Math.abs(cropEndY - cropStartY);
-
-    if (w < 5 || h < 5) return;
-
-    ctx.save();
-
-    // Only draw border, no fill
-    ctx.strokeStyle = "black"; // or "#000"
-    ctx.lineWidth = 2;
-    ctx.strokeRect(x, y, w, h);
-
-    ctx.restore();
-}
-
-
-/* APPLY CROP */
-applyCropBtn.addEventListener("click", applyCrop);
-
-function applyCrop() {
-    if (!cropMode) return;
-
-    const x = Math.min(cropStartX, cropEndX);
-    const y = Math.min(cropStartY, cropEndY);
-    const w = Math.abs(cropEndX - cropStartX);
-    const h = Math.abs(cropEndY - cropStartY);
-
-    if (w < 10 || h < 10) return;
-
-    // 🔥 IMPORTANT: redraw clean image first (no overlay)
-    drawImage();
-
-    // now safely grab real image pixels
-    const croppedData = ctx.getImageData(x, y, w, h);
-
-    canvas.width = w;
-    canvas.height = h;
-
-    ctx.putImageData(croppedData, 0, 0);
-
-    image.src = canvas.toDataURL();
-
-    exitCropMode();
-}
-
-/* EXIT CROP */
-function exitCropMode() {
-    cropMode = false;
-    isDragging = false;
-
-    cropBtn.classList.remove("active");
-    applyCropBtn.style.display = "none";
-
-    drawImage();
-}
-
-/* ESC TO CANCEL */
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && cropMode) {
-        exitCropMode();
-    }
-});
-
-
-
-
-/* =====================
-   TRANSFORMS
-===================== */
-
-rotateBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-        switch(btn.id) {
-            case "rotate_left": transform.rotate -= 90; break;
-            case "rotate_right": transform.rotate += 90; break;
-            case "flip_x": transform.flip_x *= -1; break;
-            case "flip_y": transform.flip_y *= -1; break;
-        }
-        drawImage();
-    });
-});
-
-
-/* =====================
-   EFFECTS
-===================== */
-
-function applyNoise(ctx, width, height, intensity = filters.noise) {
-    if (intensity <= 0) return;
-
-    const imgData = ctx.getImageData(0, 0, width, height);
-    const data = imgData.data;
-
-    for (let i = 0; i < data.length; i += 4) {
-        const n = (Math.random() - 0.5) * intensity;
-        data[i] = clamp(data[i] + n);
-        data[i + 1] = clamp(data[i + 1] + n);
-        data[i + 2] = clamp(data[i + 2] + n);
-    }
-
-    ctx.putImageData(imgData, 0, 0);
-}
-
-function applyPixelate(ctx, width, height, pixelSize = filters.pixelate) {
-    const size = Math.max(1, Math.floor(pixelSize / 5));
-    if (size <= 1) return;
-
-    const tempCanvas = document.createElement("canvas");
-    const tempCtx = tempCanvas.getContext("2d");
-
-    tempCanvas.width = Math.ceil(width / size);
-    tempCanvas.height = Math.ceil(height / size);
-
-    tempCtx.drawImage(ctx.canvas, 0, 0, tempCanvas.width, tempCanvas.height);
-
-    ctx.imageSmoothingEnabled = false;
-    ctx.clearRect(0, 0, width, height);
-    ctx.drawImage(tempCanvas, 0, 0, tempCanvas.width, tempCanvas.height,
-                  0, 0, width, height);
-
-    ctx.imageSmoothingEnabled = true;
-}
-
-function applyVignette(ctx, width, height, intensity = filters.vignette) {
-    if (intensity <= 0) return;
-
-    const gradient = ctx.createRadialGradient(
-        width / 2, height / 2, 0,
-        width / 2, height / 2, Math.max(width, height) / 1.2
-    );
-
-    gradient.addColorStop(0, "rgba(0,0,0,0)");
-    gradient.addColorStop(1, `rgba(0,0,0,${intensity / 100})`);
-
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
-}
-
-// Helper to avoid colors going <0 or >255
-function clamp(value) {
-    return Math.max(0, Math.min(255, value));
-}
-
-
-/* =====================
-   RESET
-===================== */
-
-/* =====================
-   IMPROVED RESET SYSTEM
-===================== */
-
-resetBtn.addEventListener("click", () => {
-
-    if (!imageLoaded || !baseImageSrc) return;
-
-    // Restore original uploaded image
-    image.src = baseImageSrc;
-
-    // Reset filters
-    filters = {
-        brightness: 100,
-        contrast: 100,
-        saturate: 100,
-        invert: 0,
-        blur: 0,
-        grayscale: 0,
-        sepia: 0,
-        hue: 0,
-        noise: 0,
-        pixelate: 0,
-        vignette: 0
-    };
-
-    // Reset transforms
-    transform = {
-        rotate: 0,
-        flip_x: 1,
-        flip_y: 1
-    };
-
-    exitCropMode();
-
-    // Reset UI
-    document.querySelectorAll(".filter-grid button")
-        .forEach(btn => btn.classList.remove("active"));
-
-    const defaultBtn = document.getElementById("brightness");
-    defaultBtn.classList.add("active");
-
-    slider.max = 200;
-    slider.value = 100;
-    filterName.innerText = "brightness";
-    sliderValue.innerText = "100%";
-});
-
-
-/* =====================
-   SAVE
-===================== */
-
-saveBtn.addEventListener("click", () => {
-    const link = document.createElement("a");
-    link.download = "edited-image.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-});
-  </script>
-
+    <div class="panel-section">
+      <div class="panel-label">Transform</div>
+      <div class="transform-row">
+        <button class="tool-btn" id="rotate_left"><i class="fas fa-undo"></i> Rotate L</button>
+        <button class="tool-btn" id="rotate_right"><i class="fas fa-redo"></i> Rotate R</button>
+        <button class="tool-btn" id="flip_x"><i class="fas fa-arrows-alt-h"></i> Flip H</button>
+        <button class="tool-btn" id="flip_y"><i class="fas fa-arrows-alt-v"></i> Flip V</button>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Tools</div>
+      <button class="tool-btn" id="cropBtn"><i class="fas fa-crop-alt"></i> Crop</button>
+      <button class="tool-btn" id="straightenBtn"><i class="fas fa-ruler-horizontal"></i> Straighten</button>
+      <button class="tool-btn" id="perspectiveBtn"><i class="fas fa-expand-arrows-alt"></i> Perspective Fix</button>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">More Effects</div>
+      <button class="tool-btn" id="vignetteToolBtn"><i class="fas fa-circle-notch"></i> Vignette</button>
+      <button class="tool-btn" id="grainToolBtn"><i class="fas fa-spray-can"></i> Grain / Film</button>
+      <button class="tool-btn" id="pixelateToolBtn"><i class="fas fa-th"></i> Pixelate</button>
+      <button class="tool-btn" id="glamToolBtn"><i class="fas fa-star"></i> Glamour Glow</button>
+      <button class="tool-btn" id="sharpBtn"><i class="fas fa-tachometer-alt"></i> Sharpen</button>
+    </div>
+
+  </aside>
+
+  <!-- ── CENTER: CANVAS ── -->
+  <main class="canvas-area">
+    <div class="canvas-wrap" id="canvasWrap">
+      <div class="canvas-placeholder" id="placeholder">
+        <i class="fas fa-image"></i>
+        <h3>No image loaded</h3>
+        <p>Upload an image from the left panel<br>to start editing</p>
+      </div>
+      <canvas id="previewCanvas" class="hidden"></canvas>
+      <div id="cropOverlay"></div>
+    </div>
+
+    <div class="zoom-controls">
+      <button class="zoom-btn" id="zoomIn" title="Zoom in"><i class="fas fa-plus"></i></button>
+      <button class="zoom-btn" id="zoomOut" title="Zoom out"><i class="fas fa-minus"></i></button>
+      <button class="zoom-btn" id="zoomFit" title="Fit"><i class="fas fa-compress-arrows-alt"></i></button>
+    </div>
+
+    <div class="canvas-toolbar">
+      <button class="btn-undo" id="undoBtn"><i class="fas fa-history"></i> Undo</button>
+      <button class="btn-reset" id="resetBtn"><i class="fas fa-times"></i> Reset</button>
+      <button class="btn-crop-apply" id="applyCropBtn">✓ Apply Crop</button>
+      <button class="btn-save" id="saveBtn"><i class="fas fa-download"></i> Save PNG</button>
+      <button class="btn-save" id="saveJpgBtn" style="background:var(--accent2);color:#0e0e12;">Save JPG</button>
+    </div>
+  </main>
+
+  <!-- ── RIGHT: ADJUSTMENTS ── -->
+  <aside class="adjustments-panel">
+
+    <div class="adj-group">
+      <div class="panel-label">Histogram</div>
+      <div class="histogram-wrap">
+        <canvas id="histCanvas" width="248" height="60"></canvas>
+      </div>
+    </div>
+
+    <!-- LIGHT -->
+    <div class="adj-group">
+      <div class="panel-label">Light</div>
+
+      <div class="adj-item" data-filter="brightness" data-min="0" data-max="200" data-default="100">
+        <div class="adj-header"><span class="adj-name">Brightness</span><span class="adj-value">0</span></div>
+        <input type="range" min="0" max="200" value="100">
+      </div>
+      <div class="adj-item" data-filter="contrast" data-min="0" data-max="200" data-default="100">
+        <div class="adj-header"><span class="adj-name">Contrast</span><span class="adj-value">0</span></div>
+        <input type="range" min="0" max="200" value="100">
+      </div>
+      <div class="adj-item" data-filter="highlights" data-min="-100" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Highlights</span><span class="adj-value">0</span></div>
+        <input type="range" min="-100" max="100" value="0">
+      </div>
+      <div class="adj-item" data-filter="shadows" data-min="-100" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Shadows</span><span class="adj-value">0</span></div>
+        <input type="range" min="-100" max="100" value="0">
+      </div>
+    </div>
+
+    <!-- COLOR -->
+    <div class="adj-group">
+      <div class="panel-label">Color</div>
+
+      <div class="adj-item" data-filter="saturate" data-min="0" data-max="200" data-default="100">
+        <div class="adj-header"><span class="adj-name">Saturation</span><span class="adj-value">0</span></div>
+        <input type="range" min="0" max="200" value="100">
+      </div>
+      <div class="adj-item temp-slider" data-filter="temperature" data-min="-100" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Temperature</span><span class="adj-value">0</span></div>
+        <input type="range" min="-100" max="100" value="0">
+      </div>
+      <div class="adj-item tint-slider" data-filter="tint" data-min="-100" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Tint</span><span class="adj-value">0</span></div>
+        <input type="range" min="-100" max="100" value="0">
+      </div>
+      <div class="adj-item" data-filter="hue" data-min="0" data-max="360" data-default="0">
+        <div class="adj-header"><span class="adj-name">Hue Shift</span><span class="adj-value">0</span></div>
+        <input type="range" min="0" max="360" value="0">
+      </div>
+      <div class="adj-item" data-filter="vibrance" data-min="-100" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Vibrance</span><span class="adj-value">0</span></div>
+        <input type="range" min="-100" max="100" value="0">
+      </div>
+    </div>
+
+    <!-- DETAIL -->
+    <div class="adj-group">
+      <div class="panel-label">Detail</div>
+
+      <div class="adj-item" data-filter="sharpen" data-min="0" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Sharpening</span><span class="adj-value">0</span></div>
+        <input type="range" min="0" max="100" value="0">
+      </div>
+      <div class="adj-item" data-filter="blur" data-min="0" data-max="20" data-default="0">
+        <div class="adj-header"><span class="adj-name">Blur / Softness</span><span class="adj-value">0</span></div>
+        <input type="range" min="0" max="20" value="0">
+      </div>
+      <div class="adj-item" data-filter="clarity" data-min="-100" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Structure / Clarity</span><span class="adj-value">0</span></div>
+        <input type="range" min="-100" max="100" value="0">
+      </div>
+    </div>
+
+    <!-- TONE / STYLE -->
+    <div class="adj-group">
+      <div class="panel-label">Tone / Style</div>
+
+      <div class="adj-item" data-filter="grayscale" data-min="0" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Black &amp; White</span><span class="adj-value">0</span></div>
+        <input type="range" min="0" max="100" value="0">
+      </div>
+      <div class="adj-item" data-filter="sepia" data-min="0" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Sepia</span><span class="adj-value">0</span></div>
+        <input type="range" min="0" max="100" value="0">
+      </div>
+      <div class="adj-item" data-filter="invert" data-min="0" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Invert</span><span class="adj-value">0</span></div>
+        <input type="range" min="0" max="100" value="0">
+      </div>
+      <div class="adj-item" data-filter="fade" data-min="0" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Fade</span><span class="adj-value">0</span></div>
+        <input type="range" min="0" max="100" value="0">
+      </div>
+    </div>
+
+    <!-- EFFECTS -->
+    <div class="adj-group">
+      <div class="panel-label">Effects</div>
+
+      <div class="adj-item" data-filter="vignette" data-min="0" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Vignette</span><span class="adj-value">0</span></div>
+        <input type="range" min="0" max="100" value="0">
+      </div>
+      <div class="adj-item" data-filter="grain" data-min="0" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Grain</span><span class="adj-value">0</span></div>
+        <input type="range" min="0" max="100" value="0">
+      </div>
+      <div class="adj-item" data-filter="pixelate" data-min="0" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Pixelate</span><span class="adj-value">0</span></div>
+        <input type="range" min="0" max="100" value="0">
+      </div>
+      <div class="adj-item" data-filter="glamour" data-min="0" data-max="100" data-default="0">
+        <div class="adj-header"><span class="adj-name">Glamour Glow</span><span class="adj-value">0</span></div>
+        <input type="range" min="0" max="100" value="0">
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<div id="toast"></div>
+
+<script src="ss.js"></script>
 </body>
 </html>

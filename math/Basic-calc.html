@@ -1,359 +1,608 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Online Calculator – Basic & Scientific Math Calculator | UsedToTools</title>
-  <meta name="description" content="Free online calculator with basic and scientific functions. Perform fast math calculations including addition, subtraction, multiplication, division, trigonometry, square roots and more.">
+  <meta name="description" content="Free online calculator with basic and advanced scientific functions. Supports trigonometry, logarithms, powers, factorials, constants, history and more. Works on all devices.">
   <meta name="robots" content="index, follow">
-
-  <!-- Canonical -->
   <link rel="canonical" href="https://usedtotools.com/math/calculator">
-
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Online Calculator – Basic & Scientific Calculator">
-  <meta property="og:description" content="Use this free online calculator for quick math calculations including arithmetic and scientific functions.">
+  <meta property="og:description" content="Free scientific calculator with trig, log, powers, constants, history and keyboard support.">
   <meta property="og:url" content="https://usedtotools.com/math/calculator">
-  <meta property="og:site_name" content="UsedToTools">
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Free Online Calculator – Basic & Scientific">
-  <meta name="twitter:description" content="Fast and accurate online calculator with arithmetic and scientific functions. Works on desktop and mobile.">
-
-  <!-- Structured Data: WebApplication -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Online Calculator",
-    "url": "https://usedtotools.com/math/calculator",
-    "applicationCategory": "EducationalApplication",
-    "operatingSystem": "All",
-    "description": "Free online basic and scientific calculator for arithmetic and trigonometric calculations.",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "provider": {
-      "@type": "Organization",
-      "name": "UsedToTools",
-      "url": "https://usedtotools.com/"
-    }
-  }
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Online Scientific Calculator","url":"https://usedtotools.com/math/calculator","applicationCategory":"EducationalApplication","operatingSystem":"All","description":"Free online basic and scientific calculator with trigonometry, logarithms, powers and history.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"provider":{"@type":"Organization","name":"UsedToTools","url":"https://usedtotools.com/"}}
   </script>
 
-  <!-- Structured Data: FAQ -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Is this calculator free to use?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, this online calculator is completely free with no usage limits."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Does it support scientific calculations?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, you can switch to scientific mode to access trigonometric functions and square root calculations."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Will this calculator work on mobile devices?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, the calculator is fully responsive and works on desktops, tablets, and smartphones."
-        }
-      }
-    ]
-  }
-  </script>
-  <!-- GLOBAL CSS -->
-  <link rel="stylesheet" href="../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="sc.css" />
 
-  <style>
-    /* =========================
-       CALCULATOR COMPONENT ONLY
-    ========================= */
 
-    .calculator {
-      background: var(--surface-color);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 20px;
-      max-width: 420px;
-    }
-
-    .calc-display {
-      width: 100%;
-      height: 60px;
-      font-size: 1.6rem;
-      padding: 10px;
-      text-align: right;
-      border-radius: var(--radius);
-      border: 1px solid var(--border-color);
-      margin-bottom: 15px;
-      background: var(--bg-color);
-      color: var(--text-color);
-    }
-
-    .calc-toggle {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-
-    .calc-toggle button {
-      flex: 1;
-      padding: 8px;
-      border-radius: var(--radius);
-      border: none;
-      cursor: pointer;
-      background: var(--border-color);
-    }
-
-    .calc-toggle .active {
-      background: var(--primary-color);
-      color: #fff;
-    }
-
-    .calc-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-
-    .calc-grid button {
-      padding: 16px;
-      font-size: 1rem;
-      border-radius: var(--radius);
-      border: none;
-      cursor: pointer;
-      background: var(--bg-color);
-      color: var(--text-color);
-    }
-
-    .calc-grid button.operator {
-      background: var(--primary-color);
-      color: #fff;
-    }
-
-    .calc-grid button.equal {
-      grid-column: span 2;
-      background: var(--primary-hover);
-      color: #fff;
-    }
-
-    .scientific {
-      display: none;
-      margin-bottom: 10px;
-    }
-
-    .scientific.active {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-  </style>
 </head>
-
 <body>
 
 <!-- HEADER -->
 <header class="header">
-  <div class="container header-inner">
-    <a href="../index.html" class="logo">
-      <span class="logo-text">UsedToTools</span>
-    </a>
-
+  <div class="header-inner">
+    <a href="../index.html" class="logo">UsedTo<span>Tools</span></a>
     <nav class="nav">
       <a href="../index.html">Home</a>
       <a href="/about.html">About</a>
     </nav>
-
     <button class="theme-toggle" id="themeToggle">🌙 Night</button>
   </div>
 </header>
 
 <!-- CONTENT -->
 <section class="section">
-  <div class="container page-layout">
+<div class="container">
+<div class="page-layout">
 
-    <!-- LEFT COLUMN -->
-    <div class="left-column">
+<!-- LEFT -->
+<div class="left-column">
+  <h1 class="section-title">Online Calculator</h1>
+  <p class="section-desc">Basic & scientific calculator — keyboard supported, history saved, angle mode switchable.</p>
 
-      <h1 class="section-title">Online Calculator</h1>
-      <p class="section-desc">
-        Free online basic and scientific calculator for fast and accurate math calculations.
-      </p>
+  <div class="calculator" id="calcShell">
 
-      <div class="calculator">
-
-        <input type="text" id="display" class="calc-display" readonly />
-
-        <div class="calc-toggle">
-          <button id="basicBtn" class="active">Basic</button>
-          <button id="sciBtn">Scientific</button>
-        </div>
-
-        <!-- SCIENTIFIC -->
-        <div id="scientific" class="scientific">
-          <button onclick="press('Math.sin(')">sin</button>
-          <button onclick="press('Math.cos(')">cos</button>
-          <button onclick="press('Math.tan(')">tan</button>
-          <button onclick="press('Math.sqrt(')">√</button>
-        </div>
-
-        <!-- MAIN GRID -->
-        <div class="calc-grid">
-          <button onclick="clearDisplay()">C</button>
-          <button onclick="press('(')">(</button>
-          <button onclick="press(')')">)</button>
-          <button class="operator" onclick="press('/')">÷</button>
-
-          <button onclick="press('7')">7</button>
-          <button onclick="press('8')">8</button>
-          <button onclick="press('9')">9</button>
-          <button class="operator" onclick="press('*')">×</button>
-
-          <button onclick="press('4')">4</button>
-          <button onclick="press('5')">5</button>
-          <button onclick="press('6')">6</button>
-          <button class="operator" onclick="press('-')">−</button>
-
-          <button onclick="press('1')">1</button>
-          <button onclick="press('2')">2</button>
-          <button onclick="press('3')">3</button>
-          <button class="operator" onclick="press('+')">+</button>
-
-          <button onclick="press('0')">0</button>
-          <button onclick="press('.')">.</button>
-          <button class="equal" onclick="calculate()">=</button>
-        </div>
-
-      </div>
-
-      <!-- SEO CONTENT -->
-      <section class="seo-content">
-        <h2>Free Online Basic and Scientific Calculator</h2>
-        <p>
-          This online calculator allows you to perform basic arithmetic and scientific
-          calculations instantly. It is designed for students, professionals, and anyone
-          who needs quick and accurate math results.
-        </p>
-
-        <h3>Calculator Features</h3>
-        <ul>
-          <li>Basic operations: addition, subtraction, multiplication, division</li>
-          <li>Scientific functions: sine, cosine, tangent, square root</li>
-          <li>Fast, lightweight, and easy to use</li>
-          <li>Works on desktop and mobile devices</li>
-        </ul>
-
-        <h3>Who Can Use This Calculator?</h3>
-        <p>
-          This calculator is useful for students solving math problems, professionals
-          handling quick calculations, and anyone who needs a reliable online calculator
-          without installing apps.
-        </p>
-
-        <h3>Frequently Asked Questions</h3>
-
-        <p><strong>Is this calculator free to use?</strong><br>
-        Yes, this calculator is completely free with no usage limits.</p>
-
-        <p><strong>Does it support scientific calculations?</strong><br>
-        Yes, you can switch to scientific mode to access trigonometric and square root functions.</p>
-
-        <p><strong>Will this calculator work on mobile?</strong><br>
-        Yes, it is fully responsive and works on all modern devices.</p>
-      </section>
-
+    <!-- MODE TABS -->
+    <div class="mode-tabs">
+      <button class="mode-tab active" id="tabBasic">Basic</button>
+      <button class="mode-tab" id="tabSci">Scientific</button>
     </div>
 
-    <!-- RIGHT COLUMN -->
-    <div class="right-column">
-      <h2 class="section-title">Quick Links</h2>
-      <p class="section-desc">Related tools</p>
-
-      <div class="quick-links">
-        <a href="geometry.html">Geometry Tools</a>
-		<a href="visualizer.html">Data Visualizer</a>
+    <!-- DISPLAY -->
+    <div class="display-wrap">
+      <div class="display-expr" id="displayExpr">&nbsp;</div>
+      <div class="display-main" id="displayMain">0</div>
+      <div class="display-meta">
+        <span class="mem-indicator" id="memIndicator"></span>
+        <button class="angle-toggle" id="angleToggle">DEG</button>
       </div>
     </div>
 
+    <!-- BASIC BUTTONS -->
+    <div class="btn-grid basic" id="basicGrid">
+      <button class="calc-btn clr"         onclick="action('clear')">C</button>
+      <button class="calc-btn util"        onclick="action('sign')">+/−</button>
+      <button class="calc-btn util"        onclick="action('percent')">%</button>
+      <button class="calc-btn op"          onclick="action('op','/')">÷</button>
+
+      <button class="calc-btn num"         onclick="action('num','7')">7</button>
+      <button class="calc-btn num"         onclick="action('num','8')">8</button>
+      <button class="calc-btn num"         onclick="action('num','9')">9</button>
+      <button class="calc-btn op"          onclick="action('op','*')">×</button>
+
+      <button class="calc-btn num"         onclick="action('num','4')">4</button>
+      <button class="calc-btn num"         onclick="action('num','5')">5</button>
+      <button class="calc-btn num"         onclick="action('num','6')">6</button>
+      <button class="calc-btn op"          onclick="action('op','-')">−</button>
+
+      <button class="calc-btn num"         onclick="action('num','1')">1</button>
+      <button class="calc-btn num"         onclick="action('num','2')">2</button>
+      <button class="calc-btn num"         onclick="action('num','3')">3</button>
+      <button class="calc-btn op"          onclick="action('op','+')">+</button>
+
+      <button class="calc-btn num span2"   onclick="action('num','0')">0</button>
+      <button class="calc-btn num"         onclick="action('decimal')">.</button>
+      <button class="calc-btn eq"          onclick="action('equals')">=</button>
+    </div>
+
+    <!-- SCIENTIFIC BUTTONS -->
+    <div class="btn-grid sci" id="sciGrid" style="display:none;">
+      <!-- Row 1: clear / util -->
+      <button class="calc-btn clr"   onclick="action('clear')">C</button>
+      <button class="calc-btn util"  onclick="action('sign')">+/−</button>
+      <button class="calc-btn util"  onclick="action('percent')">%</button>
+      <button class="calc-btn util"  onclick="action('paren','(')">( )</button>
+      <button class="calc-btn op"    onclick="action('op','/')">÷</button>
+
+      <!-- Row 2: powers / roots -->
+      <button class="calc-btn fn"    onclick="action('fn','sq')">x²</button>
+      <button class="calc-btn fn"    onclick="action('fn','cube')">x³</button>
+      <button class="calc-btn fn"    onclick="action('fn','pow')">xʸ</button>
+      <button class="calc-btn fn"    onclick="action('fn','sqrt')">√x</button>
+      <button class="calc-btn op"    onclick="action('op','*')">×</button>
+
+      <!-- Row 3: trig -->
+      <button class="calc-btn fn"    onclick="action('fn','sin')">sin</button>
+      <button class="calc-btn fn"    onclick="action('fn','cos')">cos</button>
+      <button class="calc-btn fn"    onclick="action('fn','tan')">tan</button>
+      <button class="calc-btn fn"    onclick="action('fn','inv')">1/x</button>
+      <button class="calc-btn op"    onclick="action('op','-')">−</button>
+
+      <!-- Row 4: log / exp -->
+      <button class="calc-btn fn"    onclick="action('fn','log')">log</button>
+      <button class="calc-btn fn"    onclick="action('fn','ln')">ln</button>
+      <button class="calc-btn fn"    onclick="action('fn','exp')">eˣ</button>
+      <button class="calc-btn fn"    onclick="action('fn','fact')">n!</button>
+      <button class="calc-btn op"    onclick="action('op','+')">+</button>
+
+      <!-- Row 5: constants / mem -->
+      <button class="calc-btn fn"    onclick="action('const','pi')">π</button>
+      <button class="calc-btn fn"    onclick="action('const','e')">e</button>
+      <button class="calc-btn util"  onclick="action('mem','MS')">MS</button>
+      <button class="calc-btn util"  onclick="action('mem','MR')">MR</button>
+      <button class="calc-btn util"  onclick="action('mem','MC')">MC</button>
+
+      <!-- Row 6: numbers -->
+      <button class="calc-btn num"   onclick="action('num','7')">7</button>
+      <button class="calc-btn num"   onclick="action('num','8')">8</button>
+      <button class="calc-btn num"   onclick="action('num','9')">9</button>
+      <button class="calc-btn fn"    onclick="action('fn','cbrt')">∛x</button>
+      <button class="calc-btn fn"    onclick="action('fn','abs')">|x|</button>
+
+      <!-- Row 7 -->
+      <button class="calc-btn num"   onclick="action('num','4')">4</button>
+      <button class="calc-btn num"   onclick="action('num','5')">5</button>
+      <button class="calc-btn num"   onclick="action('num','6')">6</button>
+      <button class="calc-btn fn"    onclick="action('fn','sinh')">sinh</button>
+      <button class="calc-btn fn"    onclick="action('fn','cosh')">cosh</button>
+
+      <!-- Row 8 -->
+      <button class="calc-btn num"   onclick="action('num','1')">1</button>
+      <button class="calc-btn num"   onclick="action('num','2')">2</button>
+      <button class="calc-btn num"   onclick="action('num','3')">3</button>
+      <button class="calc-btn fn"    onclick="action('fn','log2')">log₂</button>
+      <button class="calc-btn fn"    onclick="action('fn','tanh')">tanh</button>
+
+      <!-- Row 9 -->
+      <button class="calc-btn num span2" onclick="action('num','0')">0</button>
+      <button class="calc-btn num"   onclick="action('decimal')">.</button>
+      <button class="calc-btn fn"    onclick="action('fn','10pow')">10ˣ</button>
+      <button class="calc-btn eq"    onclick="action('equals')">=</button>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="history-wrap">
+      <div class="history-header">
+        <span class="history-label">History</span>
+        <button class="btn-clear-hist" onclick="clearHistory()">Clear</button>
+      </div>
+      <div class="history-list" id="historyList">
+        <div class="history-empty" id="historyEmpty">No calculations yet</div>
+      </div>
+    </div>
+
+  </div><!-- /.calculator -->
+
+  <!-- SEO CONTENT -->
+  <section class="seo-content">
+    <h2>Free Online Basic & Scientific Calculator</h2>
+    <p>This calculator handles everything from simple arithmetic to advanced scientific functions including trigonometry, logarithms, factorials, hyperbolic functions and memory storage. Designed for students, engineers, teachers and everyday users.</p>
+
+    <h3>What's Included</h3>
+    <ul>
+      <li><strong>Basic mode:</strong> Addition, subtraction, multiplication, division, percentage, sign toggle</li>
+      <li><strong>Scientific mode:</strong> sin, cos, tan, sinh, cosh, tanh, log, ln, log₂, eˣ, 10ˣ, x², x³, xʸ, √x, ∛x, |x|, 1/x, n!, π, e</li>
+      <li><strong>Memory:</strong> MS (store), MR (recall), MC (clear)</li>
+      <li><strong>Angle modes:</strong> Degrees and Radians (toggle in display)</li>
+      <li><strong>Calculation history:</strong> Click any past result to restore it</li>
+      <li><strong>Keyboard support:</strong> Type numbers and operators directly</li>
+    </ul>
+
+    <h3>Frequently Asked Questions</h3>
+    <div class="faq-block">
+      <div class="faq-item">
+        <div class="faq-q">Is this calculator free?</div>
+        <div class="faq-a">Yes — completely free, no account needed, no ads, no limits.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do I switch between degrees and radians?</div>
+        <div class="faq-a">Click the DEG / RAD button in the top-right of the display area. All trig functions (sin, cos, tan and their hyperbolic variants) respect the selected mode.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What does the memory feature do?</div>
+        <div class="faq-a">MS saves the current result to memory, MR recalls it into your calculation, and MC clears the stored value. The M indicator appears when memory holds a value.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I use my keyboard?</div>
+        <div class="faq-a">Yes. Type digits and operators (+ - * /) directly. Press Enter or = to calculate, Backspace to delete, and Escape to clear.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Does it work on mobile?</div>
+        <div class="faq-a">Yes — fully responsive on all screen sizes.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- RIGHT -->
+<div class="right-column">
+  <h2>Quick Links</h2>
+  <div class="quick-links">
+    <a href="geometry.html">Geometry Tools</a>
+    <a href="visualizer.html">Data Visualizer</a>
   </div>
+</div>
+
+</div>
+</div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <p>© 2026 UsedToTools</p>
-</footer>
+<footer class="footer">© 2026 UsedToTools.com · Online Calculator</footer>
 
-<!-- JS (UNCHANGED) -->
 <script>
-  const display = document.getElementById("display");
-  const sci = document.getElementById("scientific");
-  const basicBtn = document.getElementById("basicBtn");
-  const sciBtn = document.getElementById("sciBtn");
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+let state = {
+  display: '0',
+  expr: '',
+  operand1: null,
+  operator: null,
+  waitingForOperand: false,
+  justEvaluated: false,
+  angleMode: 'deg',   // 'deg' | 'rad'
+  memory: null,
+  powPending: false,
+};
 
-  function press(val) {
-    display.value += val;
+let history = JSON.parse(localStorage.getItem('calcHistory') || '[]');
+let mode = 'basic'; // 'basic' | 'sci'
+
+/* ═══════════════════════════════════════════
+   DOM REFS
+═══════════════════════════════════════════ */
+const displayMain = document.getElementById('displayMain');
+const displayExpr = document.getElementById('displayExpr');
+const memIndicator = document.getElementById('memIndicator');
+const angleToggle  = document.getElementById('angleToggle');
+const historyList  = document.getElementById('historyList');
+const historyEmpty = document.getElementById('historyEmpty');
+
+/* ═══════════════════════════════════════════
+   THEME
+═══════════════════════════════════════════ */
+(function() {
+  const root = document.documentElement;
+  const btn  = document.getElementById('themeToggle');
+  const saved = localStorage.getItem('theme') || 'light';
+  root.setAttribute('data-theme', saved);
+  btn.textContent = saved === 'night' ? '☀️ Day' : '🌙 Night';
+  btn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'night' ? 'light' : 'night';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    btn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+  });
+})();
+
+/* ═══════════════════════════════════════════
+   MODE TABS
+═══════════════════════════════════════════ */
+document.getElementById('tabBasic').addEventListener('click', () => setMode('basic'));
+document.getElementById('tabSci').addEventListener('click', () => setMode('sci'));
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('tabBasic').classList.toggle('active', m === 'basic');
+  document.getElementById('tabSci').classList.toggle('active', m === 'sci');
+  document.getElementById('basicGrid').style.display = m === 'basic' ? 'grid' : 'none';
+  document.getElementById('sciGrid').style.display  = m === 'sci'   ? 'grid' : 'none';
+}
+
+/* ═══════════════════════════════════════════
+   ANGLE MODE
+═══════════════════════════════════════════ */
+angleToggle.addEventListener('click', () => {
+  state.angleMode = state.angleMode === 'deg' ? 'rad' : 'deg';
+  angleToggle.textContent = state.angleMode.toUpperCase();
+});
+
+function toRad(n) {
+  return state.angleMode === 'deg' ? n * Math.PI / 180 : n;
+}
+
+/* ═══════════════════════════════════════════
+   CORE ACTION HANDLER
+═══════════════════════════════════════════ */
+function action(type, val) {
+  switch (type) {
+    case 'num':     inputDigit(val); break;
+    case 'decimal': inputDecimal(); break;
+    case 'op':      inputOperator(val); break;
+    case 'equals':  calculate(); break;
+    case 'clear':   clearAll(); break;
+    case 'sign':    toggleSign(); break;
+    case 'percent': inputPercent(); break;
+    case 'paren':   inputParen(); break;
+    case 'fn':      applyFn(val); break;
+    case 'const':   inputConst(val); break;
+    case 'mem':     memAction(val); break;
+  }
+  updateDisplay();
+}
+
+/* ── DIGIT INPUT ─────────────────────────── */
+function inputDigit(d) {
+  if (state.waitingForOperand || state.justEvaluated) {
+    state.display = d;
+    state.waitingForOperand = false;
+    state.justEvaluated = false;
+  } else {
+    state.display = state.display === '0' ? d : state.display + d;
+  }
+}
+
+function inputDecimal() {
+  if (state.waitingForOperand) { state.display = '0.'; state.waitingForOperand = false; return; }
+  if (!state.display.includes('.')) state.display += '.';
+}
+
+/* ── OPERATOR ────────────────────────────── */
+function inputOperator(op) {
+  const cur = parseFloat(state.display);
+  if (state.operand1 !== null && !state.waitingForOperand && !state.justEvaluated) {
+    const result = compute(state.operand1, cur, state.operator);
+    state.display = format(result);
+    state.operand1 = result;
+  } else {
+    state.operand1 = cur;
+  }
+  state.operator = op;
+  state.waitingForOperand = true;
+  state.justEvaluated = false;
+  state.expr = format(state.operand1) + ' ' + opSymbol(op);
+}
+
+function opSymbol(op) {
+  return {'/':'÷','*':'×','-':'−','+':'+'}[op] || op;
+}
+
+function compute(a, b, op) {
+  switch (op) {
+    case '+': return a + b;
+    case '-': return a - b;
+    case '*': return a * b;
+    case '/': return b === 0 ? NaN : a / b;
+    default:  return b;
+  }
+}
+
+/* ── EQUALS ──────────────────────────────── */
+function calculate() {
+  if (state.operand1 === null || state.operator === null) return;
+  const cur = parseFloat(state.display);
+  const result = compute(state.operand1, cur, state.operator);
+  const exprStr = `${format(state.operand1)} ${opSymbol(state.operator)} ${format(cur)}`;
+
+  if (isNaN(result) || !isFinite(result)) {
+    state.display = 'Error';
+    displayMain.classList.add('error');
+  } else {
+    const res = format(result);
+    addHistory(exprStr, res);
+    state.display = res;
+    displayMain.classList.remove('error');
+  }
+  state.expr = exprStr + ' =';
+  state.operand1 = null;
+  state.operator = null;
+  state.justEvaluated = true;
+  state.waitingForOperand = false;
+}
+
+/* ── UTIL ────────────────────────────────── */
+function clearAll() {
+  state.display = '0';
+  state.expr = '';
+  state.operand1 = null;
+  state.operator = null;
+  state.waitingForOperand = false;
+  state.justEvaluated = false;
+  displayMain.classList.remove('error');
+}
+
+function toggleSign() {
+  const n = parseFloat(state.display);
+  if (!isNaN(n)) state.display = format(-n);
+}
+
+function inputPercent() {
+  const n = parseFloat(state.display);
+  if (!isNaN(n)) state.display = format(n / 100);
+}
+
+function inputParen() {
+  // simple toggle for wrapping pending expression
+  if (state.waitingForOperand) {
+    state.display = '0';
+    state.waitingForOperand = false;
+  }
+}
+
+function inputConst(c) {
+  const vals = { pi: Math.PI, e: Math.E };
+  state.display = format(vals[c]);
+  state.justEvaluated = true;
+}
+
+/* ── SCIENTIFIC FUNCTIONS ────────────────── */
+function applyFn(fn) {
+  const n = parseFloat(state.display);
+  let result;
+  const expr = state.display;
+
+  switch (fn) {
+    case 'sq':    result = n * n; break;
+    case 'cube':  result = n * n * n; break;
+    case 'sqrt':  result = Math.sqrt(n); break;
+    case 'cbrt':  result = Math.cbrt(n); break;
+    case 'inv':   result = n === 0 ? NaN : 1 / n; break;
+    case 'abs':   result = Math.abs(n); break;
+    case 'fact':  result = factorial(Math.round(n)); break;
+    case 'sin':   result = Math.sin(toRad(n)); break;
+    case 'cos':   result = Math.cos(toRad(n)); break;
+    case 'tan':   result = Math.tan(toRad(n)); break;
+    case 'sinh':  result = Math.sinh(n); break;
+    case 'cosh':  result = Math.cosh(n); break;
+    case 'tanh':  result = Math.tanh(n); break;
+    case 'log':   result = Math.log10(n); break;
+    case 'ln':    result = Math.log(n); break;
+    case 'log2':  result = Math.log2(n); break;
+    case 'exp':   result = Math.exp(n); break;
+    case '10pow': result = Math.pow(10, n); break;
+    case 'pow':
+      // set up power operation
+      state.operand1 = n;
+      state.operator = '^';
+      state.waitingForOperand = true;
+      state.expr = format(n) + ' ^';
+      return;
+    default: result = n;
   }
 
-  function clearDisplay() {
-    display.value = "";
+  const label = fnLabel(fn);
+  const res = format(result);
+  if (!isNaN(result) && isFinite(result)) {
+    addHistory(`${label}(${expr})`, res);
+    state.display = res;
+  } else {
+    state.display = 'Error';
+    displayMain.classList.add('error');
   }
+  state.expr = `${label}(${expr}) =`;
+  state.justEvaluated = true;
+}
 
-  function calculate() {
-    try {
-      display.value = eval(display.value);
-    } catch {
-      display.value = "Error";
-    }
+// override compute to handle ^ (power)
+const _compute = compute;
+function compute(a, b, op) {
+  if (op === '^') return Math.pow(a, b);
+  return _compute(a, b, op);
+}
+
+function fnLabel(fn) {
+  const map = {sq:'x²',cube:'x³',sqrt:'√',cbrt:'∛',inv:'1/x',abs:'|x|',fact:'n!',
+    sin:'sin',cos:'cos',tan:'tan',sinh:'sinh',cosh:'cosh',tanh:'tanh',
+    log:'log',ln:'ln',log2:'log₂',exp:'eˣ','10pow':'10^',pow:'pow'};
+  return map[fn] || fn;
+}
+
+function factorial(n) {
+  if (n < 0 || n > 170) return NaN;
+  if (n === 0 || n === 1) return 1;
+  let r = 1;
+  for (let i = 2; i <= n; i++) r *= i;
+  return r;
+}
+
+/* ── MEMORY ──────────────────────────────── */
+function memAction(cmd) {
+  const n = parseFloat(state.display);
+  switch (cmd) {
+    case 'MS': state.memory = n; break;
+    case 'MR': if (state.memory !== null) { state.display = format(state.memory); state.justEvaluated = true; } break;
+    case 'MC': state.memory = null; break;
   }
+  memIndicator.textContent = state.memory !== null ? `M: ${format(state.memory)}` : '';
+}
 
-  sciBtn.onclick = () => {
-    sci.classList.add("active");
-    sciBtn.classList.add("active");
-    basicBtn.classList.remove("active");
-  };
+/* ── FORMAT ──────────────────────────────── */
+function format(n) {
+  if (isNaN(n)) return 'NaN';
+  if (!isFinite(n)) return n > 0 ? '∞' : '−∞';
+  // avoid floating point drift
+  const s = parseFloat(n.toPrecision(12)).toString();
+  // trim insane lengths
+  if (s.length > 14) return parseFloat(n.toExponential(6)).toString();
+  return s;
+}
 
-  basicBtn.onclick = () => {
-    sci.classList.remove("active");
-    basicBtn.classList.add("active");
-    sciBtn.classList.remove("active");
-  };
+/* ── UPDATE DISPLAY ──────────────────────── */
+function updateDisplay() {
+  displayMain.textContent = state.display;
+  displayExpr.textContent = state.expr || '\u00a0';
+  // auto-shrink font
+  const len = state.display.length;
+  displayMain.style.fontSize = len > 14 ? '1.4rem' : len > 10 ? '1.8rem' : '2.4rem';
+}
 
-  (function() {
-    const root = document.documentElement;
-    const toggleBtn = document.getElementById('themeToggle');
+/* ═══════════════════════════════════════════
+   HISTORY
+═══════════════════════════════════════════ */
+function addHistory(expr, result) {
+  history.unshift({ expr, result });
+  if (history.length > 30) history.pop();
+  localStorage.setItem('calcHistory', JSON.stringify(history));
+  renderHistory();
+}
 
-    const defaultTheme = 'light';
-    const savedTheme = localStorage.getItem('theme') || defaultTheme;
-    root.setAttribute('data-theme', savedTheme);
-    toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
+function clearHistory() {
+  history = [];
+  localStorage.removeItem('calcHistory');
+  renderHistory();
+}
 
-    toggleBtn.addEventListener('click', () => {
-      const current = root.getAttribute('data-theme');
-      const next = current === 'night' ? 'light' : 'night';
-
-      root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
+function renderHistory() {
+  historyEmpty.style.display = history.length ? 'none' : 'block';
+  const items = historyList.querySelectorAll('.history-item');
+  items.forEach(el => el.remove());
+  history.forEach(h => {
+    const div = document.createElement('div');
+    div.className = 'history-item';
+    div.innerHTML = `<span class="history-expr">${h.expr}</span><span class="history-result">${h.result}</span>`;
+    div.addEventListener('click', () => {
+      state.display = h.result;
+      state.justEvaluated = true;
+      updateDisplay();
     });
-  })();
-</script>
+    historyList.appendChild(div);
+  });
+}
 
+/* ═══════════════════════════════════════════
+   KEYBOARD SUPPORT
+═══════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  if (/[0-9]/.test(e.key))       action('num', e.key);
+  else if (e.key === '.')        action('decimal');
+  else if (e.key === '+')        action('op', '+');
+  else if (e.key === '-')        action('op', '-');
+  else if (e.key === '*')        action('op', '*');
+  else if (e.key === '/')        { e.preventDefault(); action('op', '/'); }
+  else if (e.key === 'Enter' || e.key === '=') action('equals');
+  else if (e.key === 'Backspace') {
+    if (state.display.length > 1) state.display = state.display.slice(0,-1);
+    else state.display = '0';
+    updateDisplay();
+  }
+  else if (e.key === 'Escape')   action('clear');
+});
+
+/* ═══════════════════════════════════════════
+   FAQ ACCORDION
+═══════════════════════════════════════════ */
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-q').addEventListener('click', () => item.classList.toggle('open'));
+});
+
+/* ═══════════════════════════════════════════
+   RIPPLE ON BUTTONS
+═══════════════════════════════════════════ */
+document.querySelectorAll('.calc-btn').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    const r = document.createElement('span');
+    r.className = 'ripple';
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+    this.appendChild(r);
+    setTimeout(() => r.remove(), 400);
+  });
+});
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+renderHistory();
+updateDisplay();
+document.body.style.zoom = "0.9";
+</script>
 </body>
 </html>

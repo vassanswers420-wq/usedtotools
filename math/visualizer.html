@@ -1,297 +1,397 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data Visualizer – Chart & Graph Generator | UsedToTools</title>
-<meta name="description" content="Free online data visualizer to create bar charts, line graphs and pie charts. Supports multiple datasets, units, date selectors and download as JPEG or PDF.">
+<title>ChartForge – Professional Chart & Graph Maker | Free Online Data Visualizer</title>
+<meta name="description" content="Create stunning bar charts, line graphs, pie charts, radar charts, scatter plots, bubble charts, area charts, doughnut charts and more. Free online chart maker for students, analysts and professionals. Export as PNG, JPEG, SVG or PDF.">
+<meta name="keywords" content="chart maker, graph generator, data visualizer, bar chart maker, line graph maker, pie chart generator, scatter plot tool, radar chart, free online chart tool, data visualization, export chart PDF">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://usedtotools.com/math/visualizer">
 
-<link rel="stylesheet" href="../style.css">
+<!-- Open Graph -->
+<meta property="og:title" content="ChartForge – Professional Chart & Graph Maker">
+<meta property="og:description" content="Build publication-ready charts in seconds. 10+ chart types, multiple datasets, custom colors, annotations and export to PNG, JPEG, SVG or PDF.">
+<meta property="og:type" content="website">
 
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<!-- Chart.js + plugins -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
-<style>
-.visualizer-box {
-  background: var(--surface-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 25px;
-  box-shadow: var(--shadow);
-}
 
-.selector-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.visualizer-box textarea {
-  width: 100%;
-  padding: 12px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border-color);
-  resize: vertical;
-  margin-bottom: 15px;
-  background: var(--surface-color);
-  color: var(--text-color);
-}
-
-.download-buttons {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 15px;
-}
-
-canvas {
-  margin-top: 25px;
-}
-.chart-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  height: 400px;
-  margin-top: 25px;
-}
-
-.chart-wrapper canvas {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-@media (max-width: 768px) {
-  .chart-wrapper {
-    height: 300px;
-  }
-}
-
-@media (max-width: 480px) {
-  .chart-wrapper {
-    height: 250px;
-  }
-}
-
-</style>
 </head>
-
+  <link rel="stylesheet" href="st.css">
 <body>
 
-<!-- ===== HEADER ===== -->
-<header class="header">
-  <div class="container header-inner">
+<!-- ─── HEADER ──────────────────────────────────── -->
+<header>
+  <div class="header-inner">
     <a href="../index.html" class="logo">
-      <img src="../assets/logo-day.png" class="logo-img logo-day" alt="UsedToTools">
-      <img src="../assets/logo-night.png" class="logo-img logo-night" alt="UsedToTools">
-      <span class="logo-text">UsedToTools.com</span>
+      Chart<span class="logo-dot">Forge</span>
     </a>
-
-    <nav class="nav">
+    <nav>
       <a href="../index.html">Home</a>
       <a href="../about.html">About</a>
     </nav>
-
-    <button class="theme-toggle" id="themeToggle">🌙 Night</button>
   </div>
 </header>
 
-<section class="section">
-<div class="container page-layout">
+<!-- ─── HERO ────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-badge">✦ Free · No signup · Instant export</div>
+  <h1>Turn data into<br><em>stunning visuals</em></h1>
+  <p>Professional chart maker for students, researchers and analysts. 10+ chart types, unlimited datasets, rich customization and one-click export.</p>
 
-<!-- LEFT COLUMN -->
-<div class="left-column">
-
-<h1 class="section-title">Professional Data Visualizer</h1>
-<p class="section-desc">
-Generate advanced charts with multiple datasets, custom axis labels, units and export options.
-</p>
-
-<div class="visualizer-box">
-
-<div class="selector-grid">
-
-<select id="chartType">
-  <option value="bar">Bar Chart</option>
-  <option value="line">Line Graph</option>
-  <option value="pie">Pie Chart</option>
-</select>
-
-<input type="text" id="xLabel" placeholder="X Axis Label">
-<input type="text" id="yLabel" placeholder="Y Axis Label">
-
-<select id="unit">
-  <option value="">No Unit</option>
-  <option value="₹">Rupees (₹)</option>
-  <option value="$">Dollar ($)</option>
-  <option value="%">Percentage (%)</option>
-  <option value="kg">Kilograms (kg)</option>
-</select>
-
-<input type="month" id="dateSelector">
-
-</div>
-
-<label><strong>Dataset 1 Values</strong></label>
-<textarea id="data1" rows="3" placeholder="10,20,30,40"></textarea>
-
-<label><strong>Dataset 2 Values (Optional)</strong></label>
-<textarea id="data2" rows="3" placeholder="15,25,35,45"></textarea>
-
-<label><strong>X-axis Labels</strong></label>
-<textarea id="labelsInput" rows="3" placeholder="Jan,Feb,Mar,Apr"></textarea>
-
-<button class="btn btn-primary" onclick="generateChart()">Generate Chart</button>
-
-<div class="download-buttons">
-  <button class="btn btn-outline" onclick="downloadJPEG()">Download JPEG</button>
-  <button class="btn btn-outline" onclick="downloadPDF()">Download PDF</button>
-</div>
-
-<div class="chart-wrapper">
-  <canvas id="myChart"></canvas>
-</div>
-
-
-</div>
-
-<!-- WHAT IS THIS SECTION -->
-<section class="seo-content" style="margin-top:40px;">
-<h2>What Is This Data Visualizer Tool?</h2>
-<p>
-This professional data visualizer allows you to convert numerical values into clear,
-interactive charts and graphs. Whether you are analyzing financial data, school
-statistics, business growth, or survey results, this tool helps transform raw
-numbers into meaningful visual insights.
-</p>
-
-<h3>Features of This Chart Generator</h3>
-<ul>
-<li>Bar, Line and Pie chart options</li>
-<li>Multiple dataset comparison</li>
-<li>Custom X and Y axis labels</li>
-<li>Unit selection support</li>
-<li>Date selector for time-based analysis</li>
-<li>Download charts as JPEG or PDF</li>
-<li>Mobile responsive and fast performance</li>
-</ul>
-
-<h3>Who Can Use This?</h3>
-<p>
-Students, teachers, business analysts, marketers, financial planners and
-research professionals can use this tool to create quick visual presentations
-without needing complex software.
-</p>
+  <!-- Chart Type Selector -->
+  <div class="chart-type-grid" id="chartTypeGrid">
+    <button class="chart-type-btn active" data-type="bar"><span class="icon">▊</span> Bar</button>
+    <button class="chart-type-btn" data-type="line"><span class="icon">📈</span> Line</button>
+    <button class="chart-type-btn" data-type="pie"><span class="icon">🥧</span> Pie</button>
+    <button class="chart-type-btn" data-type="doughnut"><span class="icon">⭕</span> Doughnut</button>
+    <button class="chart-type-btn" data-type="radar"><span class="icon">🕸</span> Radar</button>
+    <button class="chart-type-btn" data-type="polarArea"><span class="icon">🎯</span> Polar Area</button>
+    <button class="chart-type-btn" data-type="scatter"><span class="icon">✦</span> Scatter</button>
+    <button class="chart-type-btn" data-type="bubble"><span class="icon">◉</span> Bubble</button>
+    <button class="chart-type-btn" data-type="area"><span class="icon">⛰</span> Area</button>
+    <button class="chart-type-btn" data-type="horizontalBar"><span class="icon">▬</span> H. Bar</button>
+  </div>
 </section>
 
-</div>
+<!-- ─── APP LAYOUT ───────────────────────────────── -->
+<div class="app-layout">
 
-<!-- RIGHT COLUMN -->
-<div class="right-column">
-  <h2 class="section-title">Quick Links</h2>
-  <div class="quick-links">
-    <a href="geometry.html">Geometry Calculator</a>
-    <a href="Basic-calc.html">Basic Calculator</a>
+  <!-- LEFT: Control Panel -->
+  <aside>
+
+    <!-- DATA TAB -->
+    <div class="panel" style="margin-bottom:16px;">
+      <div class="panel-header">
+        <div class="panel-icon">📊</div>
+        <h2>Data</h2>
+      </div>
+      <div class="panel-body">
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="data">Datasets</button>
+          <button class="tab-btn" data-tab="labels">Labels</button>
+          <button class="tab-btn" data-tab="paste">Paste CSV</button>
+        </div>
+
+        <!-- Datasets tab -->
+        <div class="tab-panel active" id="tab-data">
+          <div id="datasetsContainer"></div>
+          <button class="btn btn-add" id="addDatasetBtn">＋ Add Dataset</button>
+        </div>
+
+        <!-- Labels tab -->
+        <div class="tab-panel" id="tab-labels">
+          <div class="form-group">
+            <label>Category / X-axis Labels</label>
+            <textarea id="labelsInput" rows="4" placeholder="Jan, Feb, Mar, Apr, May, Jun"></textarea>
+          </div>
+          <div class="form-group">
+            <label>X Axis Title</label>
+            <input type="text" id="xLabel" placeholder="Month">
+          </div>
+          <div class="form-group">
+            <label>Y Axis Title</label>
+            <input type="text" id="yLabel" placeholder="Revenue (₹)">
+          </div>
+        </div>
+
+        <!-- Paste CSV tab -->
+        <div class="tab-panel" id="tab-paste">
+          <div class="form-group">
+            <label>Paste CSV or TSV data</label>
+            <textarea id="csvInput" rows="8" placeholder="Month,Sales,Profit&#10;Jan,120,45&#10;Feb,180,60&#10;Mar,150,52"></textarea>
+          </div>
+          <button class="btn btn-secondary" onclick="parseCSV()" style="width:100%;justify-content:center;">Parse CSV</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STYLE TAB -->
+    <div class="panel" style="margin-bottom:16px;">
+      <div class="panel-header">
+        <div class="panel-icon">🎨</div>
+        <h2>Style</h2>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <label>Color Palette</label>
+          <select id="paletteSelect">
+            <option value="vivid">Vivid</option>
+            <option value="pastel">Pastel</option>
+            <option value="neon">Neon</option>
+            <option value="earth">Earth Tones</option>
+            <option value="mono">Monochrome</option>
+            <option value="sunset">Sunset</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Font Size</label>
+            <div class="range-row">
+              <input type="range" id="fontSize" min="9" max="20" value="12">
+              <span class="range-val" id="fontSizeVal">12</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Border Width</label>
+            <div class="range-row">
+              <input type="range" id="borderWidth" min="0" max="5" value="2">
+              <span class="range-val" id="borderWidthVal">2</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tension (Line)</label>
+            <div class="range-row">
+              <input type="range" id="tension" min="0" max="5" value="3">
+              <span class="range-val" id="tensionVal">0.3</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Bar Radius</label>
+            <div class="range-row">
+              <input type="range" id="barRadius" min="0" max="20" value="4">
+              <span class="range-val" id="barRadiusVal">4</span>
+            </div>
+          </div>
+        </div>
+        <div class="check-row">
+          <input type="checkbox" id="showDatalabels">
+          <label for="showDatalabels">Show data labels</label>
+        </div>
+        <div class="check-row">
+          <input type="checkbox" id="fillArea">
+          <label for="fillArea">Fill area under line</label>
+        </div>
+        <div class="check-row">
+          <input type="checkbox" id="showLegend" checked>
+          <label for="showLegend">Show legend</label>
+        </div>
+        <div class="check-row">
+          <input type="checkbox" id="showGrid" checked>
+          <label for="showGrid">Show grid lines</label>
+        </div>
+        <div class="check-row">
+          <input type="checkbox" id="animationOn" checked>
+          <label for="animationOn">Animate on render</label>
+        </div>
+        <div class="form-group" style="margin-top:8px;">
+          <label>Background Color</label>
+          <select id="bgColor">
+            <option value="transparent">Transparent</option>
+            <option value="#ffffff">White</option>
+            <option value="#0a0a0f">Dark</option>
+            <option value="#f8fafc">Light Gray</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- GENERATE + EXPORT -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-icon">🚀</div>
+        <h2>Generate & Export</h2>
+      </div>
+      <div class="panel-body">
+        <button class="btn btn-primary" onclick="generateChart()">⚡ Generate Chart</button>
+        <div class="export-grid">
+          <button class="btn btn-export" onclick="downloadAs('png')">↓ PNG</button>
+          <button class="btn btn-export" onclick="downloadAs('jpeg')">↓ JPEG</button>
+          <button class="btn btn-export" onclick="downloadAs('svg')">↓ SVG</button>
+          <button class="btn btn-export" onclick="downloadAs('pdf')">↓ PDF</button>
+        </div>
+        <button class="btn btn-secondary" onclick="copyChartImage()" style="width:100%;justify-content:center;margin-top:8px;">📋 Copy to Clipboard</button>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- RIGHT: Chart Display -->
+  <div class="panel chart-panel">
+    <div class="chart-toolbar">
+      <input type="text" class="chart-title-input" id="chartTitle" placeholder="Untitled Chart — click to rename">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-secondary" onclick="clearChart()">Clear</button>
+        <button class="btn btn-secondary" onclick="loadSampleData()">Load Sample</button>
+      </div>
+    </div>
+
+    <div class="chart-area" id="chartArea">
+      <div class="chart-empty" id="chartEmpty">
+        <div class="big-icon">📊</div>
+        <p>Enter your data and click<br><strong style="color:var(--accent)">Generate Chart</strong></p>
+      </div>
+      <canvas id="chartCanvas" style="display:none;"></canvas>
+    </div>
+
+    <div class="stats-bar" id="statsBar" style="display:none;">
+      <div class="stat-item">
+        <span class="stat-label">Data Points</span>
+        <span class="stat-value" id="statPoints">—</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Datasets</span>
+        <span class="stat-value" id="statDatasets">—</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Min</span>
+        <span class="stat-value" id="statMin">—</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Max</span>
+        <span class="stat-value" id="statMax">—</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Avg</span>
+        <span class="stat-value" id="statAvg">—</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Sum</span>
+        <span class="stat-value" id="statSum">—</span>
+      </div>
+    </div>
   </div>
-</div>
 
 </div>
+
+<!-- ─── SEO CONTENT ──────────────────────────────── -->
+<section class="seo-section">
+  <hr class="seo-divider">
+
+  <article>
+    <h2 style="font-family:var(--font-head);font-size:1.6rem;font-weight:800;margin-bottom:8px;">Free Professional Chart & Graph Maker</h2>
+    <p style="color:var(--muted);max-width:720px;line-height:1.8;font-size:0.9rem;">ChartForge is a free, browser-based data visualization tool that lets students, educators, researchers, and business analysts create publication-ready charts within seconds — no software installation, no account required. Built on Chart.js, it delivers crisp, scalable visuals you can export to PNG, JPEG, SVG, or PDF.</p>
+
+    <div class="seo-grid" style="margin-top:32px;">
+      <div class="seo-card">
+        <h3>📊 10+ Chart Types</h3>
+        <ul>
+          <li>Bar & Horizontal Bar Charts</li>
+          <li>Line & Area Graphs</li>
+          <li>Pie & Doughnut Charts</li>
+          <li>Radar & Spider Charts</li>
+          <li>Polar Area Charts</li>
+          <li>Scatter & Bubble Plots</li>
+        </ul>
+      </div>
+      <div class="seo-card">
+        <h3>🎨 Rich Customization</h3>
+        <ul>
+          <li>6 curated color palettes</li>
+          <li>Per-dataset custom colors</li>
+          <li>Data labels, legend, grid toggles</li>
+          <li>Adjustable font size & border width</li>
+          <li>Smooth curve tension control</li>
+          <li>Rounded bar radius</li>
+        </ul>
+      </div>
+      <div class="seo-card">
+        <h3>📥 Flexible Data Input</h3>
+        <ul>
+          <li>Manual comma-separated values</li>
+          <li>CSV / TSV paste & parse</li>
+          <li>Multiple dataset comparison</li>
+          <li>Scatter/Bubble JSON input</li>
+          <li>Auto-summary statistics</li>
+        </ul>
+      </div>
+      <div class="seo-card">
+        <h3>🚀 Export Options</h3>
+        <ul>
+          <li>PNG — lossless, transparent</li>
+          <li>JPEG — small file size</li>
+          <li>SVG — infinitely scalable</li>
+          <li>PDF — print-ready, A4</li>
+          <li>Copy to clipboard (one click)</li>
+        </ul>
+      </div>
+      <div class="seo-card">
+        <h3>👩‍🎓 Perfect for Students</h3>
+        <p>Create charts for science projects, math assignments, history timelines, and economics reports. Export directly to Word or PowerPoint — no Excel needed.</p>
+      </div>
+      <div class="seo-card">
+        <h3>💼 Built for Professionals</h3>
+        <p>Generate client-ready dashboards, financial KPI charts, survey result visualizations, and market analysis graphs in seconds. Supports multiple datasets for side-by-side comparison.</p>
+      </div>
+    </div>
+
+    <hr class="seo-divider">
+
+    <h2 style="font-family:var(--font-head);font-size:1.4rem;font-weight:800;margin-bottom:20px;">How to Create a Chart — Step by Step</h2>
+    <ol style="color:var(--muted);font-size:0.9rem;line-height:2;padding-left:20px;max-width:640px;">
+      <li><strong style="color:var(--text);">Pick your chart type</strong> — click any of the 10 buttons at the top.</li>
+      <li><strong style="color:var(--text);">Enter your data</strong> — type comma-separated numbers in the Datasets tab, or paste a CSV.</li>
+      <li><strong style="color:var(--text);">Add labels</strong> — switch to the Labels tab and set X-axis categories and axis titles.</li>
+      <li><strong style="color:var(--text);">Customize style</strong> — choose a palette, toggle legend, adjust font size and bar radius.</li>
+      <li><strong style="color:var(--text);">Generate</strong> — click ⚡ Generate Chart to render your chart instantly.</li>
+      <li><strong style="color:var(--text);">Export</strong> — download as PNG, JPEG, SVG, or PDF — or copy to clipboard.</li>
+    </ol>
+
+    <hr class="seo-divider">
+
+    <h2 style="font-family:var(--font-head);font-size:1.4rem;font-weight:800;margin-bottom:20px;">Frequently Asked Questions</h2>
+    <div id="faqContainer">
+      <div class="faq-item">
+        <div class="faq-q">Is this chart maker completely free?</div>
+        <div class="faq-a">Yes — 100% free, forever. No account, no watermarks, no limits on exports. All processing happens in your browser.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I create a chart with multiple datasets?</div>
+        <div class="faq-a">Yes. Click "+ Add Dataset" to add as many series as you need. Each dataset gets its own color, label, and data values, making it ideal for comparison charts.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do I use the CSV paste feature?</div>
+        <div class="faq-a">Click the "Paste CSV" tab. Paste your spreadsheet data (comma or tab separated). The first row is treated as headers (dataset names) and the first column as X-axis labels. Hit "Parse CSV" to auto-fill all datasets.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What is the best chart type for comparing categories?</div>
+        <div class="faq-a">Bar charts are ideal for comparing discrete categories. For temporal trends, use Line or Area charts. For part-to-whole relationships, use Pie or Doughnut charts. For multi-variable comparison, try Radar charts.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I export charts for presentations and reports?</div>
+        <div class="faq-a">Absolutely. Export as PNG or JPEG to insert into PowerPoint, Google Slides, Word, or any document editor. Export as PDF for print-ready reports. SVG is best when you need infinitely scalable vector graphics.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Does it work on mobile?</div>
+        <div class="faq-a">Yes. ChartForge is fully responsive and works on all modern smartphones and tablets.</div>
+      </div>
+    </div>
+  </article>
 </section>
 
-<footer class="footer">
-  <div class="container">
-    <p>© 2026 UsedToTools.com · Data Visualizer Tool</p>
-  </div>
+<!-- ─── FOOTER ───────────────────────────────────── -->
+<footer>
+  <p>© 2026 UsedToTools.com · ChartForge — Free Professional Chart Maker</p>
 </footer>
 
-<script>
-/* THEME */
-(function() {
-  const root = document.documentElement;
-  const toggleBtn = document.getElementById('themeToggle');
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  root.setAttribute('data-theme', savedTheme);
-  toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
+<!-- ─── TOAST ────────────────────────────────────── -->
+<div class="toast" id="toast"></div>
 
-  toggleBtn.addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'night' ? 'light' : 'night';
-    root.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
-  });
-})();
-
-let chart;
-
-function generateChart() {
-  const type = document.getElementById('chartType').value;
-  const labels = document.getElementById('labelsInput').value.split(',');
-  const data1 = document.getElementById('data1').value.split(',').map(Number);
-  const data2Raw = document.getElementById('data2').value;
-  const data2 = data2Raw ? data2Raw.split(',').map(Number) : null;
-  const yLabel = document.getElementById('yLabel').value;
-  const unit = document.getElementById('unit').value;
-
-  const ctx = document.getElementById('myChart').getContext('2d');
-  if (chart) chart.destroy();
-
-  const datasets = [{
-      label: "Dataset 1",
-      data: data1,
-      borderWidth: 2
-  }];
-
-  if (data2) {
-    datasets.push({
-      label: "Dataset 2",
-      data: data2,
-      borderWidth: 2
-    });
-  }
-
-  chart = new Chart(ctx, {
-    type: type,
-    data: { labels: labels, datasets: datasets },
-	options: {
-	  responsive: true,
-	  maintainAspectRatio: false,
-      scales: type !== 'pie' ? {
-        y: {
-          title: {
-            display: true,
-            text: unit ? yLabel + " (" + unit + ")" : yLabel
-          }
-        },
-        x: {
-          title: {
-            display: true,
-            text: document.getElementById('xLabel').value
-          }
-        }
-      } : {}
-    }
-  });
-}
-
-function downloadJPEG() {
-  const link = document.createElement('a');
-  link.download = 'chart.jpeg';
-  link.href = document.getElementById('myChart').toDataURL('image/jpeg', 1.0);
-  link.click();
-}
-
-function downloadPDF() {
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF();
-  const imgData = document.getElementById('myChart').toDataURL('image/jpeg', 1.0);
-  pdf.addImage(imgData, 'JPEG', 10, 10, 180, 100);
-  pdf.save("chart.pdf");
+<!-- ─── STRUCTURED DATA (SEO) ────────────────────── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ChartForge – Free Chart & Graph Maker",
+  "description": "Create bar charts, line graphs, pie charts, radar charts, scatter plots and more. Free online chart maker with PNG, JPEG, SVG and PDF export.",
+  "url": "https://usedtotools.com/math/visualizer",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
 </script>
 
+<script src="st.js"></script>
 </body>
 </html>

@@ -1,522 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Free GST Invoice Generator – Create & Download Tax Invoice Online | UsedToTools</title>
-
-  <meta name="description" content="Generate professional GST invoices online for free. Add items, calculate CGST & SGST automatically, and download invoice as PDF or Excel. Simple and fast invoice maker tool.">
-
-  <meta name="robots" content="index, follow">
-
-  <link rel="canonical" href="https://usedtotools.com/business/gst-invoice-generator">
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Free GST Invoice Generator – Create Tax Invoice Online">
-<meta property="og:description" content="Create GST compliant invoices online. Auto calculate tax, download PDF & Excel, and print instantly. 100% free invoice generator.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free GST Invoice Generator 2025 – Create GST Bill Online | UsedToTools</title>
+<meta name="description" content="Create GST-compliant tax invoices online for free. Auto-calculate CGST, SGST, IGST. Download PDF, Excel. Used by 50,000+ Indian businesses. No signup required.">
+<meta name="keywords" content="GST invoice generator, GST bill maker, online GST invoice, free GST invoice, CGST SGST calculator, tax invoice India, GST billing software free">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://usedtotools.com/business/gst-invoice-generator">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free GST Invoice Generator – Create GST Bill Online 2025">
+<meta property="og:description" content="Create professional GST invoices instantly. Auto CGST/SGST/IGST calculation. PDF & Excel download. 100% free, no signup.">
 <meta property="og:url" content="https://usedtotools.com/business/gst-invoice-generator">
-  <meta property="og:site_name" content="UsedToTools">
-
-  <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Free GST Invoice Generator | UsedToTools">
-<meta name="twitter:description" content="Create GST invoices online with automatic tax calculation and PDF download.">
-
-
-  <link rel="stylesheet" href="../style.css">
-
-  <style>
-    .tool-box {
-      background: var(--surface-color);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 20px;
-    }
-
-    .btn {
-      padding: 10px 16px;
-      border-radius: var(--radius);
-      border: none;
-      cursor: pointer;
-      background: var(--primary-color);
-      color: #fff;
-      font-size: 0.95rem;
-    }
-	/* ================= PRINT STYLES ================= */
-	@media print {
-
-	  body * {
-		visibility: hidden;
-	  }
-
-	  #invoicePDF, #invoicePDF * {
-		visibility: visible;
-	  }
-
-	  #invoicePDF {
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-	  }
-
-	  .print-brand {
-		position: fixed;
-		bottom: 5px;
-		right: 10px;
-		font-size: 10px;
-		color: #888;
-	  }
-	  @page {
-		  margin: 10mm;
-		}
-		/* ================= PROFESSIONAL INVOICE STYLE ================= */
-
-	.invoice-container {
-	  width: 210mm;
-	  min-height: 297mm;
-	  margin: auto;
-	  padding: 20mm;
-	  background: #fff;
-	  font-family: Arial, sans-serif;
-	  color: #000;
-	  position: relative;
-	}
-
-	.invoice-header {
-	  display: flex;
-	  justify-content: space-between;
-	  align-items: flex-start;
-	}
-
-	.invoice-table {
-	  width: 100%;
-	  border-collapse: collapse;
-	  margin-top: 20px;
-	}
-
-	.invoice-table th,
-	.invoice-table td {
-	  border: 1px solid #000;
-	  padding: 8px;
-	  text-align: center;
-	}
-
-	.invoice-summary {
-	  margin-top: 20px;
-	  text-align: right;
-	}
-
-	.amount-words {
-	  margin-top: 15px;
-	  font-style: italic;
-	}
-
-	.watermark {
-	  position: absolute;
-	  top: 40%;
-	  left: 20%;
-	  font-size: 70px;
-	  color: rgba(0,0,0,0.05);
-	  transform: rotate(-30deg);
-	  pointer-events: none;
-	}
-	}
-  </style>
-</head>
-
-<body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-<!-- ================= HEADER ================= -->
-<header class="header">
-  <div class="container header-inner">
-    <a href="../index.html" class="logo">
-      <img src="../assets/logo-day.png" class="logo-img logo-day" alt="UsedToTools">
-      <img src="../assets/logo-night.png" class="logo-img logo-night" alt="UsedToTools">
-      <span class="logo-text">UsedToTools</span>
-    </a>
-
-    <nav class="nav">
-      <a href="../index.html">Home</a>
-      <a href="../about.html">About</a>
-    </nav>
-
-    <button class="theme-toggle" id="themeToggle">🌙 Night</button>
-  </div>
-</header>
-
-<!-- ================= CONTENT ================= -->
-<section class="section">
-  <div class="container page-layout">
-
-    <!-- LEFT -->
-    <div class="left-column">
-
-      <h1 class="section-title">Free GST Invoice Generator</h1>
-
-      <p class="section-desc">
-Create professional GST-compliant invoices online with automatic CGST and SGST calculation. Download as PDF or Excel instantly.
-</p>
-
-
-      <p>
-Our free GST invoice generator helps businesses, shop owners, freelancers, and service providers create professional tax invoices in seconds. Add your business details, client information, and items — and the tool will automatically calculate GST, CGST, SGST, subtotal, and grand total. No registration required.
-</p>
-
-
-      <!-- TOOL BOX (EMPTY TEMPLATE AREA) -->
-	<div class="tool-box">
-
-	  <h3>Business Details</h3>
-	  <input type="file" id="logoUpload">
-	  <input type="text" id="shopName" placeholder="Shop / Business Name">
-	  <input type="text" id="gstin" placeholder="GSTIN Number">
-	  <input type="text" id="shopAddress" placeholder="Business Address">
-
-	  <h3>Invoice Details</h3>
-	  <input type="text" id="invoiceNumber" placeholder="Invoice Number (Auto if empty)">
-	  <input type="date" id="invoiceDate">
-
-	  <h3>Client Details</h3>
-	  <input type="text" id="clientName" placeholder="Client Name">
-	  <input type="text" id="clientAddress" placeholder="Client Address">
-
-	  <h3>Add Item</h3>
-	  <input type="text" id="itemDesc" placeholder="Item Description">
-	  <input type="text" id="hsnCode" placeholder="HSN / SAC Code">
-	  <input type="number" id="quantity" placeholder="Quantity">
-	  <input type="number" id="price" placeholder="Price per Unit">
-
-	  <button class="btn" onclick="addItem()">Add Item</button>
-
-	  <table id="itemTable">
-		<thead>
-		  <tr>
-			<th>Description</th>
-			<th>HSN</th>
-			<th>Qty</th>
-			<th>Price</th>
-			<th>Total</th>
-		  </tr>
-		</thead>
-		<tbody></tbody>
-	  </table>
-
-	  <h3>GST</h3>
-	  <select id="gstRate">
-		<option value="0">0%</option>
-		<option value="5">5%</option>
-		<option value="12">12%</option>
-		<option value="18" selected>18%</option>
-		<option value="28">28%</option>
-	  </select>
-
-	  <br><br>
-	  <button class="btn" onclick="generateInvoice()">Generate Invoice</button>
-	  <button class="btn" onclick="window.print()">Print</button>
-	  <button class="btn" onclick="downloadPDF()">Download PDF</button>
-	  <button class="btn" onclick="exportExcel()">Export Excel</button>
-	  <button class="btn" onclick="saveInvoice()">Save Invoice</button>
-
-	  <h3>Digital Signature</h3>
-	  <input type="file" id="signatureUpload">
-
-	  <div id="invoicePreview" style="margin-top:30px;"></div>
-
-	</div>
-
-
-      <!-- SEO CONTENT -->
-      <section class="content-section">
-        <h2>About This GST Invoice Generator</h2>
-<p>
-This online GST invoice generator is designed for Indian businesses that need fast and accurate invoice creation. It automatically calculates GST based on selected tax rates (0%, 5%, 12%, 18%, or 28%) and splits the tax into CGST and SGST as per standard billing rules.
-</p>
-
-<h3>How It Works</h3>
-<p>
-Enter your business details, GSTIN, client information, and invoice items. The system calculates subtotal, GST amount, CGST, SGST, and grand total automatically. You can then print the invoice or download it as a PDF or Excel file.
-</p>
-
-<h3>Why Use This Tool?</h3>
-<ul>
-  <li>Automatic GST calculation</li>
-  <li>Professional invoice preview</li>
-  <li>Download as PDF or Excel</li>
-  <li>No signup required</li>
-  <li>Works on mobile and desktop</li>
-</ul>
-
-      </section>
-
-      <!-- FAQ SECTION -->
-      <section class="content-section">
-        <h2>Frequently Asked Questions</h2>
-
-<h3>Is this GST invoice generator free?</h3>
-<p>Yes, this tool is completely free and does not require registration.</p>
-
-<h3>Does it calculate CGST and SGST automatically?</h3>
-<p>Yes. Once you select the GST rate, the system automatically splits the tax into CGST and SGST.</p>
-
-<h3>Can I download the invoice as PDF?</h3>
-<p>Yes, you can download the invoice as a PDF file or export it as an Excel file.</p>
-
-<h3>Is my invoice data stored?</h3>
-<p>No. All calculations are performed in your browser. Your data is not stored on any server.</p>
-
-      </section>
-
-    </div>
-
-    <!-- RIGHT -->
-    <aside class="right-column">
-      <h2 class="section-title">Related Tools</h2>
-      <div class="quick-links">
-<a href="../emipage.html">EMI Calculator</a>
-  <a href="../finance/Gst.html">GST Calculator</a>
-      </div>
-    </aside>
-
-  </div>
-</section>
-
-<!-- ================= FOOTER ================= -->
-<footer class="footer">
-  <p>© 2026 UsedToTools</p>
-</footer>
-
-<!-- ================= SCRIPT ================= -->
-<script>
-
-const invoicePreview = document.getElementById("invoicePreview");
-const itemDesc = document.getElementById("itemDesc");
-const hsnCode = document.getElementById("hsnCode");
-const quantity = document.getElementById("quantity");
-const price = document.getElementById("price");
-const shopName = document.getElementById("shopName");
-const gstin = document.getElementById("gstin");
-const shopAddress = document.getElementById("shopAddress");
-const clientName = document.getElementById("clientName");
-const clientAddress = document.getElementById("clientAddress");
-const invoiceNumber = document.getElementById("invoiceNumber");
-const invoiceDate = document.getElementById("invoiceDate");
-
-(function() {
-    const root = document.documentElement;
-    const toggleBtn = document.getElementById('themeToggle');
-
-    const defaultTheme = 'light';
-    const savedTheme = localStorage.getItem('theme') || defaultTheme;
-    root.setAttribute('data-theme', savedTheme);
-    toggleBtn.textContent = savedTheme === 'night' ? '☀️ Day' : '🌙 Night';
-
-    toggleBtn.addEventListener('click', () => {
-      const current = root.getAttribute('data-theme');
-      const next = current === 'night' ? 'light' : 'night';
-
-      root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      toggleBtn.textContent = next === 'night' ? '☀️ Day' : '🌙 Night';
-    });
-})();
-
-let items = [];
-let logoBase64 = "";
-let signatureBase64 = "";
-
-/* ================= NUMBER TO WORDS ================= */
-function numberToWords(num) {
-  const a = ["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten",
-  "Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"];
-  const b = ["","","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"];
-
-  if (num === 0) return "Zero";
-
-  if (num < 20) return a[num];
-  if (num < 100)
-    return b[Math.floor(num/10)] + " " + a[num%10];
-  if (num < 1000)
-    return a[Math.floor(num/100)] + " Hundred " + numberToWords(num%100);
-  if (num < 100000)
-    return numberToWords(Math.floor(num/1000)) + " Thousand " + numberToWords(num%1000);
-  if (num < 10000000)
-    return numberToWords(Math.floor(num/100000)) + " Lakh " + numberToWords(num%100000);
-
-  return numberToWords(Math.floor(num/10000000)) + " Crore " + numberToWords(num%10000000);
-}
-
-/* ================= FILE UPLOADS ================= */
-document.getElementById("logoUpload").addEventListener('change', function(e){
-  if (!e.target.files[0]) return;
-  const reader = new FileReader();
-  reader.onload = () => logoBase64 = reader.result;
-  reader.readAsDataURL(e.target.files[0]);
-});
-
-document.getElementById("signatureUpload").addEventListener('change', function(e){
-  if (!e.target.files[0]) return;
-  const reader = new FileReader();
-  reader.onload = () => signatureBase64 = reader.result;
-  reader.readAsDataURL(e.target.files[0]);
-});
-
-/* ================= ADD ITEM ================= */
-function addItem() {
-  const desc = itemDesc.value;
-  const hsn = hsnCode.value;
-  const qty = parseFloat(quantity.value);
-  const priceVal = parseFloat(price.value);
-
-  if (!desc || !qty || !priceVal) {
-    alert("Fill item details");
-    return;
-  }
-
-  const total = qty * priceVal;
-  items.push({ desc, hsn, qty, priceVal, total });
-
-  document.querySelector("#itemTable tbody").innerHTML += `
-    <tr>
-      <td>${desc}</td>
-      <td>${hsn}</td>
-      <td>${qty}</td>
-      <td>${priceVal.toFixed(2)}</td>
-      <td>${total.toFixed(2)}</td>
-    </tr>`;
-
-  itemDesc.value = "";
-  hsnCode.value = "";
-  quantity.value = "";
-  price.value = "";
-}
-
-/* ================= GENERATE INVOICE ================= */
-function generateInvoice() {
-
-  if (items.length === 0) {
-    alert("Add at least one item");
-    return;
-  }
-
-  let invoiceNo = invoiceNumber.value || "INV-" + Date.now();
-  const shop = shopName.value;
-  const gst = gstin.value;
-  const address = shopAddress.value;
-  const client = clientName.value;
-  const clientAddr = clientAddress.value;
-  const date = invoiceDate.value || new Date().toISOString().split('T')[0];
-  const gstRate = parseFloat(document.getElementById("gstRate").value);
-
-  let subtotal = items.reduce((sum, i) => sum + i.total, 0);
-  let gstAmount = subtotal * (gstRate / 100);
-  let cgst = gstAmount / 2;
-  let sgst = gstAmount / 2;
-  let grandTotal = subtotal + gstAmount;
-
-  let rows = items.map(i => `
-    <tr>
-      <td>${i.desc}</td>
-      <td>${i.hsn}</td>
-      <td>${i.qty}</td>
-      <td>${i.priceVal.toFixed(2)}</td>
-      <td>${i.total.toFixed(2)}</td>
-    </tr>
-  `).join("");
-
-  invoicePreview.innerHTML = `
-  <div id="invoicePDF" class="invoice-container">
-
-    <div class="watermark">${shop || "INVOICE"}</div>
-
-    <div class="invoice-header">
-      <div>
-        ${logoBase64 ? `<img src="${logoBase64}" style="max-height:80px;"><br>` : ""}
-        <h2>${shop}</h2>
-        <p>${address}</p>
-        <p><strong>GSTIN:</strong> ${gst}</p>
-      </div>
-      <div>
-        <h3>Tax Invoice</h3>
-        <p><strong>Invoice No:</strong> ${invoiceNo}</p>
-        <p><strong>Date:</strong> ${date}</p>
-      </div>
-    </div>
-
-    <hr>
-
-    <h4>Bill To:</h4>
-    <p><strong>${client}</strong></p>
-    <p>${clientAddr}</p>
-
-    <table class="invoice-table">
-      <tr>
-        <th>Description</th>
-        <th>HSN</th>
-        <th>Qty</th>
-        <th>Price</th>
-        <th>Total</th>
-      </tr>
-      ${rows}
-    </table>
-
-    <div class="invoice-summary">
-      <p><strong>Subtotal:</strong> ₹${subtotal.toFixed(2)}</p>
-      <p>CGST (${gstRate/2}%): ₹${cgst.toFixed(2)}</p>
-      <p>SGST (${gstRate/2}%): ₹${sgst.toFixed(2)}</p>
-      <h2>Grand Total: ₹${grandTotal.toFixed(2)}</h2>
-    </div>
-
-    <div class="amount-words">
-      Amount in Words: Rupees ${numberToWords(Math.round(grandTotal))} Only
-    </div>
-
-    ${signatureBase64 ? `<br><br><img src="${signatureBase64}" style="max-height:60px;"><br><strong>Authorized Signature</strong>` : ""}
-
-    <div class="print-brand">usedtotools.com</div>
-
-  </div>
-  `;
-}
-
-/* ================= PDF ================= */
-function downloadPDF() {
-  const element = document.getElementById("invoicePDF");
-  if (!element) {
-    alert("Please generate invoice first.");
-    return;
-  }
-  html2pdf().from(element).save("invoice.pdf");
-}
-
-/* ================= EXCEL ================= */
-function exportExcel() {
-  let data = [
-    ["Description","HSN","Qty","Price","Total"],
-    ...items.map(i => [i.desc, i.hsn, i.qty, i.priceVal, i.total])
-  ];
-
-  let ws = XLSX.utils.aoa_to_sheet(data);
-  let wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Invoice");
-  XLSX.writeFile(wb, "invoice.xlsx");
-}
-
-/* ================= SAVE ================= */
-function saveInvoice() {
-  const invoiceData = {
-    shop: shopName.value,
-    client: clientName.value,
-    items,
-    date: new Date()
-  };
-  localStorage.setItem("lastInvoice", JSON.stringify(invoiceData));
-  alert("Invoice Saved in Browser!");
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "GST Invoice Generator",
+  "url": "https://usedtotools.com/business/gst-invoice-generator",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "All",
+  "description": "Free online GST invoice generator for Indian businesses. Create GST-compliant tax invoices with automatic CGST, SGST, IGST calculation.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "provider": { "@type": "Organization", "name": "UsedToTools", "url": "https://usedtotools.com" }
 }
 </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <link rel="stylesheet" href="mm.css">
+</head>
+<body>
 
+<!-- HEADER -->
+<header class="site-header">
+  <a href="../index.html" class="site-logo">Used<span>To</span>Tools</a>
+  <nav class="site-nav">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+  </nav>
+</header>
 
+<!-- HERO -->
+<div class="hero-strip">
+  <h1>Free <em>GST Invoice</em> Generator 2026</h1>
+  <p>Create professional GST-compliant tax invoices in seconds. Auto-calculate CGST, SGST & IGST. Download PDF or Excel instantly.</p>
+  <div class="badge-row">
+    <span class="badge"><i class="fas fa-check-circle"></i> 100% Free</span>
+    <span class="badge"><i class="fas fa-lock"></i> No Signup</span>
+    <span class="badge"><i class="fas fa-bolt"></i> Instant PDF</span>
+    <span class="badge"><i class="fas fa-shield-alt"></i> Data stays in browser</span>
+    <span class="badge"><i class="fas fa-file-invoice"></i> GST Compliant</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="page-wrap">
+
+  <!-- LEFT: EDITOR -->
+  <div class="left-col">
+
+    <!-- TABS -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('create')"><i class="fas fa-plus-circle"></i> Create Invoice</button>
+      <button class="tab-btn" onclick="switchTab('bulk')"><i class="fas fa-layer-group"></i> Bulk Mode</button>
+      <button class="tab-btn" onclick="switchTab('history')"><i class="fas fa-history"></i> Saved (<span id="histCount">0</span>)</button>
+    </div>
+
+    <!-- TAB: CREATE -->
+    <div class="tab-panel active" id="tab-create">
+
+      <!-- Invoice Type -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-file-invoice"></i> Invoice Type</div>
+        <div class="inv-type-row">
+          <button class="inv-type-btn active" onclick="setInvType('tax')" id="type-tax">Tax Invoice</button>
+          <button class="inv-type-btn" onclick="setInvType('proforma')" id="type-proforma">Proforma Invoice</button>
+          <button class="inv-type-btn" onclick="setInvType('debit')" id="type-debit">Debit Note</button>
+          <button class="inv-type-btn" onclick="setInvType('credit')" id="type-credit">Credit Note</button>
+          <button class="inv-type-btn" onclick="setInvType('receipt')" id="type-receipt">Receipt</button>
+        </div>
+      </div>
+
+      <!-- Business Details -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-building"></i> Your Business Details</div>
+        <div class="form-grid cols-2">
+          <div class="field">
+            <label>Business / Shop Name *</label>
+            <input type="text" id="shopName" placeholder="e.g. Sharma Enterprises">
+          </div>
+          <div class="field">
+            <label>GSTIN</label>
+            <input type="text" id="gstin" placeholder="e.g. 22AAAAA0000A1Z5" maxlength="15">
+          </div>
+          <div class="field">
+            <label>Business Address *</label>
+            <input type="text" id="shopAddress" placeholder="Street, City, State, PIN">
+          </div>
+          <div class="field">
+            <label>Phone / Email</label>
+            <input type="text" id="shopContact" placeholder="Phone or Email">
+          </div>
+          <div class="field">
+            <label>State (for IGST)</label>
+            <select id="shopState">
+              <option value="">-- Select State --</option>
+              <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option>
+              <option>Bihar</option><option>Chhattisgarh</option><option>Goa</option>
+              <option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option>
+              <option>Jharkhand</option><option>Karnataka</option><option>Kerala</option>
+              <option>Madhya Pradesh</option><option selected>Maharashtra</option><option>Manipur</option>
+              <option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option>
+              <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
+              <option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
+              <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option>
+              <option>West Bengal</option><option>Delhi</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Business Logo</label>
+            <div class="file-input-wrap">
+              <i class="fas fa-image"></i>Upload Logo (PNG/JPG)
+              <input type="file" id="logoUpload" accept="image/*">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Invoice Details -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-hashtag"></i> Invoice Details</div>
+        <div class="form-grid cols-4">
+          <div class="field">
+            <label>Invoice Number</label>
+            <input type="text" id="invoiceNumber" placeholder="Auto-generated">
+          </div>
+          <div class="field">
+            <label>Invoice Date *</label>
+            <input type="date" id="invoiceDate">
+          </div>
+          <div class="field">
+            <label>Due Date</label>
+            <input type="date" id="dueDate">
+          </div>
+          <div class="field">
+            <label>Place of Supply</label>
+            <select id="supplyState">
+              <option value="">-- Same as above --</option>
+              <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option>
+              <option>Bihar</option><option>Chhattisgarh</option><option>Goa</option>
+              <option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option>
+              <option>Jharkhand</option><option>Karnataka</option><option>Kerala</option>
+              <option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option>
+              <option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option>
+              <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
+              <option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
+              <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option>
+              <option>West Bengal</option><option>Delhi</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client Details -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-user-tie"></i> Bill To (Client Details)</div>
+        <div class="form-grid cols-2">
+          <div class="field">
+            <label>Client / Company Name *</label>
+            <input type="text" id="clientName" placeholder="Client or Company Name">
+          </div>
+          <div class="field">
+            <label>Client GSTIN</label>
+            <input type="text" id="clientGstin" placeholder="Client GSTIN (optional)">
+          </div>
+          <div class="field">
+            <label>Client Address</label>
+            <input type="text" id="clientAddress" placeholder="Street, City, State, PIN">
+          </div>
+          <div class="field">
+            <label>Client State</label>
+            <select id="clientState" onchange="checkIGST()">
+              <option value="">-- Select State --</option>
+              <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option>
+              <option>Bihar</option><option>Chhattisgarh</option><option>Goa</option>
+              <option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option>
+              <option>Jharkhand</option><option>Karnataka</option><option>Kerala</option>
+              <option>Madhya Pradesh</option><option selected>Maharashtra</option><option>Manipur</option>
+              <option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option>
+              <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
+              <option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
+              <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option>
+              <option>West Bengal</option><option>Delhi</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Email (for sending)</label>
+            <input type="email" id="clientEmail" placeholder="client@email.com">
+          </div>
+          <div class="field">
+            <label>Phone</label>
+            <input type="tel" id="clientPhone" placeholder="Client phone number">
+          </div>
+        </div>
+      </div>
+
+      <!-- Items -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-list"></i> Items / Services</div>
+        <div class="item-table-wrap">
+          <table class="item-table" id="itemsTable">
+            <thead>
+              <tr>
+                <th style="width:28%">Description</th>
+                <th style="width:9%">HSN/SAC</th>
+                <th style="width:7%">Qty</th>
+                <th style="width:8%">Unit</th>
+                <th style="width:10%">Rate (₹)</th>
+                <th style="width:9%">Disc %</th>
+                <th style="width:8%">GST %</th>
+                <th style="width:11%">Amount (₹)</th>
+                <th style="width:5%"></th>
+              </tr>
+            </thead>
+            <tbody id="itemsTbody">
+            </tbody>
+          </table>
+        </div>
+        <button class="btn-add-item" onclick="addItemRow()"><i class="fas fa-plus"></i> Add Item / Service</button>
+
+        <!-- Discount / Shipping / Round Off -->
+        <div class="extra-charges">
+          <div class="field">
+            <label>Discount (₹)</label>
+            <input type="number" id="discountAmt" value="0" placeholder="0" onchange="recalcTotals()">
+          </div>
+          <div class="field">
+            <label>Shipping (₹)</label>
+            <input type="number" id="shippingAmt" value="0" placeholder="0" onchange="recalcTotals()">
+          </div>
+          <div class="field">
+            <label>Adjustment (₹)</label>
+            <input type="number" id="adjustAmt" value="0" placeholder="±0" onchange="recalcTotals()">
+          </div>
+        </div>
+
+        <!-- GST MODE -->
+        <div style="margin-top:14px;">
+          <label style="font-size:0.78rem;font-weight:500;color:var(--muted);display:block;margin-bottom:6px;">GST Mode (auto-detected from states)</label>
+          <div class="gst-chips" id="gstModeChips">
+            <span class="gst-chip active" id="chip-cgst-sgst" onclick="setGstMode('cgst-sgst')">CGST + SGST (Intra-state)</span>
+            <span class="gst-chip" id="chip-igst" onclick="setGstMode('igst')">IGST (Inter-state)</span>
+            <span class="gst-chip" id="chip-exempt" onclick="setGstMode('exempt')">Exempt / Zero-rated</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes & Terms -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sticky-note"></i> Notes & Terms</div>
+        <div class="form-grid cols-2">
+          <div class="field">
+            <label>Notes / Special Instructions</label>
+            <textarea id="invoiceNotes" placeholder="e.g. Payment due within 30 days. Thank you for your business!"></textarea>
+          </div>
+          <div class="field">
+            <label>Terms & Conditions</label>
+            <textarea id="invoiceTerms" placeholder="e.g. Goods once sold will not be taken back. Subject to local jurisdiction."></textarea>
+          </div>
+        </div>
+        <div class="form-grid cols-2" style="margin-top:12px;">
+          <div class="field">
+            <label>Bank Name</label>
+            <input type="text" id="bankName" placeholder="e.g. State Bank of India">
+          </div>
+          <div class="field">
+            <label>Account Number</label>
+            <input type="text" id="bankAccount" placeholder="Account number">
+          </div>
+          <div class="field">
+            <label>IFSC Code</label>
+            <input type="text" id="bankIfsc" placeholder="e.g. SBIN0001234">
+          </div>
+          <div class="field">
+            <label>UPI ID</label>
+            <input type="text" id="upiId" placeholder="e.g. business@upi">
+          </div>
+          <div class="field">
+            <label>Digital Signature</label>
+            <div class="file-input-wrap">
+              <i class="fas fa-signature"></i>Upload Signature
+              <input type="file" id="signatureUpload" accept="image/*">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Totals -->
+      <div class="totals-grid" id="totalsGrid">
+        <div class="total-row"><span class="lbl">Subtotal</span><span class="val" id="t-subtotal">₹0.00</span></div>
+        <div class="total-row"><span class="lbl">Discount</span><span class="val" id="t-discount">- ₹0.00</span></div>
+        <div class="total-row tax-row"><span class="lbl" id="t-tax-lbl">CGST + SGST</span><span class="val" id="t-tax">₹0.00</span></div>
+        <div class="total-row"><span class="lbl">Shipping</span><span class="val" id="t-shipping">+ ₹0.00</span></div>
+        <div class="total-row grand"><span class="lbl">GRAND TOTAL</span><span class="val" id="t-grand">₹0.00</span></div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="btn-row" style="margin-top:18px;">
+        <button class="btn btn-primary" onclick="generatePreview()"><i class="fas fa-eye"></i> Preview Invoice</button>
+        <button class="btn btn-saffron" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> Download PDF</button>
+        <button class="btn btn-outline" onclick="exportExcel()"><i class="fas fa-file-excel"></i> Export Excel</button>
+        <button class="btn btn-outline" onclick="printInvoice()"><i class="fas fa-print"></i> Print</button>
+        <button class="btn btn-outline" onclick="saveInvoice()"><i class="fas fa-save"></i> Save</button>
+        <button class="btn btn-danger btn-sm" onclick="clearAll()"><i class="fas fa-trash"></i> Clear</button>
+      </div>
+    </div>
+
+    <!-- TAB: BULK -->
+    <div class="tab-panel" id="tab-bulk">
+      <div class="card">
+        <div class="card-title"><i class="fas fa-layer-group"></i> Bulk Invoice Mode</div>
+        <p style="font-size:0.88rem;color:var(--muted);margin-bottom:16px;">Upload a CSV file with columns: ClientName, ClientAddress, ItemDesc, HSN, Qty, Price, GSTRate. The tool will generate invoices for each row.</p>
+        <div class="file-input-wrap" style="margin-bottom:14px;">
+          <i class="fas fa-file-csv"></i>Upload CSV File
+          <input type="file" id="bulkCsvUpload" accept=".csv">
+        </div>
+        <button class="btn btn-primary" onclick="processBulkCSV()"><i class="fas fa-cogs"></i> Generate All Invoices</button>
+        <div id="bulkResult" style="margin-top:16px;"></div>
+      </div>
+    </div>
+
+    <!-- TAB: HISTORY -->
+    <div class="tab-panel" id="tab-history">
+      <div class="card">
+        <div class="card-title"><i class="fas fa-history"></i> Saved Invoices</div>
+        <div id="historyList"><p style="color:var(--muted);font-size:0.88rem;">No saved invoices yet. Create and save an invoice to see it here.</p></div>
+        <div class="btn-row" style="margin-top:14px;">
+          <button class="btn btn-danger btn-sm" onclick="clearAllSaved()"><i class="fas fa-trash"></i> Clear All Saved</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /left-col -->
+
+  <!-- RIGHT: SIDEBAR -->
+  <aside>
+
+    <!-- Live Totals Card -->
+    <div class="sidebar-card">
+      <h3><i class="fas fa-calculator" style="margin-right:6px;"></i> Live Summary</h3>
+      <div style="background:var(--accent-pale);border-radius:8px;padding:14px;margin-bottom:12px;">
+        <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px;">Grand Total</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:var(--accent);" id="sb-grand">₹0.00</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:6px;" id="sb-words">—</div>
+      </div>
+      <div style="font-size:0.82rem;display:grid;gap:7px;">
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted)">Items</span><span id="sb-items" style="font-weight:600;">0</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted)">Subtotal</span><span id="sb-sub" style="font-weight:600;">₹0.00</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted)" id="sb-tax-lbl">CGST</span><span id="sb-cgst" style="font-weight:600;color:var(--saffron);">₹0.00</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted)" id="sb-tax-lbl2">SGST</span><span id="sb-sgst" style="font-weight:600;color:var(--saffron);">₹0.00</span></div>
+      </div>
+    </div>
+
+    <!-- Quick Templates -->
+    <div class="sidebar-card">
+      <h3><i class="fas fa-magic" style="margin-right:6px;"></i> Quick Templates</h3>
+      <div style="display:grid;gap:7px;">
+        <button class="btn btn-outline btn-sm" style="justify-content:flex-start;" onclick="applyTemplate('retail')"><i class="fas fa-store"></i> Retail / Shop</button>
+        <button class="btn btn-outline btn-sm" style="justify-content:flex-start;" onclick="applyTemplate('service')"><i class="fas fa-tools"></i> Service / Freelance</button>
+        <button class="btn btn-outline btn-sm" style="justify-content:flex-start;" onclick="applyTemplate('consulting')"><i class="fas fa-briefcase"></i> Consulting</button>
+        <button class="btn btn-outline btn-sm" style="justify-content:flex-start;" onclick="applyTemplate('restaurant')"><i class="fas fa-utensils"></i> Restaurant / Catering</button>
+        <button class="btn btn-outline btn-sm" style="justify-content:flex-start;" onclick="applyTemplate('ecommerce')"><i class="fas fa-shopping-cart"></i> E-commerce</button>
+      </div>
+    </div>
+
+    <!-- GST Rate Reference -->
+    <div class="sidebar-card">
+      <h3><i class="fas fa-percent" style="margin-right:6px;"></i> GST Rate Reference</h3>
+      <div style="font-size:0.8rem;display:grid;gap:5px;">
+        <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);"><span>Essential goods (milk, grains)</span><span style="font-weight:700;color:var(--accent);">0%</span></div>
+        <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);"><span>Household goods, medicines</span><span style="font-weight:700;color:var(--accent);">5%</span></div>
+        <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);"><span>Processed foods, mobiles</span><span style="font-weight:700;color:var(--accent);">12%</span></div>
+        <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);"><span>IT services, most services</span><span style="font-weight:700;color:var(--saffron);">18%</span></div>
+        <div style="display:flex;justify-content:space-between;padding:5px 0;"><span>Luxury goods, tobacco</span><span style="font-weight:700;color:var(--danger);">28%</span></div>
+      </div>
+    </div>
+
+    <!-- Recent Saved -->
+    <div class="sidebar-card">
+      <h3><i class="fas fa-clock" style="margin-right:6px;"></i> Recent Invoices</h3>
+      <div id="recentList"><p style="color:var(--muted);font-size:0.82rem;">No recent invoices.</p></div>
+    </div>
+
+  </aside>
+
+  <!-- SEO CONTENT -->
+  <div class="seo-wrap">
+    <h2>Free GST Invoice Generator for Indian Businesses — 2025</h2>
+    <p>Our online GST invoice generator is trusted by shopkeepers, freelancers, consultants, and small businesses across India. Create fully GST-compliant tax invoices in under 2 minutes — no accounting knowledge required.</p>
+
+    <div class="seo-grid">
+      <div class="seo-card"><i class="fas fa-bolt"></i><h4>Instant PDF Download</h4><p>Download a professionally formatted GST invoice as PDF in one click. No login, no watermark.</p></div>
+      <div class="seo-card"><i class="fas fa-calculator"></i><h4>Auto CGST / SGST / IGST</h4><p>Tax is automatically split into CGST+SGST for intra-state or IGST for inter-state supplies.</p></div>
+      <div class="seo-card"><i class="fas fa-shield-alt"></i><h4>100% Private & Secure</h4><p>All calculations happen in your browser. Your invoice data never leaves your device.</p></div>
+      <div class="seo-card"><i class="fas fa-file-excel"></i><h4>Excel Export</h4><p>Export item-wise invoice data to Excel for your accounts and reconciliation.</p></div>
+      <div class="seo-card"><i class="fas fa-mobile-alt"></i><h4>Works on Mobile</h4><p>Fully responsive design. Create invoices on your phone or tablet from anywhere.</p></div>
+      <div class="seo-card"><i class="fas fa-history"></i><h4>Save & Reuse</h4><p>Save invoices in browser storage. Load and edit previous invoices at any time.</p></div>
+    </div>
+
+    <h3>How to Create a GST Invoice Online (Step-by-Step)</h3>
+    <p><strong>Step 1:</strong> Enter your business name, address, and GSTIN number in the "Your Business Details" section.</p>
+    <p><strong>Step 2:</strong> Fill in invoice number, date, and select the place of supply state.</p>
+    <p><strong>Step 3:</strong> Enter your client's name, address, and GSTIN. The tool auto-detects if IGST or CGST+SGST applies.</p>
+    <p><strong>Step 4:</strong> Add items or services with HSN/SAC code, quantity, price, discount, and GST rate per item.</p>
+    <p><strong>Step 5:</strong> Preview the invoice, then download as PDF or Excel. You can also print directly.</p>
+
+    <h3>What is a GST Invoice?</h3>
+    <p>A GST invoice (or tax invoice) is a legal document issued by a GST-registered supplier to a buyer. It must include the supplier's GSTIN, HSN/SAC codes, item-wise GST rates, and the breakdown of CGST, SGST, and IGST. Businesses with annual turnover above ₹40 lakh (₹20 lakh for services) must issue GST invoices.</p>
+
+    <h3>Frequently Asked Questions</h3>
+    <div class="faq-item">
+      <div class="faq-q">Is this GST invoice generator completely free?</div>
+      <div class="faq-a">Yes, this tool is 100% free with no hidden charges, no signup, and no subscription required.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is the difference between CGST, SGST, and IGST?</div>
+      <div class="faq-a">CGST (Central GST) and SGST (State GST) are applied on intra-state sales — each is half of the total GST rate. IGST (Integrated GST) applies on inter-state sales and equals the full GST rate. This tool detects which applies based on supplier and buyer states.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I add multiple items with different GST rates?</div>
+      <div class="faq-a">Yes. Each line item in the invoice can have its own GST rate — 0%, 5%, 12%, 18%, or 28%.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I add my business logo and signature?</div>
+      <div class="faq-a">Yes. You can upload your business logo and digital signature, which will appear on the generated invoice.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is my data safe? Does it get stored on any server?</div>
+      <div class="faq-a">No. All invoice data is processed entirely in your browser. Nothing is sent to any server. Saved invoices are stored locally in your browser's localStorage.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is HSN and SAC code in GST invoices?</div>
+      <div class="faq-a">HSN (Harmonized System of Nomenclature) codes classify goods. SAC (Service Accounting Code) codes classify services. Businesses with turnover above ₹5 crore must mention 6-digit HSN/SAC codes on invoices.</div>
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<!-- INVOICE PREVIEW MODAL -->
+<div class="modal-overlay" id="previewModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span><i class="fas fa-file-invoice" style="margin-right:8px;"></i>Invoice Preview</span>
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <div id="invoicePrintArea"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="closeModal()"><i class="fas fa-times"></i> Close</button>
+      <button class="btn btn-outline btn-sm" onclick="printInvoice()"><i class="fas fa-print"></i> Print</button>
+      <button class="btn btn-saffron btn-sm" onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> Download PDF</button>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>© 2025 UsedToTools · Free Online GST Invoice Generator · All calculations are estimates. Consult a CA for compliance.</p>
+</footer>
+
+<div id="toast"></div>
+
+<script src="mm.js"></script>
 </body>
 </html>
