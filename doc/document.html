@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document Editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="jj.css">
+</head>
+<body>
+
+<!-- MENU BAR -->
+<div id="menubar">
+  <div class="menu-item">File
+    <div class="dropdown">
+      <div class="dd-item" onclick="newDoc()">New <span class="shortcut">Ctrl+N</span></div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="exportHTML()">Export as HTML <span class="shortcut">Ctrl+S</span></div>
+      <div class="dd-item" onclick="exportTxt()">Export as TXT</div>
+	  <div class="dd-item" onclick="exportDocx()">Export as DOCX</div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="printDoc()">Print <span class="shortcut">Ctrl+P</span></div>
+    </div>
+  </div>
+  <div class="menu-item">Edit
+    <div class="dropdown">
+      <div class="dd-item" onclick="document.execCommand('undo')">Undo <span class="shortcut">Ctrl+Z</span></div>
+      <div class="dd-item" onclick="document.execCommand('redo')">Redo <span class="shortcut">Ctrl+Y</span></div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="document.execCommand('cut')">Cut <span class="shortcut">Ctrl+X</span></div>
+      <div class="dd-item" onclick="document.execCommand('copy')">Copy <span class="shortcut">Ctrl+C</span></div>
+      <div class="dd-item" onclick="document.execCommand('paste')">Paste <span class="shortcut">Ctrl+V</span></div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="document.execCommand('selectAll')">Select All <span class="shortcut">Ctrl+A</span></div>
+      <div class="dd-item" onclick="toggleFind()">Find <span class="shortcut">Ctrl+F</span></div>
+    </div>
+  </div>
+  <div class="menu-item">Insert
+    <div class="dropdown">
+      <div class="dd-item" onclick="insertLink()">Link</div>
+      <div class="dd-item" onclick="insertImageURL()">Image (URL)</div>
+      <div class="dd-item" onclick="insertTable()">Table</div>
+      <div class="dd-item" onclick="insertHR()">Horizontal Rule</div>
+      <div class="dd-item" onclick="insertPageBreak()">Page Break</div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="insertDate()">Current Date</div>
+    </div>
+  </div>
+  <div class="menu-item">Format
+    <div class="dropdown">
+      <div class="dd-item" onclick="fmt('bold')">Bold <span class="shortcut">Ctrl+B</span></div>
+      <div class="dd-item" onclick="fmt('italic')">Italic <span class="shortcut">Ctrl+I</span></div>
+      <div class="dd-item" onclick="fmt('underline')">Underline <span class="shortcut">Ctrl+U</span></div>
+      <div class="dd-sep"></div>
+      <div class="dd-item" onclick="fmt('removeFormat')">Clear Formatting</div>
+    </div>
+  </div>
+  <div class="menu-item">View
+    <div class="dropdown">
+      <div class="dd-item" onclick="setZoom(0.75)">75%</div>
+      <div class="dd-item" onclick="setZoom(1)">100%</div>
+      <div class="dd-item" onclick="setZoom(1.25)">125%</div>
+      <div class="dd-item" onclick="setZoom(1.5)">150%</div>
+    </div>
+  </div>
+
+  <div id="doc-title-wrap">
+    <input id="doc-title" value="Untitled Document" spellcheck="false" title="Click to rename">
+  </div>
+
+  <div class="menu-right">
+    <span id="wordcount">0 words</span>
+    <button id="exportBtn" onclick="exportDocx()">⬇ DOCX</button>
+  </div>
+</div>
+
+<!-- TOOLBAR -->
+<div id="toolbar">
+
+  <!-- Style & Font -->
+  <select class="tb-select" id="styleSelect" title="Paragraph style" onchange="applyStyle(this.value)" style="width:115px">
+    <option value="div">Normal</option>
+    <option value="h1">Heading 1</option>
+    <option value="h2">Heading 2</option>
+    <option value="h3">Heading 3</option>
+    <option value="h4">Heading 4</option>
+    <option value="pre">Code Block</option>
+    <option value="blockquote">Quote</option>
+  </select>
+
+  <select class="tb-select" id="fontSelect" title="Font family" onchange="applyFont(this.value)" style="width:116px">
+    <option value="'Crimson Pro',serif">Crimson Pro</option>
+    <option value="'Sora',sans-serif">Sora</option>
+    <option value="'JetBrains Mono',monospace">Mono</option>
+    <option value="Georgia,serif">Georgia</option>
+    <option value="'Times New Roman',serif">Times New Roman</option>
+    <option value="Arial,sans-serif">Arial</option>
+    <option value="Verdana,sans-serif">Verdana</option>
+    <option value="'Courier New',monospace">Courier New</option>
+  </select>
+
+  <input class="tb-num" id="fontSizeInput" type="number" value="16" min="6" max="144" title="Font size (px)" onchange="applyFontSize(this.value)">
+
+  <div class="tb-sep"></div>
+
+  <!-- Text style -->
+  <button class="tb-btn" id="btnBold" title="Bold (Ctrl+B)" onclick="fmt('bold')"><b>B</b></button>
+  <button class="tb-btn" id="btnItalic" title="Italic (Ctrl+I)" onclick="fmt('italic')"><i>I</i></button>
+  <button class="tb-btn" id="btnUnderline" title="Underline (Ctrl+U)" onclick="fmt('underline')"><u>U</u></button>
+  <button class="tb-btn" id="btnStrike" title="Strikethrough" onclick="fmt('strikeThrough')"><s>S</s></button>
+  <button class="tb-btn" title="Subscript" onclick="fmt('subscript')" style="font-size:11px">X₂</button>
+  <button class="tb-btn" title="Superscript" onclick="fmt('superscript')" style="font-size:11px">X²</button>
+
+  <div class="tb-sep"></div>
+
+  <!-- Color -->
+  <div class="tb-color-group">
+    <button class="tb-color-btn" title="Text color" onclick="openPalette('text',event)">
+      <span class="color-letter" id="textColorLetter">A</span>
+      <div class="color-bar" id="textColorBar" style="background:#1a1a1a"></div>
+    </button>
+    <button class="tb-color-btn" title="Highlight" onclick="openPalette('hl',event)">
+      <span style="font-size:13px;line-height:1">▓</span>
+      <div class="color-bar" id="hlColorBar" style="background:#fef08a"></div>
+    </button>
+  </div>
+
+  <div class="tb-sep"></div>
+
+  <!-- Alignment -->
+  <button class="tb-btn" title="Align left" onclick="align('left')">
+    <svg viewBox="0 0 16 16"><rect x="1" y="2" width="14" height="2" rx="1"/><rect x="1" y="6" width="9" height="2" rx="1"/><rect x="1" y="10" width="12" height="2" rx="1"/><rect x="1" y="14" width="7" height="2" rx="1"/></svg>
+  </button>
+  <button class="tb-btn" title="Align center" onclick="align('center')">
+    <svg viewBox="0 0 16 16"><rect x="1" y="2" width="14" height="2" rx="1"/><rect x="3.5" y="6" width="9" height="2" rx="1"/><rect x="2" y="10" width="12" height="2" rx="1"/><rect x="4.5" y="14" width="7" height="2" rx="1"/></svg>
+  </button>
+  <button class="tb-btn" title="Align right" onclick="align('right')">
+    <svg viewBox="0 0 16 16"><rect x="1" y="2" width="14" height="2" rx="1"/><rect x="6" y="6" width="9" height="2" rx="1"/><rect x="3" y="10" width="12" height="2" rx="1"/><rect x="8" y="14" width="7" height="2" rx="1"/></svg>
+  </button>
+  <button class="tb-btn" title="Justify" onclick="align('full')">
+    <svg viewBox="0 0 16 16"><rect x="1" y="2" width="14" height="2" rx="1"/><rect x="1" y="6" width="14" height="2" rx="1"/><rect x="1" y="10" width="14" height="2" rx="1"/><rect x="1" y="14" width="10" height="2" rx="1"/></svg>
+  </button>
+
+  <div class="tb-sep"></div>
+
+  <!-- Lists -->
+  <button class="tb-btn" title="Bullet list" onclick="fmt('insertUnorderedList')">
+    <svg viewBox="0 0 16 16"><circle cx="2.5" cy="4" r="1.5"/><rect x="5" y="3" width="10" height="2" rx="1"/><circle cx="2.5" cy="9" r="1.5"/><rect x="5" y="8" width="10" height="2" rx="1"/><circle cx="2.5" cy="14" r="1.5"/><rect x="5" y="13" width="10" height="2" rx="1"/></svg>
+  </button>
+  <button class="tb-btn" title="Numbered list" onclick="fmt('insertOrderedList')">
+    <svg viewBox="0 0 16 16"><text x="1" y="5.5" style="font-size:5px;font-family:sans-serif">1.</text><rect x="6" y="3" width="9" height="2" rx="1"/><text x="1" y="10.5" style="font-size:5px;font-family:sans-serif">2.</text><rect x="6" y="8" width="9" height="2" rx="1"/><text x="1" y="15.5" style="font-size:5px;font-family:sans-serif">3.</text><rect x="6" y="13" width="9" height="2" rx="1"/></svg>
+  </button>
+  <button class="tb-btn" title="Indent" onclick="fmt('indent')">→≡</button>
+  <button class="tb-btn" title="Outdent" onclick="fmt('outdent')">←≡</button>
+
+  <div class="tb-sep"></div>
+
+  <!-- Insert -->
+  <button class="tb-btn" title="Insert link" onclick="insertLink()">
+    <svg viewBox="0 0 16 16"><path d="M6.5 9.5a3.5 3.5 0 005 0l2-2a3.5 3.5 0 00-5-5l-1 1"/><path d="M9.5 6.5a3.5 3.5 0 00-5 0l-2 2a3.5 3.5 0 005 5l1-1" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <button class="tb-btn" title="Insert image" onclick="insertImageURL()">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1" y="3" width="14" height="10" rx="1.5"/><circle cx="5" cy="6.5" r="1.2"/><path d="M1 11l3.5-3.5 2.5 2.5 2-2 4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="tb-btn" title="Insert table" onclick="insertTable()">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1" y="1" width="14" height="14" rx="1.5"/><line x1="1" y1="5.5" x2="15" y2="5.5"/><line x1="1" y1="10" x2="15" y2="10"/><line x1="6" y1="1" x2="6" y2="15"/><line x1="11" y1="1" x2="11" y2="15"/></svg>
+  </button>
+  <button class="tb-btn" title="Horizontal rule" onclick="insertHR()">─</button>
+
+  <div class="tb-sep"></div>
+
+  <!-- Undo/Redo/Clear -->
+  <button class="tb-btn" title="Undo (Ctrl+Z)" onclick="document.execCommand('undo')">↩</button>
+  <button class="tb-btn" title="Redo (Ctrl+Y)" onclick="document.execCommand('redo')">↪</button>
+  <button class="tb-btn" title="Clear formatting" onclick="fmt('removeFormat')">✕A</button>
+
+  <div class="tb-sep"></div>
+
+  <button class="tb-btn" title="Find (Ctrl+F)" onclick="toggleFind()">🔍</button>
+  <button class="tb-btn" title="Print" onclick="printDoc()">⎙</button>
+
+  <select class="tb-select" id="zoomSelect" onchange="setZoom(parseFloat(this.value))" style="width:64px;font-size:11px;margin-left:2px">
+    <option value="0.75">75%</option>
+    <option value="1" selected>100%</option>
+    <option value="1.25">125%</option>
+    <option value="1.5">150%</option>
+  </select>
+</div>
+
+<!-- RULER -->
+<div id="ruler">
+  <div class="ruler-inner" id="rulerInner">
+    <div class="ruler-margin" id="marginLeft" style="left:0;width:96px"></div>
+    <div class="ruler-margin" id="marginRight" style="right:0;width:96px"></div>
+  </div>
+</div>
+
+<!-- EDITOR AREA -->
+<div id="editor-area">
+  <div class="page-wrap" id="pageWrap">
+    <div class="page" id="pageEl">
+      <div id="editor"
+        contenteditable="true"
+        spellcheck="true"
+        data-placeholder="Start typing your document…"></div>
+      <div class="page-num" id="pageNum">1</div>
+    </div>
+  </div>
+</div>
+
+<!-- STATUS BAR -->
+<div id="statusbar">
+  <span class="status-item" id="sbWords">Words: 0</span>
+  <span class="status-item" id="sbChars">Chars: 0</span>
+  <span class="status-item" id="sbParas">Paragraphs: 0</span>
+  <span class="status-item" id="sbSel">No selection</span>
+  <span class="status-item" style="margin-left:auto" id="sbSaved">● Unsaved</span>
+</div>
+
+<!-- COLOR PALETTE -->
+<div id="colorPalette" class="color-palette"></div>
+
+<!-- FIND BAR -->
+<div id="findBar">
+  <input id="findInput" placeholder="Find in document…" oninput="doFind(this.value)">
+  <span id="findCount"></span>
+  <button onclick="findStep(-1)">↑</button>
+  <button onclick="findStep(1)">↓</button>
+  <button onclick="toggleFind()">✕</button>
+</div>
+
+<script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+<script src="https://unpkg.com/html-docx-js/dist/html-docx.js"></script>
+<script src="jj.js"></script>
+</body>
+</html>

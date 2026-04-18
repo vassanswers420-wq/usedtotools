@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Editor – UsedToTools</title>
+<meta name="description" content="Free online PDF editor. Merge, split, reorder, rotate pages, add text, draw, annotate and download your edited PDF instantly.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <link rel="stylesheet" href="mm.css">
+
+</head>
+<body>
+
+<header>
+  <a href="../index.html" class="logo">UsedToTools</a>
+  <nav class="header-nav">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+  </nav>
+</header>
+
+<div class="app">
+
+  <!-- ── LEFT: TOOLS ── -->
+  <aside class="tools-panel">
+
+    <div class="panel-section">
+      <div class="panel-label">Open</div>
+      <div class="upload-zone" id="uploadZone">
+        <i class="fas fa-file-pdf"></i>
+        <span>Drop PDF or click to upload</span>
+      </div>
+      <input type="file" id="pdfUploader" accept="application/pdf" hidden>
+      <div id="loadProgress">
+        <progress id="loadBar" value="0" max="100"></progress>
+        <span id="loadLabel">Loading…</span>
+      </div>
+    </div>
+
+    <div class="panel-section" id="pageListSection" style="display:none">
+      <div class="panel-label">Pages (<span id="pageCount">0</span>)</div>
+      <div class="page-thumb-list" id="pageThumbList"></div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Annotate</div>
+      <button class="tool-btn" id="textToolBtn"><i class="fas fa-font"></i> Add Text</button>
+      <button class="tool-btn" id="drawToolBtn"><i class="fas fa-pen"></i> Draw / Pen</button>
+      <button class="tool-btn" id="highlightToolBtn"><i class="fas fa-highlighter"></i> Highlight</button>
+      <button class="tool-btn" id="stickyBtn"><i class="fas fa-sticky-note"></i> Sticky Note</button>
+      <button class="tool-btn" id="selectToolBtn"><i class="fas fa-mouse-pointer"></i> Select / Move</button>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Page Transform</div>
+      <div class="transform-row">
+        <button class="tool-btn" id="rotateLeftBtn"><i class="fas fa-undo"></i> Rotate L</button>
+        <button class="tool-btn" id="rotateRightBtn"><i class="fas fa-redo"></i> Rotate R</button>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Page Operations</div>
+      <button class="tool-btn" id="deletePageBtn"><i class="fas fa-trash-alt"></i> Delete Page</button>
+      <button class="tool-btn" id="duplicatePageBtn"><i class="fas fa-copy"></i> Duplicate Page</button>
+      <button class="tool-btn" id="insertBlankBtn"><i class="fas fa-plus-square"></i> Insert Blank Page</button>
+      <button class="tool-btn" id="extractPageBtn"><i class="fas fa-file-export"></i> Extract Page</button>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Shapes</div>
+      <div class="transform-row">
+        <button class="tool-btn" id="rectToolBtn"><i class="fas fa-square"></i> Rectangle</button>
+        <button class="tool-btn" id="circleToolBtn"><i class="fas fa-circle"></i> Circle</button>
+        <button class="tool-btn" id="lineToolBtn"><i class="fas fa-slash"></i> Line</button>
+        <button class="tool-btn" id="arrowToolBtn"><i class="fas fa-long-arrow-alt-right"></i> Arrow</button>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ── CENTER: CANVAS ── -->
+  <main class="canvas-area">
+    <div class="canvas-wrap" id="canvasWrap">
+      <div class="canvas-placeholder" id="placeholder">
+        <i class="fas fa-file-pdf"></i>
+        <h3>No PDF loaded</h3>
+        <p>Upload a PDF from the left panel<br>to start editing</p>
+      </div>
+
+      <div id="pdfViewport">
+        <canvas id="pageCanvas"></canvas>
+        <canvas id="annotationCanvas"></canvas>
+      </div>
+    </div>
+
+    <div class="zoom-controls">
+      <button class="zoom-btn" id="zoomIn" title="Zoom in"><i class="fas fa-plus"></i></button>
+      <button class="zoom-btn" id="zoomOut" title="Zoom out"><i class="fas fa-minus"></i></button>
+      <button class="zoom-btn" id="zoomFit" title="Fit"><i class="fas fa-compress-arrows-alt"></i></button>
+    </div>
+
+    <div class="page-nav" id="pageNav" style="display:none">
+      <button id="prevPage"><i class="fas fa-chevron-left"></i></button>
+      <span id="pageLabel">1 / 1</span>
+      <button id="nextPage"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <div class="canvas-toolbar">
+      <button class="btn-undo" id="undoBtn"><i class="fas fa-history"></i> Undo</button>
+      <button class="btn-reset" id="clearAnnotBtn"><i class="fas fa-eraser"></i> Clear Page</button>
+      <button class="btn-delete visible" id="deleteSelBtn" style="background:rgba(245,90,90,0.15);color:var(--danger);display:none" ><i class="fas fa-trash"></i> Delete Selected</button>
+      <button class="btn-save" id="savePdfBtn"><i class="fas fa-download"></i> Export PDF</button>
+      <button class="btn-save" id="savePngBtn" style="background:var(--accent2);color:#0e0e12;"><i class="fas fa-image"></i> Export PNG</button>
+    </div>
+  </main>
+
+  <!-- ── RIGHT: PROPERTIES ── -->
+  <aside class="adjustments-panel">
+
+    <div class="adj-group">
+      <div class="panel-label">Document Info</div>
+      <div class="info-block" id="docInfo">
+        No PDF loaded.<br>
+        Upload a file to begin.
+      </div>
+    </div>
+
+    <div class="adj-group">
+      <div class="panel-label">Text Style</div>
+
+      <div class="font-size-row">
+        <label>Size</label>
+        <input type="number" id="fontSizeInput" value="16" min="6" max="120">
+        <label>px</label>
+      </div>
+
+      <div class="adj-item">
+        <div class="adj-header"><span class="adj-name">Opacity</span><span class="adj-value" id="opacityVal">100%</span></div>
+        <input type="range" id="opacitySlider" min="10" max="100" value="100">
+      </div>
+
+      <div class="adj-item">
+        <div class="adj-header"><span class="adj-name">Stroke Width</span><span class="adj-value" id="strokeVal">2px</span></div>
+        <input type="range" id="strokeSlider" min="1" max="20" value="2">
+      </div>
+
+      <div style="margin-bottom:8px">
+        <div class="adj-name" style="margin-bottom:6px">Font</div>
+        <select id="fontSelect" style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:7px;padding:6px 10px;font-size:0.82rem;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;">
+          <option value="Arial">Arial</option>
+          <option value="Georgia">Georgia</option>
+          <option value="'Courier New'">Courier New</option>
+          <option value="'Times New Roman'">Times New Roman</option>
+          <option value="Verdana">Verdana</option>
+          <option value="Impact">Impact</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:8px">
+        <div class="adj-name" style="margin-bottom:6px">Style</div>
+        <div style="display:flex;gap:6px">
+          <button class="tool-btn" id="boldBtn" style="flex:1;justify-content:center;padding:6px"><i class="fas fa-bold"></i></button>
+          <button class="tool-btn" id="italicBtn" style="flex:1;justify-content:center;padding:6px"><i class="fas fa-italic"></i></button>
+          <button class="tool-btn" id="underlineBtn" style="flex:1;justify-content:center;padding:6px"><i class="fas fa-underline"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="adj-group">
+      <div class="panel-label">Color</div>
+      <div class="color-row" id="colorSwatches">
+        <div class="color-swatch active" data-color="#000000" style="background:#000000" title="Black"></div>
+        <div class="color-swatch" data-color="#ffffff" style="background:#ffffff;border:1px solid #444" title="White"></div>
+        <div class="color-swatch" data-color="#f55a5a" style="background:#f55a5a" title="Red"></div>
+        <div class="color-swatch" data-color="#5af55a" style="background:#5af55a" title="Green"></div>
+        <div class="color-swatch" data-color="#5a9af5" style="background:#5a9af5" title="Blue"></div>
+        <div class="color-swatch" data-color="#f5c85a" style="background:#f5c85a" title="Yellow"></div>
+        <div class="color-swatch" data-color="#c8f55a" style="background:#c8f55a" title="Lime"></div>
+        <div class="color-swatch" data-color="#5af5c8" style="background:#5af5c8" title="Cyan"></div>
+        <div class="color-swatch" data-color="#d45af5" style="background:#d45af5" title="Purple"></div>
+        <div class="color-swatch" data-color="#f59a5a" style="background:#f59a5a" title="Orange"></div>
+      </div>
+      <div class="custom-color-wrap">
+        <input type="color" id="customColor" value="#000000">
+        <label>Custom color</label>
+      </div>
+    </div>
+
+    <div class="adj-group">
+      <div class="panel-label">Page Order</div>
+      <div class="page-order-list" id="pageOrderList">
+        <div style="font-size:0.78rem;color:var(--muted);text-align:center;padding:12px">Load a PDF to reorder pages</div>
+      </div>
+      <div style="margin-top:8px;display:flex;gap:6px">
+        <button class="tool-btn" id="moveUpBtn" style="flex:1;justify-content:center"><i class="fas fa-arrow-up"></i> Up</button>
+        <button class="tool-btn" id="moveDownBtn" style="flex:1;justify-content:center"><i class="fas fa-arrow-down"></i> Down</button>
+      </div>
+    </div>
+
+    <div class="adj-group">
+      <div class="panel-label">Page Background</div>
+      <div class="color-row" id="bgSwatches">
+        <div class="color-swatch active" data-color="transparent" style="background: repeating-conic-gradient(#555 0% 25%, #333 0% 50%) 0 0/10px 10px" title="None"></div>
+        <div class="color-swatch" data-color="#ffffff" style="background:#ffffff;border:1px solid #444" title="White"></div>
+        <div class="color-swatch" data-color="#f9f6ef" style="background:#f9f6ef;border:1px solid #444" title="Cream"></div>
+        <div class="color-swatch" data-color="#1a1a2e" style="background:#1a1a2e" title="Dark"></div>
+        <div class="color-swatch" data-color="#e8f4ff" style="background:#e8f4ff;border:1px solid #444" title="Sky"></div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<div id="toast"></div>
+
+<script src="mm.js"></script>
+</body>
+</html>
