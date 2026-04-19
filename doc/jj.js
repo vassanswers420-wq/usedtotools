@@ -316,26 +316,145 @@ ${editor.innerHTML}
   URL.revokeObjectURL(a.href);
   document.getElementById('sbSaved').textContent='✓ Exported';
 }
-function exportDocx(){
-  const { Document, Packer, Paragraph, TextRun } = window.docx;
+function exportDocx() {
+  const title = document.getElementById('doc-title').value || 'document';
+  const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType,
+          Table, TableRow, TableCell, WidthType, BorderStyle } = window.docx;
 
-  const text = editor.innerText;
+  const children = [];
+  const nodes = editor.childNodes;
+
+  function getAlignment(el) {
+    const align = el.style.textAlign || window.getComputedStyle(el).textAlign;
+    if (align === 'center') return AlignmentType.CENTER;
+    if (align === 'right') return AlignmentType.RIGHT;
+    if (align === 'justify') return AlignmentType.JUSTIFIED;
+    return AlignmentType.LEFT;
+  }
+
+  function getRunProps(node) {
+    let bold = false, italics = false, underline = false, strike = false;
+    let el = node.parentElement;
+    while (el && el !== editor) {
+      const tag = el.tagName?.toLowerCase();
+      if (tag === 'b' || tag === 'strong' || el.style?.fontWeight === 'bold' || el.style?.fontWeight === '700') bold = true;
+      if (tag === 'i' || tag === 'em' || el.style?.fontStyle === 'italic') italics = true;
+      if (tag === 'u' || (el.style?.textDecoration || '').includes('underline')) underline = true;
+      if (tag === 's' || tag === 'strike' || (el.style?.textDecoration || '').includes('line-through')) strike = true;
+      el = el.parentElement;
+    }
+    return { bold, italics, underline: underline ? {} : undefined, strike };
+  }
+
+  function extractRuns(el) {
+    const runs = [];
+    el.childNodes.forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent) {
+        const props = getRunProps(node);
+        runs.push(new TextRun({ text: node.textContent, ...props }));
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        runs.push(...extractRuns(node));
+      }
+    });
+    return runs;
+  }
+
+  function processNode(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = node.textContent;
+      if (text.trim()) {
+        children.push(new Paragraph({ children: [new TextRun(text)] }));
+      }
+      return;
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+
+    const tag = node.tagName.toLowerCase();
+
+    if (tag === 'h1') {
+      children.push(new Paragraph({ heading: HeadingLevel.HEADING_1, alignment: getAlignment(node), children: extractRuns(node) }));
+    } else if (tag === 'h2') {
+      children.push(new Paragraph({ heading: HeadingLevel.HEADING_2, alignment: getAlignment(node), children: extractRuns(node) }));
+    } else if (tag === 'h3') {
+      children.push(new Paragraph({ heading: HeadingLevel.HEADING_3, alignment: getAlignment(node), children: extractRuns(node) }));
+    } else if (tag === 'h4') {
+      children.push(new Paragraph({ heading: HeadingLevel.HEADING_4, alignment: getAlignment(node), children: extractRuns(node) }));
+    } else if (tag === 'blockquote') {
+      const runs = extractRuns(node);
+      if (runs.length) {
+        children.push(new Paragraph({ alignment: getAlignment(node), indent: { left: 720 }, children: runs.map(r => new TextRun({ ...r, italics: true })) }));
+      }
+    } else if (tag === 'ul' || tag === 'ol') {
+      node.querySelectorAll('li').forEach((li, idx) => {
+        const runs = extractRuns(li);
+        children.push(new Paragraph({
+          bullet: tag === 'ul' ? { level: 0 } : undefined,
+          numbering: tag === 'ol' ? { reference: 'default-numbering', level: 0 } : undefined,
+          children: runs.length ? runs : [new TextRun(li.innerText || '')]
+        }));
+      });
+    } else if (tag === 'table') {
+      const rows = [];
+      node.querySelectorAll('tr').forEach(tr => {
+        const cells = [];
+        tr.querySelectorAll('td, th').forEach(td => {
+          cells.push(new TableCell({
+            children: [new Paragraph({ children: extractRuns(td).length ? extractRuns(td) : [new TextRun(td.innerText || '')] })]
+          }));
+        });
+        if (cells.length) rows.push(new TableRow({ children: cells }));
+      });
+      if (rows.length) children.push(new Table({ rows, width: { size: 9000, type: WidthType.DXA } }));
+    } else if (tag === 'p' || tag === 'div') {
+      const runs = extractRuns(node);
+      if (runs.length) {
+        children.push(new Paragraph({ alignment: getAlignment(node), children: runs }));
+      } else if (node.innerHTML === '<br>' || node.innerHTML === '') {
+        children.push(new Paragraph({ children: [new TextRun('')] }));
+      } else {
+        node.childNodes.forEach(processNode);
+      }
+    } else if (tag === 'br') {
+      children.push(new Paragraph({ children: [new TextRun('')] }));
+    } else if (tag === 'pre' || tag === 'code') {
+      const text = node.innerText || '';
+      text.split('\n').forEach(line => {
+        children.push(new Paragraph({ children: [new TextRun({ text: line, font: 'Courier New', size: 20 })] }));
+      });
+    } else {
+      node.childNodes.forEach(processNode);
+    }
+  }
+
+  // If editor is empty
+  if (!editor.innerText.trim()) {
+    children.push(new Paragraph({ children: [new TextRun('')] }));
+  } else {
+    editor.childNodes.forEach(processNode);
+  }
+
+  if (!children.length) children.push(new Paragraph({ children: [new TextRun('')] }));
 
   const doc = new Document({
-    sections: [{
-      children: text.split("\n").map(line =>
-        new Paragraph({
-          children: [new TextRun(line)]
-        })
-      )
-    }]
+    numbering: {
+      config: [{
+        reference: 'default-numbering',
+        levels: [{ level: 0, format: 'decimal', text: '%1.', alignment: AlignmentType.LEFT }]
+      }]
+    },
+    sections: [{ children }]
   });
 
   Packer.toBlob(doc).then(blob => {
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = "document.docx";
+    a.download = title.replace(/\s+/g, '-') + '.docx';
     a.click();
+    URL.revokeObjectURL(a.href);
+    document.getElementById('sbSaved').textContent = '✓ Exported';
+  }).catch(err => {
+    console.error('DOCX export failed:', err);
+    alert('Export failed: ' + err.message);
   });
 }
 function exportTxt(){
