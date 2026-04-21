@@ -143,6 +143,7 @@
   </url>
   <url>
     <loc>https://usedtotools.com/doc/document</loc>
+	<priority>1.0</priority>
   </url>
 
 

@@ -3,12 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDF Editor – UsedToTools</title>
-<meta name="description" content="Free online PDF editor. Merge, split, reorder, rotate pages, add text, draw, annotate and download your edited PDF instantly.">
+<title>Free Online PDF Editor (No Watermark) – UsedToTools</title>
+<meta name="description" content="Free online PDF editor — no watermark, no signup. Add text, highlight, draw, annotate, merge, split, rotate & export PDFs instantly in your browser. 100% private.">
+<meta name="keywords" content="free pdf editor online, pdf editor no watermark, edit pdf online free, annotate pdf, add text to pdf, highlight pdf, draw on pdf, pdf editor no sign up, browser pdf editor">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://usedtotools.com/doc/pdf">
+ 
+<!-- Open Graph -->
+<meta property="og:title" content="Free Online PDF Editor – No Watermark | UsedToTools">
+<meta property="og:description" content="Edit PDFs free in your browser. Add text, highlight, draw, rotate pages and export — no signup, no watermark, files never leave your device.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://usedtotools.com/doc/pdf">
+ 
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Free Online PDF Editor",
+  "url": "https://usedtotools.com/doc/pdf",
+  "description": "Free browser-based PDF editor. Add text, highlight, draw, annotate, rotate, merge and export PDFs with no watermark and no account required.",
+  "applicationCategory": "ProductivityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Add text to PDF",
+    "Highlight PDF",
+    "Draw on PDF",
+    "Annotate PDF",
+    "Rotate PDF pages",
+    "Delete PDF pages",
+    "Export PDF without watermark",
+    "No file upload to server"
+  ]
+}
+</script>
+ 
+<!-- FAQ Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is this PDF editor really free?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — completely free, forever. No credit card, no subscription, and no hidden fees." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does this PDF editor add a watermark?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Your exported PDF and PNG files are watermark-free." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my PDF file safe? Is it uploaded to a server?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Your file never leaves your device. All processing happens locally in your browser using PDF.js — no server upload, no data collection." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to create an account or sign up?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No signup required. Simply open the page, drop your PDF, and start editing instantly." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I edit PDF on mobile?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. The editor is mobile-friendly and works in Chrome, Safari, and Firefox on phones and tablets." }
+    }
+  ]
+}
+</script>
+ 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <link rel="stylesheet" href="mm.css">
-
+<link rel="stylesheet" href="mm.css">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+ 
 </head>
 <body>
 
@@ -19,12 +89,12 @@
     <a href="#">About</a>
   </nav>
 </header>
-
+ 
 <div class="app">
-
+ 
   <!-- ── LEFT: TOOLS ── -->
   <aside class="tools-panel">
-
+ 
     <div class="panel-section">
       <div class="panel-label">Open</div>
       <div class="upload-zone" id="uploadZone">
@@ -37,12 +107,12 @@
         <span id="loadLabel">Loading…</span>
       </div>
     </div>
-
+ 
     <div class="panel-section" id="pageListSection" style="display:none">
       <div class="panel-label">Pages (<span id="pageCount">0</span>)</div>
       <div class="page-thumb-list" id="pageThumbList"></div>
     </div>
-
+ 
     <div class="panel-section">
       <div class="panel-label">Annotate</div>
       <button class="tool-btn" id="textToolBtn"><i class="fas fa-font"></i> Add Text</button>
@@ -51,7 +121,7 @@
       <button class="tool-btn" id="stickyBtn"><i class="fas fa-sticky-note"></i> Sticky Note</button>
       <button class="tool-btn" id="selectToolBtn"><i class="fas fa-mouse-pointer"></i> Select / Move</button>
     </div>
-
+ 
     <div class="panel-section">
       <div class="panel-label">Page Transform</div>
       <div class="transform-row">
@@ -59,7 +129,7 @@
         <button class="tool-btn" id="rotateRightBtn"><i class="fas fa-redo"></i> Rotate R</button>
       </div>
     </div>
-
+ 
     <div class="panel-section">
       <div class="panel-label">Page Operations</div>
       <button class="tool-btn" id="deletePageBtn"><i class="fas fa-trash-alt"></i> Delete Page</button>
@@ -67,7 +137,7 @@
       <button class="tool-btn" id="insertBlankBtn"><i class="fas fa-plus-square"></i> Insert Blank Page</button>
       <button class="tool-btn" id="extractPageBtn"><i class="fas fa-file-export"></i> Extract Page</button>
     </div>
-
+ 
     <div class="panel-section">
       <div class="panel-label">Shapes</div>
       <div class="transform-row">
@@ -77,9 +147,9 @@
         <button class="tool-btn" id="arrowToolBtn"><i class="fas fa-long-arrow-alt-right"></i> Arrow</button>
       </div>
     </div>
-
+ 
   </aside>
-
+ 
   <!-- ── CENTER: CANVAS ── -->
   <main class="canvas-area">
     <div class="canvas-wrap" id="canvasWrap">
@@ -88,37 +158,37 @@
         <h3>No PDF loaded</h3>
         <p>Upload a PDF from the left panel<br>to start editing</p>
       </div>
-
+ 
       <div id="pdfViewport">
         <canvas id="pageCanvas"></canvas>
         <canvas id="annotationCanvas"></canvas>
       </div>
     </div>
-
+ 
     <div class="zoom-controls">
       <button class="zoom-btn" id="zoomIn" title="Zoom in"><i class="fas fa-plus"></i></button>
       <button class="zoom-btn" id="zoomOut" title="Zoom out"><i class="fas fa-minus"></i></button>
       <button class="zoom-btn" id="zoomFit" title="Fit"><i class="fas fa-compress-arrows-alt"></i></button>
     </div>
-
+ 
     <div class="page-nav" id="pageNav" style="display:none">
       <button id="prevPage"><i class="fas fa-chevron-left"></i></button>
       <span id="pageLabel">1 / 1</span>
       <button id="nextPage"><i class="fas fa-chevron-right"></i></button>
     </div>
-
+ 
     <div class="canvas-toolbar">
       <button class="btn-undo" id="undoBtn"><i class="fas fa-history"></i> Undo</button>
       <button class="btn-reset" id="clearAnnotBtn"><i class="fas fa-eraser"></i> Clear Page</button>
-      <button class="btn-delete visible" id="deleteSelBtn" style="background:rgba(245,90,90,0.15);color:var(--danger);display:none" ><i class="fas fa-trash"></i> Delete Selected</button>
+      <button class="btn-delete visible" id="deleteSelBtn" style="background:rgba(245,90,90,0.15);color:var(--danger);display:none"><i class="fas fa-trash"></i> Delete Selected</button>
       <button class="btn-save" id="savePdfBtn"><i class="fas fa-download"></i> Export PDF</button>
       <button class="btn-save" id="savePngBtn" style="background:var(--accent2);color:#0e0e12;"><i class="fas fa-image"></i> Export PNG</button>
     </div>
   </main>
-
+ 
   <!-- ── RIGHT: PROPERTIES ── -->
   <aside class="adjustments-panel">
-
+ 
     <div class="adj-group">
       <div class="panel-label">Document Info</div>
       <div class="info-block" id="docInfo">
@@ -126,26 +196,26 @@
         Upload a file to begin.
       </div>
     </div>
-
+ 
     <div class="adj-group">
       <div class="panel-label">Text Style</div>
-
+ 
       <div class="font-size-row">
         <label>Size</label>
         <input type="number" id="fontSizeInput" value="16" min="6" max="120">
         <label>px</label>
       </div>
-
+ 
       <div class="adj-item">
         <div class="adj-header"><span class="adj-name">Opacity</span><span class="adj-value" id="opacityVal">100%</span></div>
         <input type="range" id="opacitySlider" min="10" max="100" value="100">
       </div>
-
+ 
       <div class="adj-item">
         <div class="adj-header"><span class="adj-name">Stroke Width</span><span class="adj-value" id="strokeVal">2px</span></div>
         <input type="range" id="strokeSlider" min="1" max="20" value="2">
       </div>
-
+ 
       <div style="margin-bottom:8px">
         <div class="adj-name" style="margin-bottom:6px">Font</div>
         <select id="fontSelect" style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:7px;padding:6px 10px;font-size:0.82rem;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;">
@@ -157,7 +227,7 @@
           <option value="Impact">Impact</option>
         </select>
       </div>
-
+ 
       <div style="margin-bottom:8px">
         <div class="adj-name" style="margin-bottom:6px">Style</div>
         <div style="display:flex;gap:6px">
@@ -167,7 +237,7 @@
         </div>
       </div>
     </div>
-
+ 
     <div class="adj-group">
       <div class="panel-label">Color</div>
       <div class="color-row" id="colorSwatches">
@@ -187,7 +257,7 @@
         <label>Custom color</label>
       </div>
     </div>
-
+ 
     <div class="adj-group">
       <div class="panel-label">Page Order</div>
       <div class="page-order-list" id="pageOrderList">
@@ -198,7 +268,7 @@
         <button class="tool-btn" id="moveDownBtn" style="flex:1;justify-content:center"><i class="fas fa-arrow-down"></i> Down</button>
       </div>
     </div>
-
+ 
     <div class="adj-group">
       <div class="panel-label">Page Background</div>
       <div class="color-row" id="bgSwatches">
@@ -209,10 +279,304 @@
         <div class="color-swatch" data-color="#e8f4ff" style="background:#e8f4ff;border:1px solid #444" title="Sky"></div>
       </div>
     </div>
-
+ 
   </aside>
 </div>
-
+ 
+<!-- ── MOBILE FLOATING BUTTON ── -->
+<button class="mobile-toolbar-toggle" id="mobileToolbarToggle" aria-label="Open tools">
+  <i class="fas fa-sliders-h"></i>
+</button>
+ 
+<!-- ── MOBILE OVERLAY ── -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+ 
+<!-- ── MOBILE BOTTOM SHEET ── -->
+<div class="mobile-panel" id="mobilePanel" role="dialog" aria-label="PDF Editor Tools">
+  <div class="mobile-panel-handle"></div>
+ 
+  <div class="mobile-tabs">
+    <button class="mobile-tab active" data-tab="annotate">Annotate</button>
+    <button class="mobile-tab" data-tab="shapes">Shapes</button>
+    <button class="mobile-tab" data-tab="pages">Pages</button>
+    <button class="mobile-tab" data-tab="color">Color</button>
+    <button class="mobile-tab" data-tab="upload">Upload</button>
+  </div>
+ 
+  <!-- Annotate -->
+  <div class="mobile-tab-panel active" data-panel="annotate">
+    <div class="mobile-tool-grid">
+      <div class="mobile-tool-item" data-tool="textToolBtn"><i class="fas fa-font"></i>Add Text</div>
+      <div class="mobile-tool-item" data-tool="drawToolBtn"><i class="fas fa-pen"></i>Draw</div>
+      <div class="mobile-tool-item" data-tool="highlightToolBtn"><i class="fas fa-highlighter"></i>Highlight</div>
+      <div class="mobile-tool-item" data-tool="stickyBtn"><i class="fas fa-sticky-note"></i>Sticky</div>
+      <div class="mobile-tool-item" data-tool="selectToolBtn"><i class="fas fa-mouse-pointer"></i>Select</div>
+      <div class="mobile-tool-item" id="mobileUndoBtn"><i class="fas fa-history"></i>Undo</div>
+    </div>
+  </div>
+ 
+  <!-- Shapes -->
+  <div class="mobile-tab-panel" data-panel="shapes">
+    <div class="mobile-tool-grid">
+      <div class="mobile-tool-item" data-tool="rectToolBtn"><i class="fas fa-square"></i>Rectangle</div>
+      <div class="mobile-tool-item" data-tool="circleToolBtn"><i class="fas fa-circle"></i>Circle</div>
+      <div class="mobile-tool-item" data-tool="lineToolBtn"><i class="fas fa-slash"></i>Line</div>
+      <div class="mobile-tool-item" data-tool="arrowToolBtn"><i class="fas fa-long-arrow-alt-right"></i>Arrow</div>
+    </div>
+  </div>
+ 
+  <!-- Pages -->
+  <div class="mobile-tab-panel" data-panel="pages">
+    <div class="mobile-tool-grid">
+      <div class="mobile-tool-item" id="mobileRotateL"><i class="fas fa-undo"></i>Rotate L</div>
+      <div class="mobile-tool-item" id="mobileRotateR"><i class="fas fa-redo"></i>Rotate R</div>
+      <div class="mobile-tool-item" id="mobileDeletePage"><i class="fas fa-trash-alt"></i>Delete Page</div>
+      <div class="mobile-tool-item" id="mobileDuplicatePage"><i class="fas fa-copy"></i>Duplicate</div>
+      <div class="mobile-tool-item" id="mobileExtractPage"><i class="fas fa-file-export"></i>Extract PNG</div>
+      <div class="mobile-tool-item" id="mobileClearAnnot"><i class="fas fa-eraser"></i>Clear Page</div>
+    </div>
+  </div>
+ 
+  <!-- Color -->
+  <div class="mobile-tab-panel" data-panel="color">
+    <div style="margin-bottom:12px">
+      <div style="font-size:0.78rem;color:var(--muted);margin-bottom:8px">Stroke / Text Color</div>
+      <div class="color-row" id="mobileColorSwatches">
+        <div class="color-swatch active" data-color="#000000" style="background:#000000"></div>
+        <div class="color-swatch" data-color="#ffffff" style="background:#ffffff;border:1px solid #444"></div>
+        <div class="color-swatch" data-color="#f55a5a" style="background:#f55a5a"></div>
+        <div class="color-swatch" data-color="#5a9af5" style="background:#5a9af5"></div>
+        <div class="color-swatch" data-color="#f5c85a" style="background:#f5c85a"></div>
+        <div class="color-swatch" data-color="#c8f55a" style="background:#c8f55a"></div>
+        <div class="color-swatch" data-color="#5af5c8" style="background:#5af5c8"></div>
+        <div class="color-swatch" data-color="#d45af5" style="background:#d45af5"></div>
+      </div>
+    </div>
+    <div style="margin-bottom:12px">
+      <div style="font-size:0.78rem;color:var(--muted);margin-bottom:6px">Stroke Width</div>
+      <input type="range" id="mobileStrokeSlider" min="1" max="20" value="2" style="width:100%">
+    </div>
+    <div>
+      <div style="font-size:0.78rem;color:var(--muted);margin-bottom:6px">Opacity</div>
+      <input type="range" id="mobileOpacitySlider" min="10" max="100" value="100" style="width:100%">
+    </div>
+  </div>
+ 
+  <!-- Upload -->
+  <div class="mobile-tab-panel" data-panel="upload">
+    <div class="upload-zone" id="mobileUploadZone" style="margin-bottom:10px">
+      <i class="fas fa-file-pdf"></i>
+      <span>Tap to upload PDF</span>
+    </div>
+    <input type="file" id="mobilePdfUploader" accept="application/pdf" hidden>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+      <button class="btn-save" id="mobileSavePdf" style="border:none;border-radius:8px;padding:10px;font-size:0.8rem;cursor:pointer;"><i class="fas fa-download"></i> Export PDF</button>
+      <button class="btn-save" id="mobileSavePng" style="background:var(--accent2);color:#0e0e12;border:none;border-radius:8px;padding:10px;font-size:0.8rem;cursor:pointer;"><i class="fas fa-image"></i> Export PNG</button>
+    </div>
+  </div>
+</div>
+ 
+<!-- ── SEO SECTION ── -->
+<section class="seo-section" aria-label="About this PDF Editor">
+  <div class="seo-inner">
+ 
+    <!-- Hero copy -->
+    <div class="seo-hero">
+      <h1>Free Online PDF Editor — <span>No Watermark</span>, No Signup</h1>
+      <p>Edit any PDF file directly in your browser. Add text, highlight passages, draw, annotate, rotate pages, and export a clean PDF or PNG — all for free, with zero watermarks and zero file uploads to any server.</p>
+    </div>
+ 
+    <!-- Trust bar -->
+    <div class="seo-trust">
+      <div class="trust-item"><i class="fas fa-shield-alt"></i> Files never leave your device</div>
+      <div class="trust-item"><i class="fas fa-ban"></i> No watermark on export</div>
+      <div class="trust-item"><i class="fas fa-user-slash"></i> No account required</div>
+      <div class="trust-item"><i class="fas fa-dollar-sign"></i> 100% free forever</div>
+      <div class="trust-item"><i class="fas fa-mobile-alt"></i> Works on mobile</div>
+      <div class="trust-item"><i class="fas fa-lock"></i> Private &amp; secure</div>
+    </div>
+ 
+    <!-- Features -->
+    <div class="seo-features">
+      <div class="seo-feature-card">
+        <i class="fas fa-font"></i>
+        <h3>Add Text to PDF</h3>
+        <p>Click anywhere on the page to place custom text. Choose font, size, color, bold, italic, and underline styles.</p>
+      </div>
+      <div class="seo-feature-card">
+        <i class="fas fa-highlighter"></i>
+        <h3>Highlight PDF</h3>
+        <p>Draw highlight strokes over any passage in any color. Adjust opacity for subtle or vivid highlights.</p>
+      </div>
+      <div class="seo-feature-card">
+        <i class="fas fa-pen"></i>
+        <h3>Draw &amp; Annotate</h3>
+        <p>Freehand pen tool lets you sign documents, sketch diagrams, or mark up PDFs exactly like paper.</p>
+      </div>
+      <div class="seo-feature-card">
+        <i class="fas fa-shapes"></i>
+        <h3>Insert Shapes</h3>
+        <p>Add rectangles, circles, lines, and arrows with custom stroke width and color to call attention to key areas.</p>
+      </div>
+      <div class="seo-feature-card">
+        <i class="fas fa-sticky-note"></i>
+        <h3>Sticky Notes</h3>
+        <p>Place floating sticky notes on any page to leave reminders, feedback, or comments for collaborators.</p>
+      </div>
+      <div class="seo-feature-card">
+        <i class="fas fa-sync-alt"></i>
+        <h3>Rotate Pages</h3>
+        <p>Rotate individual pages left or right 90° to fix orientation issues without re-scanning documents.</p>
+      </div>
+      <div class="seo-feature-card">
+        <i class="fas fa-trash-alt"></i>
+        <h3>Delete &amp; Reorder Pages</h3>
+        <p>Remove unwanted pages, duplicate pages, or drag them into a new order before exporting.</p>
+      </div>
+      <div class="seo-feature-card">
+        <i class="fas fa-download"></i>
+        <h3>Export Without Watermark</h3>
+        <p>Download your edited document as a multi-page PDF or export any page as a high-quality PNG — always watermark-free.</p>
+      </div>
+    </div>
+ 
+    <!-- How to use -->
+    <div class="seo-steps">
+      <h2>How to Edit a PDF Online — 4 Simple Steps</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-num">01</span>
+          <div class="step-body">
+            <h4>Upload Your PDF</h4>
+            <p>Drag and drop a PDF onto the editor or click the upload zone. Files are opened locally — nothing is sent to any server.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <span class="step-num">02</span>
+          <div class="step-body">
+            <h4>Choose a Tool</h4>
+            <p>Pick from Add Text, Draw, Highlight, Shapes, or page operations in the left panel (or the mobile toolbar).</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <span class="step-num">03</span>
+          <div class="step-body">
+            <h4>Edit Your Document</h4>
+            <p>Click or draw on the page to annotate. Use Undo (Ctrl+Z) anytime. Switch pages with the navigation bar.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <span class="step-num">04</span>
+          <div class="step-body">
+            <h4>Export Free</h4>
+            <p>Hit <strong>Export PDF</strong> to download a clean, watermark-free PDF, or <strong>Export PNG</strong> for a single-page image.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Prose columns -->
+    <div class="seo-prose-grid">
+      <div class="seo-prose">
+        <h2>Edit PDFs Without Installing Software</h2>
+        <p>Most PDF editors require a desktop installation or a paid subscription. This tool runs entirely in your browser using PDF.js — the same technology trusted by Firefox and Google Chrome. There's nothing to install, and it works on Windows, Mac, Linux, iOS, and Android.</p>
+        <p>All annotation rendering happens client-side using HTML5 Canvas, so performance is fast and your document stays completely private. Your PDF is never uploaded to any external server or cloud service.</p>
+      </div>
+      <div class="seo-prose">
+        <h2>Who Is This PDF Editor For?</h2>
+        <p><strong>Students</strong> can annotate research papers, highlight key passages, and add study notes directly to lecture slides or textbooks.</p>
+        <p><strong>Professionals</strong> can mark up contracts, add signatures, insert comments, and return documents — without needing Adobe Acrobat.</p>
+        <p><strong>Teachers</strong> can annotate student submissions, add feedback with sticky notes, and highlight sections for review.</p>
+        <p><strong>Anyone</strong> who needs to quickly fill in or annotate a PDF without subscribing to a service will find this tool instant and friction-free.</p>
+      </div>
+      <div class="seo-prose">
+        <h2>Is This PDF Editor Really Free?</h2>
+        <p>Yes — completely free, with no freemium limits. You don't need to create an account, verify an email, or enter payment details. There are no daily download caps, no page limits, and no watermarks stamped on your exported files.</p>
+        <p>UsedToTools is built around the philosophy that essential productivity tools should be accessible to everyone, free of charge.</p>
+      </div>
+      <div class="seo-prose">
+        <h2>Privacy &amp; Security</h2>
+        <p>Your files are processed entirely within your own browser. When you open a PDF, it is read by the JavaScript engine on your device and rendered to an HTML5 canvas — no bytes are transmitted to any external server.</p>
+        <p>This makes the editor ideal for sensitive documents: contracts, medical records, financial statements, or personal files you would never want to upload to a cloud service.</p>
+      </div>
+    </div>
+ 
+    <!-- Comparison table -->
+    <div class="seo-comparison">
+      <h2>UsedToTools PDF Editor vs. Alternatives</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="highlight-col">UsedToTools (Free)</th>
+            <th>Adobe Acrobat Online</th>
+            <th>Smallpdf Free</th>
+            <th>iLovePDF Free</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Watermark-free export</td><td class="yes highlight-col">✓ Yes</td><td class="no">✗ Paid only</td><td class="no">✗ Free adds watermark</td><td class="no">✗ Free adds watermark</td></tr>
+          <tr><td>No account required</td><td class="yes highlight-col">✓ Yes</td><td class="no">✗ Required</td><td class="yes">✓ Yes</td><td class="yes">✓ Yes</td></tr>
+          <tr><td>Files stay on device</td><td class="yes highlight-col">✓ 100% local</td><td class="no">✗ Uploaded</td><td class="no">✗ Uploaded</td><td class="no">✗ Uploaded</td></tr>
+          <tr><td>Draw / freehand pen</td><td class="yes highlight-col">✓ Yes</td><td class="yes">✓ Yes</td><td class="no">✗ No</td><td class="no">✗ No</td></tr>
+          <tr><td>Highlight tool</td><td class="yes highlight-col">✓ Yes</td><td class="yes">✓ Paid</td><td class="no">✗ No</td><td class="no">✗ No</td></tr>
+          <tr><td>Shapes (rect, circle, arrow)</td><td class="yes highlight-col">✓ Yes</td><td class="yes">✓ Paid</td><td class="no">✗ No</td><td class="no">✗ No</td></tr>
+          <tr><td>Mobile-friendly</td><td class="yes highlight-col">✓ Yes</td><td class="yes">✓ Yes</td><td class="yes">✓ Yes</td><td class="yes">✓ Yes</td></tr>
+          <tr><td>Price</td><td class="yes highlight-col">Free</td><td class="no">$19.99/mo</td><td class="no">$9/mo (no WM)</td><td class="no">$6/mo (no WM)</td></tr>
+        </tbody>
+      </table>
+    </div>
+ 
+    <!-- FAQ -->
+    <div class="seo-faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-list">
+ 
+        <div class="faq-item">
+          <button class="faq-q">Does this PDF editor add a watermark? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">No — never. Your exported PDF and PNG files are completely watermark-free, even on the free plan. There is no paid plan; the tool is 100% free.</div>
+        </div>
+ 
+        <div class="faq-item">
+          <button class="faq-q">Is my PDF file uploaded to a server? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">No. Your file is opened and processed entirely within your browser using JavaScript and HTML5 Canvas. Nothing is transmitted to any server. Your document is completely private.</div>
+        </div>
+ 
+        <div class="faq-item">
+          <button class="faq-q">Do I need to create an account or sign up? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">No account, no email, no signup. Just open the page, drop your PDF, and start editing immediately.</div>
+        </div>
+ 
+        <div class="faq-item">
+          <button class="faq-q">Can I edit a PDF on my phone or tablet? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">Yes. The editor includes a mobile-optimised bottom toolbar panel that appears automatically on smaller screens, giving you access to all annotation tools, page operations, and export options on iOS and Android.</div>
+        </div>
+ 
+        <div class="faq-item">
+          <button class="faq-q">Can I add text to a PDF for free? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">Yes. Select the "Add Text" tool, click anywhere on the PDF page, type your text, and choose font, size, color, bold, italic, and underline. The text is baked into the exported PDF.</div>
+        </div>
+ 
+        <div class="faq-item">
+          <button class="faq-q">Can I sign a PDF using this tool? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">Yes. Use the Draw / Pen tool to handwrite your signature directly on the PDF page. You can choose pen color, stroke width, and opacity for a natural look.</div>
+        </div>
+ 
+        <div class="faq-item">
+          <button class="faq-q">What browsers are supported? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">The editor works in all modern browsers: Google Chrome, Mozilla Firefox, Microsoft Edge, Safari (desktop and iOS), and Samsung Internet. No plugins or extensions required.</div>
+        </div>
+ 
+        <div class="faq-item">
+          <button class="faq-q">Is there a file size limit? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">There is no enforced server-side limit since files are processed locally. Very large PDFs (100+ MB) may be slow to load depending on your device's available memory, but most typical documents load in seconds.</div>
+        </div>
+ 
+      </div>
+    </div>
+ 
+  </div>
+</section>
 <div id="toast"></div>
 
 <script src="mm.js"></script>

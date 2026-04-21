@@ -3,13 +3,84 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Photo Editor – UsedToTools</title>
-<meta name="description" content="Free online image editor. Adjust brightness, contrast, blur, saturation, grayscale, rotate, flip, crop and download your edited image instantly.">
+<title>Free Online Photo Editor – No Watermark | UsedToTools</title>
+<meta name="description" content="Free online photo editor. Adjust brightness, contrast, saturation, blur, crop, rotate, flip, apply filters and download instantly. No watermark, no signup required.">
+<meta name="keywords" content="free online photo editor, edit photo online free, image editor online, brightness contrast editor, crop photo online, photo filter online, no watermark photo editor, online image editor no signup">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://usedtotools.com/image/photo-editor">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Free Online Photo Editor – No Watermark | UsedToTools">
+<meta property="og:description" content="Edit photos free in your browser. Adjust brightness, contrast, saturation, crop, rotate, apply presets and export — no signup, no watermark, files stay on your device.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://usedtotools.com/image/photo-editor">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Free Online Photo Editor",
+  "url": "https://usedtotools.com/image/photo-editor",
+  "description": "Free browser-based photo editor. Adjust brightness, contrast, saturation, crop, rotate, flip, apply presets and export photos with no watermark and no account required.",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Adjust brightness and contrast",
+    "Crop photo online",
+    "Rotate and flip image",
+    "Apply photo filters and presets",
+    "Blur and sharpen",
+    "Saturation and color temperature",
+    "Vignette and grain effects",
+    "Export PNG and JPG without watermark",
+    "No file upload to server"
+  ]
+}
+</script>
+
+<!-- FAQ Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is this photo editor free?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — completely free with no subscription, no credit card, and no hidden fees." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does this photo editor add a watermark?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Your exported PNG and JPG files are completely watermark-free." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my photo uploaded to a server?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. All editing happens locally inside your browser using HTML5 Canvas. Your photo never leaves your device." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to create an account?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No signup required. Open the page, drop your photo, and start editing instantly." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I edit photos on mobile?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. The editor has a dedicated mobile toolbar that slides up from the bottom, giving you full access to all tools on phones and tablets." }
+    }
+  ]
+}
+</script>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="ss.css">
+<link rel="stylesheet" href="ss.css">
+<link rel="stylesheet" href="abc.css">
 </head>
 <body>
-  <link rel="stylesheet" href="abc.css">
+
 <header>
   <a href="../index.html" class="logo">UsedToTools</a>
   <nav class="header-nav">
@@ -116,7 +187,6 @@
     <!-- LIGHT -->
     <div class="adj-group">
       <div class="panel-label">Light</div>
-
       <div class="adj-item" data-filter="brightness" data-min="0" data-max="200" data-default="100">
         <div class="adj-header"><span class="adj-name">Brightness</span><span class="adj-value">0</span></div>
         <input type="range" min="0" max="200" value="100">
@@ -138,7 +208,6 @@
     <!-- COLOR -->
     <div class="adj-group">
       <div class="panel-label">Color</div>
-
       <div class="adj-item" data-filter="saturate" data-min="0" data-max="200" data-default="100">
         <div class="adj-header"><span class="adj-name">Saturation</span><span class="adj-value">0</span></div>
         <input type="range" min="0" max="200" value="100">
@@ -164,7 +233,6 @@
     <!-- DETAIL -->
     <div class="adj-group">
       <div class="panel-label">Detail</div>
-
       <div class="adj-item" data-filter="sharpen" data-min="0" data-max="100" data-default="0">
         <div class="adj-header"><span class="adj-name">Sharpening</span><span class="adj-value">0</span></div>
         <input type="range" min="0" max="100" value="0">
@@ -182,7 +250,6 @@
     <!-- TONE / STYLE -->
     <div class="adj-group">
       <div class="panel-label">Tone / Style</div>
-
       <div class="adj-item" data-filter="grayscale" data-min="0" data-max="100" data-default="0">
         <div class="adj-header"><span class="adj-name">Black &amp; White</span><span class="adj-value">0</span></div>
         <input type="range" min="0" max="100" value="0">
@@ -204,7 +271,6 @@
     <!-- EFFECTS -->
     <div class="adj-group">
       <div class="panel-label">Effects</div>
-
       <div class="adj-item" data-filter="vignette" data-min="0" data-max="100" data-default="0">
         <div class="adj-header"><span class="adj-name">Vignette</span><span class="adj-value">0</span></div>
         <input type="range" min="0" max="100" value="0">
@@ -226,8 +292,280 @@
   </aside>
 </div>
 
+<!-- ── MOBILE FLOATING BUTTON ── -->
+<button class="mobile-toolbar-toggle" id="mobileToolbarToggle" aria-label="Open tools">
+  <i class="fas fa-sliders-h"></i>
+</button>
+
+<!-- ── MOBILE OVERLAY ── -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- ── MOBILE BOTTOM SHEET ── -->
+<div class="mobile-panel" id="mobilePanel" role="dialog" aria-label="Photo Editor Tools">
+  <div class="mobile-panel-handle"></div>
+
+  <div class="mobile-tabs">
+    <button class="mobile-tab active" data-tab="upload">Upload</button>
+    <button class="mobile-tab" data-tab="presets">Presets</button>
+    <button class="mobile-tab" data-tab="transform">Transform</button>
+    <button class="mobile-tab" data-tab="adjust">Adjust</button>
+    <button class="mobile-tab" data-tab="effects">Effects</button>
+  </div>
+
+  <!-- Upload -->
+  <div class="mobile-tab-panel active" data-panel="upload">
+    <div class="upload-zone" id="mobileUploadZone" style="margin-bottom:12px">
+      <i class="fas fa-image"></i>
+      <span>Tap to upload photo</span>
+    </div>
+    <input type="file" id="mobileImageUploader" accept="image/*" hidden>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button class="mobile-action-btn" id="mobileUndoBtn"><i class="fas fa-history"></i> Undo</button>
+      <button class="mobile-action-btn danger" id="mobileResetBtn"><i class="fas fa-times"></i> Reset</button>
+      <button class="mobile-action-btn save" id="mobileSavePng"><i class="fas fa-download"></i> Save PNG</button>
+      <button class="mobile-action-btn save2" id="mobileSaveJpg"><i class="fas fa-image"></i> Save JPG</button>
+    </div>
+  </div>
+
+  <!-- Presets -->
+  <div class="mobile-tab-panel" data-panel="presets">
+    <div class="mobile-preset-grid">
+      <button class="preset-btn" data-preset="none">Original</button>
+      <button class="preset-btn" data-preset="vivid">Vivid</button>
+      <button class="preset-btn" data-preset="matte">Matte</button>
+      <button class="preset-btn" data-preset="chrome">Chrome</button>
+      <button class="preset-btn" data-preset="fade">Fade</button>
+      <button class="preset-btn" data-preset="noir">Noir</button>
+      <button class="preset-btn" data-preset="warm">Warm</button>
+      <button class="preset-btn" data-preset="cool">Cool</button>
+      <button class="preset-btn" data-preset="portrait">Portrait</button>
+      <button class="preset-btn" data-preset="landscape">Landscape</button>
+    </div>
+  </div>
+
+  <!-- Transform -->
+  <div class="mobile-tab-panel" data-panel="transform">
+    <div class="mobile-tool-grid">
+      <div class="mobile-tool-item" id="mobileRotateL"><i class="fas fa-undo"></i>Rotate L</div>
+      <div class="mobile-tool-item" id="mobileRotateR"><i class="fas fa-redo"></i>Rotate R</div>
+      <div class="mobile-tool-item" id="mobileFlipH"><i class="fas fa-arrows-alt-h"></i>Flip H</div>
+      <div class="mobile-tool-item" id="mobileFlipV"><i class="fas fa-arrows-alt-v"></i>Flip V</div>
+      <div class="mobile-tool-item" id="mobileCrop"><i class="fas fa-crop-alt"></i>Crop</div>
+      <div class="mobile-tool-item" id="mobileStraighten"><i class="fas fa-ruler-horizontal"></i>Straighten</div>
+    </div>
+  </div>
+
+  <!-- Adjust -->
+  <div class="mobile-tab-panel" data-panel="adjust">
+    <div class="mobile-slider-row"><span>Brightness</span><input type="range" id="mob_brightness" min="0" max="200" value="100"></div>
+    <div class="mobile-slider-row"><span>Contrast</span><input type="range" id="mob_contrast" min="0" max="200" value="100"></div>
+    <div class="mobile-slider-row"><span>Saturation</span><input type="range" id="mob_saturate" min="0" max="200" value="100"></div>
+    <div class="mobile-slider-row"><span>Temperature</span><input type="range" id="mob_temperature" min="-100" max="100" value="0"></div>
+    <div class="mobile-slider-row"><span>Highlights</span><input type="range" id="mob_highlights" min="-100" max="100" value="0"></div>
+    <div class="mobile-slider-row"><span>Shadows</span><input type="range" id="mob_shadows" min="-100" max="100" value="0"></div>
+  </div>
+
+  <!-- Effects -->
+  <div class="mobile-tab-panel" data-panel="effects">
+    <div class="mobile-slider-row"><span>Vignette</span><input type="range" id="mob_vignette" min="0" max="100" value="0"></div>
+    <div class="mobile-slider-row"><span>Grain</span><input type="range" id="mob_grain" min="0" max="100" value="0"></div>
+    <div class="mobile-slider-row"><span>Blur</span><input type="range" id="mob_blur" min="0" max="20" value="0"></div>
+    <div class="mobile-slider-row"><span>Sharpen</span><input type="range" id="mob_sharpen" min="0" max="100" value="0"></div>
+    <div class="mobile-slider-row"><span>B&amp;W</span><input type="range" id="mob_grayscale" min="0" max="100" value="0"></div>
+    <div class="mobile-slider-row"><span>Sepia</span><input type="range" id="mob_sepia" min="0" max="100" value="0"></div>
+  </div>
+</div>
+
+<!-- ── SEO SECTION ── -->
+<section class="seo-section" aria-label="About this Photo Editor">
+  <div class="seo-inner">
+
+    <div class="seo-hero">
+      <h1>Free Online Photo Editor — <span>No Watermark</span>, No Signup</h1>
+      <p>Edit photos directly in your browser. Adjust brightness, contrast, saturation, crop, rotate, apply filters, and export clean PNG or JPG files — all for free, with no watermarks and no server uploads.</p>
+    </div>
+
+    <div class="seo-trust">
+      <div class="trust-item"><i class="fas fa-shield-alt"></i> Photos never leave your device</div>
+      <div class="trust-item"><i class="fas fa-ban"></i> No watermark on export</div>
+      <div class="trust-item"><i class="fas fa-user-slash"></i> No account required</div>
+      <div class="trust-item"><i class="fas fa-dollar-sign"></i> 100% free forever</div>
+      <div class="trust-item"><i class="fas fa-mobile-alt"></i> Works on mobile</div>
+      <div class="trust-item"><i class="fas fa-lock"></i> Private &amp; secure</div>
+    </div>
+
+    <div class="seo-features">
+      <div class="seo-feature-card">
+        <i class="fas fa-sun"></i>
+        <h3>Brightness &amp; Contrast</h3>
+        <p>Fine-tune exposure with brightness, contrast, highlights, and shadows sliders — the same controls found in Lightroom.</p>
+      </div>
+      <div class="seo-feature-card">
+        <i class="fas fa-palette"></i>
+        <h3>Color &amp; Saturation</h3>
+        <p>Boost or reduce color intensity with saturation and vibrance. Shift white balance with temperature and tint controls.</p>
+      </div>
+      <div class="seo-feature-card">
+        <i class="fas fa-magic"></i>
+        <h3>10 Photo Presets</h3>
+        <p>One-tap looks: Vivid, Matte, Chrome, Noir, Warm, Cool, Fade, Portrait, and Landscape — applied instantly.</p>
+      </div>
+      <div class="seo-feature-card">
+        <i class="fas fa-crop-alt"></i>
+        <h3>Crop &amp; Straighten</h3>
+        <p>Draw a selection to crop any area of your photo. Use Straighten to fix horizon tilt by entering a rotation angle.</p>
+      </div>
+      <div class="seo-feature-card">
+        <i class="fas fa-sync-alt"></i>
+        <h3>Rotate &amp; Flip</h3>
+        <p>Rotate images left or right in 90° steps, or flip horizontally and vertically with a single click.</p>
+      </div>
+      <div class="seo-feature-card">
+        <i class="fas fa-tachometer-alt"></i>
+        <h3>Sharpen &amp; Blur</h3>
+        <p>Apply unsharp mask sharpening for crisp detail, or add softness blur for portraits and dreamy effects.</p>
+      </div>
+      <div class="seo-feature-card">
+        <i class="fas fa-circle-notch"></i>
+        <h3>Vignette &amp; Grain</h3>
+        <p>Add a natural vignette to draw focus to your subject. Apply authentic film grain for an analogue aesthetic.</p>
+      </div>
+      <div class="seo-feature-card">
+        <i class="fas fa-chart-bar"></i>
+        <h3>Live Histogram</h3>
+        <p>Monitor exposure with a real-time RGB histogram that updates as you adjust sliders — no guesswork needed.</p>
+      </div>
+    </div>
+
+    <div class="seo-steps">
+      <h2>How to Edit Photos Online — 4 Simple Steps</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-num">01</span>
+          <div class="step-body">
+            <h4>Upload Your Photo</h4>
+            <p>Drag and drop any JPG, PNG, WebP, or GIF onto the editor, or click the upload zone to browse. Your file is opened locally.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <span class="step-num">02</span>
+          <div class="step-body">
+            <h4>Apply a Preset or Adjust</h4>
+            <p>Tap a one-click preset (Vivid, Noir, Warm…) for instant style, or fine-tune brightness, color, and effects manually.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <span class="step-num">03</span>
+          <div class="step-body">
+            <h4>Crop, Rotate &amp; Transform</h4>
+            <p>Draw a crop selection, rotate the image, flip it, or straighten a tilted horizon — all non-destructive until you save.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <span class="step-num">04</span>
+          <div class="step-body">
+            <h4>Export Free</h4>
+            <p>Download your edited photo as a lossless PNG or a compressed JPG. No watermark, no account, no limits.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seo-prose-grid">
+      <div class="seo-prose">
+        <h2>Edit Photos Without Installing Software</h2>
+        <p>Professional photo editors like Lightroom and Photoshop cost hundreds of dollars per year. This editor runs entirely in your browser using HTML5 Canvas — no download, no plugin, no subscription. It works on Windows, Mac, Linux, iOS, and Android.</p>
+        <p>Because all processing is client-side, the app is fast and responsive even on large images, and your photos are never transmitted to any third-party server.</p>
+      </div>
+      <div class="seo-prose">
+        <h2>Who Is This Photo Editor For?</h2>
+        <p><strong>Photographers</strong> can do quick colour corrections and crops without opening Lightroom for every small edit.</p>
+        <p><strong>Social media creators</strong> can apply one-tap presets, adjust exposure, and export optimised images for Instagram, Twitter, or LinkedIn.</p>
+        <p><strong>Students and bloggers</strong> can resize, crop, and colour-correct images for articles and presentations at no cost.</p>
+        <p><strong>Anyone</strong> who needs fast, private photo edits without uploading to a cloud service will find this tool ideal.</p>
+      </div>
+      <div class="seo-prose">
+        <h2>Privacy &amp; Security</h2>
+        <p>Your photos are processed entirely inside your own browser. When you open an image it is decoded by JavaScript on your device and rendered to an HTML5 Canvas element — nothing is sent anywhere.</p>
+        <p>This makes the editor suitable for editing personal, medical, or confidential photos that you would never want to upload to a cloud service like Canva or PicsArt.</p>
+      </div>
+      <div class="seo-prose">
+        <h2>Supported File Formats</h2>
+        <p>The editor accepts any image format your browser supports, including JPEG, PNG, WebP, GIF, BMP, and AVIF. Export is available as <strong>PNG</strong> (lossless, transparent backgrounds supported) or <strong>JPG</strong> at 92% quality for smaller file sizes.</p>
+        <p>There are no file size limits enforced by the server since processing is fully local. Very large images may be slower on low-powered devices.</p>
+      </div>
+    </div>
+
+    <div class="seo-comparison">
+      <h2>UsedToTools Photo Editor vs. Alternatives</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="highlight-col">UsedToTools (Free)</th>
+            <th>Canva Free</th>
+            <th>PicsArt Free</th>
+            <th>Adobe Express Free</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Watermark-free export</td><td class="yes highlight-col">✓ Yes</td><td class="no">✗ Watermark on free</td><td class="no">✗ Watermark on free</td><td class="no">✗ Watermark on free</td></tr>
+          <tr><td>No account required</td><td class="yes highlight-col">✓ Yes</td><td class="no">✗ Required</td><td class="no">✗ Required</td><td class="no">✗ Required</td></tr>
+          <tr><td>Files stay on device</td><td class="yes highlight-col">✓ 100% local</td><td class="no">✗ Uploaded</td><td class="no">✗ Uploaded</td><td class="no">✗ Uploaded</td></tr>
+          <tr><td>Brightness / Contrast</td><td class="yes highlight-col">✓ Yes</td><td class="yes">✓ Yes</td><td class="yes">✓ Yes</td><td class="yes">✓ Yes</td></tr>
+          <tr><td>Temperature &amp; Tint</td><td class="yes highlight-col">✓ Yes</td><td class="yes">✓ Limited</td><td class="yes">✓ Yes</td><td class="yes">✓ Yes</td></tr>
+          <tr><td>Live Histogram</td><td class="yes highlight-col">✓ Yes</td><td class="no">✗ No</td><td class="no">✗ No</td><td class="no">✗ No</td></tr>
+          <tr><td>Crop &amp; Rotate</td><td class="yes highlight-col">✓ Yes</td><td class="yes">✓ Yes</td><td class="yes">✓ Yes</td><td class="yes">✓ Yes</td></tr>
+          <tr><td>Mobile-friendly</td><td class="yes highlight-col">✓ Yes</td><td class="yes">✓ Yes</td><td class="yes">✓ Yes</td><td class="yes">✓ Yes</td></tr>
+          <tr><td>Price</td><td class="yes highlight-col">Free</td><td class="no">$15/mo (no WM)</td><td class="no">$5/mo (no WM)</td><td class="no">$9.99/mo (no WM)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="seo-faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">Does this photo editor add a watermark? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">No — never. Your exported PNG and JPG files are completely watermark-free. The editor is 100% free with no paid upgrade required.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Is my photo uploaded to a server? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">No. Your image is opened and processed entirely inside your browser using HTML5 Canvas and JavaScript. Nothing is transmitted to any server. Your photos stay completely private.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Do I need to create an account? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">No account, no email, no signup — ever. Just open the page, drop your photo, and start editing immediately.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Can I edit photos on my phone or tablet? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">Yes. On mobile a floating button reveals a bottom-sheet toolbar with access to presets, transform tools, adjustment sliders, and export — all optimised for touch interaction.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What image formats are supported? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">The editor accepts any image format your browser supports: JPEG, PNG, WebP, GIF, BMP, and AVIF. You can export as PNG (lossless) or JPG (compressed).</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Can I make a photo black and white? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">Yes. Use the Black &amp; White slider under Tone / Style, or apply the one-click Noir preset for a high-contrast monochrome look.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Is there an undo button? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">Yes. Click the Undo button in the bottom toolbar or press Ctrl+Z (Cmd+Z on Mac) to step back through your edit history. You can also Reset to the original image at any time.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What browsers are supported? <i class="fas fa-chevron-down"></i></button>
+          <div class="faq-a">The editor works in all modern browsers: Google Chrome, Mozilla Firefox, Microsoft Edge, Safari (desktop and iOS), and Samsung Internet. No plugins required.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <div id="toast"></div>
 
 <script src="ss.js"></script>
+
 </body>
 </html>

@@ -665,7 +665,171 @@ document.getElementById('saveJpgBtn').addEventListener('click', () => {
   a.click();
   toast('Saved as JPG');
 });
- 
+ /* ══════════════════════════════════════════
+   mobile.js — Mobile bottom-sheet panel logic
+   Include AFTER ss.js in the HTML:
+   <script src="ss.js"></script>
+   <script src="mobile.js"></script>
+══════════════════════════════════════════ */
+
+(function () {
+  'use strict';
+
+  /* ── Panel open / close ── */
+  const mobileToggle  = document.getElementById('mobileToolbarToggle');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+  const mobilePanel   = document.getElementById('mobilePanel');
+
+  function openMobilePanel() {
+    mobileOverlay.style.display = 'block';
+    mobilePanel.style.display   = 'block';
+    requestAnimationFrame(() => {
+      mobileOverlay.classList.add('open');
+      mobilePanel.classList.add('open');
+    });
+  }
+
+  function closeMobilePanel() {
+    mobileOverlay.classList.remove('open');
+    mobilePanel.classList.remove('open');
+    setTimeout(() => {
+      mobileOverlay.style.display = 'none';
+      mobilePanel.style.display   = 'none';
+    }, 320);
+  }
+
+  if (mobileToggle)  mobileToggle.addEventListener('click', openMobilePanel);
+  if (mobileOverlay) mobileOverlay.addEventListener('click', closeMobilePanel);
+
+  /* ── Tab switching ── */
+  document.querySelectorAll('.mobile-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.mobile-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.mobile-tab-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      const panel = document.querySelector(`[data-panel="${tab.dataset.tab}"]`);
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+  /* ── Upload zone ── */
+  const mobileUploadZone    = document.getElementById('mobileUploadZone');
+  const mobileImageUploader = document.getElementById('mobileImageUploader');
+
+  if (mobileUploadZone) {
+    mobileUploadZone.addEventListener('click', () => {
+      if (mobileImageUploader) mobileImageUploader.click();
+    });
+  }
+
+  if (mobileImageUploader) {
+    mobileImageUploader.addEventListener('change', function () {
+      if (!this.files[0]) return;
+      // Inject into desktop uploader and trigger its change handler
+      const dt = new DataTransfer();
+      dt.items.add(this.files[0]);
+      const desktopInput = document.getElementById('imageUploader');
+      if (desktopInput) {
+        desktopInput.files = dt.files;
+        desktopInput.dispatchEvent(new Event('change'));
+      }
+      closeMobilePanel();
+    });
+  }
+
+  /* ── Action buttons → desktop button delegates ── */
+  const actionMap = {
+    mobileUndoBtn:   'undoBtn',
+    mobileResetBtn:  'resetBtn',
+    mobileSavePng:   'saveBtn',
+    mobileSaveJpg:   'saveJpgBtn',
+    mobileRotateL:   'rotate_left',
+    mobileRotateR:   'rotate_right',
+    mobileFlipH:     'flip_x',
+    mobileFlipV:     'flip_y',
+    mobileCrop:      'cropBtn',
+    mobileStraighten:'straightenBtn',
+  };
+
+  Object.entries(actionMap).forEach(([mId, dId]) => {
+    const mBtn = document.getElementById(mId);
+    if (!mBtn) return;
+    mBtn.addEventListener('click', () => {
+      const dBtn = document.getElementById(dId);
+      if (dBtn) dBtn.click();
+      // Keep panel open for crop/straighten (user needs to interact with canvas)
+      if (mId !== 'mobileCrop' && mId !== 'mobileStraighten') {
+        closeMobilePanel();
+      }
+    });
+  });
+
+  /* ── Preset buttons inside mobile panel ── */
+  // The mobile preset-btn elements share the same data-preset attributes,
+  // so they automatically trigger via ss.js's querySelectorAll('.preset-btn') loop.
+  // We just close the panel after selection.
+  document.querySelectorAll('#mobilePanel .preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      setTimeout(closeMobilePanel, 150);
+    });
+  });
+
+  /* ── Adjustment sliders → sync to desktop .adj-item sliders ── */
+  const sliderMap = {
+    mob_brightness:  'brightness',
+    mob_contrast:    'contrast',
+    mob_saturate:    'saturate',
+    mob_temperature: 'temperature',
+    mob_highlights:  'highlights',
+    mob_shadows:     'shadows',
+    mob_vignette:    'vignette',
+    mob_grain:       'grain',
+    mob_blur:        'blur',
+    mob_sharpen:     'sharpen',
+    mob_grayscale:   'grayscale',
+    mob_sepia:       'sepia',
+  };
+
+  Object.entries(sliderMap).forEach(([mobId, filterKey]) => {
+    const mobSlider = document.getElementById(mobId);
+    if (!mobSlider) return;
+
+    mobSlider.addEventListener('input', function () {
+      // Find matching desktop adj-item and fire its input event
+      const desktopInput = document.querySelector(`[data-filter="${filterKey}"] input[type=range]`);
+      if (desktopInput) {
+        desktopInput.value = this.value;
+        desktopInput.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    });
+  });
+
+  /* ── Sync mobile sliders when desktop sliders change (preset applied etc.) ── */
+  // Listen on adj-item inputs and update corresponding mobile slider
+  Object.entries(sliderMap).forEach(([mobId, filterKey]) => {
+    const desktopInput = document.querySelector(`[data-filter="${filterKey}"] input[type=range]`);
+    const mobSlider    = document.getElementById(mobId);
+    if (!desktopInput || !mobSlider) return;
+
+    desktopInput.addEventListener('input', function () {
+      // Only update if value differs (avoid infinite loop)
+      if (mobSlider.value !== this.value) {
+        mobSlider.value = this.value;
+      }
+    });
+  });
+
+  /* ── FAQ accordion ── */
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item    = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+})();
 /* ═══════════════════════════════════════════
    TOAST
 ═══════════════════════════════════════════ */

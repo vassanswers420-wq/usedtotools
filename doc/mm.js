@@ -940,3 +940,114 @@ function toast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => el.classList.remove('show'), 2400);
 }
+// ── MOBILE PANEL LOGIC ──
+const mobileToggle  = document.getElementById('mobileToolbarToggle');
+const mobileOverlay = document.getElementById('mobileOverlay');
+const mobilePanel   = document.getElementById('mobilePanel');
+ 
+function openMobilePanel() {
+  mobileOverlay.style.display = 'block';
+  mobilePanel.style.display   = 'block';
+  requestAnimationFrame(() => {
+    mobileOverlay.classList.add('open');
+    mobilePanel.classList.add('open');
+  });
+}
+function closeMobilePanel() {
+  mobileOverlay.classList.remove('open');
+  mobilePanel.classList.remove('open');
+  setTimeout(() => {
+    mobileOverlay.style.display = 'none';
+    mobilePanel.style.display   = 'none';
+  }, 300);
+}
+ 
+mobileToggle.addEventListener('click', openMobilePanel);
+mobileOverlay.addEventListener('click', closeMobilePanel);
+ 
+// Mobile tabs
+document.querySelectorAll('.mobile-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.mobile-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.mobile-tab-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelector(`[data-panel="${tab.dataset.tab}"]`).classList.add('active');
+  });
+});
+ 
+// Mobile tool items → trigger desktop tool buttons
+document.querySelectorAll('.mobile-tool-item[data-tool]').forEach(item => {
+  item.addEventListener('click', () => {
+    const btn = document.getElementById(item.dataset.tool);
+    if (btn) btn.click();
+    closeMobilePanel();
+  });
+});
+ 
+// Mobile action buttons → trigger desktop counterparts
+const mobileActions = {
+  mobileUndoBtn:      'undoBtn',
+  mobileRotateL:      'rotateLeftBtn',
+  mobileRotateR:      'rotateRightBtn',
+  mobileDeletePage:   'deletePageBtn',
+  mobileDuplicatePage:'duplicatePageBtn',
+  mobileExtractPage:  'extractPageBtn',
+  mobileClearAnnot:   'clearAnnotBtn',
+  mobileSavePdf:      'savePdfBtn',
+  mobileSavePng:      'savePngBtn',
+};
+Object.entries(mobileActions).forEach(([mId, dId]) => {
+  document.getElementById(mId)?.addEventListener('click', () => {
+    document.getElementById(dId)?.click();
+    closeMobilePanel();
+  });
+});
+ 
+// Mobile upload
+document.getElementById('mobileUploadZone')?.addEventListener('click', () => {
+  document.getElementById('mobilePdfUploader').click();
+});
+document.getElementById('mobilePdfUploader')?.addEventListener('change', function() {
+  if (this.files[0]) {
+    // Reuse the desktop upload handler
+    const dt = new DataTransfer();
+    dt.items.add(this.files[0]);
+    const desktopInput = document.getElementById('pdfUploader');
+    desktopInput.files = dt.files;
+    desktopInput.dispatchEvent(new Event('change'));
+    closeMobilePanel();
+  }
+});
+ 
+// Mobile color swatches sync to desktop
+document.querySelectorAll('#mobileColorSwatches .color-swatch').forEach(sw => {
+  sw.addEventListener('click', () => {
+    // Find matching desktop swatch
+    const match = document.querySelector(`#colorSwatches .color-swatch[data-color="${sw.dataset.color}"]`);
+    if (match) match.click();
+    document.querySelectorAll('#mobileColorSwatches .color-swatch').forEach(s => s.classList.remove('active'));
+    sw.classList.add('active');
+  });
+});
+ 
+// Mobile sliders sync to desktop sliders
+document.getElementById('mobileStrokeSlider')?.addEventListener('input', function() {
+  const ds = document.getElementById('strokeSlider');
+  ds.value = this.value;
+  ds.dispatchEvent(new Event('input'));
+});
+document.getElementById('mobileOpacitySlider')?.addEventListener('input', function() {
+  const ds = document.getElementById('opacitySlider');
+  ds.value = this.value;
+  ds.dispatchEvent(new Event('input'));
+});
+ 
+// ── FAQ ACCORDION ──
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
